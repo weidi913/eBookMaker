@@ -1,0 +1,90 @@
+﻿@page
+@model FYP1.Pages.eBooks.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.eBook[0].title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.eBook[0].type)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.eBook[0].description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.eBook[0].height)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.eBook[0].width)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.eBook[0].background)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.eBook[0].edition)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.eBook[0].bookStatus)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.eBook[0].commentDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.eBook[0].authorID)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.eBook) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.type)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.height)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.width)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.background)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.edition)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.bookStatus)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.commentDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.authorID)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.bookID">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.bookID">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.bookID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

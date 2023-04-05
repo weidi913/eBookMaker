@@ -1,0 +1,79 @@
+﻿@page
+@model FYP1.Pages.eBooks.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>eBook</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.eBook.title)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.eBook.title)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.eBook.type)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.eBook.type)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.eBook.description)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.eBook.description)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.eBook.height)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.eBook.height)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.eBook.width)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.eBook.width)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.eBook.background)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.eBook.background)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.eBook.edition)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.eBook.edition)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.eBook.bookStatus)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.eBook.bookStatus)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.eBook.commentDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.eBook.commentDate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.eBook.authorID)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.eBook.authorID)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.eBook?.bookID">Edit</a> |
+    <a asp-page="./Index">Back to List</a>
+</div>
