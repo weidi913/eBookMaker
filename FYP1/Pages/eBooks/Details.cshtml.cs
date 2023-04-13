@@ -20,16 +20,19 @@ namespace FYP1.Pages.eBooks
             _context = context;
         }
 
-        //[BindProperty] //really need it?
+        [BindProperty] //really need it?
         public eBook eBook { get; set; } = default!;
         public IList<Chapter> Chapter { get; set; } = default!;
         public IList<BookPage> BookPage { get; set; } = default!;
+        public IList<Element> Element { get; set; } = default!;
 
         [BindProperty]
         public Chapter ChapterAdd { get; set; } = default!;
 
         [BindProperty]
         public BookPage BookPageAdd { get; set; } = default!;
+        [BindProperty]
+        public Element ElementAdd { get; set; } = default!;
 
 
         public async Task<IActionResult> OnGetAsync(int? id)
@@ -64,11 +67,27 @@ namespace FYP1.Pages.eBooks
                 .Include(b => b.Chapter).ToListAsync();
             }
 
+            if (_context.Element != null)
+            {
+                Element = await _context.Element
+                .Include(e => e.BookPage).ToListAsync();
+            }
+
+
+            //no need to filter???? i think need to filter to avoid excessive loadinf time
             ViewData["bookID"] = new SelectList(_context.Set<eBook>(), "bookID", "background");
             ViewData["chapterID"] = new SelectList(_context.Chapter, "chapterID", "chapterName");
             return Page();
 
         }
+/*        public async Task OnGetAsync()
+        {
+            if (_context.Element != null)
+            {
+                Element = await _context.Element
+                .Include(e => e.BookPage).ToListAsync();
+            }
+        }*/
 
         //public IActionResult OnGet()
         //{
@@ -140,6 +159,23 @@ namespace FYP1.Pages.eBooks
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");
+        }
+
+
+
+
+        // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
+        public async Task<IActionResult> OnPostElementAsync()
+        {
+/*            if (!ModelState.IsValid || _context.Element == null || Element == null)
+            {
+                return Page();
+            }*/
+
+            _context.Element.Add(ElementAdd);
+            await _context.SaveChangesAsync();
+            return new JsonResult(new { success = true });
+/*            return RedirectToPage("./Index");*//**/
         }
 
         //public async Task<IActionResult> OnPostAsync()

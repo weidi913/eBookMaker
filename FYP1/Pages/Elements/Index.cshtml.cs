@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using FYP1.Data;
 using FYP1.Models;
 
-namespace FYP1.Pages.BookPages
+namespace FYP1.Pages.Elements
 {
     public class IndexModel : PageModel
     {
@@ -19,14 +19,14 @@ namespace FYP1.Pages.BookPages
             _context = context;
         }
 
-        public IList<BookPage> BookPage { get;set; } = default!;
+        public IList<Element> Element { get;set; } = default!;
 
         public async Task OnGetAsync()
         {
-            if (_context.Page != null)
+            if (_context.Element != null)
             {
-                BookPage = await _context.Page
-                .Include(b => b.Chapter).ToListAsync();
+                Element = await _context.Element
+                .Include(e => e.BookPage).ToListAsync();
             }
         }
     }

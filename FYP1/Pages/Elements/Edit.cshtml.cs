@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using FYP1.Data;
 using FYP1.Models;
 
-namespace FYP1.Pages.Chapters
+namespace FYP1.Pages.Elements
 {
     public class EditModel : PageModel
     {
@@ -21,22 +21,22 @@ namespace FYP1.Pages.Chapters
         }
 
         [BindProperty]
-        public Chapter Chapter { get; set; } = default!;
+        public Element Element { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null || _context.Chapter == null)
+            if (id == null || _context.Element == null)
             {
                 return NotFound();
             }
 
-            var chapter =  await _context.Chapter.FirstOrDefaultAsync(m => m.chapterID == id);
-            if (chapter == null)
+            var element =  await _context.Element.FirstOrDefaultAsync(m => m.elementID == id);
+            if (element == null)
             {
                 return NotFound();
             }
-            Chapter = chapter;
-           ViewData["bookID"] = new SelectList(_context.Set<eBook>(), "bookID", "background");
+            Element = element;
+           ViewData["bookPageID"] = new SelectList(_context.Page, "bookPageID", "bookPageID");
             return Page();
         }
 
@@ -49,7 +49,7 @@ namespace FYP1.Pages.Chapters
                 return Page();
             }
 
-            _context.Attach(Chapter).State = EntityState.Modified;
+            _context.Attach(Element).State = EntityState.Modified;
 
             try
             {
@@ -57,7 +57,7 @@ namespace FYP1.Pages.Chapters
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ChapterExists(Chapter.chapterID))
+                if (!ElementExists(Element.elementID))
                 {
                     return NotFound();
                 }
@@ -70,9 +70,9 @@ namespace FYP1.Pages.Chapters
             return RedirectToPage("./Index");
         }
 
-        private bool ChapterExists(int id)
+        private bool ElementExists(int id)
         {
-          return (_context.Chapter?.Any(e => e.chapterID == id)).GetValueOrDefault();
+          return (_context.Element?.Any(e => e.elementID == id)).GetValueOrDefault();
         }
     }
 }

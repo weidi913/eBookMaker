@@ -5,6 +5,364 @@
     ViewData["Title"] = "Index";
 }
 
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - FYP1</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/FYP1.styles.css" asp-append-version="true" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <style>
+        .left_nav_bar {
+            position: fixed;
+            left: 0% !important;
+            opacity: 0.9;
+            top: 10% !important;
+            width: 10% !important;
+            height: 90% !important;
+            visibility: none;
+            background-color: #263238;
+            color: #FFF;
+            padding: 10px;
+            float: left;
+        }
+
+        .top_bar {
+            position: fixed;
+            left: 0vw !important;
+            top: 0vh !important;
+            width: 100vw !important;
+            height: 10vh !important;
+            display: flex;
+        }
+
+        .top_bar_menu_button {
+            background: transparent;
+            opacity: 1;
+            height: 90%;
+            width: auto;
+            cursor: pointer;
+            padding:5px;
+            background-image: url('~/images/menu_button.png/');
+        }
+        .top_bar_menu_button_container:hover{
+            background: #F5F5F5;
+        }
+
+        .logo{
+           background-image: url('~/images/menu_button.png/');
+           padding-left:1vw;
+           padding-right:1vw;
+        }
+        .logo *{
+            height:100%;
+            width:auto;
+        }
+
+        .top_bar_title{
+            font-size:1.5em;
+            font-weight:500;
+            color:#616161;
+            padding-left:1vw;
+            padding-right:1vw;
+            text-align:left;
+            text-transform:uppercase;
+            display: flex;
+            width:auto;
+            align-items: center;
+            height:100%;
+        }
+
+        .top_bar_right{
+            flex: 1;
+        }
+
+        div.left_nav_bar div {
+            padding: 10px;
+            cursor: pointer;
+            font-size:1em;
+        }
+
+        div.left_nav_bar div:hover {
+             background-color: #FFF;
+             color: #263238;
+        }
+
+        .content {
+            background: white;
+            position: fixed;
+            left: 10% !important;
+            top: 10% !important;
+            width: 90%;
+            height: 90% !important;
+            overflow: auto;
+        }
+        .content_title{
+        color:white;
+                                    background:#616161;
+                                            overflow:auto;
+                                            padding:10px;
+                                            height:not working%;
+                                            font-size:2em;
+
+                             }
+        .whole_containter {
+            background: #00FFFF;
+            position: absolute;
+            height: 100%;
+            width: 100%;
+        }
+
+        .center {
+            text-align: center;
+            border: 3px solid green;
+        }
+
+        .project {
+            border: 3px solid black;
+            opacity: 0.8;
+            display: inline-block;
+            background: white;
+            color: black;
+            height: 100%;
+            width: 20%;
+            position: relative;
+            float: left;
+            flex: 0 0 40%;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+    <div class="whole_container">
+        <div class="left_nav_bar">
+            <div>
+                Home
+            </div>
+            <div>
+                Management
+            </div>
+            <div>
+                Projects
+            </div>
+            <div>
+                Shared
+            </div>
+        </div>
+        <div class="top_bar shadow-sm p-3 mb-5 bg-white rounded">
+            <div class="top_bar_menu_button_container"><img class="top_bar_menu_button" src="~/images/menu_button.png" /></div>
+            <div class="logo"><img src="images/logo.png" /></div>
+            <div class="top_bar_title">eBook Maker System</div>
+            <div style="float: right;height:100%;width:auto">
+                <a asp-page="Create"> <button type="button" class="btn btn-outline-secondary">Create New</button>
+                    </a>
+                </div>
+        </div>
+        <div class="content column">
+            <div class="align-content-center" style="opacity:1.0">
+                <div class="center" style="overflow:auto;padding:10px;height:not working%;font-size:2em; position: relative; background:	#848884" ;>
+                    My Project
+                </div>
+                @*<div class="flex" style="flex-wrap: nowrap; overflow-x: scroll; display: flex;height:20%; width:100%;">*@
+                <div style="  display:flex;height:30vh; box-sizing:content-box;
+  width:100%; background-color:floralwhite; overflow-x:auto;">
+                    @*justify-content: space-between;*@
+                    @{var i = 0;}
+                    @foreach (var item in Model.eBook)
+                    {
+                        if(i ==5){
+                            break;
+                        }
+                        <div class="project">
+                            <img src="/images/not_available.jpg" alt="Rocks" style="height:60%">
+                            @*                            <div src="/images/not_available.jpg" class="image" style="width:100%;height:80%">*@
+
+                                
+                            <div style="width:100%;height:auto">
+                                <a asp-page="./Details" asp-route-id="@item.bookID">
+                                    @Html.DisplayFor(modelItem => item.title)
+                                </a>
+
+                            </div>
+                            <div style="height:auto">
+                                @Html.DisplayFor(modelItem => item.type)
+                            </div>
+                            <a asp-page="./Edit" asp-route-id="@item.bookID">Edit</a>
+                            <a asp-page="./Delete" asp-route-id="@item.bookID">Delete</a>
+                        </div>
+
+
+                        @*                            <td>
+                    @Html.DisplayFor(modelItem => item.description)
+                    </td>
+                    <td>
+                    @Html.DisplayFor(modelItem => item.height)
+                    </td>
+                    <td>
+                    @Html.DisplayFor(modelItem => item.width)
+                    </td>
+                    <td>
+                    @Html.DisplayFor(modelItem => item.background)
+                    </td>
+                    <td>
+                    @Html.DisplayFor(modelItem => item.edition)
+                    </td>
+                    <td>
+                    @Html.DisplayFor(modelItem => item.bookStatus)
+                    </td>
+                    <td>
+                    @Html.DisplayFor(modelItem => item.dateUpdated)
+                    </td>
+                    <td>
+                    @Html.DisplayFor(modelItem => item.authorID)
+                    </td>
+                    <td>
+                    <a asp-page="./Edit" asp-route-id="@item.bookID">Edit</a> |
+                    |
+                    <a asp-page="./Delete" asp-route-id="@item.bookID">Delete</a>
+                    </td>*@
+
+                    }
+
+                </div>
+                <div class="center" style="overflow:auto;padding:10px;height:not working%;font-size:2em; position: relative; background:	#848884">
+                    All Project
+                </div>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>
+
+                                @Html.DisplayNameFor(model => model.eBook[0].title)
+
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.eBook[0].type)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.eBook[0].description)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.eBook[0].height)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.eBook[0].width)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.eBook[0].background)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.eBook[0].edition)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.eBook[0].bookStatus)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.eBook[0].dateUpdated)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.eBook[0].authorID)
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.eBook)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.title)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.type)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.description)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.height)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.width)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.background)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.edition)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.bookStatus)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.dateUpdated)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.authorID)
+                                </td>
+                                <td>
+                                    <a asp-page="./Edit" asp-route-id="@item.bookID">Edit</a> |
+                                    <a asp-page="./Details" asp-route-id="@item.bookID">Details</a> |
+                                    <a asp-page="./Delete" asp-route-id="@item.bookID">Delete</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <div class="row">
+            </div>
+
+        </div>
+        <div class="bottom-bar">
+        </div>
+    </div>
+</body>
+</html>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<script type="text/javascript">
+    alert();
+    $(document).ready(function () {
+        //change to the menu button
+        $("img.menu_button").on("click", function () {
+            console.log("123");
+            console.log($(this).css("display"));
+            var visibility = $("div.left_nav_bar").css("display");
+            if (!(visibility == "none")) {
+                $("div.left_nav_bar").css("display", "none");
+
+            }
+            else {
+                $("div.left_nav_bar").css("display", "block");
+            }
+        })
+
+    })
+    @*
+        $(document).ready(function () {
+        alert();
+        })
+        $(document).ready(function () {
+        alert();
+        $("div.left_nav_bar").on("click", function () {
+        // console.log($(this).visibility));
+        alert();
+
+        })
+        *@
+</script>
+
+@*@page
+@model FYP1.Pages.eBooks.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
 <h1>Index</h1>
 
 <p>
@@ -91,3 +449,4 @@
         }
     </tbody>
 </table>
+*@

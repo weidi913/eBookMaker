@@ -59,11 +59,11 @@ namespace FYP1.Migrations
                     description = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: false),
                     height = table.Column<float>(type: "real", nullable: false),
                     width = table.Column<float>(type: "real", nullable: false),
-                    background = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    background = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     edition = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     bookStatus = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
-                    commentDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    authorID = table.Column<int>(type: "int", maxLength: 50, nullable: false)
+                    dateUpdated = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    authorID = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -203,7 +203,7 @@ namespace FYP1.Migrations
                 {
                     collabID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    authorID = table.Column<int>(type: "int", maxLength: 50, nullable: false),
+                    authorID = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     bookID = table.Column<int>(type: "int", nullable: false),
                     eBookbookID = table.Column<int>(type: "int", nullable: true)
                 },
@@ -284,7 +284,7 @@ namespace FYP1.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Object",
+                name: "Element",
                 columns: table => new
                 {
                     elementID = table.Column<int>(type: "int", nullable: false)
@@ -298,9 +298,9 @@ namespace FYP1.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Object", x => x.elementID);
+                    table.PrimaryKey("PK_Element", x => x.elementID);
                     table.ForeignKey(
-                        name: "FK_Object_Page_bookPageID",
+                        name: "FK_Element_Page_bookPageID",
                         column: x => x.bookPageID,
                         principalTable: "Page",
                         principalColumn: "bookPageID",
@@ -362,8 +362,8 @@ namespace FYP1.Migrations
                 column: "PagebookPageID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Object_bookPageID",
-                table: "Object",
+                name: "IX_Element_bookPageID",
+                table: "Element",
                 column: "bookPageID");
 
             migrationBuilder.CreateIndex(
@@ -401,7 +401,7 @@ namespace FYP1.Migrations
                 name: "Comment");
 
             migrationBuilder.DropTable(
-                name: "Object");
+                name: "Element");
 
             migrationBuilder.DropTable(
                 name: "Version");

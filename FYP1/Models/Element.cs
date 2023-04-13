@@ -13,14 +13,14 @@ namespace FYP1.Models
         [Required]
         public bool elementLock { get; set; } = false;
 
-        [Required,StringLength(5000)]
-        public string elementStyle { get; set; }
+        [StringLength(5000)]
+        public string? elementStyle { get; set; }
 
-        [Required]
-        public string z_index { get; set; }
+        //Suppose not nullable
+        public string? z_index { get; set; }
 
-        [Required]
-        public string text { get; set; }
+        
+        public string? text { get; set; }
 
         [Required]
         public int bookPageID { get; set; }

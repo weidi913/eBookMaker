@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FYP1.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230405204914_first222")]
-    partial class first222
+    [Migration("20230411225727_first")]
+    partial class first
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -151,7 +151,6 @@ namespace FYP1.Migrations
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("background")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("bookStatus")

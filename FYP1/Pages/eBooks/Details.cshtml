@@ -4,33 +4,63 @@
 @{
     ViewData["Title"] = "Details";
 }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
     .pageContainer {
-        position: fixed;
-        top: 10%;
-        left: 10%;
-        background-color: red;
+        position: relative;
+        /*        top: 10%;
+            left: 10%;*/
+        background-color: lightblue;
         color: black !important;
-        opacity: 0.1;
-        height: 90%;
+        opacity: 0.9;
+        height: 900px;
         width: 90%;
+        overflow: auto;
+    }
+
+    .unselectable {
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
     }
 
     .page {
-        left: 25%;
-        width: 50%;
-        height: 100%;
-        ;
+        margin: auto;
+        padding: 10px;
+        border: 3px solid black;
+        height: 500px;
+        width: 400px;
         color: black;
-        top: 0%;
         background-color: white !important;
-        position: absolute;
+        position: relative;
+        overflow:hidden;
     }
+
+    .container2 {
+        padding: 0;
+        margin: 0;
+    }
+
+    .container2 {
+        min-width: 100vh;
+    }
+
+    html, body {
+        margin: 0;
+        padding: 0;
+    }
+
 </style>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 <h1>Details</h1>
 
-<div>
+<div class="container">
     <h4>eBook</h4>
+
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
@@ -104,116 +134,107 @@
 <p>
     Chapter Index
 </p>
-
-<div class="row">
-    <div></div>
+<div id="export">
+    Export
 </div>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Chapter[0].chapterName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Chapter[0].chapterNo)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Chapter[0].book)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model.Chapter)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.chapterID)
-                </td>
-                <td>
+
+<div class="pageContainer container">
+
+    @foreach (var item in Model.Chapter)
+    {
+        <div id=@item.chapterID class="chapter">
+            <div class="row border border-secondary">
+                <div class="col-lg-1 border border-secondary">
+                    @Html.DisplayNameFor(model => model.Chapter[0].chapterName)
+                </div>
+                <div class="col-lg-4 border border-secondary">
                     @Html.DisplayFor(modelItem => item.chapterName)
-                </td>
-                <td>
+                </div>
+                <div class="col-lg-1 border border-secondary">
+                    @Html.DisplayNameFor(model => model.Chapter[0].chapterNo)
+                </div>
+                <div class="col-lg-4 border border-secondary">
                     @Html.DisplayFor(modelItem => item.chapterNo)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.book.background)
-                </td>
-                <td>
-                    <a asp-page="./Edit" asp-route-id="@item.chapterID">Edit</a> |
-                    <a asp-page="./Details" asp-route-id="@item.chapterID">Details</a> |
-                    <a asp-page="./Delete" asp-route-id="@item.chapterID">Delete</a>
-                </td>
-            </tr>
+                </div>
+                <div class="col-lg-1 border border-secondary"><a asp-page="./Edit" asp-route-id="@item.chapterID">Edit</a></div>
+                <div class="col-lg-1 border border-secondary"><a asp-page="./Delete" asp-route-id="@item.chapterID">Delete</a></div>
+            </div>
 
-            <tr>
-                @*HEREEE *@
+            @foreach (var item2 in Model.BookPage)
+            {
+                if (item2.chapterID != item.chapterID)
+                    continue;
+                <div class="BookPage row border border-primary">
+                    <div class="col-lg-2">
+                        @(Html.DisplayNameFor(model => model.BookPage[0].pageNo)) @(Html.DisplayFor(modelItem => item2.pageNo))
+                    </div>
+                    @*                <div class="col-lg-1">
+            @(Html.DisplayNameFor(model => model.BookPage[0].pageLock)) @(Html.DisplayFor(modelItem => item2.pageLock))
+            </div>*@
+                    <div class="col-lg-9"></div>
+                    <div class="col-lg-1"><a asp-page="./Delete" asp-route-id="@item2.bookPageID">Delete</a></div>
+                </div>
+                <div id=@item2.bookPageID class="page BookPage">
+                @foreach (var item3 in Model.Element)
+                {
+                        <div id="@item3.elementID" class="@item3.elementType element" style="@item3.elementStyle">@item3.text</div>
+@*                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item3.elementType)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item3.elementLock)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item3.elementStyle)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item3.z_index)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item3.text)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item3.BookPage.bookPageID)
+                        </td>
+                        <td>
+                            <a asp-page="./Edit" asp-route-id="@item3.elementID">Edit</a> |
+                            <a asp-page="./Details" asp-route-id="@item3.elementID">Details</a> |
+                            <a asp-page="./Delete" asp-route-id="@item3.elementID">Delete</a>
+                        </td>
+                    </tr>*@
 
-            <tr>
-                <th>
-                        @Html.DisplayNameFor(model => model.BookPage[0].pageNo)
-                </th>
-                <th>
-                        @Html.DisplayNameFor(model => model.BookPage[0].pageLock)
-                </th>
-                <th>
-                        @Html.DisplayNameFor(model => model.BookPage[0].Chapter)
-                </th>
-            </tr>
+    
+                }
+                </div>
+            }
+            <form method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="row">
+                    <div class="form-group col-lg-3">
+                        <label asp-for="BookPageAdd.pageNo" value="1" class="control-label"></label>
+                        <input asp-for="BookPageAdd.pageNo" class="form-control" />
+                        <span asp-validation-for="BookPageAdd.pageNo" class="text-danger"></span>
+                    </div>
+                    <div class="form-group form-check col-lg-3">
+                        <label hidden class="form-check-label">
+                            <input hidden class="form-check-input" asp-for="BookPageAdd.pageLock" /> @Html.DisplayNameFor(model => model.BookPageAdd.pageLock)
+                        </label>
+                    </div>
+                    <div class="form-group col-lg-5">
+                        <label hidden asp-for="BookPageAdd.chapterID" class="control-label"></label>
+                        <input hidden value="@item.chapterID" asp-for="BookPageAdd.chapterID" class="form-control" asp-items="ViewBag.chapterID" />
+                    </div>
 
-            <tr>
-                    @foreach (var item2 in Model.BookPage)
-                    {
-                <tr>
-                    <td>
-                                @Html.DisplayFor(modelItem => item2.pageNo) 123
-                    </td>
-                    <td>
-                                @Html.DisplayFor(modelItem => item2.pageLock)
-                    </td>
-                    <td>
-                                @Html.DisplayFor(modelItem => item2.Chapter.chapterName)
-                    </td>
-                    <td>
-                        <a asp-page="./Edit" asp-route-id="@item2.bookPageID">Edit</a> |
-                        <a asp-page="./Details" asp-route-id="@item2.bookPageID">Details</a> |
-                        <a asp-page="./Delete" asp-route-id="@item2.bookPageID">Delete</a>
-                    </td>
-                </tr>
-                <div>123</div>
-                    }
-            </tr>
-            <tr>
-                <td>
-                    -------- Chapter End --------
-                </td>
-            </tr>
-            </tr>
-        }
-    </tbody>
-    <form method="post">
-        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-        <div class="form-group">
-            <label asp-for="BookPageAdd.pageNo" value="1" class="control-label"></label>
-            <input asp-for="BookPageAdd.pageNo" class="form-control" />
-            <span asp-validation-for="BookPageAdd.pageNo" class="text-danger"></span>
+                    <div class="form-group col-lg-1">
+                        <input type="submit" asp-page-handler="BookPage" value="Create" class="btn btn-primary" />
+                    </div>
+                </div>
+            </form>
         </div>
-        <div class="form-group form-check">
-            <label hidden class="form-check-label">
-                <input hidden class="form-check-input" asp-for="BookPageAdd.pageLock" /> @Html.DisplayNameFor(model => model.BookPageAdd.pageLock)
-            </label>
-        </div>
-        <div class="form-group">
-            <label asp-for="BookPageAdd.chapterID" class="control-label"></label>
-            <input value="item.chapterID" asp-for="BookPageAdd.chapterID" class="form-control" asp-items="ViewBag.chapterID"/>
-        </div>
-        <div class="form-group">
-            <input type="submit" asp-page-handler="BookPage" value="Create" class="btn btn-primary" />
-        </div>
-    </form>
+    }
 
     <h1>Create</h1>
-
     <h4>Chapter</h4>
     <hr />
     <div class="row">
@@ -225,6 +246,7 @@
                     <input asp-for="ChapterAdd.chapterName" class="form-control" />
                     <span asp-validation-for="ChapterAdd.chapterName" class="text-danger"></span>
                 </div>
+
                 <div class="form-group">
                     <label asp-for="ChapterAdd.chapterNo" class="control-label"></label>
                     <input asp-for="ChapterAdd.chapterNo" class="form-control" />
@@ -240,4 +262,108 @@
             </form>
         </div>
     </div>
+    <div id="elementButtonList" style="left:0%;top:20%;width:100px; position:fixed; background-color:lemonchiffon; padding:15px">
+        <form method="post">
+            C:\Degree Y2S3\FYP1\Coding\FYP1\FYP1\wwwroot\images\textIcon.png
+            <div id="text" style="background:url('/images/icon_text.png');color:white ;width:50px;height:50px;
+                background-size:100%  100%;color:white"></div>
+            <div id="chart" style="background:url('/images/icon_chart.png');color:white ;width:50px;height:50px;
+                background-size:100%  100%;color:white">
+            </div>
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="ElementAdd.elementType" class="control-label"></label>
+                <input asp-for="ElementAdd.elementType" class="form-control type" />
+                <span asp-validation-for="ElementAdd.elementType" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="ElementAdd.elementLock" /> @Html.DisplayNameFor(model => model.ElementAdd.elementLock)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="ElementAdd.elementStyle" class="control-label"></label>
+                <input asp-for="ElementAdd.elementStyle" class="form-control" />
+                <span asp-validation-for="ElementAdd.elementStyle" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ElementAdd.z_index" class="control-label"></label>
+                <input asp-for="ElementAdd.z_index" class="form-control" />
+                <span asp-validation-for="ElementAdd.z_index" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ElementAdd.text" class="control-label"></label>
+                <input asp-for="ElementAdd.text" class="form-control" />
+                <span asp-validation-for="ElementAdd.text" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ElementAdd.bookPageID" class="control-label"></label>
+                <input asp-for="ElementAdd.bookPageID" class="form-control bookPageID" asp-items="ViewBag.bookPageID"></input>
+            </div>
+            <div class="form-group">
+                <input type="submit" asp-page-handler="Element" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
 
+    @*must use container*@
+    <div style="background:yellow;color:red;position:fixed;left:0%;bottom:10%;width:100px;height:50px">
+        <div class="row">
+            <div id="chapterSection" style="width:auto;height:auto">
+                123
+            </div>
+            <div id="pageSection" style="width:auto;height:auto">
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        console.log("123");
+        const nodeList = document.querySelectorAll("div.page");
+        console.log(nodeList);
+        for (let i = 0; i < nodeList.length; i++) {
+            console.log("123");
+            nodeList[i].style.height = @Html.DisplayFor(model => model.eBook.height) +"mm";
+            nodeList[i].style.width = @Html.DisplayFor(model => model.eBook.width) +"mm";
+        }
+
+
+        $("div.chapter").on("mouseover", function () {
+            $("div#chapterSection").html("ChapterID " + $(this).attr("id"));
+
+        })
+
+        $("div.BookPage").on("mouseover", function () {
+            $("div#pageSection").html("PageID " + $(this).attr("id"));
+            $("input.bookPageID").val($(this).attr("id"));
+
+        })
+
+        $("div#chart").on("click", function () {
+            $("input.type").val($(this).attr("id"));
+            console.log("chart clicked");
+        })
+
+        $("div#text").on("click", function () {
+            $("input.type").val($(this).attr("id"));
+            console.log("text clicked");
+        })
+        
+
+        $("div div.element").mouseover(function(){
+            $(this).attr('contenteditable', 'true');
+            console.log("mouseover");
+        })
+         $("div div.element").mouseout(function(){
+            $(this).attr('contenteditable','false');
+            console.log("mouseout");
+        })
+
+    })
+
+
+    @*Model.eBook.width can use this to retrieve the bindproperty content maybe*@
+</script>

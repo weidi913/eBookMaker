@@ -8,8 +8,9 @@ using Microsoft.EntityFrameworkCore;
 using FYP1.Data;
 using FYP1.Models;
 
-namespace FYP1.Pages.BookPages
+namespace FYP1.Pages.Elements
 {
+    
     public class DeleteModel : PageModel
     {
         private readonly FYP1.Data.ApplicationDbContext _context;
@@ -20,40 +21,40 @@ namespace FYP1.Pages.BookPages
         }
 
         [BindProperty]
-      public BookPage BookPage { get; set; } = default!;
+      public Element Element { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null || _context.Page == null)
+            if (id == null || _context.Element == null)
             {
                 return NotFound();
             }
 
-            var bookpage = await _context.Page.FirstOrDefaultAsync(m => m.bookPageID == id);
+            var element = await _context.Element.FirstOrDefaultAsync(m => m.elementID == id);
 
-            if (bookpage == null)
+            if (element == null)
             {
                 return NotFound();
             }
             else 
             {
-                BookPage = bookpage;
+                Element = element;
             }
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync(int? id)
         {
-            if (id == null || _context.Page == null)
+            if (id == null || _context.Element == null)
             {
                 return NotFound();
             }
-            var bookpage = await _context.Page.FindAsync(id);
+            var element = await _context.Element.FindAsync(id);
 
-            if (bookpage != null)
+            if (element != null)
             {
-                BookPage = bookpage;
-                _context.Page.Remove(BookPage);
+                Element = element;
+                _context.Element.Remove(Element);
                 await _context.SaveChangesAsync();
             }
 

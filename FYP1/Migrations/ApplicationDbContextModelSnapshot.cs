@@ -205,7 +205,6 @@ namespace FYP1.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("elementStyle")
-                        .IsRequired()
                         .HasMaxLength(5000)
                         .HasColumnType("nvarchar(max)");
 
@@ -215,11 +214,9 @@ namespace FYP1.Migrations
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("text")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("z_index")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("elementID");

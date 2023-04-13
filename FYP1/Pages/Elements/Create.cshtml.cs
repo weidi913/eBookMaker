@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using FYP1.Data;
 using FYP1.Models;
 
-namespace FYP1.Pages.Chapters
+namespace FYP1.Pages.Elements
 {
     public class CreateModel : PageModel
     {
@@ -21,23 +21,23 @@ namespace FYP1.Pages.Chapters
 
         public IActionResult OnGet()
         {
-        ViewData["bookID"] = new SelectList(_context.Set<eBook>(), "bookID", "background");
+        ViewData["bookPageID"] = new SelectList(_context.Page, "bookPageID", "bookPageID");
             return Page();
         }
 
         [BindProperty]
-        public Chapter Chapter { get; set; } = default!;
+        public Element Element { get; set; } = default!;
         
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
-          if (!ModelState.IsValid || _context.Chapter == null || Chapter == null)
+          if (!ModelState.IsValid || _context.Element == null || Element == null)
             {
                 return Page();
             }
 
-            _context.Chapter.Add(Chapter);
+            _context.Element.Add(Element);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");

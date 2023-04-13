@@ -1,0 +1,66 @@
+﻿@page
+@model FYP1.Pages.Elements.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Element[0].elementType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Element[0].elementLock)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Element[0].elementStyle)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Element[0].z_index)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Element[0].text)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Element[0].BookPage)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Element) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.elementType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.elementLock)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.elementStyle)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.z_index)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.text)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BookPage.bookPageID)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.elementID">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.elementID">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.elementID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

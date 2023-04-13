@@ -21,10 +21,11 @@
 
   <ItemGroup>
     <Folder Include="Data\Migrations\" />
+    <Folder Include="Migrations\" />
     <Folder Include="Pages\Comments\" />
-    <Folder Include="Pages\Elements\" />
     <Folder Include="Pages\Versions\" />
     <Folder Include="Pages\Collaborations\" />
+    <Folder Include="wwwroot\images\" />
   </ItemGroup>
 
 </Project>

@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using FYP1.Data;
 using FYP1.Models;
 
-namespace FYP1.Pages.BookPages
+namespace FYP1.Pages.Elements
 {
     public class DetailsModel : PageModel
     {
@@ -19,23 +19,23 @@ namespace FYP1.Pages.BookPages
             _context = context;
         }
 
-      public BookPage BookPage { get; set; } = default!; 
+      public Element Element { get; set; } = default!; 
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null || _context.Page == null)
+            if (id == null || _context.Element == null)
             {
                 return NotFound();
             }
 
-            var bookpage = await _context.Page.FirstOrDefaultAsync(m => m.bookPageID == id);
-            if (bookpage == null)
+            var element = await _context.Element.FirstOrDefaultAsync(m => m.elementID == id);
+            if (element == null)
             {
                 return NotFound();
             }
             else 
             {
-                BookPage = bookpage;
+                Element = element;
             }
             return Page();
         }
