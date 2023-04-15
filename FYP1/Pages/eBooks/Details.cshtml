@@ -291,9 +291,16 @@
         }
 
     div.element {
-        white-space: pre-line; /* collapse WS, preserve LB */
-    }
+        white-space: pre; /* collapse WS, preserve LB */
 
+    }
+    pre {
+  white-space: pre;
+  text-indent: -1em;
+}
+            pre:first-line {
+    line-height: 0;
+}
     .selected {
         border: dashed 1px blue;
     }
@@ -466,64 +473,17 @@ border:0px;outline:none;background:transparent" type="submit" asp-page-handler="
                                 </div>
                 pageNumber++;
                         <div id=@item2.bookPageID style="width:@Html.DisplayFor(model => model.eBook.width)mm; height:@Html.DisplayFor(model => model.eBook.height)mm;" class="page BookPage">
-
-                            <div class="content">
-                        @foreach (var item3 in Model.Element)
-                        {
-                            if (item3.bookPageID != item2.bookPageID)
-                                continue;
-
-                                        <div tabindex="0" id="@item3.elementID" class="@item3.elementType element" style="@item3.elementStyle;position:absolute;box-sizing:border-box;">
-                                            @item3.text
-                                        </div>
-                        }
                             @*Current*@
-                            @*require to filter according to the type*@
-                            @*                    if (item3.elementType == "chart")
-                {*@
+                            <div class="content" style="">
+                                @foreach (var item3 in Model.Element)
+                                {
+                                    if (item3.bookPageID != item2.bookPageID)
+                                        continue;
 
-
-                            @*                    }
-                else if (item3.elementType == "text")
-                {
-                <div tabindex="0" id="@item3.elementID" class="@item3.elementType element"
-                style="border: solid 1px yellow; box-sizing:content-box;@item3.elementStyle">
-                @item3.text
-                </div>
-
-                }
-                else if (item3.elementType == "image")
-                {
-                <div tabindex="0" id="@item3.elementID" class="@item3.elementType element"
-                style="border: solid 1px blue;box-sizing:content-box;@item3.elementStyle">
-                @item3.text
-                </div>
-
-                }
-                else if (item3.elementType == "shape")
-                {
-                <div tabindex="0" id="@item3.elementID" class="@item3.elementType element"
-                style="border: solid 1px red;box-sizing:content-box;@item3.elementStyle">
-                @item3.text
-                </div>
-
-                }
-                else
-                {
-                <div tabindex="0" id="@item3.elementID" class="@item3.elementType element"
-                style="border: solid 10px black;box-sizing:content-box;@item3.elementStyle">
-                @item3.text
-                </div>
-
-                *@
-                            @*}*@
-                            @*
-                <td>
-                <a asp-page="./Edit" asp-route-id="@item3.elementID">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item3.elementID">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item3.elementID">Delete</a>
-                </td>
-                </tr>*@
+                                    <div tabindex="0" id="@item3.elementID" class="@item3.elementType element PageElement" style="display:inline;@item3.elementStyle;position:absolute;box-sizing:border-box;">@item3.text</div>
+                                }
+                            
+ 
                         
                             </div>
                         </div>
@@ -795,13 +755,13 @@ border:0px;outline:none;background:transparent" type="submit" asp-page-handler="
             window.jsPDF = window.jspdf.jsPDF;
 
 
-            var doc = new jsPDF();
+            var doc = new jsPDF('p', 'mm', [@Model.eBook.height, @Model.eBook.width]);
                                         @*Current*@
 
             doc.setFontSize(12);
-            doc.setFont("helvetica", "bold");
+doc.setFont("Arial ", "normal");
             const totalPage = document.querySelectorAll("div.BookPage");
-            const totalElement = document.querySelectorAll("div.element");
+            const totalElement = $("div.PageElement");
 
             alert(totalPage.length +" "+totalElement.length);
 
@@ -810,23 +770,26 @@ border:0px;outline:none;background:transparent" type="submit" asp-page-handler="
                 doc.addPage();
                 doc.text(20, 20, 'Visit CodexWorld.com');
                 }*@
-                for (var i = 1; i <= totalPage.length; i++) {
+                for (var i = 0; i < totalPage.length; i++) {
 
-                if (i != 1) doc.addPage();
+                if (i != 0) doc.addPage();
 
                 var pageID = $(totalPage[i]).attr("id");
- 
-                        console.log("Page "+i +" "+ pageID);
+                doc.text(10,10,"Page "+ pageID);
+                        @*console.log("Page "+i +" "+ pageID);*@
                 for (var j = 0; j < totalElement.length; j++) {
                                                 
                     const element = $(totalElement[j]);
 
                     var elementFK =$(element).closest("div").closest("div.BookPage").attr("id");
-                    console.log("Element "+j +" "+elementFK);
-                    console.log(elementFK+" compare "+ pageID);
+                    @*console.log("Element "+j +" "+elementFK);*@
+                    @*console.log(elementFK+" compare "+ pageID);*@
                     if(elementFK == pageID){
-
-                        doc.text(element.position().left * 0.2645833333, element.position().top * 0.2645833333, element.text());
+                        @*console.log(parseFloat(element.css("left"))+" "+parseFloat(element.css("top")));*@
+                        var left = parseFloat(element.css("left"))* 0.2645833333;
+                        var top = parseFloat(element.css("top"))* 0.2645833333;
+                        @*alert(left+" "+top);*@
+                        doc.text(left, top, element.text().trim());
                     }
                 }
             };
@@ -836,22 +799,22 @@ border:0px;outline:none;background:transparent" type="submit" asp-page-handler="
 
 
     @* // Save the PDF*@
-                doc.addPage();
+@*                doc.addPage();
             doc.setFontSize(12);
             doc.setTextColor(0, 0, 0);
             doc.text("This is a long text that will wrap around and create multiple lines.", 20, 20);
             doc.text("Another long text that will wrap around and create multiple lines.", 20, 40);
 
-            // Use drawMultilineText() method to show line breaks
+            // Use drawMultilineText() method to show line breaks*@
     @*var text = "This is a long text that will wrap around and create multiple lines. Another long text that will wrap around and create multiple lines.";
                 doc.setFontSize(12);
                 doc.setTextColor(0, 0, 0);
                 doc.drawMultilineText(text, 20, 60, 200, 10);*@
-            var text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam semper sapien ac dolor imperdiet pharetra. Sed ultricies purus at massa facilisis sollicitudin. Vestibulum eget volutpat arcu, et posuere est. Duis in ipsum vel libero pellentesque pharetra. Nam elementum posuere turpis nec rhoncus. Sed tempor semper blandit. Fusce dapibus mauris quis libero vestibulum placerat. Vivamus tincidunt eros vel velit ornare, quis consequat eros ultrices. Proin in massa vel augue facilisis efficitur. Nam a pharetra lectus.";
+@*            var text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam semper sapien ac dolor imperdiet pharetra. Sed ultricies purus at massa facilisis sollicitudin. Vestibulum eget volutpat arcu, et posuere est. Duis in ipsum vel libero pellentesque pharetra. Nam elementum posuere turpis nec rhoncus. Sed tempor semper blandit. Fusce dapibus mauris quis libero vestibulum placerat. Vivamus tincidunt eros vel velit ornare, quis consequat eros ultrices. Proin in massa vel augue facilisis efficitur. Nam a pharetra lectus.";
 
             var lines = doc.splitTextToSize(text, 200);
 
-            doc.text(0, 50, lines);
+            doc.text(0, 50, lines);*@
             doc.save($("div.BookTitle").text().trim() + '.pdf');
 
 
