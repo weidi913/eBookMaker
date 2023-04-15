@@ -66,8 +66,8 @@ namespace FYP1.Pages.Chapters
                     throw;
                 }
             }
-
-            return RedirectToPage("./Index");
+            return RedirectToPage("../Details", new { id = Chapter.bookID });
+            return RedirectToAction("OnGetAsync", new { id = Chapter.bookID }); ;
         }
 
         private bool ChapterExists(int id)

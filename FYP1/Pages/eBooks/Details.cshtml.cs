@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using FYP1.Data;
 using FYP1.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Net;
 
 namespace FYP1.Pages.eBooks
 {
@@ -58,7 +59,8 @@ namespace FYP1.Pages.eBooks
             if (_context.Chapter != null)
             {
                 Chapter = await _context.Chapter
-                .Include(c => c.book).ToListAsync();
+                .Include(c => c.book)
+                .Where(c=>c.book.bookID == eBook.bookID).ToListAsync();
             }
 
             if (_context.Page != null)
@@ -147,7 +149,27 @@ namespace FYP1.Pages.eBooks
             await _context.SaveChangesAsync();
             return RedirectToAction("OnGetAsync", new { id = ChapterAdd.bookID }); ;
         }
+        public async Task<IActionResult> OnPostDeleteChapterAsync(int? id, int bookid)
+        {
+            
+            if (id == null || _context.Chapter == null)
+            {
+                return NotFound();
+            }
+            var chapter = await _context.Chapter.FindAsync(id);
 
+
+            if (chapter != null)
+            {
+                /*                Chapter = chapter;
+                                _context.Chapter.Remove(Chapter);*/
+
+                _context.Chapter.Remove(chapter);
+                await _context.SaveChangesAsync();
+            }
+
+            return RedirectToAction("OnGetAsync", new { id = bookid }); ;
+        }
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostBookPageAsync()
         {
@@ -158,10 +180,26 @@ namespace FYP1.Pages.eBooks
             _context.Page.Add(BookPageAdd);
             await _context.SaveChangesAsync();
 
-            return RedirectToPage("./Index");
+            return RedirectToAction("OnGetAsync", new { id = eBook.bookID });
         }
 
+        public async Task<IActionResult> OnPostDeleteBookPageAsync(int? id , int? bookID)
+        {
+            if (id == null || _context.Page == null)
+            {
+                return NotFound();
+            }
+            var bookpage = await _context.Page.FindAsync(id);
 
+            if (bookpage != null)
+            {
+               /* BookPage = bookpage;*/
+                _context.Page.Remove(bookpage);
+                await _context.SaveChangesAsync();
+            }
+
+            return RedirectToAction("OnGetAsync", new { id = bookID });
+        }
 
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
@@ -174,8 +212,62 @@ namespace FYP1.Pages.eBooks
 
             _context.Element.Add(ElementAdd);
             await _context.SaveChangesAsync();
-            return new JsonResult(new { success = true });
+            return RedirectToAction("OnGetAsync", new { id = eBook.bookID });
 /*            return RedirectToPage("./Index");*//**/
+        }
+
+        [BindProperty]
+        public String elementEditText { get; set; }="";
+        [BindProperty]
+        public int elementEditID { get; set; } = -1;
+
+        public async Task<IActionResult> OnPostEditElementAsync()
+        {
+/*            if (!ModelState.IsValid)
+            {
+                return Page();
+            }*/
+
+            Element elementEdit = await _context.Element.FirstOrDefaultAsync(m => m.elementID == elementEditID);
+            elementEdit.text = elementEditText;
+            _context.Attach(elementEdit).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+/*                if (!ElementExists(Element.elementID))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }*/
+            }
+
+            return RedirectToAction("OnGetAsync", new { id = eBook.bookID });
+        }
+
+        public async Task<IActionResult> OnPostDeleteElementAsync(/*int? id*/)
+        {
+/*            if (id == null || _context.Element == null)
+            {
+                return NotFound();
+            }*/
+            var element = await _context.Element.FindAsync(elementEditID);
+
+            if (element != null)
+            {
+                /*                Element = element;
+                                _context.Element.Remove(Element);*/
+
+                _context.Element.Remove(element);
+                await _context.SaveChangesAsync();
+            }
+            return RedirectToAction("OnGetAsync", new { id = eBook.bookID });
         }
 
         //public async Task<IActionResult> OnPostAsync()

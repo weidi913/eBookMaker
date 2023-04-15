@@ -1,16 +1,244 @@
 ﻿@page
 @model FYP1.Pages.eBooks.DetailsModel
 
+
 @{
     ViewData["Title"] = "Details";
 }
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
+    .top_bar {
+        position: fixed;
+        left: 0vw !important;
+        top: 0vh !important;
+        width: 100vw !important;
+        height: 10vh !important;
+        display: flex;
+        z-index: 999;
+    }
+
+    .top_bar_menu_button {
+        background: transparent;
+        opacity: 1;
+        height: 90%;
+        width: auto;
+        cursor: pointer;
+        padding: 5px;
+        background-image: url('~/images/menu_button.png/');
+    }
+
+    .top_bar_menu_button_container:hover {
+        background: #F5F5F5;
+    }
+
+    .logo {
+        background-image: url('~/images/menu_button.png/');
+        padding-left: 1vw;
+        padding-right: 1vw;
+    }
+
+        .logo * {
+            height: 100%;
+            width: auto;
+        }
+
+    .top_bar_title {
+        font-size: 1.5em;
+        font-weight: 500;
+        color: #616161;
+        padding-left: 1vw;
+        padding-right: 1vw;
+        text-align: left;
+        text-transform: uppercase;
+        display: flex;
+        width: auto;
+        align-items: center;
+        height: 100%;
+    }
+
+    .top_bar_create {
+        width: auto;
+        height: 100%;
+        margin-left: auto;
+        align-items: center;
+        display: flex;
+        padding-right: 1vw;
+    }
+
+    .top_bar_image * {
+        height: 100%;
+        width: auto;
+        padding-left: 1vw;
+        padding-right: 1vw;
+        align-items: center;
+        display: flex;
+    }
+
+    .top_bar_information {
+        font-size: 0.75em;
+        color: #616161;
+        padding-left: 1vw;
+        padding-right: 1vw;
+        text-align: left;
+        width: auto;
+        align-items: center;
+        height: auto;
+        margin-top: auto;
+        margin-bottom: auto;
+    }
+
+    .left_nav_bar {
+        position: fixed;
+        left: 0vw;
+        top: 10vh;
+        width: 5vw;
+        height: 90vh;
+        background-color: #28282B;
+        /*        box-shadow: 0 0 5px 10px #FBFBFB;*/
+        color: white;
+        padding: 10px;
+        font-size: 0.75em;
+        z-index: 888;
+    }
+
+    .left_nav_bar_selected {
+        background-color: #36454F;
+        color: #fff;
+        font-weight: 600;
+    }
+
+    .left_nav_bar_item {
+        display: block;
+        align-items: center;
+        /*            box-sizing: content-box;*/
+        height: auto;
+        width: 100%;
+        box-sizing: border-box;
+        padding-bottom: 5px;
+    }
+
+    .left_nav_bar_item_image {
+        padding: 12px;
+        padding-bottom: 0px;
+        height: auto;
+        width: 100%;
+        margin: auto;
+    }
+
+        .left_nav_bar_item_image img {
+            height: auto%;
+            width: 100%;
+        }
+
+    .left_nav_bar_item_desc {
+        height: auto;
+        font-weight: 500;
+        font-size: 0.75em;
+        width: auto;
+        text-align: center;
+    }
+    /*    .left_nav_bar_item img {
+                            height: 100% !important;
+                            /*box-sizing:content-box;
+                            padding: 2px;
+                            padding-right:5px;
+                            height: 100%;
+                            width: auto;
+                            object-fit: contain;
+                        }*/
+
+
+    .left_nav_bar_item:hover {
+        opacity: 0.7;
+        color: #fff;
+        cursor: pointer;
+        font-weight: 500;
+    }
+
+    .left_nav_bar_bottom {
+        position: absolute; /* position the footer at the bottom of the parent container */
+        left: 0;
+        padding: 10px;
+        bottom: 0; /* align the footer to the bottom */
+        width: 100%; /* set the width to 100% so it spans the entire container */
+    }
+
+    .eBook_content {
+        background: #c5c6d0;
+        /*text-align: center;*/
+        position: fixed;
+        left: 5vw;
+        top: 10vh;
+        width: 95vw;
+        overflow: auto !important;
+        height: 90vh;
+    }
+
+    .chapter_container {
+        height: auto;
+        margin: auto;
+        box-sizing: border-box;
+        display: flex;
+    }
+
+    .chapter_title {
+        padding: 10px;
+        font-weight: 500;
+        padding: 10px;
+        position: relative;
+        font-size: 1.75em;
+        height: auto;
+    }
+
+    .chapter_action {
+        width: auto;
+        height: 100%;
+        margin-left: auto;
+        margin-top: auto;
+        margin-bottom: auto;
+    }
+
+    .page_info_container {
+        height: auto;
+        margin: auto;
+        box-sizing: border-box;
+        display: flex;
+    }
+
+    .page_info_title {
+        font-weight: 500;
+        padding: 5px;
+        position: relative;
+        font-size: 1em;
+        height: auto;
+    }
+
+    .page_info_action {
+        width: auto;
+        height: 100%;
+        margin-left: auto;
+        margin-top: auto;
+        margin-bottom: auto;
+    }
+
+        .page_info_action img {
+            width: auto;
+            height: 100%;
+            height: 24px;
+            margin: auto;
+            padding: 2px;
+        }
+
+    div:focus {
+        border: 1px dashed blue;
+        outline: none;
+    }
+
     .pageContainer {
         position: relative;
         /*        top: 10%;
-            left: 10%;*/
+                                left: 10%;*/
         background-color: lightblue;
         color: black !important;
         opacity: 0.9;
@@ -32,12 +260,10 @@
         margin: auto;
         padding: 10px;
         border: 3px solid black;
-        height: 500px;
-        width: 400px;
         color: black;
         background-color: white !important;
         position: relative;
-        overflow:hidden;
+        overflow: hidden;
     }
 
     .container2 {
@@ -54,260 +280,320 @@
         padding: 0;
     }
 
-</style>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-<h1>Details</h1>
-
-<div class="container">
-    <h4>eBook</h4>
-
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.eBook.title)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.eBook.title)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.eBook.type)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.eBook.type)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.eBook.description)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.eBook.description)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.eBook.height)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.eBook.height)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.eBook.width)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.eBook.width)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.eBook.background)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.eBook.background)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.eBook.edition)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.eBook.edition)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.eBook.bookStatus)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.eBook.bookStatus)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.eBook.dateUpdated)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.eBook.dateUpdated)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.eBook.authorID)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.eBook.authorID)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-page="./Edit" asp-route-id="@Model.eBook?.bookID">Edit</a> |
-    <a asp-page="./Index">Back to List</a>
-</div>
-
-
-<p>
-    Chapter Index
-</p>
-<div id="export">
-    Export
-</div>
-
-<div class="pageContainer container">
-
-    @foreach (var item in Model.Chapter)
-    {
-        <div id=@item.chapterID class="chapter">
-            <div class="row border border-secondary">
-                <div class="col-lg-1 border border-secondary">
-                    @Html.DisplayNameFor(model => model.Chapter[0].chapterName)
-                </div>
-                <div class="col-lg-4 border border-secondary">
-                    @Html.DisplayFor(modelItem => item.chapterName)
-                </div>
-                <div class="col-lg-1 border border-secondary">
-                    @Html.DisplayNameFor(model => model.Chapter[0].chapterNo)
-                </div>
-                <div class="col-lg-4 border border-secondary">
-                    @Html.DisplayFor(modelItem => item.chapterNo)
-                </div>
-                <div class="col-lg-1 border border-secondary"><a asp-page="./Edit" asp-route-id="@item.chapterID">Edit</a></div>
-                <div class="col-lg-1 border border-secondary"><a asp-page="./Delete" asp-route-id="@item.chapterID">Delete</a></div>
-            </div>
-
-            @foreach (var item2 in Model.BookPage)
-            {
-                if (item2.chapterID != item.chapterID)
-                    continue;
-                <div class="BookPage row border border-primary">
-                    <div class="col-lg-2">
-                        @(Html.DisplayNameFor(model => model.BookPage[0].pageNo)) @(Html.DisplayFor(modelItem => item2.pageNo))
-                    </div>
-                    @*                <div class="col-lg-1">
-            @(Html.DisplayNameFor(model => model.BookPage[0].pageLock)) @(Html.DisplayFor(modelItem => item2.pageLock))
-            </div>*@
-                    <div class="col-lg-9"></div>
-                    <div class="col-lg-1"><a asp-page="./Delete" asp-route-id="@item2.bookPageID">Delete</a></div>
-                </div>
-                <div id=@item2.bookPageID class="page BookPage">
-                @foreach (var item3 in Model.Element)
-                {
-                        <div id="@item3.elementID" class="@item3.elementType element" style="@item3.elementStyle">@item3.text</div>
-@*                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item3.elementType)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item3.elementLock)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item3.elementStyle)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item3.z_index)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item3.text)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item3.BookPage.bookPageID)
-                        </td>
-                        <td>
-                            <a asp-page="./Edit" asp-route-id="@item3.elementID">Edit</a> |
-                            <a asp-page="./Details" asp-route-id="@item3.elementID">Details</a> |
-                            <a asp-page="./Delete" asp-route-id="@item3.elementID">Delete</a>
-                        </td>
-                    </tr>*@
-
-    
-                }
-                </div>
-            }
-            <form method="post">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <div class="row">
-                    <div class="form-group col-lg-3">
-                        <label asp-for="BookPageAdd.pageNo" value="1" class="control-label"></label>
-                        <input asp-for="BookPageAdd.pageNo" class="form-control" />
-                        <span asp-validation-for="BookPageAdd.pageNo" class="text-danger"></span>
-                    </div>
-                    <div class="form-group form-check col-lg-3">
-                        <label hidden class="form-check-label">
-                            <input hidden class="form-check-input" asp-for="BookPageAdd.pageLock" /> @Html.DisplayNameFor(model => model.BookPageAdd.pageLock)
-                        </label>
-                    </div>
-                    <div class="form-group col-lg-5">
-                        <label hidden asp-for="BookPageAdd.chapterID" class="control-label"></label>
-                        <input hidden value="@item.chapterID" asp-for="BookPageAdd.chapterID" class="form-control" asp-items="ViewBag.chapterID" />
-                    </div>
-
-                    <div class="form-group col-lg-1">
-                        <input type="submit" asp-page-handler="BookPage" value="Create" class="btn btn-primary" />
-                    </div>
-                </div>
-            </form>
-        </div>
+    a {
+        color: black !important;
+        text-decoration: none !important;
     }
 
-    <h1>Create</h1>
-    <h4>Chapter</h4>
-    <hr />
-    <div class="row">
-        <div class="col-md-4">
-            <form method="post">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <div class="form-group">
-                    <label asp-for="ChapterAdd.chapterName" class="control-label"></label>
-                    <input asp-for="ChapterAdd.chapterName" class="form-control" />
-                    <span asp-validation-for="ChapterAdd.chapterName" class="text-danger"></span>
-                </div>
+        a:hover {
+            text-decoration: none;
+            color: cornflowerblue !important;
+        }
+         div.element {
+     white-space: pre-line; /* collapse WS, preserve LB */
+   }
+</style>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
-                <div class="form-group">
-                    <label asp-for="ChapterAdd.chapterNo" class="control-label"></label>
-                    <input asp-for="ChapterAdd.chapterNo" class="form-control" />
-                    <span asp-validation-for="ChapterAdd.chapterNo" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label hidden asp-for="ChapterAdd.bookID" class="control-label"></label>
-                    <select hidden asp-for="ChapterAdd.bookID" class="form-control" asp-items="ViewBag.bookID"></select>
-                </div>
-                <div class="form-group">
-                    <input type="submit" asp-page-handler="Chapter" value="Create" class="btn btn-primary" />
-                </div>
-            </form>
-        </div>
+<div class="top_bar shadow-sm p-3 mb-5 bg-white rounded">
+    <div class="top_bar_menu_button_container">
+        <img class="top_bar_menu_button" src="~/images/menu_button.png" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Toggle the side menu" />
     </div>
-    <div id="elementButtonList" style="left:0%;top:20%;width:100px; position:fixed; background-color:lemonchiffon; padding:15px">
-        <form method="post">
-            C:\Degree Y2S3\FYP1\Coding\FYP1\FYP1\wwwroot\images\textIcon.png
-            <div id="text" style="background:url('/images/icon_text.png');color:white ;width:50px;height:50px;
-                background-size:100%  100%;color:white"></div>
-            <div id="chart" style="background:url('/images/icon_chart.png');color:white ;width:50px;height:50px;
-                background-size:100%  100%;color:white">
+    <div class="logo"><img src="~/images/logo.png" /></div>
+    <div class="top_bar_title">
+        <a asp-page="./Edit" asp-route-id="@Model.eBook?.bookID">File</a>
+    </div>
+    <div class="top_bar_title BookTitle">
+        @Html.DisplayFor(model => model.eBook.title)
+    </div>
+    <div class="top_bar_create">
+        @*<a asp-page="Create">*@
+        <button type="button" class="btn btn-dark export">Export</button>
+        @*</a>*@
+    </div>
+    <div class="top_bar_image"><img class="rounded-circle" src="~/images/default_people_icon.png" /></div>
+</div>
+
+
+<div id="elementButtonList" style="left:0%;top:20%;width:100px; position:fixed; background-color:lemonchiffon; padding:15px">
+    <form method="post">
+    </form>
+</div>
+@*    style="background:url('/images/icon_text.png')
+*@
+@*        <div id="text" class="left_nav_bar_item elementCanAdd" ;color:white;width:50px;height:50px;
+        background-size:100%  100%;color:white"></div>*@
+@*        <div id="chart" class="elementCanAdd" style="background:url('/images/icon_chart.png');color:white ;width:50px;height:50px;
+        background-size:100%  100%;color:white">
+        </div>*@
+<div id="elementButtonList" class="left_nav_bar">
+    <form method="post">
+        <div id="text" class="left_nav_bar_item left_nav_bar_selected elementCanAdd">
+            <div class="left_nav_bar_item_image">
+                <img src="~/images/icon_text.png" />
             </div>
+            <div class="left_nav_bar_item_desc">
+                Text
+            </div>
+        </div>
+        <div style="padding:2px"></div>
+        <div id="shape" class="left_nav_bar_item elementCanAdd">
+            <div class="left_nav_bar_item_image">
+                <img src="~/images/icon_shape.png" />
+            </div>
+            <div class="left_nav_bar_item_desc">
+                Shape
+            </div>
+        </div>
+        <div style="padding:2px"></div>
+        <div id="image" class="left_nav_bar_item elementCanAdd">
+            <div class="left_nav_bar_item_image">
+                <img src="~/images/icon_image.png" />
+            </div>
+            <div class="left_nav_bar_item_desc">
+                Image
+            </div>
+        </div>
+        <div style="padding:2px"></div>
+        <div id="chart" class="left_nav_bar_item elementCanAdd">
+            <div class="left_nav_bar_item_image">
+                <img src="~/images/icon_chart.png" />
+            </div>
+            <div class="left_nav_bar_item_desc">
+                Chart
+            </div>
+        </div>
+        <div style="margin:auto"></div>
+        <div id="back" class="left_nav_bar_item left_nav_bar_bottom">
+            <a asp-page="./Index">
+                <div class="left_nav_bar_item_image">
+                    <img src="~/images/icon_back.png" />
+                </div>
+                <div style="text-decoration:none;color:white" class="left_nav_bar_item_desc">
+                    Back
+                </div>
+            </a>
+        </div>
+
+
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+            <label hidden asp-for="ElementAdd.elementType" class="control-label"></label>
+            <input hidden value="dummy" asp-for="ElementAdd.elementType" class="form-control type" />
+            <span hidden asp-validation-for="ElementAdd.elementType" class="text-danger"></span>
+        </div>
+        <div class="form-group form-check">
+            <label hidden class="form-check-label">
+                <input hidden class="form-check-input" asp-for="ElementAdd.elementLock" /> @Html.DisplayNameFor(model => model.ElementAdd.elementLock)
+            </label>
+        </div>
+        <div class="form-group">
+            <label asp-for="ElementAdd.elementStyle" hidden class="control-label"></label>
+            <input asp-for="ElementAdd.elementStyle" value="min-height:10px;max-height:auto;width:auto;background-color:coral-white;font-size:12px" hidden class="form-control" />
+            <span asp-validation-for="ElementAdd.elementStyle" hidden class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="ElementAdd.z_index" hidden class="control-label"></label>
+            <input asp-for="ElementAdd.z_index" value="1" hidden class="form-control" />
+            <span asp-validation-for="ElementAdd.z_index" hidden class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="ElementAdd.text" hidden class="control-label"></label>
+            <input asp-for="ElementAdd.text" hidden value="Delete and Insert Text Here" class="form-control" />
+            <span asp-validation-for="ElementAdd.text" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="ElementAdd.bookPageID" hidden class="control-label"></label>
+            <input asp-for="ElementAdd.bookPageID" hidden required class="form-control bookPageID" asp-items="ViewBag.bookPageID"></input>
+        </div>
+        <input asp-for="eBook.bookID" hidden value="@Model.eBook.bookID" />
+        <div class="form-group">
+            <input hidden id="elementButton" type="submit" asp-page-handler="Element" value="Create" class="btn btn-primary" />
+        </div>
+    </form>
+</div>
+<div class="eBook_content">
+    <div style="height:100%;width:100" class="scaleHere">
+    @*<div class="pageContainer container">*@
+    @{
+        int noChapter = 1;
+    }
+    @foreach (var item in Model.Chapter)
+    {
+        <div style="width:@Html.DisplayFor(model => model.eBook.width)mm;" id=@item.chapterID class="chapter chapter_container">
+            <div class="chapter_title">
+                Chapter @noChapter @item.chapterName
+            </div>
+
+            <div class="chapter_action">
+                <form method="post">
+                <div class=" btn btn-light"><a asp-page="./Chapters/Edit" asp-route-id="@item.chapterID">Edit</a></div>
+                    <button type="submit" class=" btn btn-light" asp-page-handler="DeleteChapter" 
+                    asp-route-id="@item.chapterID" asp-route-bookid="@Model.eBook.bookID">Delete</button>
+                    </form>
+            </div>
+        </div>
+        noChapter++;
+
+        int pageNumber = 1;
+
+        @foreach (var item2 in Model.BookPage)
+        {
+            if (item2.chapterID != item.chapterID)
+                continue;
+            <div style="width:@Html.DisplayFor(model => model.eBook.width)mm;" class="page_info_container">
+                <div class="page_info_title">
+                    Page @pageNumber
+                </div>
+                <div class="page_info_action" style="display:flex">
+                    @*Suppose activate the lock function after click*@
+                    <img src="~/images/icon_lock.png" />
+                    <form method="post">                    
+                        <button style="height:auto;width:auto;
+border:0px;outline:none;background:transparent" type="submit" asp-page-handler="DeleteBookPage" asp-route-id="@item2.bookPageID" asp-route-bookid="@Model.eBook.bookID">
+                        <img src="~/images/icon_delete.png" />
+                        </button>
+                    </form>
+
+                </div>
+            </div>
+            pageNumber++;
+
+            <div id=@item2.bookPageID style="width:@Html.DisplayFor(model => model.eBook.width)mm; height:@Html.DisplayFor(model => model.eBook.height)mm;" class="page BookPage">
+
+                @foreach (var item3 in Model.Element)
+                {
+                    if (item3.bookPageID != item2.bookPageID)
+                        continue;
+                        @*Current*@
+                    @*require to filter according to the type*@
+@*                    if (item3.elementType == "chart")
+                    {*@
+                        <div tabindex="0" id="@item3.elementID" class="@item3.elementType element"
+             style="@item3.elementStyle;position:absolute;box-sizing:border-box;border: solid 1px black;">
+             @item3.text
+                            
+                        </div>
+
+@*                    }
+                    else if (item3.elementType == "text")
+                    {
+                        <div tabindex="0" id="@item3.elementID" class="@item3.elementType element"
+             style="border: solid 1px yellow; box-sizing:content-box;@item3.elementStyle">
+                            @item3.text
+                        </div>
+
+                    }
+                    else if (item3.elementType == "image")
+                    {
+                        <div tabindex="0" id="@item3.elementID" class="@item3.elementType element"
+             style="border: solid 1px blue;box-sizing:content-box;@item3.elementStyle">
+                            @item3.text
+                        </div>
+
+                    }
+                    else if (item3.elementType == "shape")
+                    {
+                        <div tabindex="0" id="@item3.elementID" class="@item3.elementType element"
+             style="border: solid 1px red;box-sizing:content-box;@item3.elementStyle">
+                            @item3.text
+                        </div>
+
+                    }
+                    else
+                    {
+                        <div tabindex="0" id="@item3.elementID" class="@item3.elementType element"
+             style="border: solid 10px black;box-sizing:content-box;@item3.elementStyle">
+                            @item3.text
+                        </div>
+
+*@
+                    @*}*@
+                    @*
+        <td>
+        <a asp-page="./Edit" asp-route-id="@item3.elementID">Edit</a> |
+        <a asp-page="./Details" asp-route-id="@item3.elementID">Details</a> |
+        <a asp-page="./Delete" asp-route-id="@item3.elementID">Delete</a>
+        </td>
+        </tr>*@
+                }
+            </div>
+        }
+        //Book Page Form
+        <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="ElementAdd.elementType" class="control-label"></label>
-                <input asp-for="ElementAdd.elementType" class="form-control type" />
-                <span asp-validation-for="ElementAdd.elementType" class="text-danger"></span>
+                <label asp-for="BookPageAdd.pageNo" hidden class="control-label"></label>
+                <input asp-for="BookPageAdd.pageNo" hidden value="@pageNumber" readonly class="form-control" />
+                <span asp-validation-for="BookPageAdd.pageNo" hidden class="text-danger"></span>
             </div>
             <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="ElementAdd.elementLock" /> @Html.DisplayNameFor(model => model.ElementAdd.elementLock)
+                <label hidden class="form-check-label">
+                    <input hidden class="form-check-input" asp-for="BookPageAdd.pageLock" /> @Html.DisplayNameFor(model => model.BookPageAdd.pageLock)
                 </label>
             </div>
             <div class="form-group">
-                <label asp-for="ElementAdd.elementStyle" class="control-label"></label>
-                <input asp-for="ElementAdd.elementStyle" class="form-control" />
-                <span asp-validation-for="ElementAdd.elementStyle" class="text-danger"></span>
+                <label hidden asp-for="BookPageAdd.chapterID" class="control-label"></label>
+                <input hidden value="@item.chapterID" asp-for="BookPageAdd.chapterID" class="form-control" asp-items="ViewBag.chapterID" />
             </div>
-            <div class="form-group">
-                <label asp-for="ElementAdd.z_index" class="control-label"></label>
-                <input asp-for="ElementAdd.z_index" class="form-control" />
-                <span asp-validation-for="ElementAdd.z_index" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ElementAdd.text" class="control-label"></label>
-                <input asp-for="ElementAdd.text" class="form-control" />
-                <span asp-validation-for="ElementAdd.text" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ElementAdd.bookPageID" class="control-label"></label>
-                <input asp-for="ElementAdd.bookPageID" class="form-control bookPageID" asp-items="ViewBag.bookPageID"></input>
-            </div>
-            <div class="form-group">
-                <input type="submit" asp-page-handler="Element" value="Create" class="btn btn-primary" />
-            </div>
+            <input asp-for="eBook.bookID" hidden value="@Model.eBook.bookID" />
+            @*                <div class="form-group">
+        <input type="submit" asp-page-handler="BookPage" value="Create" class="btn btn-primary" />
+        <button type="submit" style="background:transparent;border:0px" asp-page-handler="BookPage"><img src=~/images/icon_add_page.png /></button>
+        </div>*@
+            <div style="margin-bottom:5px"></div>
+            <button type="submit" class="form-control" asp-page-handler="BookPage"
+                style="color:#808588; font-size:1.25em;margin:auto;height:auto;padding:10px;width:@Html.DisplayFor(model => model.eBook.width)mm">
+                +Add Page
+            </button>
         </form>
-    </div>
+        @*            </div>*@
+    }
+
+    @*//Book Chapter Form*@
+    <form method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div style="width:@Html.DisplayFor(model => model.eBook.width)mm;" class="chapter chapter_container">
+            <div class="chapter_title">
+                Chapter @noChapter
+                <input required asp-for="ChapterAdd.chapterName" placeholder="Chapter Name"
+                       class="chapter_name_input" style="color:#808588;outline:none;text-decoration:underline;border:none;background:transparent;width:auto%;height:100%" />
+            </div>
+            <div class="form-group">
+                <label hidden asp-for="ChapterAdd.chapterNo" class="control-label"></label>
+                <input  hidden asp-for="ChapterAdd.chapterNo" readonly value="@noChapter" class="form-control" />
+                <span asp-validation-for="ChapterAdd.chapterNo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label hidden asp-for="ChapterAdd.bookID" class="control-label"></label>
+                <input hidden asp-for="ChapterAdd.bookID" value="@Model.eBook.bookID" />
+                @*            <select hidden asp-for="ChapterAdd.bookID" class="form-control" asp-items="ViewBag.bookID"></select>*@
+            </div>
+
+            <div class="chapter_action">
+                <button type="submit" asp-page-handler="Chapter" class="btn btn-light">
+                    @*<img src="~/images/icon_add.png" />*@
+                    Create
+                </button>
+            </div>
+        </div>
+
+        @*                <div class="form-group">
+        <label asp-for="ChapterAdd.chapterName" class="control-label"></label>
+        <input asp-for="ChapterAdd.chapterName" class="form-control" />
+        <span asp-validation-for="ChapterAdd.chapterName" class="text-danger"></span>
+        </div>*@
+
+@*        <div class="form-group">
+            <input type="submit" asp-page-handler="Chapter" value="Create" class="btn btn-primary" />
+        </div>*@
+    </form>
+
+    <div style="margin-bottom:50px"></div>
+
 
     @*must use container*@
-    <div style="background:yellow;color:red;position:fixed;left:0%;bottom:10%;width:100px;height:50px">
+@*    <div style="background:yellow;color:red;position:fixed;left:0%;bottom:10%;width:100px;height:50px">
         <div class="row">
             <div id="chapterSection" style="width:auto;height:auto">
                 123
@@ -315,21 +601,111 @@
             <div id="pageSection" style="width:auto;height:auto">
             </div>
         </div>
+
+    </div>*@
+    @*</div>*@
+
+    </div>
+    <div class="resize form-control" style="display:flex; width:auto;position:fixed;bottom:5%; left:8%">
+        Scaling
+        <input class="resizevalue" min="25" max="400" value="100" step="25" type="range">
+        <div class="resizevalue">100%</div>
+    </div>
+
+    <div class="style_bar" style="width:20vw;top:0;margin-top:10vh;left:80vw ;height:90vw;overflow-y:auto !important;background:#28282B; position:fixed; z-index:900">
+        <div style="height:25px;width:25px;padding:10px;box-sizing:content-box">          
+            <img class="closeStyle" style="cursor:pointer; height:100%;width:100%" src="~/images/icon_cancel.png"/>
+        </div>
+        <form method="post">
+        <div class="row" style="margin:auto ;padding:10px;height:75vh;width:100%;overflow-y:auto !important;color:white">
+            <div class="col-lg-4">ID: </div>
+            <input asp-for="elementEditID" class="edit_elementID" style="height:auto" readonly class="col-lg-8"></input>
+@*            <div class="col-lg-4">Type: </div>
+            <input class="edit_type" style="height:auto" readonly class="col-lg-8"></input>
+            <div class="col-lg-4">Lock: </div>
+            <input class="edit_lock" style="height:auto" readonly class="col-lg-8" value="false"></input>
+*@            <div class="col-lg-4">Text: </div>
+            <textarea asp-for="elementEditText" class="edit_text" style="word-break: break-all;height:500px;width:100%" class="col-lg-8"></textarea>
+@*            <div class="col-lg-4">Style: </div>
+            <textarea class="edit_style" style="word-break: break-all;height:500px;width:100%" readonly class="col-lg-8"></textarea>
+            <div class="col-lg-4">z-index: </div>
+            <input class="edit_z_index" style="height:auto" readonly class="col-lg-8" value="1"></input>
+            <div class="col-lg-4">Page: </div>
+            <input class="edit_pageID" style="height:auto" readonly class="col-lg-8"></input>
+*@        </div>
+        <div style="display:flex;margin:auto;height:auto;width:100%;padding:10px">
+                <input asp-for="eBook.bookID" hidden value="@Model.eBook.bookID" />
+
+            <button asp-page-handler="EditElement" style="margin:auto;padding:5px" class="btn btn-light"> Edit </button>
+             <button asp-page-handler="DeleteElement" style="margin:auto;padding:5px" class="btn btn-danger" >Delete</button>
+        </div>
+        </form>
     </div>
 </div>
+@*jspdf*@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" integrity="sha512-qZvrmS2ekKPF2mSznTQsxqPgnpkI4DNTlrdUmTzrDgektczlKNRRhy5X5AAOnx5S09ydFYWWNSfcEqDTTHgtNA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 <script type="text/javascript">
 
     $(document).ready(function () {
-        console.log("123");
+        $("img.closeStyle").on("click",function(){
+            $("div.style_bar").css("display","none");
+        })
+
+        $("button.export").on("click",function(){
+            console.log("export activated");
+            window.jsPDF = window.jspdf.jsPDF;
+
+
+            var doc = new jsPDF();
+            doc.setFontSize(12);
+            doc.setFont("helvetica", "bold");
+            const totalPage = document.querySelectorAll("div.BookPage");
+            const totalElement = document.querySelectorAll("div.element");
+
+@*            for (int i = 1; i <= totalPage.length; i++){
+                console.log(i)；
+                            doc.addPage();
+                                        doc.text(20, 20, 'Visit CodexWorld.com');
+            }*@
+        for (var i = 1; i <= totalPage.length; i++) {
+                if (i != 1) doc.addPage();
+                console.log(i);
+                @*Current*@
+                for (var j = 0; j < totalElement.length; j++) {
+                    const element = $(totalElement[j]);
+                    console.log("Offset left"+element.offset().left);
+                    console.log("Offset top"+element.offset().top);
+                    console.log("left"+element.position().left);
+                    console.log("top"+element.position().top);
+                    doc.text(element.position().left * 0.2645833333, element.position().top * 0.2645833333, element.text());
+                }
+            };
+@*            doc.text(20, 20, 'Hello world!');
+            doc.text(20, 30, 'This is client-side Javascript to generate a PDF.');
+*@
+
+
+           @* // Save the PDF*@
+
+            doc.save($("div.BookTitle").text().trim()+'.pdf');
+
+
+        })
+@*        console.log("123");
         const nodeList = document.querySelectorAll("div.page");
         console.log(nodeList);
         for (let i = 0; i < nodeList.length; i++) {
             console.log("123");
             nodeList[i].style.height = @Html.DisplayFor(model => model.eBook.height) +"mm";
             nodeList[i].style.width = @Html.DisplayFor(model => model.eBook.width) +"mm";
-        }
+        }*@
 
+            $("input.resizevalue").change(function () {
+                $("div.scaleHere").css("zoom", (this).value + "%");
+                $("div.resize").css("zoom", 100 + "%");
+                $(".resizevalue").html((this).value + "%");
+            })
 
         $("div.chapter").on("mouseover", function () {
             $("div#chapterSection").html("ChapterID " + $(this).attr("id"));
@@ -342,27 +718,179 @@
 
         })
 
-        $("div#chart").on("click", function () {
-            $("input.type").val($(this).attr("id"));
-            console.log("chart clicked");
+        $("div.elementCanAdd").on("click", function () {
+            $("input#elementButton").click();
+            console.log("123");
         })
+    })
 
-        $("div#text").on("click", function () {
-            $("input.type").val($(this).attr("id"));
-            console.log("text clicked");
-        })
-        
+    $("div#chart").on("click", function () {
+        $("input.type").val($(this).attr("id"));
+        console.log("chart clicked");
+    })
 
-        $("div div.element").mouseover(function(){
-            $(this).attr('contenteditable', 'true');
-            console.log("mouseover");
-        })
-         $("div div.element").mouseout(function(){
-            $(this).attr('contenteditable','false');
-            console.log("mouseout");
-        })
+    $("div#text").on("click", function () {
+        $("input.type").val($(this).attr("id"));
+        console.log("text clicked");
+    })
+
+    $("div#image").on("click", function () {
+        $("input.type").val($(this).attr("id"));
+        console.log("text clicked");
+    })
+
+    $("div#shape").on("click", function () {
+        $("input.type").val($(this).attr("id"));
+        console.log("text clicked");
+    })
+
+    
+
+
+    @*        $("div.element").on("click",function(){
+        document.getElementById($(this).attr("id")).focus();
+        console.log("tsting");
+        })*@
+
+    @*        $("div.element").on("click", function() {
+        var id = $(this).attr("id");
+        if (id) {
+        setTimeout(function () {
+        document.getElementById(id).focus();
+        console.log("testing");
+        }, 0);
+
+
+        }
+        else
+        console.log("fail");
+        });*@
+
+    @*document.querySelector("div.element").focus();*@
+@*            < div class="row" style = "margin:auto ;padding:10px;height:75vh;width:100%;overflow-y:auto !important;color:white" >
+            <div class="col-lg-4" > ID: </div>
+                < input class="edit_elementID" style = "height:auto" readonly class="col-lg-8" > </input>
+                    < div class="col-lg-4" > Type: </div>
+                        < input class="edit_type" style = "height:auto" readonly class="col-lg-8" > </input>
+                            < div class="col-lg-4" > Lock: </div>
+                                < input class="edit_lock" style = "height:auto" readonly class="col-lg-8" value = "false" > </input>
+                                    < div class="col-lg-4" > Text: </div>
+                                        < input class="edit_text" style = "height:500px"class="col-lg-8" > </input>
+                                            < div class="col-lg-4" > Style: </div>
+                                                < input class="edit_style" style = "height:500px" readonly class="col-lg-8" > </input>
+                                                    < div class="col-lg-4" > z - index: </div>
+                                                        < input class="edit_z_index" style = "height:auto" readonly class="col-lg-8" value = "1" > </input>
+                                                            < div class="col-lg-4" > Page: </div>
+                                                                < input class="edit_pageID" style = "height:auto" readonly class="col-lg-8" > </input>
+                                                                    < /div>
+*@
+        $('div.element').on('focus', function () {
+            console.log('The div has received focus');
+            $("input.edit_elementID").val($(this).attr("id"));
+            $("textarea.edit_text").val($(this).html().trim());
+@*            @foreach(var element in Model.Element){
+                if(element.elementID == $(this).attr("id")){
+                    $("input.edit_elementID").val(element.elementID);
+                    break;
+                }
+
+                
+            }*@
+        });
+    $("div.element").on("focusout", function () {
 
     })
+    $("div.element").focus(function () {
+        console.log("this is focus and prepare to edit");
+        $("div.style_bar").css("display","block");
+    })
+    $("div.element").focusout(function () {
+        console.log("you should execute the edit ajax here");
+    @*   @{
+            int pk = 0;
+            }
+            @pk = $(this).attr("id");*@
+
+
+    @*    @{
+            for (int i = 0; i < Model.Element.Count; i++)
+            {
+            if (Model.Element[i].elementID == pk)
+            {
+            Model.ElementAdd = Model.Element[i];
+            break;
+            }
+
+            }*@
+    @*        //Model.ElementAdd = Model.Element.FirstOrDefaultAsync(c => c.elementID == pk);
+
+            }*@
+    @*$("button.editElement").click();*@
+    @*}*@
+    @*            $.ajax({
+            url: "@Url.Page("Details", "OnPostElementAsync")",
+            url: '/eBooks/Details?handler=OnPostElementAsync',
+            type: "POST",
+            data: {},
+            success: function (response) {
+            alert("AJAX success hooray");
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+            console.log("Error Thrown: " + errorThrown);
+            console.log("Text Status: " + textStatus);
+            console.log("XMLHttpRequest: " + XMLHttpRequest);
+            console.warn(XMLHttpRequest.responseText)
+            }
+            });*@
+                            })
+    @*        var elementEditted;
+        $("div div.element").mouseout(function () {
+        $(this).click(function () {
+
+        elementEditted = $(this);
+        elementEditted.attr('contenteditable', 'true');
+        console.log("mouseout click");
+        })
+        })*@
+
+    @*        $("div div.element").mouseover(function(){
+        $(this).click(function(){
+
+
+        $(this).attr('contenteditable', 'false');
+        console.log("mouseover click");
+        })
+        })*@
+                            const observer = new MutationObserver((mutationsList, observer) => {
+            console.log("content changed");
+        });
+
+    const targetNode = document.querySelectorAll('div.element');
+    const config = { childList: true, subtree: true,@*characterData:false *@attributes: true};
+    for (var i = 0; i < targetNode.length; i++)
+        observer.observe(targetNode[i], config);
+
+    @*// Select the target node.
+        var target = document.querySelectorAll('div.element');
+        // Create an observer instance.
+
+        var observer = new MutationObserver(function(mutations) {
+        console.log(target.innerText);
+        });
+        // Pass in the target node, as well as the observer options.
+        for(var i = 0; i<target.size(); i++){
+        observer.observe(target[i], {
+        attributes:    true,
+        childList:     true,
+        characterData: true
+        });
+        }*@
+
+    @*        $(elementEditted).focus(function(){
+        console.log("focus success");
+        })*@
+
+
 
 
     @*Model.eBook.width can use this to retrieve the bindproperty content maybe*@

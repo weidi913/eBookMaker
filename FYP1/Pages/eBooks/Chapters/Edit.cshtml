@@ -20,13 +20,14 @@
                 <span asp-validation-for="Chapter.chapterName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Chapter.chapterNo" class="control-label"></label>
-                <input asp-for="Chapter.chapterNo" class="form-control" />
+                <label hidden asp-for="Chapter.chapterNo" class="control-label"></label>
+                <input hidden asp-for="Chapter.chapterNo" class="form-control" />
                 <span asp-validation-for="Chapter.chapterNo" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Chapter.bookID" class="control-label"></label>
-                <select asp-for="Chapter.bookID" class="form-control" asp-items="ViewBag.bookID"></select>
+                <input class="form-control" asp-for="Chapter.bookID" readonly value="@Model.Chapter.bookID" />
+                @*<select asp-for="Chapter.bookID" class="form-control" asp-items="ViewBag.bookID"></select>*@
                 <span asp-validation-for="Chapter.bookID" class="text-danger"></span>
             </div>
             <div class="form-group">

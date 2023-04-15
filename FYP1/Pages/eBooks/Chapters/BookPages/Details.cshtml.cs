@@ -37,7 +37,7 @@ namespace FYP1.Pages.BookPages
             {
                 BookPage = bookpage;
             }
-            return Page();
+            return RedirectToPage();
         }
     }
 }
