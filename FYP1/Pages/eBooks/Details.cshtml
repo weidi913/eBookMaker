@@ -139,14 +139,14 @@
         text-align: center;
     }
     /*    .left_nav_bar_item img {
-                            height: 100% !important;
-                            /*box-sizing:content-box;
-                            padding: 2px;
-                            padding-right:5px;
-                            height: 100%;
-                            width: auto;
-                            object-fit: contain;
-                        }*/
+                                    height: 100% !important;
+                                    /*box-sizing:content-box;
+                                    padding: 2px;
+                                    padding-right:5px;
+                                    height: 100%;
+                                    width: auto;
+                                    object-fit: contain;
+                                }*/
 
 
     .left_nav_bar_item:hover {
@@ -231,14 +231,14 @@
         }
 
     div:focus {
-        border: 1px dashed blue;
+        border: 1px dashed red;
         outline: none;
     }
 
     .pageContainer {
         position: relative;
         /*        top: 10%;
-                                left: 10%;*/
+                                        left: 10%;*/
         background-color: lightblue;
         color: black !important;
         opacity: 0.9;
@@ -289,9 +289,14 @@
             text-decoration: none;
             color: cornflowerblue !important;
         }
-         div.element {
-     white-space: pre-line; /* collapse WS, preserve LB */
-   }
+
+    div.element {
+        white-space: pre-line; /* collapse WS, preserve LB */
+    }
+
+    .selected {
+        border: dashed 1px blue;
+    }
 </style>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
@@ -414,196 +419,200 @@
 </div>
 <div class="eBook_content">
     <div style="height:100%;width:100" class="scaleHere">
-    @*<div class="pageContainer container">*@
-    @{
-        int noChapter = 1;
-    }
-    @foreach (var item in Model.Chapter)
-    {
-        <div style="width:@Html.DisplayFor(model => model.eBook.width)mm;" id=@item.chapterID class="chapter chapter_container">
-            <div class="chapter_title">
-                Chapter @noChapter @item.chapterName
-            </div>
-
-            <div class="chapter_action">
-                <form method="post">
-                <div class=" btn btn-light"><a asp-page="./Chapters/Edit" asp-route-id="@item.chapterID">Edit</a></div>
-                    <button type="submit" class=" btn btn-light" asp-page-handler="DeleteChapter" 
-                    asp-route-id="@item.chapterID" asp-route-bookid="@Model.eBook.bookID">Delete</button>
-                    </form>
-            </div>
-        </div>
-        noChapter++;
-
-        int pageNumber = 1;
-
-        @foreach (var item2 in Model.BookPage)
+        @*<div class="pageContainer container">*@
+        @{
+            int noChapter = 1;
+        }
+        @foreach (var item in Model.Chapter)
         {
-            if (item2.chapterID != item.chapterID)
-                continue;
-            <div style="width:@Html.DisplayFor(model => model.eBook.width)mm;" class="page_info_container">
-                <div class="page_info_title">
-                    Page @pageNumber
-                </div>
-                <div class="page_info_action" style="display:flex">
-                    @*Suppose activate the lock function after click*@
-                    <img src="~/images/icon_lock.png" />
-                    <form method="post">                    
-                        <button style="height:auto;width:auto;
+                    <div style="width:@Html.DisplayFor(model => model.eBook.width)mm;" id=@item.chapterID class="chapter chapter_container">
+                        <div class="chapter_title">
+                            Chapter @noChapter @item.chapterName
+                        </div>
+
+                        <div class="chapter_action">
+                            <form method="post">
+                                <div class=" btn btn-light"><a asp-page="./Chapters/Edit" asp-route-id="@item.chapterID">Edit</a></div>
+                                <button type="submit" class=" btn btn-light" asp-page-handler="DeleteChapter"
+                            asp-route-id="@item.chapterID" asp-route-bookid="@Model.eBook.bookID">
+                                    Delete
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+            noChapter++;
+
+            int pageNumber = 1;
+
+            @foreach (var item2 in Model.BookPage)
+            {
+                if (item2.chapterID != item.chapterID)
+                    continue;
+                                <div style="width:@Html.DisplayFor(model => model.eBook.width)mm;" class="page_info_container">
+                                    <div class="page_info_title">
+                                        Page @pageNumber
+                                    </div>
+                                    <div class="page_info_action" style="display:flex">
+                        @*Suppose activate the lock function after click*@
+                                        <img src="~/images/icon_lock.png" />
+                                        <form method="post">
+                                            <button style="height:auto;width:auto;
 border:0px;outline:none;background:transparent" type="submit" asp-page-handler="DeleteBookPage" asp-route-id="@item2.bookPageID" asp-route-bookid="@Model.eBook.bookID">
-                        <img src="~/images/icon_delete.png" />
+                                                <img src="~/images/icon_delete.png" />
+                                            </button>
+                                        </form>
+
+                                    </div>
+                                </div>
+                pageNumber++;
+                        <div id=@item2.bookPageID style="width:@Html.DisplayFor(model => model.eBook.width)mm; height:@Html.DisplayFor(model => model.eBook.height)mm;" class="page BookPage">
+
+                            <div class="content">
+                        @foreach (var item3 in Model.Element)
+                        {
+                            if (item3.bookPageID != item2.bookPageID)
+                                continue;
+
+                                        <div tabindex="0" id="@item3.elementID" class="@item3.elementType element" style="@item3.elementStyle;position:absolute;box-sizing:border-box;">
+                                            @item3.text
+                                        </div>
+                        }
+                            @*Current*@
+                            @*require to filter according to the type*@
+                            @*                    if (item3.elementType == "chart")
+                {*@
+
+
+                            @*                    }
+                else if (item3.elementType == "text")
+                {
+                <div tabindex="0" id="@item3.elementID" class="@item3.elementType element"
+                style="border: solid 1px yellow; box-sizing:content-box;@item3.elementStyle">
+                @item3.text
+                </div>
+
+                }
+                else if (item3.elementType == "image")
+                {
+                <div tabindex="0" id="@item3.elementID" class="@item3.elementType element"
+                style="border: solid 1px blue;box-sizing:content-box;@item3.elementStyle">
+                @item3.text
+                </div>
+
+                }
+                else if (item3.elementType == "shape")
+                {
+                <div tabindex="0" id="@item3.elementID" class="@item3.elementType element"
+                style="border: solid 1px red;box-sizing:content-box;@item3.elementStyle">
+                @item3.text
+                </div>
+
+                }
+                else
+                {
+                <div tabindex="0" id="@item3.elementID" class="@item3.elementType element"
+                style="border: solid 10px black;box-sizing:content-box;@item3.elementStyle">
+                @item3.text
+                </div>
+
+                *@
+                            @*}*@
+                            @*
+                <td>
+                <a asp-page="./Edit" asp-route-id="@item3.elementID">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item3.elementID">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item3.elementID">Delete</a>
+                </td>
+                </tr>*@
+                        
+                            </div>
+                        </div>
+            }
+            //Book Page Form
+                    <form method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="form-group">
+                            <label asp-for="BookPageAdd.pageNo" hidden class="control-label"></label>
+                            <input asp-for="BookPageAdd.pageNo" hidden value="@pageNumber" readonly class="form-control" />
+                            <span asp-validation-for="BookPageAdd.pageNo" hidden class="text-danger"></span>
+                        </div>
+                        <div class="form-group form-check">
+                            <label hidden class="form-check-label">
+                                <input hidden class="form-check-input" asp-for="BookPageAdd.pageLock" /> @Html.DisplayNameFor(model => model.BookPageAdd.pageLock)
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label hidden asp-for="BookPageAdd.chapterID" class="control-label"></label>
+                            <input hidden value="@item.chapterID" asp-for="BookPageAdd.chapterID" class="form-control" asp-items="ViewBag.chapterID" />
+                        </div>
+                        <input asp-for="eBook.bookID" hidden value="@Model.eBook.bookID" />
+                @*                <div class="form-group">
+            <input type="submit" asp-page-handler="BookPage" value="Create" class="btn btn-primary" />
+            <button type="submit" style="background:transparent;border:0px" asp-page-handler="BookPage"><img src=~/images/icon_add_page.png /></button>
+            </div>*@
+                        <div style="margin-bottom:5px"></div>
+                        <button type="submit" class="form-control" asp-page-handler="BookPage"
+                    style="color:#808588; font-size:1.25em;margin:auto;height:auto;padding:10px;width:@Html.DisplayFor(model => model.eBook.width)mm">
+                            +Add Page
                         </button>
                     </form>
-
-                </div>
-            </div>
-            pageNumber++;
-
-            <div id=@item2.bookPageID style="width:@Html.DisplayFor(model => model.eBook.width)mm; height:@Html.DisplayFor(model => model.eBook.height)mm;" class="page BookPage">
-
-                @foreach (var item3 in Model.Element)
-                {
-                    if (item3.bookPageID != item2.bookPageID)
-                        continue;
-                        @*Current*@
-                    @*require to filter according to the type*@
-@*                    if (item3.elementType == "chart")
-                    {*@
-                        <div tabindex="0" id="@item3.elementID" class="@item3.elementType element"
-             style="@item3.elementStyle;position:absolute;box-sizing:border-box;border: solid 1px black;">
-             @item3.text
-                            
-                        </div>
-
-@*                    }
-                    else if (item3.elementType == "text")
-                    {
-                        <div tabindex="0" id="@item3.elementID" class="@item3.elementType element"
-             style="border: solid 1px yellow; box-sizing:content-box;@item3.elementStyle">
-                            @item3.text
-                        </div>
-
-                    }
-                    else if (item3.elementType == "image")
-                    {
-                        <div tabindex="0" id="@item3.elementID" class="@item3.elementType element"
-             style="border: solid 1px blue;box-sizing:content-box;@item3.elementStyle">
-                            @item3.text
-                        </div>
-
-                    }
-                    else if (item3.elementType == "shape")
-                    {
-                        <div tabindex="0" id="@item3.elementID" class="@item3.elementType element"
-             style="border: solid 1px red;box-sizing:content-box;@item3.elementStyle">
-                            @item3.text
-                        </div>
-
-                    }
-                    else
-                    {
-                        <div tabindex="0" id="@item3.elementID" class="@item3.elementType element"
-             style="border: solid 10px black;box-sizing:content-box;@item3.elementStyle">
-                            @item3.text
-                        </div>
-
-*@
-                    @*}*@
-                    @*
-        <td>
-        <a asp-page="./Edit" asp-route-id="@item3.elementID">Edit</a> |
-        <a asp-page="./Details" asp-route-id="@item3.elementID">Details</a> |
-        <a asp-page="./Delete" asp-route-id="@item3.elementID">Delete</a>
-        </td>
-        </tr>*@
-                }
-            </div>
+            @*            </div>*@
         }
-        //Book Page Form
+
+        @*//Book Chapter Form*@
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="BookPageAdd.pageNo" hidden class="control-label"></label>
-                <input asp-for="BookPageAdd.pageNo" hidden value="@pageNumber" readonly class="form-control" />
-                <span asp-validation-for="BookPageAdd.pageNo" hidden class="text-danger"></span>
+            <div style="width:@Html.DisplayFor(model => model.eBook.width)mm;" class="chapter chapter_container">
+                <div class="chapter_title">
+                    Chapter @noChapter
+                    <input required asp-for="ChapterAdd.chapterName" placeholder="Chapter Name"
+                           class="chapter_name_input" style="color:#808588;outline:none;text-decoration:underline;border:none;background:transparent;width:auto%;height:100%" />
+                </div>
+                <div class="form-group">
+                    <label hidden asp-for="ChapterAdd.chapterNo" class="control-label"></label>
+                    <input hidden asp-for="ChapterAdd.chapterNo" readonly value="@noChapter" class="form-control" />
+                    <span asp-validation-for="ChapterAdd.chapterNo" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label hidden asp-for="ChapterAdd.bookID" class="control-label"></label>
+                    <input hidden asp-for="ChapterAdd.bookID" value="@Model.eBook.bookID" />
+                    @*            <select hidden asp-for="ChapterAdd.bookID" class="form-control" asp-items="ViewBag.bookID"></select>*@
+                </div>
+
+                <div class="chapter_action">
+                    <button type="submit" asp-page-handler="Chapter" class="btn btn-light">
+                        @*<img src="~/images/icon_add.png" />*@
+                        Create
+                    </button>
+                </div>
             </div>
-            <div class="form-group form-check">
-                <label hidden class="form-check-label">
-                    <input hidden class="form-check-input" asp-for="BookPageAdd.pageLock" /> @Html.DisplayNameFor(model => model.BookPageAdd.pageLock)
-                </label>
-            </div>
-            <div class="form-group">
-                <label hidden asp-for="BookPageAdd.chapterID" class="control-label"></label>
-                <input hidden value="@item.chapterID" asp-for="BookPageAdd.chapterID" class="form-control" asp-items="ViewBag.chapterID" />
-            </div>
-            <input asp-for="eBook.bookID" hidden value="@Model.eBook.bookID" />
+
             @*                <div class="form-group">
-        <input type="submit" asp-page-handler="BookPage" value="Create" class="btn btn-primary" />
-        <button type="submit" style="background:transparent;border:0px" asp-page-handler="BookPage"><img src=~/images/icon_add_page.png /></button>
-        </div>*@
-            <div style="margin-bottom:5px"></div>
-            <button type="submit" class="form-control" asp-page-handler="BookPage"
-                style="color:#808588; font-size:1.25em;margin:auto;height:auto;padding:10px;width:@Html.DisplayFor(model => model.eBook.width)mm">
-                +Add Page
-            </button>
-        </form>
-        @*            </div>*@
-    }
+            <label asp-for="ChapterAdd.chapterName" class="control-label"></label>
+            <input asp-for="ChapterAdd.chapterName" class="form-control" />
+            <span asp-validation-for="ChapterAdd.chapterName" class="text-danger"></span>
+            </div>*@
 
-    @*//Book Chapter Form*@
-    <form method="post">
-        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-        <div style="width:@Html.DisplayFor(model => model.eBook.width)mm;" class="chapter chapter_container">
-            <div class="chapter_title">
-                Chapter @noChapter
-                <input required asp-for="ChapterAdd.chapterName" placeholder="Chapter Name"
-                       class="chapter_name_input" style="color:#808588;outline:none;text-decoration:underline;border:none;background:transparent;width:auto%;height:100%" />
-            </div>
-            <div class="form-group">
-                <label hidden asp-for="ChapterAdd.chapterNo" class="control-label"></label>
-                <input  hidden asp-for="ChapterAdd.chapterNo" readonly value="@noChapter" class="form-control" />
-                <span asp-validation-for="ChapterAdd.chapterNo" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label hidden asp-for="ChapterAdd.bookID" class="control-label"></label>
-                <input hidden asp-for="ChapterAdd.bookID" value="@Model.eBook.bookID" />
-                @*            <select hidden asp-for="ChapterAdd.bookID" class="form-control" asp-items="ViewBag.bookID"></select>*@
-            </div>
-
-            <div class="chapter_action">
-                <button type="submit" asp-page-handler="Chapter" class="btn btn-light">
-                    @*<img src="~/images/icon_add.png" />*@
-                    Create
-                </button>
-            </div>
-        </div>
-
-        @*                <div class="form-group">
-        <label asp-for="ChapterAdd.chapterName" class="control-label"></label>
-        <input asp-for="ChapterAdd.chapterName" class="form-control" />
-        <span asp-validation-for="ChapterAdd.chapterName" class="text-danger"></span>
-        </div>*@
-
-@*        <div class="form-group">
+            @*        <div class="form-group">
             <input type="submit" asp-page-handler="Chapter" value="Create" class="btn btn-primary" />
-        </div>*@
-    </form>
+            </div>*@
+        </form>
 
-    <div style="margin-bottom:50px"></div>
+        <div style="margin-bottom:50px"></div>
 
 
-    @*must use container*@
-@*    <div style="background:yellow;color:red;position:fixed;left:0%;bottom:10%;width:100px;height:50px">
+        @*must use container*@
+        @*    <div style="background:yellow;color:red;position:fixed;left:0%;bottom:10%;width:100px;height:50px">
         <div class="row">
-            <div id="chapterSection" style="width:auto;height:auto">
-                123
-            </div>
-            <div id="pageSection" style="width:auto;height:auto">
-            </div>
+        <div id="chapterSection" style="width:auto;height:auto">
+        123
+        </div>
+        <div id="pageSection" style="width:auto;height:auto">
+        </div>
         </div>
 
-    </div>*@
-    @*</div>*@
+        </div>*@
+        @*</div>*@
 
     </div>
     <div class="resize form-control" style="display:flex; width:auto;position:fixed;bottom:5%; left:8%">
@@ -613,32 +622,33 @@ border:0px;outline:none;background:transparent" type="submit" asp-page-handler="
     </div>
 
     <div class="style_bar" style="width:20vw;top:0;margin-top:10vh;left:80vw ;height:90vw;overflow-y:auto !important;background:#28282B; position:fixed; z-index:900">
-        <div style="height:25px;width:25px;padding:10px;box-sizing:content-box">          
-            <img class="closeStyle" style="cursor:pointer; height:100%;width:100%" src="~/images/icon_cancel.png"/>
+        <div style="height:25px;width:25px;padding:10px;box-sizing:content-box">
+            <img class="closeStyle" style="cursor:pointer; height:100%;width:100%" src="~/images/icon_cancel.png" />
         </div>
         <form method="post">
-        <div class="row" style="margin:auto ;padding:10px;height:75vh;width:100%;overflow-y:auto !important;color:white">
-            <div class="col-lg-4">ID: </div>
-            <input asp-for="elementEditID" class="edit_elementID" style="height:auto" readonly class="col-lg-8"></input>
-@*            <div class="col-lg-4">Type: </div>
-            <input class="edit_type" style="height:auto" readonly class="col-lg-8"></input>
-            <div class="col-lg-4">Lock: </div>
-            <input class="edit_lock" style="height:auto" readonly class="col-lg-8" value="false"></input>
-*@            <div class="col-lg-4">Text: </div>
-            <textarea asp-for="elementEditText" class="edit_text" style="word-break: break-all;height:500px;width:100%" class="col-lg-8"></textarea>
-@*            <div class="col-lg-4">Style: </div>
-            <textarea class="edit_style" style="word-break: break-all;height:500px;width:100%" readonly class="col-lg-8"></textarea>
-            <div class="col-lg-4">z-index: </div>
-            <input class="edit_z_index" style="height:auto" readonly class="col-lg-8" value="1"></input>
-            <div class="col-lg-4">Page: </div>
-            <input class="edit_pageID" style="height:auto" readonly class="col-lg-8"></input>
-*@        </div>
-        <div style="display:flex;margin:auto;height:auto;width:100%;padding:10px">
+            <div class="row" style="margin:auto ;padding:10px;height:75vh;width:100%;overflow-y:auto !important;color:white">
+                <div class="col-lg-4">ID: </div>
+                <input asp-for="elementEditID" class="edit_elementID" style="height:auto" readonly class="col-lg-8"></input>
+                @*            <div class="col-lg-4">Type: </div>
+                <input class="edit_type" style="height:auto" readonly class="col-lg-8"></input>
+                <div class="col-lg-4">Lock: </div>
+                <input class="edit_lock" style="height:auto" readonly class="col-lg-8" value="false"></input>
+                *@            <div class="col-lg-4">Text: </div>
+                <textarea asp-for="elementEditText" class="edit_text" style="word-break: break-all;height:500px;width:100%" class="col-lg-8"></textarea>
+                           <div class="col-lg-4">Style: </div>
+                <textarea asp-for="elementEditStyle" class="edit_style" style="word-break: break-all;height:500px;width:100%" readonly class="col-lg-8"></textarea>
+                @*<div class="col-lg-4">z-index: </div>
+                <input class="edit_z_index" style="height:auto" readonly class="col-lg-8" value="1"></input>
+                <div class="col-lg-4">Page: </div>
+                <input class="edit_pageID" style="height:auto" readonly class="col-lg-8"></input>
+                *@
+            </div>
+            <div style="display:flex;margin:auto;height:auto;width:100%;padding:10px">
                 <input asp-for="eBook.bookID" hidden value="@Model.eBook.bookID" />
 
-            <button asp-page-handler="EditElement" style="margin:auto;padding:5px" class="btn btn-light"> Edit </button>
-             <button asp-page-handler="DeleteElement" style="margin:auto;padding:5px" class="btn btn-danger" >Delete</button>
-        </div>
+                <button id="EditElement" asp-page-handler="EditElement" style="margin:auto;padding:5px" class="btn btn-light"> Edit </button>
+                <button asp-page-handler="DeleteElement" style="margin:auto;padding:5px" class="btn btn-danger">Delete</button>
+            </div>
         </form>
     </div>
 </div>
@@ -647,59 +657,213 @@ border:0px;outline:none;background:transparent" type="submit" asp-page-handler="
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 <script type="text/javascript">
 
+
+    var elementID =1 ;
+    var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
     $(document).ready(function () {
-        $("img.closeStyle").on("click",function(){
-            $("div.style_bar").css("display","none");
+        $("img.closeStyle").on("click", function () {
+            $("div.style_bar").css("display", "none");
+
+        }
+        )
+            function mousedown(e) {
+                e = e || window.event;
+                e.preventDefault();
+
+                pos3 = e.clientX;
+                pos4 = e.clientY;
+
+                document.addEventListener("mousemove", move);
+                document.addEventListener("mouseup", mouseup);
+            };
+        $('div.element').on('focus', function () {
+            console.log('The div has received focus');
+            $("div.style_bar").css("display", "block");
+
+            $('div.element:focus').addClass("selected");
+            elementID = $(this).attr("id");
+
+
+            console.log(elementID);
+                $("input.edit_elementID").val($(this).attr("id"));
+                $(".edit_style").val($(this).attr("style"));
+            $("textarea.edit_text").val($(this).html().trim());
+            $("div.content").on("mousedown", "div",mousedown);
+        }
+        );
+
+
+        $("div.element").focusout(function () {
+            console.log("you should execute the edit ajax here");
+            $(this).removeClass("selected");
+            $("div.content").off("mousedown", "div", mousedown);
+
         })
 
-        $("button.export").on("click",function(){
+
+
+
+    @*$("div.content").on("click", "div", isSelected);*@
+
+
+
+    @*        var click = 0;
+
+        $("div.content").click(function (e) {
+            click += 1;
+            if (click == 1) {
+                click -= 1;
+                $("div.selected").removeClass("selected");
+            }
+        });*@
+
+    @*        function isSelected() {
+
+            var selected = false;
+            var classArray = $(this).attr("class").split(" ");
+            for (var i = 0; i < classArray.length; i++) {
+                if (classArray[i] == "selected" || classArray[i] == "continue") {
+                    selected = true;
+                    break;
+                }
+            }
+            if (selected != true) {
+                $("div.selected").removeClass("selected");
+                $(this).addClass("selected");
+            }
+            click--;
+
+        }*@
+
+    @*        function deselected() {
+
+            $("div.selected").css("background-color","orange");
+            $("div.selected").removeClass("selected");
+        }*@
+
+
+
+        function mouseup() {
+
+            document.removeEventListener("mousemove", move);
+            console.log(elementID);
+            const div = document.getElementById(elementID);
+            const style = div.getAttribute("style");
+            console.log(style);
+            $(".edit_style").val(style);
+    @*$("button#EditElement").click();*@
+
+        }
+
+        function move(e) {
+            e = e || window.event;
+            e.preventDefault();
+            var elem = $("div.selected");
+            var selected = false;
+
+            var classArray = elem.attr("class").split(" ");
+            for (var i = 0; i < classArray.length; i++) {
+                if (classArray[i] == "selected" || classArray[i] == "continue") {
+                    selected = true;
+                    break;
+                }
+            }
+
+            if (selected == true) {
+                pos1 = pos3 - e.clientX;
+                pos2 = pos4 - e.clientY;
+                pos3 = e.clientX;
+                pos4 = e.clientY;
+
+                elem[0].style.top = (elem[0].offsetTop - pos2) + "px";
+                elem[0].style.left = (elem[0].offsetLeft - pos1) + "px";
+
+            }
+        }
+
+    @*        $("div.element").on("mouseup", function (e) {
+
+            selected = false;
+            console.log("move is false");
+            document.removeEventListener("mousedown",move(e));
+            }
+        )*@
+
+
+        $("button.export").on("click", function () {
             console.log("export activated");
             window.jsPDF = window.jspdf.jsPDF;
 
 
             var doc = new jsPDF();
+                                        @*Current*@
+
             doc.setFontSize(12);
             doc.setFont("helvetica", "bold");
             const totalPage = document.querySelectorAll("div.BookPage");
             const totalElement = document.querySelectorAll("div.element");
 
-@*            for (int i = 1; i <= totalPage.length; i++){
+            alert(totalPage.length +" "+totalElement.length);
+
+    @*            for (int i = 1; i <= totalPage.length; i++){
                 console.log(i)；
-                            doc.addPage();
-                                        doc.text(20, 20, 'Visit CodexWorld.com');
-            }*@
-        for (var i = 1; i <= totalPage.length; i++) {
+                doc.addPage();
+                doc.text(20, 20, 'Visit CodexWorld.com');
+                }*@
+                for (var i = 1; i <= totalPage.length; i++) {
+
                 if (i != 1) doc.addPage();
-                console.log(i);
-                @*Current*@
+
+                var pageID = $(totalPage[i]).attr("id");
+ 
+                        console.log("Page "+i +" "+ pageID);
                 for (var j = 0; j < totalElement.length; j++) {
+                                                
                     const element = $(totalElement[j]);
-                    console.log("Offset left"+element.offset().left);
-                    console.log("Offset top"+element.offset().top);
-                    console.log("left"+element.position().left);
-                    console.log("top"+element.position().top);
-                    doc.text(element.position().left * 0.2645833333, element.position().top * 0.2645833333, element.text());
+
+                    var elementFK =$(element).closest("div").closest("div.BookPage").attr("id");
+                    console.log("Element "+j +" "+elementFK);
+                    console.log(elementFK+" compare "+ pageID);
+                    if(elementFK == pageID){
+
+                        doc.text(element.position().left * 0.2645833333, element.position().top * 0.2645833333, element.text());
+                    }
                 }
             };
-@*            doc.text(20, 20, 'Hello world!');
-            doc.text(20, 30, 'This is client-side Javascript to generate a PDF.');
-*@
+    @*            doc.text(20, 20, 'Hello world!');
+                doc.text(20, 30, 'This is client-side Javascript to generate a PDF.');
+                *@
 
 
-           @* // Save the PDF*@
+    @* // Save the PDF*@
+                doc.addPage();
+            doc.setFontSize(12);
+            doc.setTextColor(0, 0, 0);
+            doc.text("This is a long text that will wrap around and create multiple lines.", 20, 20);
+            doc.text("Another long text that will wrap around and create multiple lines.", 20, 40);
 
-            doc.save($("div.BookTitle").text().trim()+'.pdf');
+            // Use drawMultilineText() method to show line breaks
+    @*var text = "This is a long text that will wrap around and create multiple lines. Another long text that will wrap around and create multiple lines.";
+                doc.setFontSize(12);
+                doc.setTextColor(0, 0, 0);
+                doc.drawMultilineText(text, 20, 60, 200, 10);*@
+            var text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam semper sapien ac dolor imperdiet pharetra. Sed ultricies purus at massa facilisis sollicitudin. Vestibulum eget volutpat arcu, et posuere est. Duis in ipsum vel libero pellentesque pharetra. Nam elementum posuere turpis nec rhoncus. Sed tempor semper blandit. Fusce dapibus mauris quis libero vestibulum placerat. Vivamus tincidunt eros vel velit ornare, quis consequat eros ultrices. Proin in massa vel augue facilisis efficitur. Nam a pharetra lectus.";
+
+            var lines = doc.splitTextToSize(text, 200);
+
+            doc.text(0, 50, lines);
+            doc.save($("div.BookTitle").text().trim() + '.pdf');
 
 
         })
-@*        console.log("123");
-        const nodeList = document.querySelectorAll("div.page");
-        console.log(nodeList);
-        for (let i = 0; i < nodeList.length; i++) {
+    @*        console.log("123");
+            const nodeList = document.querySelectorAll("div.page");
+            console.log(nodeList);
+            for (let i = 0; i < nodeList.length; i++) {
             console.log("123");
             nodeList[i].style.height = @Html.DisplayFor(model => model.eBook.height) +"mm";
             nodeList[i].style.width = @Html.DisplayFor(model => model.eBook.width) +"mm";
-        }*@
+            }*@
 
             $("input.resizevalue").change(function () {
                 $("div.scaleHere").css("zoom", (this).value + "%");
@@ -744,7 +908,7 @@ border:0px;outline:none;background:transparent" type="submit" asp-page-handler="
         console.log("text clicked");
     })
 
-    
+
 
 
     @*        $("div.element").on("click",function(){
@@ -767,82 +931,62 @@ border:0px;outline:none;background:transparent" type="submit" asp-page-handler="
         });*@
 
     @*document.querySelector("div.element").focus();*@
-@*            < div class="row" style = "margin:auto ;padding:10px;height:75vh;width:100%;overflow-y:auto !important;color:white" >
-            <div class="col-lg-4" > ID: </div>
-                < input class="edit_elementID" style = "height:auto" readonly class="col-lg-8" > </input>
-                    < div class="col-lg-4" > Type: </div>
-                        < input class="edit_type" style = "height:auto" readonly class="col-lg-8" > </input>
-                            < div class="col-lg-4" > Lock: </div>
-                                < input class="edit_lock" style = "height:auto" readonly class="col-lg-8" value = "false" > </input>
-                                    < div class="col-lg-4" > Text: </div>
-                                        < input class="edit_text" style = "height:500px"class="col-lg-8" > </input>
-                                            < div class="col-lg-4" > Style: </div>
-                                                < input class="edit_style" style = "height:500px" readonly class="col-lg-8" > </input>
-                                                    < div class="col-lg-4" > z - index: </div>
-                                                        < input class="edit_z_index" style = "height:auto" readonly class="col-lg-8" value = "1" > </input>
-                                                            < div class="col-lg-4" > Page: </div>
-                                                                < input class="edit_pageID" style = "height:auto" readonly class="col-lg-8" > </input>
-                                                                    < /div>
-*@
-        $('div.element').on('focus', function () {
-            console.log('The div has received focus');
-            $("input.edit_elementID").val($(this).attr("id"));
-            $("textarea.edit_text").val($(this).html().trim());
-@*            @foreach(var element in Model.Element){
-                if(element.elementID == $(this).attr("id")){
-                    $("input.edit_elementID").val(element.elementID);
-                    break;
-                }
+    @*            < div class="row" style = "margin:auto ;padding:10px;height:75vh;width:100%;overflow-y:auto !important;color:white" >
+        <div class="col-lg-4" > ID: </div>
+        < input class="edit_elementID" style = "height:auto" readonly class="col-lg-8" > </input>
+        < div class="col-lg-4" > Type: </div>
+        < input class="edit_type" style = "height:auto" readonly class="col-lg-8" > </input>
+        < div class="col-lg-4" > Lock: </div>
+        < input class="edit_lock" style = "height:auto" readonly class="col-lg-8" value = "false" > </input>
+        < div class="col-lg-4" > Text: </div>
+        < input class="edit_text" style = "height:500px"class="col-lg-8" > </input>
+        < div class="col-lg-4" > Style: </div>
+        < input class="edit_style" style = "height:500px" readonly class="col-lg-8" > </input>
+        < div class="col-lg-4" > z - index: </div>
+        < input class="edit_z_index" style = "height:auto" readonly class="col-lg-8" value = "1" > </input>
+        < div class="col-lg-4" > Page: </div>
+        < input class="edit_pageID" style = "height:auto" readonly class="col-lg-8" > </input>
+        < /div>
+        *@
 
-                
-            }*@
-        });
-    $("div.element").on("focusout", function () {
 
-    })
-    $("div.element").focus(function () {
-        console.log("this is focus and prepare to edit");
-        $("div.style_bar").css("display","block");
-    })
-    $("div.element").focusout(function () {
-        console.log("you should execute the edit ajax here");
     @*   @{
-            int pk = 0;
-            }
-            @pk = $(this).attr("id");*@
+        int pk = 0;
+        }
+        @pk = $(this).attr("id");*@
 
 
     @*    @{
-            for (int i = 0; i < Model.Element.Count; i++)
-            {
-            if (Model.Element[i].elementID == pk)
-            {
-            Model.ElementAdd = Model.Element[i];
-            break;
-            }
+        for (int i = 0; i < Model.Element.Count; i++)
+        {
+        if (Model.Element[i].elementID == pk)
+        {
+        Model.ElementAdd = Model.Element[i];
+        break;
+        }
 
-            }*@
+        }*@
     @*        //Model.ElementAdd = Model.Element.FirstOrDefaultAsync(c => c.elementID == pk);
 
-            }*@
+        }*@
     @*$("button.editElement").click();*@
     @*}*@
     @*            $.ajax({
-            url: "@Url.Page("Details", "OnPostElementAsync")",
-            url: '/eBooks/Details?handler=OnPostElementAsync',
-            type: "POST",
-            data: {},
-            success: function (response) {
-            alert("AJAX success hooray");
-            },
-            error: function (XMLHttpRequest, textStatus, errorThrown) {
-            console.log("Error Thrown: " + errorThrown);
-            console.log("Text Status: " + textStatus);
-            console.log("XMLHttpRequest: " + XMLHttpRequest);
-            console.warn(XMLHttpRequest.responseText)
-            }
-            });*@
-                            })
+        url: "@Url.Page("Details", "OnPostElementAsync")",
+        url: '/eBooks/Details?handler=OnPostElementAsync',
+        type: "POST",
+        data: {},
+        success: function (response) {
+        alert("AJAX success hooray");
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+        console.log("Error Thrown: " + errorThrown);
+        console.log("Text Status: " + textStatus);
+        console.log("XMLHttpRequest: " + XMLHttpRequest);
+        console.warn(XMLHttpRequest.responseText)
+        }
+        });*@
+
     @*        var elementEditted;
         $("div div.element").mouseout(function () {
         $(this).click(function () {
@@ -861,12 +1005,12 @@ border:0px;outline:none;background:transparent" type="submit" asp-page-handler="
         console.log("mouseover click");
         })
         })*@
-                            const observer = new MutationObserver((mutationsList, observer) => {
+            const observer = new MutationObserver((mutationsList, observer) => {
             console.log("content changed");
         });
 
     const targetNode = document.querySelectorAll('div.element');
-    const config = { childList: true, subtree: true,@*characterData:false *@attributes: true};
+    const config = { childList: true, subtree: true,@*characterData:false *@attributes: true };
     for (var i = 0; i < targetNode.length; i++)
         observer.observe(targetNode[i], config);
 

@@ -220,6 +220,8 @@ namespace FYP1.Pages.eBooks
         public String elementEditText { get; set; }="";
         [BindProperty]
         public int elementEditID { get; set; } = -1;
+        [BindProperty]
+        public String elementEditStyle { get; set; }
 
         public async Task<IActionResult> OnPostEditElementAsync()
         {
@@ -230,6 +232,7 @@ namespace FYP1.Pages.eBooks
 
             Element elementEdit = await _context.Element.FirstOrDefaultAsync(m => m.elementID == elementEditID);
             elementEdit.text = elementEditText;
+            elementEdit.elementStyle = elementEditStyle;
             _context.Attach(elementEdit).State = EntityState.Modified;
 
             try
