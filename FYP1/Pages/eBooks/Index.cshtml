@@ -16,6 +16,10 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
     <style>
+        iframe{
+            overflow:none;
+            pointer-events:none;
+        }
                 .whole_containter {
                     position: absolute;
                     height: 100vh;
@@ -178,7 +182,8 @@
                 }
                 .home_content_overview{
                     display:flex;
-                    height:30vh;
+                    height:auto;
+                    min-height:30vh;
                     box-sizing:content-box;
                     width:100%;
                     overflow-x:auto;
@@ -281,7 +286,7 @@
                     <form method="post">
                         <!-- Modal Header -->
                         <div class="modal-header">
-                            <h4 class="modal-title">Modal Heading</h4>
+                            <h4 class="modal-title">Create Your Own eBook</h4>
                             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                         </div>
 
@@ -450,6 +455,8 @@
                     {
                         break;
                     }
+                    else
+                        i++;
 
                     <div class="home_content_overview_project">
                         @{
@@ -506,7 +513,6 @@
                 }
 
             </div>
-            <br />
             <hr class="mt-1 mb-1" />
             <div class="home_content_title">
                 Shared With Me
@@ -514,7 +520,6 @@
             </div>
             <div class="home_content_overview">
             </div>
-            <br />
             <hr class="mt-1 mb-1" />
             <div class="home_content_title">
                 All Project
@@ -540,9 +545,9 @@
                         <th>
                             @Html.DisplayNameFor(model => model.eBook[0].bookStatus)
                         </th>
-                        <th>
+@*                        <th>
                             @Html.DisplayNameFor(model => model.eBook[0].dateUpdated)
-                        </th>
+                        </th>*@
                         <th>
                             @Html.DisplayNameFor(model => model.eBook[0].authorID)
                         </th>
@@ -568,9 +573,9 @@
                             <td>
                                 @Html.DisplayFor(modelItem => item.bookStatus)
                             </td>
-                            <td>
+@*                            <td>
                                 @Html.DisplayFor(modelItem => item.dateUpdated)
-                            </td>
+                            </td>*@
                             <td>
                                 @Html.DisplayFor(modelItem => item.authorID)
                             </td>
@@ -592,10 +597,16 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 <script type="text/javascript">
-    alert();
+    //alert();
     $("iframe").on("load", function () {
-        $(this).scrollLeft("500");
-        $(this).scrollTop("500");
+        $("iframe").contents().find(".top_bar").css("display","none");
+        $("iframe").contents().find(".left_nav_bar").css("display","none");
+        $("iframe").contents().find(".resize").css("display","none");
+        $("iframe").contents().find(".left_nav_bar").css("display","none");
+        $("iframe").contents().find("div.scaleHere").css("zoom", "30%");
+        $("iframe").contents().find("div.scaleHere").css("overflow", "none");
+       // $(this).scrollLeft("800");
+       // $(this).scrollTop("500");
     })
 
     $(document).ready(function () {

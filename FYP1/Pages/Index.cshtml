@@ -3,9 +3,53 @@
 @{
     ViewData["Title"] = "Home page";
 }
-
+@*
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-    <a href="/eBooks">eBook</a>
+
 </div>
+*@
+<head>
+  <title> Transition Page</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: sans-serif;
+    }
+
+    /* Make content area fill the entire browser window */
+    html,
+    .fullscreen {
+      display: flex;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      width: 100%;
+    }
+
+    /* Center the content in the browser window */
+    .container {
+      margin: auto;
+      text-align: center;
+    }
+
+    .title {
+      font-size: 3rem;
+    }
+  </style>
+</head>
+
+<body class="fullscreen">
+  <div class="container">
+      <h1 class="title">Redirect to Home Page....</h1>
+  </div>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script>
+    $(document).ready(function () {
+      window.location.replace("eBooks");
+    });
+
+  </script>
+</body>
+

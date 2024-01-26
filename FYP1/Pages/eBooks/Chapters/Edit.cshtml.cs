@@ -30,7 +30,7 @@ namespace FYP1.Pages.Chapters
                 return NotFound();
             }
 
-            var chapter =  await _context.Chapter.FirstOrDefaultAsync(m => m.chapterID == id);
+            var chapter =  await _context.Chapter.Include(m => m.book).FirstOrDefaultAsync(m => m.chapterID == id);
             if (chapter == null)
             {
                 return NotFound();

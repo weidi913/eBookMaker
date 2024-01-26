@@ -15,7 +15,7 @@ namespace FYP1.Models
         [DataType(DataType.Date), DisplayName("Version Date")]
         public DateTime commentDate { get; set; } = DateTime.Now;
 
-        [Required]
+        [Required]//maybe need add default status
         public bool commentStatus { get; set; }
 
         [Required,StringLength(50)]

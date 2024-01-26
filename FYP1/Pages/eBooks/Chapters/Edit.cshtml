@@ -7,7 +7,7 @@
 
 <h1>Edit</h1>
 
-<h4>Chapter</h4>
+<h4>Chapter from @Model.Chapter.book.title</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -24,7 +24,7 @@
                 <input hidden asp-for="Chapter.chapterNo" class="form-control" />
                 <span asp-validation-for="Chapter.chapterNo" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div hidden class="form-group">
                 <label asp-for="Chapter.bookID" class="control-label"></label>
                 <input class="form-control" asp-for="Chapter.bookID" readonly value="@Model.Chapter.bookID" />
                 @*<select asp-for="Chapter.bookID" class="form-control" asp-items="ViewBag.bookID"></select>*@
@@ -38,7 +38,8 @@
 </div>
 
 <div>
-    <a asp-page="./Index">Back to List</a>
+    <a href="javascript: history.go(-1)">Go Back</a>
+    @*<a asp-page="~~/Details" asp-for="Chapter.bookID">Back to List</a>*@
 </div>
 
 @section Scripts {
