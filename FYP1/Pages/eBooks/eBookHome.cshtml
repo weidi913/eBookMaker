@@ -1,0 +1,749 @@
+﻿@page
+@model FYP1.Pages.eBooks.eBookHomeModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - FYP1</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/FYP1.styles.css" asp-append-version="true" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <style>
+        iframe{
+            overflow:none;
+            pointer-events:none;
+        }
+                .whole_containter {
+                    position: absolute;
+                    height: 100vh;
+                    width: 100vw;
+                }
+
+                .top_bar {
+                    position: fixed;
+                    left: 0vw !important;
+                    top: 0vh !important;
+                    width: 100vw !important;
+                    height: 10vh !important;
+                    display: flex;
+                    z-index:999;
+                }
+
+                .top_bar_menu_button {
+                    background: transparent;
+                    opacity: 1;
+                    height: 90%;
+                    width: auto;
+                    cursor: pointer;
+                    padding:5px;
+                    background-image: url('~/images/menu_button.png/');
+                }
+                .top_bar_menu_button_container:hover{
+                    background: #F5F5F5;
+                }
+
+                .logo{
+                   background-image: url('~/images/menu_button.png/');
+                   padding-left:1vw;
+                   padding-right:1vw;
+                }
+                .logo *{
+                    height:100%;
+                    width:auto;
+                }
+
+                .top_bar_title{
+                    font-size:1.5em;
+                    font-weight:500;
+                    color:#616161;
+                    padding-left:1vw;
+                    padding-right:1vw;
+                    text-align:left;
+                    text-transform:uppercase;
+                    display: flex;
+                    width:auto;
+                    align-items: center;
+                    height:100%;
+                }
+
+                .top_bar_create{
+                    width:auto;
+                    height:100%;
+                    margin-left:auto;
+                    align-items: center;
+                    display: flex;
+                    padding-right: 1vw;
+                }
+
+                .top_bar_image *{
+                    height:100%;
+                    width:auto;
+                    padding-left: 1vw;
+                    padding-right: 1vw;
+                    align-items: center;
+                    display: flex;
+                }
+
+                .top_bar_information{
+                    font-size:0.75em;
+                    color:#616161;
+                    padding-left:1vw;
+                    padding-right:1vw;
+                    text-align:left;
+                    width:auto;
+
+                    align-items: center;
+                    height:auto;
+                    margin-top:auto;
+                    margin-bottom:auto;
+                }
+
+
+                .left_nav_bar_expandable {
+                    position: fixed;
+                    left: 0vw;
+                    top: 10vh;
+                    width: 14vw;
+                    height: 90vh;
+                    background-color: #FBFBFB;
+                    box-shadow: 0 0 5px 10px #FBFBFB;
+                    color: black;
+                    padding: 10px;
+                    font-size: 0.75em;
+                    z-index:888;
+                }
+
+                .left_nav_bar_selected{
+                    background-color: #BDBDBD;
+                    color: #fff;
+                    font-weight:600;
+                }
+
+                .left_nav_bar_item{
+                    display: flex;
+                    width: auto;
+                    align-items: center;
+                    padding: 10px;
+        /*            box-sizing: content-box;*/
+                    height: 50px;
+                    width: 100%;
+                    box-sizing: border-box;
+                }
+
+                .left_nav_bar_item img {
+                    height: 100% !important;
+                    /*box-sizing:content-box;*/
+                    padding: 2px;
+                    padding-right:5px;
+                    height: 100%;
+                    width: auto;
+                    object-fit: contain;
+                }
+
+                .left_nav_bar_item:hover {
+                        background-color: #E0E0E0;
+                    color: #fff;
+                    cursor: pointer;
+                    font-weight: 500;
+                }
+
+                /*maybe can align to the bottom if future got change*/
+                .bottom{
+                    height:auto;
+                    align-self: flex-end;
+                }
+
+                .home_content {
+                    background: white;
+                    /*text-align: center;*/
+                    position: fixed;
+                    left: 15vw;
+                    margin-top: 10vh;
+                    width: 85vw;
+                    overflow:auto !important;
+                    height: 90vh;
+                }
+
+                .home_content_title{
+                    overflow-x:auto;
+                    padding:10px;
+                    font-weight:500;
+                    padding:10px;
+                    position: relative;
+                    font-size:1.5em;
+                    height:auto;
+                }
+                .home_content_overview{
+                    display:flex;
+                    height:auto;
+                    min-height:30vh;
+                    box-sizing:content-box;
+                    width:100%;
+                    overflow-x:auto;
+                    overflow-y:hidden;
+                }
+                .home_content_overview_project{
+                    height:auto;
+                    width: 300px;
+                    box-sizing:border-box;
+                    padding: 10px;
+                    /*overflow-y:visible;*/
+                }
+        @*<div class="center" style="font-size:2em;  background:	#848884" ;>*@
+
+        @*<div style="overflow:auto;padding:10px;height:not working%;font-size:2em; position: relative; background:	#848884" ;>*@
+
+        @*<div class="flex" style="flex-wrap: nowrap; overflow-x: scroll; display: flex;height:20%; width:100%;">*@
+
+
+
+                .eBook_preview{
+                     height:200px%;
+                     width:100%;
+                     overflow:hidden;
+                     border:3px black solid;
+                }
+
+                .eBook_description{
+                    height:auto;
+                    width:100;
+                    padding:10px;
+                    box-sizing:border-box;
+                }
+
+                .eBook_title{
+                    font-size:1em;
+                    font-weight:500;
+                    color:black !important;
+                    text-decoration:none;
+                }
+
+                .eBook_type{
+                    font-size:0.75em;
+                    font-weight:300;
+                }
+
+                .previewText {
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    display: -webkit-box;
+                    -webkit-line-clamp: 1; /* number of lines to show */
+                    line-clamp: 1;
+                    -webkit-box-orient: vertical;
+                }
+
+                .center {
+
+                    border: 3px solid green;
+                }
+
+                .content_project {
+                    border: 3px solid black;
+                    opacity: 0.8;
+                    display: inline-block;
+                    background: white;
+                    color: black;
+                    height: 100%;
+                    width: 20%;
+                    position: relative;
+                    float: left;
+                    flex: 0 0 40%;
+                    box-sizing: border-box;
+                }
+    </style>
+</head>
+<body>
+    <div class="whole_container">
+
+        <div class="top_bar shadow-sm p-3 mb-5 bg-white rounded">
+            <div class="top_bar_menu_button_container">
+                <img class="top_bar_menu_button" src="~/images/menu_button.png" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Toggle the side menu" />
+            </div>
+            <div class="logo"><img src="images/logo.png" /></div>
+            <div class="top_bar_title">eBook Maker System</div>
+            <div class="top_bar_create">
+                @*<a asp-page="Create">*@
+                <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#myModal">Create New</button>
+                @*</a>*@
+            </div>
+            <div class="top_bar_image"><img class="rounded-circle" src="images/default_people_icon.png" /></div>
+            <div class="top_bar_information">
+                <div>EMAIL</div>
+                <div>Hi, First NAME</div>
+            </div>
+        </div>
+        <!-- The Modal -->
+        <div class="modal" id="myModal">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                    <form method="post">
+                        <!-- Modal Header -->
+                        <div class="modal-header">
+                            <h4 class="modal-title">Create Your Own eBook</h4>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+
+                        <!-- Modal body -->
+                        <div class="modal-body container row " style="display: flex">
+                            <div class="col-lg-4 my-auto">
+                                <img src="~/images/create_eBook.jpg" style="width:100%;height:auto" />
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            </div>
+
+                            <div class="col-lg-8 container row">
+
+                                <div class="col-lg-3">
+                                    <label asp-for="eBookAdd.title" class="control-label"></label>
+                                </div>
+                                <div class="col-lg-9">
+                                    <input asp-for="eBookAdd.title" class="form-control" />
+                                    <span asp-validation-for="eBookAdd.title" class="text-danger"></span>
+                                </div>
+                                <div class="col-lg-3">
+                                    <label asp-for="eBookAdd.type" class="control-label"></label>
+                                </div>
+                                <div class="col-lg-9">
+                                    <select class="form-control" asp-for="eBookAdd.type" id="cars">
+                                        <option value="Document">Document</option>
+                                        <option value="Lecture Notes">Lecture Notes</option>
+
+                                    </select>
+                                    <span asp-validation-for="eBookAdd.type" class="text-danger"></span>
+                                </div>
+                                <div class="col-lg-3">
+                                    <label asp-for="eBookAdd.description" class="control-label"></label>
+                                </div>
+                                <div class="col-lg-9">
+                                    <textarea asp-for="eBookAdd.description" class="form-control"></textarea>
+                                    <span asp-validation-for="eBookAdd.description" class="text-danger"></span>
+                                </div>
+                                @*                            <div class="col-lg-3">
+                                @*<label asp-for="eBookAdd.height" class="control-label"></label>
+                                </div>
+                                <div class="col-lg-9">
+                                <input asp-for="eBookAdd.height" class="form-control" />
+                                <span asp-validation-for="eBookAdd.height" class="text-danger"></span>
+                                </div>*@
+                                <div class="col-lg-3">
+                                    @*                                    <label asp-for="eBookAdd.height" class="control-label"></label>
+                                    <label asp-for="eBookAdd.width" class="control-label"></label>
+
+                                    *@
+                                    Size (mm)
+                                </div>
+                                <div class="col-lg-9 row">
+                                    <div class="col-lg-5">
+                                        <input hint="Height" asp-for="eBookAdd.height" class="form-control" />
+                                        <span asp-validation-for="eBookAdd.height" class="text-danger"></span>
+                                        <div style="font-size:0.9em">
+                                            Height(mm)
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-5">
+                                        <input hint="Width" asp-for="eBookAdd.width" class="form-control" />
+                                        <span asp-validation-for="eBookAdd.width" class="text-danger"></span>
+                                        <div style="font-size:0.9em">
+                                            Width(mm)
+                                        </div>
+                                    </div>
+
+                                </div>
+                                @*                                <div class="col-lg-9 row">
+                                <input asp-for="eBookAdd.height" class="form-control" />
+                                <span asp-validation-for="eBookAdd.height" class="text-danger"></span>
+                                </div>
+                                <div class="col-lg-3">
+                                <label asp-for="eBookAdd.width" class="control-label"></label>
+                                </div>
+                                <div class="col-lg-9">
+                                <input asp-for="eBookAdd.width" class="form-control" />
+                                <span asp-validation-for="eBookAdd.width" class="text-danger"></span>
+                                </div>*@
+                                @*                                <div class="col-lg-3">
+                                <label asp-for="eBookAdd.edition" class="control-label"></label>
+                                </div>
+                                <div class="col-lg-9">
+                                <input asp-for="eBookAdd.edition" class="form-control" />
+                                <span asp-validation-for="eBookAdd.edition" class="text-danger"></span>
+                                </div>*@
+
+
+
+
+                                @*            <div class="form-group">
+                                <input hidden  asp-for="eBook.background" class="form-control" />
+                                <span asp-validation-for="eBook.background" class="text-danger"></span>
+                                </div>*@
+
+
+                                @*           <div class="form-group">
+                                <input hidden asp-for="eBook.bookStatus" class="form-control" />
+                                <span asp-validation-for="eBook.bookStatus" class="text-danger"></span>
+                                </div>*@
+                                @*<span hidden asp-validation-for="eBookAdd.bookStatus" class="text-danger"></span>*@
+                                @*            <div class="form-group">
+
+                                <input hidden asp-for="eBook.dateUpdated" class="form-control" />
+                                <span asp-validation-for="eBook.dateUpdated" class="text-danger"></span>
+                                </div>*@
+                                @*<span hidden asp-validation-for="eBookAdd.dateUpdated" class="text-danger"></span>*@
+                                @*Dont allow them to type auto fill in*@
+                                                                @*<div class="form-group">*@
+                                <label hidden asp-for="eBookAdd.authorID" class="control-label"></label>
+                                <input hidden value="testing@email.com" asp-for="eBookAdd.authorID" class="form-control" />
+                                <span hidden asp-validation-for="eBookAdd.authorID" class="text-danger"></span>
+                                @*</div>*@
+
+
+
+                            </div>
+
+
+                        </div>
+
+                        <!-- Modal footer -->
+                        <div class="modal-footer">
+                                            <input type="submit" value="Create" class="btn btn-danger" asp-page-handler="Book"/>
+@*                            <button type="button" class="btn btn-danger" >Create</button>*@
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="left_nav_bar_expandable">
+
+            <div class="left_nav_bar_item left_nav_bar_selected">
+                <img src="~/images/nav_menu_home.png" />
+                Home
+            </div>
+            <div class="left_nav_bar_item">
+                <img src="~/images/nav_menu_project.png" />
+                Projects
+            </div>
+            <div class="left_nav_bar_item">
+                <img src="~/images/nav_menu_share.png" />
+                Shared
+            </div>
+            <div class="left_nav_bar_item">
+                <img src="~/images/nav_menu_management.png" />
+                Management
+            </div>
+        </div>
+
+        <div class="home_content">
+            @*<div class="home_scrollbar">*@
+            <div class="home_content_title">
+                Recent Project
+            </div>
+            <div class="home_content_overview">
+                @*justify-content: space-between;*@
+                @{
+                    var i = 0;
+                }
+                @foreach (var item in Model.eBook)
+                {
+                    if (i == 5)
+                    {
+                        break;
+                    }
+                    else
+                        i++;
+
+                    <div class="home_content_overview_project">
+                        @{
+                            var pathSrc = "https://localhost:7171/eBooks/Details?id=" + item.bookID;
+                        }
+
+                        <div class="eBook_preview">
+                            <iframe scrolling="no" src=@pathSrc></iframe>
+                        </div>
+                        <div class="eBook_description">
+                            <div class="eBook_title previewText" @*style="width:100%;height:auto"*@>
+                                <a asp-page="./Details" asp-route-id="@item.bookID">
+                                    @Html.DisplayFor(modelItem => item.title)
+                                </a>
+
+                            </div>
+                            <div class="eBook_type" @*style="height:auto"*@>
+                                @Html.DisplayFor(modelItem => item.type)
+                            </div>
+                        </div>
+                        @*<a asp-page="./Edit" asp-route-id="@item.bookID">Edit</a>*@
+                        @*<a asp-page="./Delete" asp-route-id="@item.bookID">Delete</a>*@
+                    </div>
+                    @*                            <td>
+                @Html.DisplayFor(modelItem => item.description)
+                </td>
+                <td>
+                @Html.DisplayFor(modelItem => item.height)
+                </td>
+                <td>
+                @Html.DisplayFor(modelItem => item.width)
+                </td>
+                <td>
+                @Html.DisplayFor(modelItem => item.background)
+                </td>
+                <td>
+                @Html.DisplayFor(modelItem => item.edition)
+                </td>
+                <td>
+                @Html.DisplayFor(modelItem => item.bookStatus)
+                </td>
+                <td>
+                @Html.DisplayFor(modelItem => item.dateUpdated)
+                </td>
+                <td>
+                @Html.DisplayFor(modelItem => item.authorID)
+                </td>
+                <td>
+                <a asp-page="./Edit" asp-route-id="@item.bookID">Edit</a> |
+                |
+                <a asp-page="./Delete" asp-route-id="@item.bookID">Delete</a>
+                </td>*@
+
+                }
+
+            </div>
+            <hr class="mt-1 mb-1" />
+            <div class="home_content_title">
+                Shared With Me
+
+            </div>
+            <div class="home_content_overview">
+            </div>
+            <hr class="mt-1 mb-1" />
+            <div class="home_content_title">
+                All Project
+            </div>
+            <table class="table " style="margin-bottom:20px">
+                <thead>
+                    <tr>
+                        <th>
+
+                            @Html.DisplayNameFor(model => model.eBook[0].title)
+
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.eBook[0].type)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.eBook[0].description)
+                        </th>
+
+                        <th>
+                            @Html.DisplayNameFor(model => model.eBook[0].edition)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.eBook[0].bookStatus)
+                        </th>
+@*                        <th>
+                            @Html.DisplayNameFor(model => model.eBook[0].dateUpdated)
+                        </th>*@
+                        <th>
+                            @Html.DisplayNameFor(model => model.eBook[0].authorID)
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.eBook)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.title)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.type)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.description)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.edition)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.bookStatus)
+                            </td>
+@*                            <td>
+                                @Html.DisplayFor(modelItem => item.dateUpdated)
+                            </td>*@
+                            <td>
+                                @Html.DisplayFor(modelItem => item.authorID)
+                            </td>
+                            <td>
+                                <a asp-page="./Edit" asp-route-id="@item.bookID">Edit</a> |
+                                <a asp-page="./Details" asp-route-id="@item.bookID">Details</a> |
+                                <a asp-page="./Delete" asp-route-id="@item.bookID">Delete</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            @*</div>*@
+        </div>
+    </div>
+
+</body>
+</html>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<script type="text/javascript">
+    //alert();
+    $("iframe").on("load", function () {
+        $("iframe").contents().find(".top_bar").css("display","none");
+        $("iframe").contents().find(".left_nav_bar").css("display","none");
+        $("iframe").contents().find(".resize").css("display","none");
+        $("iframe").contents().find(".left_nav_bar").css("display","none");
+        $("iframe").contents().find("div.scaleHere").css("zoom", "30%");
+        $("iframe").contents().find("div.scaleHere").css("overflow", "none");
+       // $(this).scrollLeft("800");
+       // $(this).scrollTop("500");
+    })
+
+    $(document).ready(function () {
+        //change to the menu button
+        $("img.top_bar_menu_button").on("click", function () {
+            console.log("123");
+            console.log($(this).css("display"));
+            var visibility = $("div.left_nav_bar_expandable").css("display");
+            if (!(visibility == "none")) {
+                $("div.left_nav_bar_expandable").css("display", "none");
+                $("div.home_content").css("left", "0vw");
+                $("div.home_content").css("width", "100vw");
+                console.log("nonerun");
+            }
+            else {
+                $("div.left_nav_bar_expandable").css("display", "block");
+                $("div.home_content").css("left", "15vw");
+                $("div.home_content").css("width", "85vw");
+                console.log("block run");
+
+            }
+        })
+
+        $("div.left_nav_bar_expandable").on("mouseover", (function () {
+            $(this).find("div").on("click", function () {
+
+
+                $("div.left_nav_bar_expandable").children("div").removeClass("left_nav_bar_selected");
+                $(this).addClass("left_nav_bar_selected");
+            })
+        }))
+    })
+    @*
+        $(document).ready(function () {
+        alert();
+        })
+        $(document).ready(function () {
+        alert();
+        $("div.left_nav_bar").on("click", function () {
+        // console.log($(this).visibility));
+        alert();
+
+        })
+        *@
+</script>
+
+@*@page
+@model FYP1.Pages.eBooks.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+
+                @Html.DisplayNameFor(model => model.eBook[0].title)
+
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.eBook[0].type)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.eBook[0].description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.eBook[0].height)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.eBook[0].width)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.eBook[0].background)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.eBook[0].edition)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.eBook[0].bookStatus)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.eBook[0].dateUpdated)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.eBook[0].authorID)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.eBook)
+        {
+            <tr>
+                <td>
+                        @Html.DisplayFor(modelItem => item.title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.type)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.height)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.width)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.background)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.edition)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.bookStatus)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.dateUpdated)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.authorID)
+                </td>
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@item.bookID">Edit</a> |
+                    <a asp-page="./Details" asp-route-id="@item.bookID">Details</a> |
+                    <a asp-page="./Delete" asp-route-id="@item.bookID">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+*@

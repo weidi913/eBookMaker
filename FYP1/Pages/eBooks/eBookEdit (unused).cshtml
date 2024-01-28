@@ -1,0 +1,80 @@
+﻿@page
+@model FYP1.Pages.eBooks.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>eBook</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="eBook.bookID" />
+            <div class="form-group">
+                <label asp-for="eBook.title" class="control-label"></label>
+                <input asp-for="eBook.title" class="form-control" />
+                <span asp-validation-for="eBook.title" class="text-danger"></span>
+            </div>
+            <div  class="form-group">
+                <label asp-for="eBook.type" class="control-label"></label>
+                <input readonly asp-for="eBook.type" class="form-control" />
+                <span asp-validation-for="eBook.type" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="eBook.description" class="control-label"></label>
+                <input asp-for="eBook.description" class="form-control" />
+                <span asp-validation-for="eBook.description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="eBook.height" class="control-label"></label>
+                <input readonly asp-for="eBook.height" class="form-control" />
+                <span asp-validation-for="eBook.height" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="eBook.width" class="control-label"></label>
+                <input readonly asp-for="eBook.width" class="form-control" />
+                <span asp-validation-for="eBook.width" class="text-danger"></span>
+            </div>
+            <div  hidden class="form-group">
+                <label asp-for="eBook.background" class="control-label"></label>
+                <input asp-for="eBook.background" class="form-control" />
+                <span asp-validation-for="eBook.background" class="text-danger"></span>
+            </div>
+            <div hidden class="form-group">
+                <label asp-for="eBook.edition" class="control-label"></label>
+                <input asp-for="eBook.edition" class="form-control" />
+                <span asp-validation-for="eBook.edition" class="text-danger"></span>
+            </div>
+            <div hidden class="form-group">
+                <label asp-for="eBook.bookStatus" class="control-label"></label>
+                <input asp-for="eBook.bookStatus" class="form-control" />
+                <span asp-validation-for="eBook.bookStatus" class="text-danger"></span>
+            </div>
+            <div hidden class="form-group">
+                <label asp-for="eBook.LastUpdate" class="control-label"></label>
+                <input asp-for="eBook.LastUpdate" class="form-control" />
+                <span asp-validation-for="eBook.LastUpdate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="eBook.authorID" class="control-label"></label>
+                <input readonly asp-for="eBook.authorID" class="form-control" />
+                <span asp-validation-for="eBook.authorID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

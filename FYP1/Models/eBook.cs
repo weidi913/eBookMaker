@@ -33,7 +33,7 @@ namespace FYP1.Models
         public string bookStatus { get; set; } = "DRAFT";
 
         [DataType(DataType.Date), DisplayName("Last Modified")]
-        public DateTime dateUpdated { get; set; } = DateTime.Now;
+        public DateTime LastUpdate { get; set; } = DateTime.Now;
 
         [StringLength(50)]
         public string authorID { get; set; }
