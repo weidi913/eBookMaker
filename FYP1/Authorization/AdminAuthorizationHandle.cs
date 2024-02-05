@@ -5,12 +5,12 @@ using Microsoft.AspNetCore.Authorization;
 namespace FYP1.Authorization
 {
     public class AdminAuthorizationHandle
-                : AuthorizationHandler<OperationAuthorizationRequirement, Member>
+                : AuthorizationHandler<OperationAuthorizationRequirement, string>
     {
         protected override Task HandleRequirementAsync(
                                               AuthorizationHandlerContext context,
                                     OperationAuthorizationRequirement requirement,
-                                     Member resource)
+                                     string username)
         {
             if (context.User == null)
             {

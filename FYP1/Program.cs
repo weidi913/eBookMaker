@@ -29,7 +29,8 @@ builder.Services.AddRazorPages();
 builder.Services.AddAuthorization(options =>
 {
     options.FallbackPolicy = new AuthorizationPolicyBuilder()
-        .RequireAuthenticatedUser()
+            .RequireAssertion(_ => true) // Allow anonymous access
+        /*        .RequireAuthenticatedUser()*/
         .Build();
 });
 

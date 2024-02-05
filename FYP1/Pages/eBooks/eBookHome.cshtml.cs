@@ -41,7 +41,7 @@ namespace FYP1.Pages.eBooks
             if (_context.eBook != null)
             {
                 eBook = await _context.eBook
-                    .Where(e => e.authorID == UserManager.GetUserId(User))
+                    .Where(e => e.authorID == UserManager.GetUserName(User))
                     .ToListAsync();
             }
         }
@@ -57,15 +57,15 @@ namespace FYP1.Pages.eBooks
                 //to show the error
             }
 
-            eBookAdd.authorID = UserManager.GetUserId(User);
+            eBookAdd.authorID = UserManager.GetUserName(User);
 
             var isAuthorized = await AuthorizationService.AuthorizeAsync(
                                                         User, eBookAdd.authorID,
                                                         Operations.Create);
             if (!isAuthorized.Succeeded)
             {
-                return Forbid();
-                return Challenge();
+/*                return Forbid();
+*/                return Challenge();
             }
 
             _context.eBook.Add(eBookAdd);

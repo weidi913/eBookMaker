@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace FYP1.Authorization
 {
     public class IsOwnerAuthorizationHandler
-                : AuthorizationHandler<OperationAuthorizationRequirement, Member>
+                : AuthorizationHandler<OperationAuthorizationRequirement, string>
     {
         UserManager<Member> _userManager;
 
@@ -22,9 +22,9 @@ namespace FYP1.Authorization
         protected override Task
             HandleRequirementAsync(AuthorizationHandlerContext context,
                                    OperationAuthorizationRequirement requirement,
-                                   Member resource)
+                                   string username)
         {
-            if (context.User == null || resource == null)
+            if (context.User == null || username == null)
             {
                 return Task.CompletedTask;
             }
@@ -39,7 +39,7 @@ namespace FYP1.Authorization
                 return Task.CompletedTask;
             }
 
-            if (resource.OwnerID == _userManager.GetUserId(context.User))
+            if (username == _userManager.GetUserName(context.User))
             {
                 context.Succeed(requirement);
             }

@@ -6,14 +6,14 @@ using Microsoft.AspNetCore.Identity;
 namespace FYP1.Authorization
 {
     public class MemberAuthorizationHandle :
-    AuthorizationHandler<OperationAuthorizationRequirement, Member>
+    AuthorizationHandler<OperationAuthorizationRequirement, string>
     {
         protected override Task
             HandleRequirementAsync(AuthorizationHandlerContext context,
                                    OperationAuthorizationRequirement requirement,
-                                   Member resource)
+                                   string username)
         {
-            if (context.User == null || resource == null)
+            if (context.User == null || username == null)
             {
                 return Task.CompletedTask;
             }
@@ -28,7 +28,7 @@ namespace FYP1.Authorization
             }
 
             // Managers can read, delete, approve or reject.
-            if (context.User.IsInRole(Constants.ModeratorRole))
+            if (context.User.IsInRole(Constants.MemberRole))
             {
                 context.Succeed(requirement);
             }
