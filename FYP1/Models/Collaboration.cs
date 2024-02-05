@@ -17,5 +17,8 @@ namespace FYP1.Models
 
         public eBook? eBook { get; set; }
         //public User? User { get; set; }
+
+        [Timestamp]
+        public byte[] ConcurrencyToken { get; set; }
     }
 }

@@ -27,6 +27,9 @@ namespace FYP1.Models
         public string? imageData { get; set; }
 
         public MemeberStatus? Status { get; set; }
+
+        [Timestamp]
+        public byte[] ConcurrencyToken { get; set; }
     }
 
     public enum MemeberStatus

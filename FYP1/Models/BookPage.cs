@@ -21,5 +21,8 @@ namespace FYP1.Models
         public ICollection<Element>? Elements { get; set; }
 
         public ICollection<Comment>? Comments { get; set; }
+
+        [Timestamp]
+        public byte[] ConcurrencyToken { get; set; }
     }
 }

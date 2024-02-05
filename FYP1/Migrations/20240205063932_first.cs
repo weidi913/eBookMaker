@@ -41,6 +41,7 @@ namespace FYP1.Migrations
                     country = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     imageData = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Status = table.Column<int>(type: "int", nullable: true),
+                    ConcurrencyToken = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -76,7 +77,8 @@ namespace FYP1.Migrations
                     edition = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     bookStatus = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     LastUpdate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    authorID = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
+                    authorID = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    ConcurrencyToken = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -197,7 +199,8 @@ namespace FYP1.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     chapterName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     chapterNo = table.Column<int>(type: "int", nullable: false),
-                    bookID = table.Column<int>(type: "int", nullable: false)
+                    bookID = table.Column<int>(type: "int", nullable: false),
+                    ConcurrencyToken = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -218,7 +221,8 @@ namespace FYP1.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     authorID = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     bookID = table.Column<int>(type: "int", nullable: false),
-                    eBookbookID = table.Column<int>(type: "int", nullable: true)
+                    eBookbookID = table.Column<int>(type: "int", nullable: true),
+                    ConcurrencyToken = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -240,7 +244,8 @@ namespace FYP1.Migrations
                     verContent = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     versionDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     bookID = table.Column<int>(type: "int", nullable: false),
-                    eBookbookID = table.Column<int>(type: "int", nullable: true)
+                    eBookbookID = table.Column<int>(type: "int", nullable: true),
+                    ConcurrencyToken = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -260,7 +265,8 @@ namespace FYP1.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     pageNo = table.Column<int>(type: "int", nullable: false),
                     pageLock = table.Column<bool>(type: "bit", nullable: false),
-                    chapterID = table.Column<int>(type: "int", nullable: false)
+                    chapterID = table.Column<int>(type: "int", nullable: false),
+                    ConcurrencyToken = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -284,7 +290,8 @@ namespace FYP1.Migrations
                     commentStatus = table.Column<bool>(type: "bit", nullable: false),
                     authorID = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     bookPageID = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PagebookPageID = table.Column<int>(type: "int", nullable: true)
+                    PagebookPageID = table.Column<int>(type: "int", nullable: true),
+                    ConcurrencyToken = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -307,7 +314,8 @@ namespace FYP1.Migrations
                     elementStyle = table.Column<string>(type: "nvarchar(max)", maxLength: 5000, nullable: true),
                     z_index = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     text = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    bookPageID = table.Column<int>(type: "int", nullable: false)
+                    bookPageID = table.Column<int>(type: "int", nullable: false),
+                    ConcurrencyToken = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false)
                 },
                 constraints: table =>
                 {

@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using FYP1.Data;
 using FYP1.Models;
+using System.Composition;
 
 namespace FYP1.Pages.eBooks
 {
@@ -30,7 +31,7 @@ namespace FYP1.Pages.eBooks
                 return NotFound();
             }
 
-            var ebook =  await _context.eBook.FirstOrDefaultAsync(m => m.bookID == id);
+            var ebook = await _context.eBook.FirstOrDefaultAsync(m => m.bookID == id);
             if (ebook == null)
             {
                 return NotFound();
@@ -50,19 +51,61 @@ namespace FYP1.Pages.eBooks
 
             _context.Attach(eBook).State = EntityState.Modified;
 
-            try
+            //Fetch current department from DB.
+            //ConcurrencyToken may have changed.
+
+            var UpdateReport = await _context.eBook
+                .FirstOrDefaultAsync(m => m.bookID == eBook.bookID);
+
+            if (UpdateReport == null)
             {
-                await _context.SaveChangesAsync();
+                return HandleDeleted("Report");
             }
-            catch (DbUpdateConcurrencyException)
+
+            // Set ConcurrencyToken to value read in OnGetAsync
+            _context.Entry(UpdateReport).Property(p => p.ConcurrencyToken)
+                .OriginalValue = eBook.ConcurrencyToken;
+
+            if (await TryUpdateModelAsync<eBook>(
+                eBook, //vairable intend to update
+                "Report",
+                s => s.bookStatus, s => s.title))
             {
-                if (!eBookExists(eBook.bookID))
+
+
+                try
                 {
-                    return NotFound();
+                    await _context.SaveChangesAsync();
                 }
-                else
+                catch (DbUpdateConcurrencyException ex)
                 {
-                    throw;
+                    var exceptionEntry = ex.Entries.Single();
+                    var clientValues = (eBook)exceptionEntry.Entity;
+                    var databaseEntry = exceptionEntry.GetDatabaseValues();
+                    if (databaseEntry == null)
+                    {
+                        ModelState.AddModelError(string.Empty, "Unable to save. " +
+                            "The report was deleted by another user.");
+                        return Page();
+                    }
+
+                    var dbValues = (eBook)databaseEntry.ToObject();
+                    await SetDbErrorMessage(dbValues, clientValues, _context);
+
+                    // Save the current ConcurrencyToken so next postback
+                    // matches unless an new concurrency issue happens.
+                    eBook.ConcurrencyToken = (byte[])dbValues.ConcurrencyToken;
+                    // Clear the model error for the next postback.
+                    ModelState.Remove($"{nameof(eBook)}.{nameof(eBook.ConcurrencyToken)}");
+
+                    /*                    if (!eBookExists(eBook.bookID))
+                                        {
+                                            return NotFound();
+                                        }
+                                        else
+                                        {
+                                            throw;
+                                        }*/
                 }
             }
 
@@ -71,7 +114,52 @@ namespace FYP1.Pages.eBooks
 
         private bool eBookExists(int id)
         {
-          return (_context.eBook?.Any(e => e.bookID == id)).GetValueOrDefault();
+            return (_context.eBook?.Any(e => e.bookID == id)).GetValueOrDefault();
+        }
+
+        private IActionResult HandleDeleted(string type)
+        {
+            // ModelState contains the posted data because of the deletion error
+            // and overides the Department instance values when displaying Page().
+            ModelState.AddModelError(string.Empty,
+                "Unable to save. The " + type + " was deleted by another user.");
+            //InstructorNameSL = new SelectList(_context.Instructors, "ID", "FullName", Department.InstructorID);
+            return Page();
+        }
+
+        private async Task SetDbErrorMessage(eBook dbValues,
+        eBook clientValues, ApplicationDbContext context)
+        {
+
+            /*            if (dbValues.Name != clientValues.Name)
+                        {
+                            ModelState.AddModelError("Department.Name",
+                                $"Current value: {dbValues.Name}");
+                        }
+                        if (dbValues.Budget != clientValues.Budget)
+                        {
+                            ModelState.AddModelError("Department.Budget",
+                                $"Current value: {dbValues.Budget:c}");
+                        }
+                        if (dbValues.StartDate != clientValues.StartDate)
+                        {
+                            ModelState.AddModelError("Department.StartDate",
+                                $"Current value: {dbValues.StartDate:d}");
+                        }
+                        if (dbValues.InstructorID != clientValues.InstructorID)
+                        {
+                            Instructor dbInstructor = await _context.Instructors
+                               .FindAsync(dbValues.InstructorID);
+                            ModelState.AddModelError("Department.InstructorID",
+                                $"Current value: {dbInstructor?.FullName}");
+                        }*/
+
+            ModelState.AddModelError(string.Empty,
+                "The record you attempted to edit "
+              + "was modified by another user after you. The "
+              + "edit operation was canceled and the current values in the database "
+              + "have been displayed. If you still want to edit this record, click "
+              + "the Save button again.");
         }
     }
 }

@@ -46,5 +46,8 @@ namespace FYP1.Models
 
         public ICollection<Collaboration>? Collaborations { get; set; }
 
+        [Timestamp]
+        public byte[] ConcurrencyToken { get; set; }
+
     }
 }

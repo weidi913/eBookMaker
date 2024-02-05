@@ -28,5 +28,8 @@ namespace FYP1.Models
         public BookPage? Page { get; set; }
 
         //public User? User { get; set; }
+
+        [Timestamp]
+        public byte[] ConcurrencyToken { get; set; }
     }
 }
