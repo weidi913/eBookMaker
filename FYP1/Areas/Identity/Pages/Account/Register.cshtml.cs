@@ -58,6 +58,7 @@ namespace FYP1.Areas.Identity.Pages.Account
         ///     directly from your code. This API may change or be removed in future releases.
         /// </summary>
         public string ReturnUrl { get; set; }
+        public bool errorDetected = false;
 
         /// <summary>
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
@@ -98,15 +99,27 @@ namespace FYP1.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+
+            public string FirstName { get; set; }
+            public string LastName { get; set; }
+            public DateTime BirthdayDate { get; set; }
+            public string Gender { get; set; }
+            public bool Term { get; set; }
+            public bool Privacy { get; set; }
         }
 
+        public async Task<IActionResult> OnGetCheckEmailExist(string email)
+        {
+            var user = await _userManager.FindByNameAsync(email);
+            return new JsonResult(user != null);
+        }
 
         public async Task OnGetAsync(string returnUrl = null)
         {
+            errorDetected = false;
             ReturnUrl = returnUrl;
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
         }
-
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
             returnUrl ??= Url.Content("~/");
@@ -117,6 +130,10 @@ namespace FYP1.Areas.Identity.Pages.Account
 
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
+                user.birthday = Input.BirthdayDate;
+                user.gender = Input.Gender;
+                user.firstName = Input.FirstName;
+                user.lastName = Input.LastName;
                 var result = await _userManager.CreateAsync(user, Input.Password);
 
                 if (result.Succeeded)
@@ -155,6 +172,7 @@ namespace FYP1.Areas.Identity.Pages.Account
             }
 
             // If we got this far, something failed, redisplay form
+            errorDetected = true;
             return Page();
         }
 

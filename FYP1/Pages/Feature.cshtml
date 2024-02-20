@@ -1,0 +1,215 @@
+﻿@page
+@model FYP1.Pages.FeatureModel
+@{
+    ViewData["Title"] = "Feature";
+}
+
+
+@{
+    if (User.Identity.IsAuthenticated)
+    {
+        @Html.Partial("_HeaderLogin")
+    }
+    else
+    {
+        @Html.Partial("_HeaderGuest")
+    }
+}
+
+<div>
+    <div class="feature-page-container">
+        <div id="Products" class="feature-page-product-container">
+            <div class="section-container">
+                <h1 class="feature-page-product-heading section-header">Products</h1>
+                <div class="feature-page-product-list-container">
+                    <div class="feature-page-left-product-card about-card">
+                        <div class="feature-page-hover-container">
+                            <span class="feature-page-hover-text">
+                                Create and Design Your Own eBook
+                            </span>
+                        </div>
+                    </div>
+                    <div class="feature-page-right-product-card about-card">
+                        <div class="feature-page-hover-container">
+                            <span class="feature-page-hover-text">
+                                Collaboration Options
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="Services" class="feature-page-service-container">
+            <div class="feature-page-service-vertical-container section-container">
+                <h1 class="feature-page-service-heading section-header">Services</h1>
+                <div class="feature-page-service-gallery">
+                    <div class="feature-page-gallery" style="grid-area: a;">
+                        <div class="feature-page-gallery-container">
+                            <h1 class="feature-page-gallery-heading">Project Title</h1>
+                            <span class="feature-page-gallery-text">
+                                <span>Lorem ipsum dolor sit amet</span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="feature-page-gallery" style="grid-area: b;">
+                        <div class="feature-page-gallery-container">
+                            <h1 class="feature-page-gallery-heading">Project Title</h1>
+                            <span class="feature-page-gallery-text">
+                                <span>Lorem ipsum dolor sit amet</span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="feature-page-gallery" style="grid-area: c;">
+                        <div class="feature-page-gallery-container">
+                            <h1 class="feature-page-gallery-heading">Project Title</h1>
+                            <span class="feature-page-gallery-text">
+                                <span>Lorem ipsum dolor sit amet</span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="feature-page-gallery" style="grid-area: d;">
+                        <div class="feature-page-gallery-container">
+                            <h1 class="feature-page-gallery-heading">Project Title</h1>
+                            <span class="feature-page-gallery-text">
+                                <span>Lorem ipsum dolor sit amet</span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="feature-page-gallery" style="grid-area: e;">
+                        <div class="feature-page-gallery-container">
+                            <h1 class="feature-page-gallery-heading">Project Title</h1>
+                            <span class="feature-page-gallery-text">
+                                <span>Lorem ipsum dolor sit amet</span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="feature-page-gallery" style="grid-area: f;">
+                        <div class="feature-page-gallery-container">
+                            <h1 class="feature-page-gallery-heading">Project Title</h1>
+                            <span class="feature-page-gallery-text">
+                                <span>Lorem ipsum dolor sit amet</span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="Capabilities" class="feature-page-capability-container">
+            <div class="feature-page-capability-vertical-container section-container">
+                <h1 class="feature-page-capability-heading section-header">
+                    Capabilities
+                </h1>
+                <div class="feature-page-blog-list-container">
+                    <div class="feature-page-blog-container">
+                        <div class="blog-post-card-blog-post-card blog-post-card-root-class-name8">
+                            <img alt="image"
+                                 src="https://images.unsplash.com/photo-1547841243-eacb14453cd9?ixid=Mnw5MTMyMXwwfDF8c2VhcmNofDIyfHxjaXR5fGVufDB8fHx8MTYyNjE4NjYxMg&ixlib=rb-1.2.1&w=1000"
+                                 class="blog-post-card-image" />
+                            <div class="blog-post-card-content-container">
+                                <span class="blog-post-card-type"><span>ENTERPRISE</span></span>
+                                <span class="blog-post-card-title">
+                                    <span>Lorem ipsum dolor sit amet</span>
+                                </span>
+                                <span class="blog-post-card-description">
+                                    <span>
+                                        Lorem ipsum dolor sit amet, consectetur, adipiscing elit.
+                                        Sed non volutpat turpis. ​ Mauris luctus rutrum mi ut
+                                        rhoncus. Integer in dignissim tortor. Lorem ​​ ipsum dolor
+                                        sit amet, consectetur adipiscing elit.
+                                    </span>
+                                </span>
+                                <div class="blog-post-card-profile-container">
+                                    <div class="blog-post-card-profile">
+                                        <img alt="profile"
+                                             src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixid=Mnw5MTMyMXwwfDF8c2VhcmNofDd8fG1hbiUyMHBvcnRyYWl0fGVufDB8fHx8MTYyNjQzMTMwMw&ixlib=rb-1.2.1&h=1200"
+                                             image_src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixid=Mnw5MTMyMXwwfDF8c2VhcmNofDd8fG1hbiUyMHBvcnRyYWl0fGVufDB8fHx8MTYyNjQzMTMwMw&amp;ixlib=rb-1.2.1&amp;h=1200"
+                                             class="blog-post-card-profile-image" />
+                                        <span class="blog-post-card-name">
+                                            <span>Jon Doe</span>
+                                        </span>
+                                    </div>
+                                    <span class="blog-post-card-read-time">
+                                        <span>5 min read</span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="feature-page-blog-container">
+                        <div class="blog-post-card-blog-post-card blog-post-card-root-class-name8">
+                            <img alt="image"
+                                 src="https://images.unsplash.com/photo-1547841243-eacb14453cd9?ixid=Mnw5MTMyMXwwfDF8c2VhcmNofDIyfHxjaXR5fGVufDB8fHx8MTYyNjE4NjYxMg&ixlib=rb-1.2.1&w=1000"
+                                 class="blog-post-card-image" />
+                            <div class="blog-post-card-content-container">
+                                <span class="blog-post-card-type"><span>ENTERPRISE</span></span>
+                                <span class="blog-post-card-title">
+                                    <span>Lorem ipsum dolor sit amet</span>
+                                </span>
+                                <span class="blog-post-card-description">
+                                    <span>
+                                        Lorem ipsum dolor sit amet, consectetur, adipiscing elit.
+                                        Sed non volutpat turpis. ​ Mauris luctus rutrum mi ut
+                                        rhoncus. Integer in dignissim tortor. Lorem ​​ ipsum dolor
+                                        sit amet, consectetur adipiscing elit.
+                                    </span>
+                                </span>
+                                <div class="blog-post-card-profile-container">
+                                    <div class="blog-post-card-profile">
+                                        <img alt="profile"
+                                             src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixid=Mnw5MTMyMXwwfDF8c2VhcmNofDd8fG1hbiUyMHBvcnRyYWl0fGVufDB8fHx8MTYyNjQzMTMwMw&ixlib=rb-1.2.1&h=1200"
+                                             image_src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixid=Mnw5MTMyMXwwfDF8c2VhcmNofDd8fG1hbiUyMHBvcnRyYWl0fGVufDB8fHx8MTYyNjQzMTMwMw&amp;ixlib=rb-1.2.1&amp;h=1200"
+                                             class="blog-post-card-profile-image" />
+                                        <span class="blog-post-card-name">
+                                            <span>Jon Doe</span>
+                                        </span>
+                                    </div>
+                                    <span class="blog-post-card-read-time">
+                                        <span>5 min read</span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="feature-page-blog-last-container">
+                        <div class="blog-post-card-blog-post-card blog-post-card-root-class-name8">
+                            <img alt="image"
+                                 src="https://images.unsplash.com/photo-1547841243-eacb14453cd9?ixid=Mnw5MTMyMXwwfDF8c2VhcmNofDIyfHxjaXR5fGVufDB8fHx8MTYyNjE4NjYxMg&ixlib=rb-1.2.1&w=1000"
+                                 class="blog-post-card-image" />
+                            <div class="blog-post-card-content-container">
+                                <span class="blog-post-card-type"><span>ENTERPRISE</span></span>
+                                <span class="blog-post-card-title">
+                                    <span>Lorem ipsum dolor sit amet</span>
+                                </span>
+                                <span class="blog-post-card-description">
+                                    <span>
+                                        Lorem ipsum dolor sit amet, consectetur, adipiscing elit.
+                                        Sed non volutpat turpis. ​ Mauris luctus rutrum mi ut
+                                        rhoncus. Integer in dignissim tortor. Lorem ​​ ipsum dolor
+                                        sit amet, consectetur adipiscing elit.
+                                    </span>
+                                </span>
+                                <div class="blog-post-card-profile-container">
+                                    <div class="blog-post-card-profile">
+                                        <img alt="profile"
+                                             src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixid=Mnw5MTMyMXwwfDF8c2VhcmNofDd8fG1hbiUyMHBvcnRyYWl0fGVufDB8fHx8MTYyNjQzMTMwMw&ixlib=rb-1.2.1&h=1200"
+                                             image_src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixid=Mnw5MTMyMXwwfDF8c2VhcmNofDd8fG1hbiUyMHBvcnRyYWl0fGVufDB8fHx8MTYyNjQzMTMwMw&amp;ixlib=rb-1.2.1&amp;h=1200"
+                                             class="blog-post-card-profile-image" />
+                                        <span class="blog-post-card-name">
+                                            <span>Jon Doe</span>
+                                        </span>
+                                    </div>
+                                    <span class="blog-post-card-read-time">
+                                        <span>5 min read</span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@Html.Partial("_FooterGuest")

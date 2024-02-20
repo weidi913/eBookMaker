@@ -4,20 +4,71 @@
     ViewData["Title"] = "Register confirmation";
 }
 
-<h1>@ViewData["Title"]</h1>
-@{
+ <h1>@ViewData["Title"]</h1> 
+ @{
     if (@Model.DisplayConfirmAccountLink)
     {
-<p>
-    This app does not currently have a real email sender registered, see <a href="https://aka.ms/aspaccountconf">these docs</a> for how to configure a real email sender.
-    Normally this would be emailed: <a id="confirm-link" href="@Model.EmailConfirmationUrl">Click here to confirm your account</a>
-</p>
+        <p>
+            This app does not currently have a real email sender registered, see <a href="https://aka.ms/aspaccountconf">these docs</a> for how to configure a real email sender.
+            Normally this would be emailed: <a id="confirm-link" href="@Model.EmailConfirmationUrl">Click here to confirm your account</a>
+        </p>
     }
     else
     {
-<p>
-        Please check your email to confirm your account.
-</p>
+        <p>
+            Please check your email to confirm your account.
+        </p>
     }
-}
+} 
+<div class="register-container">
+    <div class="register-form-container">
+        <div class="enter-container">
+            <a style="align-self:center" asp-page="Home">
+                <img alt="logo"
+                     src="~/images/dwei-logo.png"
+                     class="register-form-logo" />
+            </a>
+            <div class="register-form-instruction-container">
+                <div id="input-container-6" class="register-form-input-container input-container">
+                    <h1 class="register-form-text"><span>Confirmation Link</span></h1>
+                    <span class="register-form-description">
+                        <span>Thank you for registering for our websites!</span>
+                    </span>
+                    <span class="register-form-confirm-no-margin-text">
+                        <span>
+                            To complete the registration process, we've sent a confirmation
+                            email to the address you provided. Please check your inbox and
+                            follow the instructions in the email to verify your account.
+                        </span>
+                    </span>
+                    <span class="register-form-confirm-margin-text">
+                        <span>
+                            If you don't receive the email within a few minutes, please
+                            check your spam or junk folder or click Resend Confirmation
+                            Email
+                        </span>
+                    </span>
+                    <span class="register-form-confirm-margin-text">
+                        <span>
+                            Once your account is verified, you'll be all set to explore
+                            and enjoy eBook journey. If you encounter any issues or have
+                            questions, feel free to contact our support team.
+                        </span>
+                    </span>
+                </div>
+            </div>
+            <div class="register-form-button-container">
+                <button class="register-form-right-button enter-button">
+                    <span>Login Page</span>
+                </button>
+            </div>
+        </div>
+    </div>
+    @Html.Partial("_FooterGuest")
+</div>
 
+<script>
+    $(".enter-button").click(function () {
+        window.location.href = '/Identity/Account/Login';
+    })
+</script>

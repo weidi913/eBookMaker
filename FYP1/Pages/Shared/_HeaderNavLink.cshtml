@@ -1,0 +1,152 @@
+﻿<div>
+    @* Nav link container*@
+    <div class="nav-link-nav-link">
+        @* Home section *@
+        <div data-thq="thq-dropdown" class="nav-link-normal-container">
+            <div data-thq="thq-dropdown-toggle" class="nav-link-dropdown-toggle">
+                <a asp-page="Home">
+                    <span class="nav-link-menu-text">Home</span>
+                </a>
+            </div>
+        </div>
+        @* More option section *@
+        <div data-thq="thq-dropdown" class="nav-link-expand-container">
+            @* Menu Bar*@
+            <div data-thq="thq-dropdown-toggle" class="nav-link-dropdown-toggle">
+                <svg viewBox="0 0 1024 1024" class="nav-link-icon">
+                    <path d="M597.333 512c0-23.552-9.6-44.928-25.003-60.331s-36.779-25.003-60.331-25.003-44.928 9.6-60.331 25.003-25.003 36.779-25.003 60.331 9.6 44.928 25.003 60.331 36.779 25.003 60.331 25.003 44.928-9.6 60.331-25.003 25.003-36.779 25.003-60.331zM896 512c0-23.552-9.6-44.928-25.003-60.331s-36.779-25.003-60.331-25.003-44.928 9.6-60.331 25.003-25.003 36.779-25.003 60.331 9.6 44.928 25.003 60.331 36.779 25.003 60.331 25.003 44.928-9.6 60.331-25.003 25.003-36.779 25.003-60.331zM298.667 512c0-23.552-9.6-44.928-25.003-60.331s-36.779-25.003-60.331-25.003-44.928 9.6-60.331 25.003-25.003 36.779-25.003 60.331 9.6 44.928 25.003 60.331 36.779 25.003 60.331 25.003 44.928-9.6 60.331-25.003 25.003-36.779 25.003-60.331z"></path>
+                </svg>
+            </div>
+            @* Drop down list*@
+            <ul data-thq="thq-dropdown-list" class="nav-link-dropdown-list">
+                <li data-thq="thq-dropdown" class="nav-link-dropdown list-item">
+                    <div data-thq="thq-dropdown-toggle"
+                         class="nav-link-nested-dropdown-toggle">
+                        <a asp-page="About">
+                            <span class="nav-link-dropdown-text">About</span>
+                        </a>
+                    </div>
+                </li>
+                <li data-thq="thq-dropdown" class="nav-link-dropdown list-item">
+                    <div data-thq="thq-dropdown-toggle"
+                         class="nav-link-nested-dropdown-toggle">
+                         <a asp-page="Feature">
+                        <span class="nav-link-dropdown-text">Feature</span>
+                        </a>
+                    </div>
+                </li>
+                <li data-thq="thq-dropdown" class="nav-link-dropdown list-item">
+                    <div data-thq="thq-dropdown-toggle"
+                         class="nav-link-nested-dropdown-toggle">
+                         <a asp-page="Help">
+                        <span class="nav-link-dropdown-text">Help</span>
+                        </a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        @* About section *@
+        <div data-thq="thq-dropdown" class="nav-link-normal-container">
+            <div data-thq="thq-dropdown-toggle" class="nav-link-dropdown-toggle">
+                <a asp-page="About">
+                <span class="nav-link-menu-text">About</span>
+                </a>
+                <div data-thq="thq-dropdown-arrow" class="nav-link-dropdown-arrow">
+                    <svg viewBox="0 0 1024 1024" class="nav-link-icon">
+                        <path d="M426 726v-428l214 214z"></path>
+                    </svg>
+                </div>
+            </div>
+            @* Drop down list*@
+            <ul data-thq="thq-dropdown-list" class="nav-link-dropdown-list">
+                <li data-thq="thq-dropdown" class="nav-link-dropdown list-item">
+                    <div data-thq="thq-dropdown-toggle" class="nav-link-nested-dropdown-toggle">
+                        <a asp-page="About" asp-fragment="Mission">
+                        <span class="nav-link-dropdown-text">Mission</span>
+                        </a>
+                    </div>
+                </li>
+                <li data-thq="thq-dropdown" class="nav-link-dropdown list-item">
+                    <div data-thq="thq-dropdown-toggle" class="nav-link-nested-dropdown-toggle">
+                        <a asp-page="About" asp-fragment="Vision">
+                        <span class="nav-link-dropdown-text">Vision</span>
+                        </a>
+                    </div>
+                </li>
+                <li data-thq="thq-dropdown" class="nav-link-dropdown list-item">
+                    <div data-thq="thq-dropdown-toggle" class="nav-link-nested-dropdown-toggle">
+                        <a asp-page="About" asp-fragment="Why-Choose-Us">
+                        <span class="nav-link-dropdown-text">Why choose us</span>
+                        </a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        @* Feature section *@
+        <div data-thq="thq-dropdown" class="nav-link-normal-container">
+            <div data-thq="thq-dropdown-toggle" class="nav-link-dropdown-toggle">
+                <a asp-page="Feature">
+                <span class="nav-link-menu-text">Feature</span>
+                </a>
+                <div data-thq="thq-dropdown-arrow" class="nav-link-dropdown-arrow">
+                    <svg viewBox="0 0 1024 1024" class="nav-link-icon">
+                        <path d="M426 726v-428l214 214z"></path>
+                    </svg>
+                </div>
+            </div>
+            @* Drop down list*@
+            <ul data-thq="thq-dropdown-list" class="nav-link-dropdown-list">
+                <li data-thq="thq-dropdown" class="nav-link-dropdown list-item">
+                    <div data-thq="thq-dropdown-toggle" class="nav-link-nested-dropdown-toggle">
+                        <a asp-page="Feature" asp-fragment="Products">
+                        <span class="nav-link-dropdown-text">Products</span>
+                        </a>
+                    </div>
+                </li>
+                <li data-thq="thq-dropdown" class="nav-link-dropdown list-item">
+                    <div data-thq="thq-dropdown-toggle" class="nav-link-nested-dropdown-toggle">
+                        <a asp-page="Feature" asp-fragment="Services">
+                        <span class="nav-link-dropdown-text">Services</span>
+                        </a>
+                    </div>
+                </li>
+                <li data-thq="thq-dropdown" class="nav-link-dropdown list-item">
+                    <div data-thq="thq-dropdown-toggle" class="nav-link-nested-dropdown-toggle">
+                        <a asp-page="Feature" asp-fragment="Capabilities">
+                        <span class="nav-link-dropdown-text">Capabilities</span>
+                        </a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        @* Help section *@
+        <div data-thq="thq-dropdown" class="nav-link-normal-container">
+            <div data-thq="thq-dropdown-toggle" class="nav-link-dropdown-toggle">
+                <a asp-page="Help">
+                <span class="nav-link-menu-text">Help</span>
+                </a>
+                <div data-thq="thq-dropdown-arrow" class="nav-link-dropdown-arrow">
+                    <svg viewBox="0 0 1024 1024" class="nav-link-icon">
+                        <path d="M426 726v-428l214 214z"></path>
+                    </svg>
+                </div>
+            </div>
+            <ul data-thq="thq-dropdown-list" class="nav-link-dropdown-list">
+                <li data-thq="thq-dropdown" class="nav-link-dropdown list-item">
+                    <div data-thq="thq-dropdown-toggle" class="nav-link-nested-dropdown-toggle">
+                        <a asp-page="Help" asp-fragment="Guidances">
+                        <span class="nav-link-dropdown-text">Guidances</span>
+                        </a>
+                    </div>
+                </li>
+                <li data-thq="thq-dropdown" class="nav-link-dropdown list-item">
+                    <div data-thq="thq-dropdown-toggle" class="nav-link-nested-dropdown-toggle">
+                        <a asp-page="Help" asp-fragment="Contact-us">
+                        <span class="nav-link-dropdown-text">Contact us</span>
+                        </a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

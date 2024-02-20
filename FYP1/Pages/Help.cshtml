@@ -1,0 +1,155 @@
+﻿@page
+@model FYP1.Pages.HelpModel
+@{
+    ViewData["Title"] = "Help";
+}
+
+
+@{
+    if (User.Identity.IsAuthenticated)
+    {
+        @Html.Partial("_HeaderLogin")
+    }
+    else
+    {
+        @Html.Partial("_HeaderGuest")
+    }
+}
+
+<div id="Guidances">
+    <div class="help-banner-banner">
+        <h1 class="help-banner-text section-header">
+            <span>How can we help?</span>
+        </h1>
+        <span class="help-banner-empty-space-text">
+            <span></span>
+        </span>
+        <div class="help-banner-search-container">
+            <svg viewBox="0 0 1024 1024" class="help-banner-icon">
+                <path d="M992.262 871.396l-242.552-206.294c-25.074-22.566-51.89-32.926-73.552-31.926 57.256-67.068 91.842-154.078 91.842-249.176 0-212.078-171.922-384-384-384-212.076 0-384 171.922-384 384s171.922 384 384 384c95.098 0 182.108-34.586 249.176-91.844-1 21.662 9.36 48.478 31.926 73.552l206.294 242.552c35.322 39.246 93.022 42.554 128.22 7.356s31.892-92.898-7.354-128.22zM384 640c-141.384 0-256-114.616-256-256s114.616-256 256-256 256 114.616 256 256-114.614 256-256 256z"></path>
+            </svg>
+            <input type="text"
+                   placeholder="I want to know more about..."
+                   class="help-banner-textinput input" />
+        </div>
+        <span class="help-banner-popular-text">
+            <span>Popular topic: account setting, operations</span>
+        </span>
+    </div>
+</div>
+
+<div id="FAQ">
+    <div class="help-faq-container">
+        <div class="help-faq-type-container">
+            <svg viewBox="0 0 877.7142857142857 1024" class="help-faq-icon">
+                <path d="M502.857 685.714v91.429c0 10.286-8 18.286-18.286 18.286h-91.429c-10.286 0-18.286-8-18.286-18.286v-91.429c0-10.286 8-18.286 18.286-18.286h91.429c10.286 0 18.286 8 18.286 18.286zM649.143 402.286c0 81.143-56.571 113.143-98.286 136.571-29.714 17.143-48 28-48 46.286v18.286c0 10.286-8 18.286-18.286 18.286h-91.429c-10.286 0-18.286-8-18.286-18.286v-38.857c0-70.286 50.286-92.571 90.857-110.857 34.286-16 55.429-26.857 55.429-52.571 0-33.143-41.714-57.714-79.429-57.714-20 0-41.143 6.286-54.286 15.429-12.571 8.571-24.571 21.143-45.714 47.429-3.429 4.571-8.571 6.857-14.286 6.857-4 0-8-1.143-10.857-3.429l-61.714-46.857c-7.429-5.714-9.143-16.571-4-24.571 46.857-73.714 112.571-109.714 199.429-109.714v0c93.714 0 198.857 74.286 198.857 173.714zM438.857 146.286c-201.714 0-365.714 164-365.714 365.714s164 365.714 365.714 365.714 365.714-164 365.714-365.714-164-365.714-365.714-365.714zM877.714 512c0 242.286-196.571 438.857-438.857 438.857s-438.857-196.571-438.857-438.857 196.571-438.857 438.857-438.857v0c242.286 0 438.857 196.571 438.857 438.857z"></path>
+            </svg>
+            <div class="help-faq-text-container">
+                <div class="help-faq-clarity-container">
+                    <h1 class="help-faq-text"><span>Heading</span></h1>
+                    <span class="help-faq-text1">
+                        <span>
+                            Description Here you can insert whatever you want here just test
+                            make it longer to test the limit
+                        </span>
+                    </span>
+                </div>
+                <div class="help-faq-faq-grid-container">
+                    <span class="help-faq-question-text">
+                        <span>Emquiry Enquiry Emquiry Enquiry Emquiry</span>
+                    </span>
+                    <span class="help-faq-question-text">
+                        <span>Emquiry Enquiry Emquiry Enquiry Emquiry</span>
+                    </span>
+                    <span class="help-faq-question-text">
+                        <span>Emquiry Enquiry Emquiry Enquiry Emquiry</span>
+                    </span>
+                    <span class="help-faq-question-text">
+                        <span>Emquiry Enquiry Emquiry Enquiry Emquiry</span>
+                    </span>
+                    <span class="help-faq-question-text">
+                        <span>Emquiry Enquiry Emquiry Enquiry Emquiry</span>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="Contact-us" style="display:flex; justify-content:center">
+    <div class="help-contact-us-steps section-container">
+        <h1 class="help-contact-us-text section-header"><span>Contact us</span></h1>
+        <div class="help-contact-us-contact-us-container-list">
+            <div class="help-contact-us-contact-list-container">
+                <div class="help-contact-us-contact-container">
+                    <svg viewBox="0 0 1024 1024" class="help-contact-us-icon">
+                        <path d="M512 490q44 0 75-31t31-75-31-75-75-31-75 31-31 75 31 75 75 31zM512 86q124 0 211 87t87 211q0 62-31 142t-75 150-87 131-73 97l-32 34q-12-14-32-37t-72-92-91-134-71-147-32-144q0-124 87-211t211-87z"></path>
+                    </svg>
+                    <div class="help-contact-us-text-container">
+                        <h1 class="help-contact-us-contact-heading">
+                            <span>Location</span>
+                        </h1>
+                        <span class="help-contact-us-contact-info">
+                            <span>2345, Jalan Seksyen 2/9,</span>
+                            <br />
+                            <span>31900 Kampar, Perak, Malaysia</span>
+                        </span>
+                    </div>
+                </div>
+                <div class="help-contact-us-contact-container">
+                    <svg viewBox="0 0 1024 1024" class="help-contact-us-icon">
+                        <path d="M282 460q96 186 282 282l94-94q20-20 44-10 72 24 152 24 18 0 30 12t12 30v150q0 18-12 30t-30 12q-300 0-513-213t-213-513q0-18 12-30t30-12h150q18 0 30 12t12 30q0 80 24 152 8 26-10 44z"></path>
+                    </svg>
+                    <div class="help-contact-us-text-container">
+                        <h1 class="help-contact-us-contact-heading">
+                            <span>Enquiries</span>
+                        </h1>
+                        <span class="help-contact-us-contact-info">
+                            <span>Phone: +6017-433 9650</span>
+                            <br />
+                            <span>Email: corjackchin@1utar.my</span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="help-contact-us-contact-list-container">
+                <div class="help-contact-us-contact-container">
+                    <svg viewBox="0 0 1024 1024" class="help-contact-us-icon">
+                        <path d="M512 310.857v256c0 10.286-8 18.286-18.286 18.286h-182.857c-10.286 0-18.286-8-18.286-18.286v-36.571c0-10.286 8-18.286 18.286-18.286h128v-201.143c0-10.286 8-18.286 18.286-18.286h36.571c10.286 0 18.286 8 18.286 18.286zM749.714 512c0-171.429-139.429-310.857-310.857-310.857s-310.857 139.429-310.857 310.857 139.429 310.857 310.857 310.857 310.857-139.429 310.857-310.857zM877.714 512c0 242.286-196.571 438.857-438.857 438.857s-438.857-196.571-438.857-438.857 196.571-438.857 438.857-438.857 438.857 196.571 438.857 438.857z"></path>
+                    </svg>
+                    <div class="help-contact-us-text-container">
+                        <h1 class="help-contact-us-contact-heading">
+                            <span>Opening Hours</span>
+                        </h1>
+                        <span class="help-contact-us-contact-info">
+                            <span>Mon-Fri: 10 a.m. - 10 p.m.</span>
+                            <br />
+                            <span>Saturday & Sunday: Closed</span>
+                        </span>
+                    </div>
+                </div>
+                <div class="help-contact-us-contact-container">
+                    <svg viewBox="0 0 1024 1024" class="help-contact-us-icon">
+                        <path d="M864 704c-45.16 0-85.92 18.738-115.012 48.83l-431.004-215.502c1.314-8.252 2.016-16.706 2.016-25.328s-0.702-17.076-2.016-25.326l431.004-215.502c29.092 30.090 69.852 48.828 115.012 48.828 88.366 0 160-71.634 160-160s-71.634-160-160-160-160 71.634-160 160c0 8.622 0.704 17.076 2.016 25.326l-431.004 215.504c-29.092-30.090-69.852-48.83-115.012-48.83-88.366 0-160 71.636-160 160 0 88.368 71.634 160 160 160 45.16 0 85.92-18.738 115.012-48.828l431.004 215.502c-1.312 8.25-2.016 16.704-2.016 25.326 0 88.368 71.634 160 160 160s160-71.632 160-160c0-88.364-71.634-160-160-160z"></path>
+                    </svg>
+                    <div class="help-contact-us-text-container">
+                        <h1 class="help-contact-us-contact-heading">
+                            <span>Follow Us</span>
+                        </h1>
+                        <span class="help-contact-us-contact-info">
+                            <span>FB: Wei Di</span>
+                            <br />
+                            <span>IG: weidi8825</span>
+                            <br/>
+                            <span>YT: WeiDi</span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@Html.Partial("_FooterGuest")

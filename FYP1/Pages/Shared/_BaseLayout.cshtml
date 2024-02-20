@@ -1,0 +1,64 @@
+﻿
+@*
+    This file store the common layout for all files.
+    It will import all the relevant css, jquery file
+*@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    @* write the basic website information*@
+    <meta charset="utf-8" />
+    <meta property="og:title" content="FYP eBook" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta property="twitter:card" content="summary_large_image" />
+
+    @* Website Title *@
+    <title>DWei @ViewData["Title"]</title>
+
+    @* Change the icon of the website based on best customization*@
+    <link rel="icon" type="image/png" href="~/images/website-icon/16x16.png">
+    <link rel="icon" type="image/png" href="~/images/website-icon/32x32.png">
+    <link rel="icon" type="image/png" href="~/images/website-icon/48x48.png">
+    <link rel="icon" type="image/png" href="~/images/website-icon/340x340.png">
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&amp;display=swap" data-tag="font" />
+    @* import the relevant css and js file *@
+    <link rel="stylesheet" type="text/css" href="~/css/reset.css" asp-append-version="true">
+    <link rel="stylesheet" type="text/css" href="~/css/default.css" asp-append-version="true">
+
+    @* this must be deleted to ensure nice spacing for the thing*@
+
+    @* <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" /> *@
+    <link rel="stylesheet" type="text/css" href="~/css/styles.css" asp-append-version="true">
+
+
+    <link rel="stylesheet" href="https://unpkg.com/animate.css@4.1.1/animate.css" />
+
+@*     <link rel="stylesheet" href="https://unpkg.com/@teleporthq/teleport-custom-scripts/dist/style.css" /> *@
+
+</head>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/script.js" asp-append-version="true"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+
+<body>
+     <div>
+        @* <main role="main" class="pb-3"> *@
+        <main role="main">
+            @RenderBody()
+        </main>
+    </div>
+ 
+@*     <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/script.js" asp-append-version="true"></script>
+
+    @await RenderSectionAsync("Scripts", required: false) *@
+</body>
+</html>

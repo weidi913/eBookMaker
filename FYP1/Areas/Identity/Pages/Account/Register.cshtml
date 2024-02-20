@@ -4,6 +4,684 @@
     ViewData["Title"] = "Register";
 }
 
+@if (User.Identity.IsAuthenticated)
+{
+    Response.Redirect("/eBooks/eBookHome");
+}
+
+<style>
+    option {
+        color: black;
+    }
+</style>
+<div class="register-container">
+    <div class="register-form-container">
+        <div class="enter-container">
+            <a style="align-self:center" asp-page="Home">
+                <img alt="logo"
+                     src="~/images/dwei-logo.png"
+                     class="register-form-logo" />
+            </a>
+            <div class="register-form-instruction-container">
+                <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="enter-form">
+                    @*the first left button change to back to login page*@
+                    <div id="input-container-1" class="register-form-input-container input-container">
+                        <h1 class="register-form-text"><span>Create Your Account</span></h1>
+                        <span class="register-form-description">
+                            <span>Enter Your Name</span>
+                        </span>
+                        <div class="enter-input-label-container">
+                            <label asp-for="Input.FirstName" class="enter-label">First name</label>
+                            <input asp-for="Input.FirstName" id="first-name" type="text" placeholder="First Name" class="input name-input" />
+                            <div class="register-user-error-container">
+                                <svg viewBox="0 0 1024 1024" class="register-user-error-icon">
+                                    <path d="M512 854q140 0 241-101t101-241-101-241-241-101-241 101-101 241 101 241 241 101zM512 86q176 0 301 125t125 301-125 301-301 125-301-125-125-301 125-301 301-125zM470 298h84v256h-84v-256zM470 640h84v86h-84v-86z"></path>
+                                </svg>
+                                <span class="register-user-error-text">Enter first name</span>
+                            </div>
+                        </div>
+                        <div class="register-form-second-container enter-input-label-container">
+                            <label asp-for="Input.LastName" class="enter-label">Last name</label>
+                            <input asp-for="Input.LastName" id="last-name" type="text" placeholder="Last name (optional)" class="input" />
+                            <div class="register-user-error-container">
+                                <svg viewBox="0 0 1024 1024" class="register-user-error-icon">
+                                    <path d="M512 854q140 0 241-101t101-241-101-241-241-101-241 101-101 241 101 241 241 101zM512 86q176 0 301 125t125 301-125 301-301 125-301-125-125-301 125-301 301-125zM470 298h84v256h-84v-256zM470 640h84v86h-84v-86z"></path>
+                                </svg>
+                                <span class="register-user-error-text">Enter last name</span>
+                            </div>
+                        </div>
+                        @if (Model.errorDetected)
+                        {
+                            <div style="display:flex" class="register-user-error-container">
+                                <span class="register-user-error-text">Unknown error detected. Please try again or contact our customer services last name</span>
+                            </div>
+                        }
+                    </div>
+                    <div style="display:none" id="input-container-2" class="register-form-input-container input-container">
+                        <h1 class="register-form-text"><span>Basic Information</span></h1>
+                        <span class="register-form-description">
+                            <span>Enter your birthday and gender</span>
+                        </span>
+                        <div class="register-form-birthday-contianer">
+                            <div class="register-form-month-container enter-input-label-container">
+                                <label class="enter-label"><span>Month</span></label>
+                                <select style="color:gray;" id="birthday-month" class="register-form-month-select input_same_line">
+                                    <option value="" hidden disabled selected>Month</option>
+                                    <option value="1">January</option>
+                                    <option value="2">February</option>
+                                    <option value="3">March</option>
+                                    <option value="4">April</option>
+                                    <option value="5">May</option>
+                                    <option value="6">June</option>
+                                    <option value="7">July</option>
+                                    <option value="8">August</option>
+                                    <option value="9">September</option>
+                                    <option value="10">October</option>
+                                    <option value="11">November</option>
+                                    <option value="12">December</option>
+                                </select>
+                            </div>
+                            <div class="register-form-day-container enter-input-label-container">
+                                <label class="enter-label"><span>Day</span></label>
+                                <input id="birthday-day" type="text" placeholder="Day" class="register-form-day-input input_same_line" maxlength="2" />
+                            </div>
+                            <div class="register-form-year-container enter-input-label-container">
+                                <label class="enter-label"><span>Year</span></label>
+                                <input id="birthday-year" type="text" placeholder="Year" class="register-form-year-input input_same_line" maxlength="4" />
+                            </div>
+                        </div>
+                        <input hidden asp-for="Input.BirthdayDate" type="date" id="birthday-date" />
+                        <div class="register-user-error-container">
+                            <svg viewBox="0 0 1024 1024" class="register-user-error-icon">
+                                <path d="M512 854q140 0 241-101t101-241-101-241-241-101-241 101-101 241 101 241 241 101zM512 86q176 0 301 125t125 301-125 301-301 125-301-125-125-301 125-301 301-125zM470 298h84v256h-84v-256zM470 640h84v86h-84v-86z"></path>
+                            </svg>
+                            <span class="register-user-error-text">Enter valid birthday date</span>
+                        </div>
+                        <div class="register-form-second-container enter-input-label-container">
+                            <label asp-for="Input.Gender" class="enter-label"><span>Gender</span></label>
+                            <select asp-for="Input.Gender" style="color:gray;" id="gender" class="input">
+                                <option value="" hidden disabled selected>Gender</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Other">Other</option>
+                                <option value="N/A">Rather not say</option>
+                            </select>
+                            <div class="register-user-error-container">
+                                <svg viewBox="0 0 1024 1024" class="register-user-error-icon">
+                                    <path d="M512 854q140 0 241-101t101-241-101-241-241-101-241 101-101 241 101 241 241 101zM512 86q176 0 301 125t125 301-125 301-301 125-301-125-125-301 125-301 301-125zM470 298h84v256h-84v-256zM470 640h84v86h-84v-86z"></path>
+                                </svg>
+                                <span class="register-user-error-text">Select your gender</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="display:none" id="input-container-3" class="register-form-input-container input-container">
+                        <h1 class="register-form-text"><span>How you'll sign in?</span></h1>
+                        <span class="register-form-description">
+                            <span>Use an existing email address for signing in to our website</span>
+                        </span>
+                        <div class="enter-input-label-container">
+                            <label asp-for="Input.Email" class="enter-label"><span>Username</span></label>
+                            <input asp-for="Input.Email" id="username" type="text" placeholder="email@address.com" class="input" />
+                            <div class="register-user-error-container">
+                                <svg viewBox="0 0 1024 1024" class="register-user-error-icon">
+                                    <path d="M512 854q140 0 241-101t101-241-101-241-241-101-241 101-101 241 101 241 241 101zM512 86q176 0 301 125t125 301-125 301-301 125-301-125-125-301 125-301 301-125zM470 298h84v256h-84v-256zM470 640h84v86h-84v-86z"></path>
+                                </svg>
+                                <span class="register-user-error-text">Enter valid email address format</span>
+                            </div>
+                            <label class="enter-label">
+                                <span>You can use letters, numbers and symbols</span>
+                            </label>
+
+                        </div>
+                    </div>
+                    <div style="display:none" id="input-container-4" class="register-form-input-container input-container">
+                        <h1 class="register-form-text"><span>Create a strong password</span></h1>
+                        <span class="register-form-description">
+                            <span>Create a strong password with a mix of letters, numbers and symbols</span>
+                        </span>
+                        <div class="enter-input-label-container">
+                            <label asp-for="Input.Password" class="enter-label"><span>Password</span></label>
+                            <input asp-for="Input.Password" id="password" type="password" placeholder="Password" class="input" />
+                            <div class="register-user-error-container">
+                                <svg viewBox="0 0 1024 1024" class="register-user-error-icon">
+                                    <path d="M512 854q140 0 241-101t101-241-101-241-241-101-241 101-101 241 101 241 241 101zM512 86q176 0 301 125t125 301-125 301-301 125-301-125-125-301 125-301 301-125zM470 298h84v256h-84v-256zM470 640h84v86h-84v-86z"></path>
+                                </svg>
+                                <span class="register-user-error-text">Enter valid password format</span>
+                            </div>
+                        </div>
+                        <div class="register-form-second-container enter-input-label-container">
+                            <label asp-for="Input.ConfirmPassword" class="enter-label"><span>Confirm</span></label>
+                            <input asp-for="Input.ConfirmPassword" id="confirm-password" type="password" placeholder="Confirm" class="input" />
+                            <div class="register-user-error-container">
+                                <svg viewBox="0 0 1024 1024" class="register-user-error-icon">
+                                    <path d="M512 854q140 0 241-101t101-241-101-241-241-101-241 101-101 241 101 241 241 101zM512 86q176 0 301 125t125 301-125 301-301 125-301-125-125-301 125-301 301-125zM470 298h84v256h-84v-256zM470 640h84v86h-84v-86z"></path>
+                                </svg>
+                                <span class="register-user-error-text">Enter valid password format</span>
+                            </div>
+                        </div>
+
+                        <div class="enter-checkbox-container">
+                            <input id="show-password-checkbox" type="checkbox" class="register-form-show-checkbox" />
+                            <span class="register-form-show-text">
+                                <span>Show Password</span>
+                            </span>
+                        </div>
+                    </div>
+                    <div style="display:none" id="input-container-5" class="register-form-input-container input-container">
+                        <h1 class="register-form-text"><span>Privacy and Terms</span></h1>
+                        <span class="register-form-description">
+                            <span>
+                                To create an account, you'll need to agree Privacy Policy and Term of Service
+                            </span>
+                        </span>
+                        <div class="enter-checkbox-container">
+                            <input asp-for="Input.Term" id="term-condition" type="checkbox" class="register-form-agree-checkbox" />
+                            <span class="register-form-agree-text">
+                                <span>I have read and agree to the terms and conditions.</span>
+                            </span>
+                        </div>
+                        <div class="enter-checkbox-container">
+                            <input asp-for="Input.Privacy" id="privacy-policy" type="checkbox" class="register-form-agree-checkbox" />
+                            <span class="register-form-agree-text">
+                                <span>I have read and agree to the privacy policy.</span>
+                            </span>
+                        </div>
+                        <div style="margin-top:4px"id="term-privacy-error" class="register-user-error-container">
+                            <svg viewBox="0 0 1024 1024" class="register-user-error-icon">
+                                <path d="M512 854q140 0 241-101t101-241-101-241-241-101-241 101-101 241 101 241 241 101zM512 86q176 0 301 125t125 301-125 301-301 125-301-125-125-301 125-301 301-125zM470 298h84v256h-84v-256zM470 640h84v86h-84v-86z"></path>
+                            </svg>
+                            <span class="register-user-error-text">Must agree both conditions before creating the account</span>
+                        </div>
+                    </div>
+                    <div class="register-form-button-container">
+                        <button id="left-button"type="button"
+                                class="register-form-left-button enter-button">
+                            <span>Login Page</span>
+                        </button>
+                        <button id="next-button" type="button"
+                                class="register-form-right-button enter-button">
+                            <span>Next</span>
+                        </button>
+                        <button style="display:none" id="submit-button" type="submit"
+                                class="register-form-right-button enter-button">
+                            <span>Submit</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    @Html.Partial("_FooterGuest")
+</div>
+
+<script>
+
+    $(document).ready(function () {
+        var cur_number = 0;
+        var input_container_list = $('.input-container');
+        var left_button = $("#left-button");
+        var right_button = $("#next-button");
+        var submit_button = $("#submit-button");
+
+        $(submit_button).click(function (e) {
+            e.preventDefault();
+            console.log("this is clicked");
+        })
+
+        // Focus effect
+        $("input, select").focusin(function () {
+            $(this).prev("label.enter-label").css("color", "#3282E9");
+        })
+        $("input, select").focusout(function () {
+            $(this).prev("label.enter-label").css("color", "var(--dl-color-gray-700)");
+        })
+        $('#show-password-checkbox').change(function () {
+            var isChecked = $(this).is(':checked');
+            $('#password').attr('type', isChecked ? 'text' : 'password');
+            $('#confirm-password').attr('type', isChecked ? 'text' : 'password');
+        });
+        $(".register-form-left-button").click(function () {
+            cur_number = cur_number - 1;
+            switch (cur_number) {
+                case -1:
+                    window.location.href = '/Identity/Account/Login';
+                    break;
+                default:
+                    switch (cur_number) {
+                        case 0:
+                            left_button.find("span").text("Login Page");
+                            break;
+                        case 1:
+                            left_button.find("span").text("Back");
+                            break;
+                        case 2:
+                            left_button.find("span").text("Back");
+                            break;
+                        case 3:
+                            right_button.show();
+                            submit_button.hide();
+                            break;
+                        default:
+
+                    }
+                    var currentContainer = $(".input-container").filter(":visible");
+                    currentContainer.hide();
+                    input_container_list.eq(cur_number).show();
+
+            }
+
+            console.log(cur_number);
+        });
+
+        // Allow letter only in first name
+        $("#first-name").on("keypress", function (event) {
+            var charCode = event.which || event.keyCode;
+            if (!((charCode >= 65 && charCode <= 90) || // Uppercase letters
+                (charCode >= 97 && charCode <= 122) || // Lowercase letters
+                charCode === 32)) { // Space
+                event.preventDefault();
+            }
+        });
+        // Allow letter only in last name
+        $("#last-name").on("keypress", function (event) {
+            var charCode = event.which || event.keyCode;
+            if (!((charCode >= 65 && charCode <= 90) || // Uppercase letters
+                (charCode >= 97 && charCode <= 122) || // Lowercase letters
+                charCode === 32)) { // Space
+                event.preventDefault();
+            }
+        });
+        // Select placeholder effect
+        $("select").change(function () {
+            $(this).css('color', 'black'); // Change color when option is selected
+        })
+        // Allow digit only for birthday day
+        $("#birthday-day").on("keypress", function (event) {
+            var charCode = event.which || event.keyCode;
+            if (!(charCode >= 48 && charCode <= 57)) { // Numbers 0-9
+                event.preventDefault();
+            }
+        });
+        // Allow digit only for birthday year
+        $("#birthday-year").on("keypress", function (event) {
+            var charCode = event.which || event.keyCode;
+            if (!(charCode >= 48 && charCode <= 57)) { // Numbers 0-9
+                event.preventDefault();
+            }
+        });
+
+        function showError(elementVariable) {
+            $(elementVariable).prev("label.enter-label").addClass("error-label");
+            $(elementVariable).addClass("error-input");
+            $(elementVariable).next("div").css("display", "flex");
+        }
+        function hideError(elemeentVariable) {
+            $(elemeentVariable).removeClass("error-input");
+            $(elemeentVariable).prev("label").removeClass("error-label");
+            $(elemeentVariable).next("div").css("display", "none");
+
+        }
+        function isValidEmail(email) {
+            var emailPattern = /^[^\s@@]+@@[^\s@@]+\.[^\s@@]+$/;
+            return emailPattern.test(email);
+
+        }
+
+        // Function to check if the email exists
+        function checkEmailExists(email) {
+            return $.ajax({
+                url: '/Identity/Account/Register?handler=CheckEmailExist&email=' + email, // Replace this with your actual endpoint URL
+                method: 'GET',
+                data: { email: email },
+                dataType: 'json'
+            });
+        }
+
+        /*
+        function checkEmailExist(email) {
+            // Make a GET request to the server-side endpoint
+            return fetch(`/Identity/Account/Register?handler=CheckEmailExist&email=${email}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    return data; // True if email exists, false otherwise
+                })
+                .catch(error => {
+                    console.error('There was a problem with the fetch operation:', error);
+                    return false; // Return false in case of error
+                });
+        }*/
+        /*async function checkEmailExist(email) {
+            try {
+                const response = await fetch(`/Identity/Account/Register?handler=CheckEmailExist&email=${email}`);
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const data = await response.json();
+                return data; // True if email exists, false otherwise
+            } catch (error) {
+                console.error('There was a problem with the fetch operation:', error);
+                return false; // Return false in case of error
+            }
+        }
+        */
+        async function handleEmailCheck(id_val, inputVariable, inputValid) {
+            try {
+                // Make the AJAX request
+                var response = await checkEmailExists(id_val);
+
+                return response; 
+
+            } catch (error) {
+                console.error("AJAX request failed:", error);
+                inputValid = 0;
+                $(inputVariable).next("div").find("span").text("AJAX function error. Please try again");
+                return false;
+            }
+        }
+
+        async function inputValidation(inputVariable) {
+            var id_name = $(inputVariable).attr("id");
+            var id_val = $(inputVariable).val();
+            var inputValid = 1;
+
+            // First name must have value
+            if (id_name === "first-name" && id_val === "") {
+                inputValid = 0;
+            }
+            // Last name optional value
+            else if (id_name === "last-name") {
+                return true;
+            }
+            // Skip day checking
+            else if (id_name === "birthday-day") {
+                return true;
+            }
+            // Skip month checking
+            else if (id_name === "birthday-month") {
+                return true;
+            }
+            // Skip year checking
+            else if (id_name === "birthday-year") {
+                return true;
+            }
+            // Birthday date must have valid value
+            else if (id_name === "birthday-date") {
+
+                var month = parseInt($("#birthday-month").val(), 10);
+                var day = parseInt($("#birthday-day").val(), 10);
+                var year = parseInt($("#birthday-year").val(), 10);
+                //$(inputVariable).next("div").css("display", "flex");
+
+                var emptyError = false;
+                var errorText = "Please complete the birthday date";
+
+                if ($("#birthday-month").val() === null) {
+                    $("#birthday-month").prev("label.enter-label").addClass("error-label");
+                    $("#birthday-month").addClass("error-input");
+                    emptyError = true;
+                }
+                else {
+                    $("#birthday-month").prev("label.enter-label").removeClass("error-label");
+                    $("#birthday-month").removeClass("error-input");
+                }
+                if ($("#birthday-day").val() === "") {
+                    emptyError = true;
+                    $("#birthday-day").prev("label.enter-label").addClass("error-label");
+                    $("#birthday-day").addClass("error-input");
+                }
+                else {
+                    $("#birthday-day").prev("label.enter-label").removeClass("error-label");
+                    $("#birthday-day").removeClass("error-input");
+                }
+                if ($("#birthday-year").val() === "") {
+                    emptyError = true;
+                    $("#birthday-year").prev("label.enter-label").addClass("error-label");
+                    $("#birthday-year").addClass("error-input");
+                }
+                else {
+                    $("#birthday-year").prev("label.enter-label").removeClass("error-label");
+                    $("#birthday-year").removeClass("error-input");
+                }
+                if (emptyError) {
+                    inputValid = 0; // Blank date
+                }
+                else {
+                    // Check if the day is within the valid range for the selected month
+                    var daysInMonth = new Date(year, month, 0).getDate();
+
+                    // Create a Date object from the parsed parts
+                    var birthday = new Date(year, month - 1, day);
+
+                    // Check if the date is too far in the past or future
+                    var currentDate = new Date();
+                    var maxDate = new Date(currentDate.getFullYear() - 100, currentDate.getMonth(), currentDate.getDate());
+                    var minDate = new Date(currentDate.getFullYear() - 18, currentDate.getMonth(), currentDate.getDate());
+
+                    if (day < 1 || day > daysInMonth) {
+                        // Day is invalid for the selected month
+                        errorText = "Invalid day for the selected month";
+                        $("#birthday-day").prev("label.enter-label").addClass("error-label");
+                        $("#birthday-day").addClass("error-input");
+                        inputValid = 0;
+                    }
+                    else if (birthday < maxDate || birthday > minDate) {
+                        // Year is invalid
+                        errorText = "Birthday must be between 18 and 100 years ago";
+                        $("#birthday-year").prev("label.enter-label").addClass("error-label");
+                        $("#birthday-year").addClass("error-input");
+                        inputValid = 0;
+                    }
+
+                    else if (isNaN(birthday.getTime())) {
+                        // Invalid birthday date
+                        errorText = "Invalid birthday date";
+                        // Handle error for the entire date (month, day, year)
+                        $("#birthday-month").prev("label.enter-label").addClass("error-label");
+                        $("#birthday-month").addClass("error-input");
+                        $("#birthday-day").prev("label.enter-label").addClass("error-label");
+                        $("#birthday-day").addClass("error-input");
+                        $("#birthday-year").prev("label.enter-label").addClass("error-label");
+                        $("#birthday-year").addClass("error-input");
+                        inputValid = 0;
+                    }
+                }
+
+                // All checks passed, the birthday is valid
+                if (inputValid) {
+                    $("#birthday-month").prev("label.enter-label").removeClass("error-label");
+                    $("#birthday-month").removeClass("error-input");
+                    $("#birthday-day").prev("label.enter-label").removeClass("error-label");
+                    $("#birthday-day").removeClass("error-input");
+                    $("#birthday-year").prev("label.enter-label").removeClass("error-label");
+                    $("#birthday-year").removeClass("error-input");
+
+                    $("#birthday-date").val(birthday.toISOString().split('T')[0]);
+                }
+                else {
+                    $(inputVariable).next("div").find("span").text(errorText);
+                }
+            }
+            // Gender must have value
+            else if (id_name === "gender" && id_val === null) {
+                inputValid = 0;
+            }
+            else if (id_name === "username") {
+                if (id_val === "") {
+                    $(inputVariable).next("div").find("span").text("Please complete the email address");
+                    inputValid = 0;
+                }
+                else if (!isValidEmail(id_val)) {
+                    $(inputVariable).next("div").find("span").text("Invalid email address format");
+                    inputValid = 0;
+                }
+                else if (await checkEmailExists(id_val)
+                    .done(function (response) {
+                        return response; // Response data from the server
+                    })
+                    .fail(function (jqXHR, textStatus, errorThrown) {
+                        console.error("AJAX request failed:", textStatus, errorThrown);
+                        inputValid = 0;
+                        $(inputVariable).next("div").find("span").text("AJAX function error. Please try again");
+                        return false;
+                    })
+                ) {
+                    inputValid = 0;
+                    $(inputVariable).next("div").find("span").text("Email has been taken");
+
+                }
+
+                if (inputValid) {
+                    $(inputVariable).next("div").next("label").css("display", "flex");
+                }
+                else {
+                    $(inputVariable).next("div").next("label").css("display", "none");
+                }
+
+            }
+            else if (id_name === "password") {
+                if (id_val === "") {
+                    inputValid = 0;
+                    $(inputVariable).next("div").find("span").text("Please complete the password section");
+                }
+                else if (id_val.length < 8) {
+                    inputValid = 0;
+                    $(inputVariable).next("div").find("span").text("Use 8 characters or more for your password");
+                }
+                else if (!(/[^a-zA-Z0-9]/.test(id_val) &&
+                    /[a-z]/.test(id_val) &&
+                    /[A-Z]/.test(id_val))) {
+                    inputValid = 0;
+                    $(inputVariable).next("div").find("span").text("Please choose a stronger password.");
+                }
+
+            }
+            else if (id_name === "confirm-password") {
+                var password_val = $("#password").val();
+                if (password_val === "" || password_val.length < 8 ||
+                    !(/[^a-zA-Z0-9]/.test(password_val) &&
+                        /[a-z]/.test(password_val) &&
+                        /[A-Z]/.test(password_val))) {
+
+                }
+                else if (id_val === "") {
+                    inputValid = 0;
+                    $(inputVariable).next("div").find("span").text("Please complete the confirm password section");
+                }
+                else if(id_val !== $("#password").val()){
+                    inputValid = 0;
+                    $(inputVariable).next("div").find("span").text("Those passwords didn’t match. Try again");
+                }
+            }
+            else if (id_name === "privacy-policy") {
+                if (!$('#privacy-policy').prop('checked') || !$('#term-condition').prop('checked')) {
+                    inputValid = 0;
+                    $("#term-privacy-error").find("span").text("Please agree both conditions before creating the account");
+                    $("#term-privacy-error").css("display", "flex");
+
+                } else if (false) {
+                    inputValid = 0;
+                    $("#term-privacy-error").find("span").text("Unknown error detected. Please contact customer services");
+                    $("#term-privacy-error").css("display", "flex");
+                }
+                else {
+                    $("#term-privacy-error").css("display", "none");
+
+                }
+            }
+
+            if (inputValid === 1) {
+              //  console.log("hide error triggered");
+                hideError(inputVariable);
+                return true;
+            }
+            else if (inputValid === 0) {
+              //  console.log("show error triggered");
+                showError(inputVariable);
+                return false;
+            }
+        }
+
+        $("#next-button").click(async function () {
+
+       // $(".register-form-right-button").click(async function () {
+            var input_is_filled = true;
+            var input_container_input_list = input_container_list.eq(cur_number).find("input");
+            var input_container_select_list = input_container_list.eq(cur_number).find("select");
+            /*
+            input_container_input_list.each(async function () {
+                console.log("looping");
+                input_is_filled &= await inputValidation(this);
+                console.log("next loop");
+            })*/
+            // Use a for loop instead of each()
+            for (let i = 0; i < input_container_input_list.length; i++) {
+                const inputVariable = input_container_input_list[i];
+                input_is_filled &= await inputValidation(inputVariable);
+            }
+
+            for (let i = 0; i < input_container_select_list.length; i++) {
+                const inputVariable = input_container_select_list[i];
+                input_is_filled &= await inputValidation(inputVariable);
+            }
+
+            if (input_is_filled) {
+                cur_number = cur_number + 1;
+                var currentContainer = $(".input-container").filter(":visible");
+                if (cur_number < input_container_list.length) {
+                    currentContainer.hide();
+                    input_container_list.eq(cur_number).show();
+                }
+            }
+            console.log(cur_number);
+            switch (cur_number) {
+                case 1:
+                    left_button.find("span").text("Back");
+                    $("select").each(function () {
+
+                        if ($(this).val() !== null) {
+                            $(this).css("color", "black");
+                            console.log($(this).val());
+                        }
+                    });
+                    break;
+                case 4:
+                    right_button.find("span").text("Submit");
+                    break;
+                case 5:
+                    $("#registerForm").submit();
+                    break
+                case 6:
+                    window.location.href = '/Identity/Account/Login';
+                    break;
+                default:
+            }
+        });
+
+        /*
+
+        $("#next-button1").click(function () {
+            console.log(123);
+            var currentContainer = $(".input-container").filter(":visible");
+            var nextContainer = currentContainer.next(".input-container");
+            console.log(currentContainer);
+            console.log(nextContainer);
+            if (nextContainer.length) {
+                currentContainer.hide();
+                nextContainer.show();
+            }
+        });*/
+
+
+    });
+</script>
+@*
 <h1>@ViewData["Title"]</h1>
 
 <div class="row">
@@ -37,25 +715,27 @@
             @{
                 if ((Model.ExternalLogins?.Count ?? 0) == 0)
                 {
-                    <div>
-                        <p>
-                            There are no external authentication services configured. See this <a href="https://go.microsoft.com/fwlink/?LinkID=532715">article
-                            about setting up this ASP.NET application to support logging in via external services</a>.
-                        </p>
-                    </div>
+                                                        <div>
+                                                            <p>
+                                                                There are no external authentication services configured. See this <a href="https://go.microsoft.com/fwlink/?LinkID=532715">
+                                                                    article
+                                                                    about setting up this ASP.NET application to support logging in via external services
+                                                                </a>.
+                                                            </p>
+                                                        </div>
                 }
                 else
                 {
-                    <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
-                        <div>
-                            <p>
-                                @foreach (var provider in Model.ExternalLogins!)
+                                                        <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
+                                                            <div>
+                                                                <p>
+                                                                    @foreach (var provider in Model.ExternalLogins!)
                                 {
-                                    <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
+                                                                        <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
                                 }
-                            </p>
-                        </div>
-                    </form>
+                                                                </p>
+                                                            </div>
+                                                        </form>
                 }
             }
         </section>
@@ -65,3 +745,4 @@
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }
+*@

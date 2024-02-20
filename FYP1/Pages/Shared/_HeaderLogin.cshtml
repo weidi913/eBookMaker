@@ -1,0 +1,27 @@
+﻿<div>
+    <div class="header-login-container">
+        <header data-role="Header" class="header-login-content">
+            <div class="header-login-left-group">
+                <button type="button" style="padding: 0px">
+                    <svg viewBox="0 0 1024 1024" class="header-login-sidebar-icon">
+                        <path d="M128 554.667h768c23.552 0 42.667-19.115 42.667-42.667s-19.115-42.667-42.667-42.667h-768c-23.552 0-42.667 19.115-42.667 42.667s19.115 42.667 42.667 42.667zM128 298.667h768c23.552 0 42.667-19.115 42.667-42.667s-19.115-42.667-42.667-42.667h-768c-23.552 0-42.667 19.115-42.667 42.667s19.115 42.667 42.667 42.667zM128 810.667h768c23.552 0 42.667-19.115 42.667-42.667s-19.115-42.667-42.667-42.667h-768c-23.552 0-42.667 19.115-42.667 42.667s19.115 42.667 42.667 42.667z"></path>
+                    </svg>
+                </button>
+                <img alt="logo" src="~/images/dwei-logo.png" class="header-guest-image" />
+                @* navigation link*@
+                @Html.Partial("_HeaderNavLink")
+            </div>
+            <div class="header-login-right-group">
+                <button class="header-login-create">
+                    <span class="button">
+                        <span class="header-login-text">Create</span>
+                        <br />
+                    </span>
+                </button>
+                <img alt="image"
+                     src="~/images/default_people_icon.png"
+                     class="header-login-profile-pic" />
+            </div>
+        </header>
+    </div>
+</div>

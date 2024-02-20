@@ -1,0 +1,112 @@
+﻿<div>
+    @* header Container *@
+    <div class="header-guest-container">
+        @* header content *@
+        <header data-role="Header" class="header-guest-header-content">
+            @* header left group content *@
+            <div class="header-guest-left-group">
+                @* menu sidebar button *@
+                <button class="toggle-sidebar-button" type="button" style="padding: 0px">
+                    <svg viewBox="0 0 1024 1024" class="header-guest-icon">
+                        <path d="M128 554.667h768c23.552 0 42.667-19.115 42.667-42.667s-19.115-42.667-42.667-42.667h-768c-23.552 0-42.667 19.115-42.667 42.667s19.115 42.667 42.667 42.667zM128 298.667h768c23.552 0 42.667-19.115 42.667-42.667s-19.115-42.667-42.667-42.667h-768c-23.552 0-42.667 19.115-42.667 42.667s19.115 42.667 42.667 42.667zM128 810.667h768c23.552 0 42.667-19.115 42.667-42.667s-19.115-42.667-42.667-42.667h-768c-23.552 0-42.667 19.115-42.667 42.667s19.115 42.667 42.667 42.667z"></path>
+                    </svg>
+                </button>
+                @* logo *@
+                <img alt="logo" src="~/images/dwei-logo.png" class="header-guest-image" />
+                @* navigation link*@
+                @Html.Partial("_HeaderNavLink")
+            </div>
+            @{
+                if (User.Identity.IsAuthenticated)
+                {
+                    <div class="header-login-right-group">
+                        <button class="header-login-create">
+                            <span class="button">
+                                <span class="header-login-text">Create</span>
+                                <br />
+                            </span>
+                        </button>
+                        <img alt="image"
+                             src="~/images/default_people_icon.png"
+                             class="header-login-profile-pic" />
+                    </div>
+                }
+                else
+                {
+                    <div class="header-guest-btn-group">
+                    <a asp-area="Identity" asp-page="/Account/Login">
+                        <button class="header-guest-login button">Login</button>
+                        </a>
+                        <a asp-area="Identity" asp-page="/Account/Register">
+                        <button class="header-guest-register">
+                            <span class="header-guest-text button">
+                                <span>Sign Up Free</span>
+                                <br />
+                            </span>
+                        </button>
+                        </a>
+                    </div>
+                }
+            }
+        </header>
+    </div>
+</div>
+
+<div>
+    <div class="sidebar-guest-container">
+        <div class="sidebar-guest-sidebar">
+            <nav class="sidebar-guest-nav-container">
+                <div class="sidebar-guest-nav">
+                    <span class="sidebar-guest-nav-text">Home</span>
+                    <svg viewBox="0 0 1024 1024" class="sidebar-guest-arrow-icon">
+                        <path d="M366 708l196-196-196-196 60-60 256 256-256 256z"></path>
+                    </svg>
+                </div>
+                <div class="sidebar-guest-nav">
+                    <span class="sidebar-guest-nav-text">About</span>
+                    <svg viewBox="0 0 1024 1024" class="sidebar-guest-arrow-icon">
+                        <path d="M366 708l196-196-196-196 60-60 256 256-256 256z"></path>
+                    </svg>
+                </div>
+                <div class="sidebar-guest-nav">
+                    <span class="sidebar-guest-nav-text">Features</span>
+                    <svg viewBox="0 0 1024 1024" class="sidebar-guest-arrow-icon">
+                        <path d="M366 708l196-196-196-196 60-60 256 256-256 256z"></path>
+                    </svg>
+                </div>
+                <div class="sidebar-guest-nav">
+                    <span class="sidebar-guest-nav-text">Help</span>
+                    <svg viewBox="0 0 1024 1024" class="sidebar-guest-arrow-icon">
+                        <path d="M366 708l196-196-196-196 60-60 256 256-256 256z"></path>
+                    </svg>
+                </div>
+            </nav>
+            <div class="sidebar-guest-sidebar-separator"></div>
+            <a asp-area="Identity" asp-page="/Account/Login">
+            <button class="sidebar-guest-login button">Login</button>
+            </a>
+            <a asp-area="Identity" asp-page="/Account/Register">
+            <button class="sidebar-guest-register">
+                <span class="sidebar-guest-button-text button">
+                    <span>Sign Up Free</span>
+                    <br />
+                </span>
+            </button>
+            </a>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $(".toggle-sidebar-button").click(function () {
+            var $sidebar = $(".sidebar-guest-container");
+            $sidebar.css("display", "flex");
+        });
+
+        $(".sidebar-guest-container").click(function () {
+            var $sidebar = $(".sidebar-guest-container");
+            $sidebar.css("display", "none");
+        });
+    });
+</script>
