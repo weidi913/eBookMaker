@@ -2413,6 +2413,11 @@ a:hover{
     color: var(--dl-color-primary-300);
     font-size: 12px;
   }
+  .login-user-invalid-text{
+    margin-top: var(--dl-space-space-halfunit);
+    color: var(--dl-color-danger-700);;
+    font-size: 12px;
+  }
   .login-user-submit-container {
     flex: 0 0 auto;
     width: 100%;

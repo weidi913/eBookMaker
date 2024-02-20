@@ -19,6 +19,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using System.Net.Mail;
 
 namespace FYP1.Areas.Identity.Pages.Account
 {
@@ -140,23 +141,48 @@ namespace FYP1.Areas.Identity.Pages.Account
                 {
                     _logger.LogInformation("User created a new account with password.");
 
-                    var userId = await _userManager.GetUserIdAsync(user);
-                    var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                    code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-                    var callbackUrl = Url.Page(
-                        "/Account/ConfirmEmail",
-                        pageHandler: null,
-                        values: new { area = "Identity", userId = userId, code = code, returnUrl = returnUrl },
-                        protocol: Request.Scheme);
-
-                    await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
-                        $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
-
-/*                        var user2 = await _userManager.FindByIdAsync(userId);
-*/                    await _userManager.AddToRoleAsync(user, FYP1.Authorization.Constants.MemberRole);
+                    /*                        var user2 = await _userManager.FindByIdAsync(userId);
+                    */
+                    await _userManager.AddToRoleAsync(user, FYP1.Authorization.Constants.MemberRole);
 
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {
+                        var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                        code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
+
+                        var confirmationReturnUrl = "~/Identity/Account/Login"; // You need to set returnUrl appropriately
+                        var callbackUrl = Url.Page(
+                            "/Account/ConfirmEmail",
+                            pageHandler: null,
+                            values: new { area = "Identity", userId = user.Id, code = code, returnUrl = confirmationReturnUrl },
+                            protocol: Request.Scheme
+                        );
+
+                        try
+                        {
+                            using (MailMessage message = new MailMessage(
+                                "corjackchin@1utar.my", //Sender
+                                user.Email, //Receiver
+                                "Confirm Your Email", // Title
+                                "Please confirm your email by clicking <a href='" + HtmlEncoder.Default.Encode(callbackUrl) + "'>here</a>.")) //Content
+                            {
+                                message.IsBodyHtml = true; // Set IsBodyHtml to true to indicate that the message body contains HTML
+
+                                using (SmtpClient client = new SmtpClient("smtp.gmail.com", 587))
+                                {
+                                    client.EnableSsl = true;
+                                    client.Credentials = new System.Net.NetworkCredential("corjackchin@1utar.my", "spmf ywrk xehj fyjo");
+                                    await client.SendMailAsync(message);
+                                }
+                            }
+
+                            //return RedirectToPage("SuccessPage");
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine($"An error occurred: {ex.Message}");
+                            return Page(); // or return error view
+                        }
                         return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });
                     }
                     else

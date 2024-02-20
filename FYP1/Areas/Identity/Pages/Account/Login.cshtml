@@ -24,23 +24,39 @@
             <form id="account" method="post" class="enter-form">
                 <div class="enter-input-label-container">
                     <label asp-for="Input.Email" class="enter-label"><span>Email</span></label>
-                    <input asp-for="Input.Email" autocomplete="username" aria-required="true" type="text" placeholder="Email" class="input" />
-
-                    <div class="login-user-error-container">
+                    <input id="username" asp-for="Input.Email" autocomplete="username" aria-required="true" type="text" placeholder="Email" class="input" />
+                    <div class="register-user-error-container">
+                        <svg viewBox="0 0 1024 1024" class="register-user-error-icon">
+                            <path d="M512 854q140 0 241-101t101-241-101-241-241-101-241 101-101 241 101 241 241 101zM512 86q176 0 301 125t125 301-125 301-301 125-301-125-125-301 125-301 301-125zM470 298h84v256h-84v-256zM470 640h84v86h-84v-86z"></path>
+                        </svg>
+                        <span class="register-user-error-text">Please complete email</span>
+                    </div>
+@*                     <div class="login-user-error-container">
 
                         <span asp-validation-for="Input.Email" class="login-user-error-text"></span>
-                    </div>
+                    </div> *@
 
 
 
                 </div>
                 <div class="login-user-password-container enter-input-label-container">
                     <label asp-for="Input.Password" class="enter-label"><span>Password</span></label>
-                    <input asp-for="Input.Password" autocomplete="current-password" aria-required="true" type="password" placeholder="Password" class="input" />
-                    <div class="login-user-error-container">
-                        <span asp-validation-for="Input.Password" class="login-user-error-text"></span>
+                    <input id="password" asp-for="Input.Password" autocomplete="current-password" aria-required="true" type="password" placeholder="Password" class="input" />
+
+                    <div class="register-user-error-container">
+                        <svg viewBox="0 0 1024 1024" class="register-user-error-icon">
+                            <path d="M512 854q140 0 241-101t101-241-101-241-241-101-241 101-101 241 101 241 241 101zM512 86q176 0 301 125t125 301-125 301-301 125-301-125-125-301 125-301 301-125zM470 298h84v256h-84v-256zM470 640h84v86h-84v-86z"></path>
+                        </svg>
+                        <span class="register-user-error-text">Please complete password</span>
                     </div>
+                    @*                     <div class="login-user-error-container">
+                    <span asp-validation-for="Input.Password" class="login-user-error-text"></span>
+                    </div> *@
                 </div>
+                @if (Model.InvalidLogin)
+                {
+                    <span class="login-user-invalid-text">Invalid login attempt</span>
+                }
                 <div class="login-user-redirect-container enter-checkbox-container">
                     <a asp-area="Identity" asp-page="/Account/ForgotPassword">
                         <span class="login-user-redirect-text">
@@ -67,7 +83,7 @@
                             </span>
                         </label>
                     </div>
-                    <button id="login-submit" type="submit" class="enter-button">
+                    <button id="login-submit" class="enter-button">
                         <span>Sign in</span>
                     </button>
                 </div>
@@ -77,6 +93,84 @@
     @Html.Partial("_FooterGuest")
 </div>
 
+<script>
+    $(document).ready(function () {
+        // Focus effect
+        $("input, select").focusin(function () {
+            $(this).prev("label.enter-label").css("color", "#3282E9");
+        })
+        $("input, select").focusout(function () {
+            $(this).prev("label.enter-label").css("color", "var(--dl-color-gray-700)");
+        })
+        
+        function showError(elementVariable) {
+            $(elementVariable).prev("label.enter-label").addClass("error-label");
+            $(elementVariable).addClass("error-input");
+            $(elementVariable).next("div").css("display", "flex");
+        }
+        function hideError(elemeentVariable) {
+            $(elemeentVariable).removeClass("error-input");
+            $(elemeentVariable).prev("label").removeClass("error-label");
+            $(elemeentVariable).next("div").css("display", "none");
+
+        }
+        function isValidEmail(email) {
+            var emailPattern = /^[^\s@@]+@@[^\s@@]+\.[^\s@@]+$/;
+            return emailPattern.test(email);
+        }
+        async function inputValidation(inputVariable) {
+            var id_name = $(inputVariable).attr("id");
+            var id_val = $(inputVariable).val();
+            var inputValid = 1;
+
+            if (id_name === "username") {
+                if (id_val === "") {
+                    $(inputVariable).next("div").find("span").text("Please complete the email address");
+                    inputValid = 0;
+                }
+                else if (!isValidEmail(id_val)) {
+                    $(inputVariable).next("div").find("span").text("Invalid email address format");
+                    inputValid = 0;
+                }
+            }
+            else if (id_name === "password") {
+                if (id_val === "") {
+                    inputValid = 0;
+                    $(inputVariable).next("div").find("span").text("Please complete the password section");
+                }
+            }
+            if (inputValid === 1) {
+                //  console.log("hide error triggered");
+                hideError(inputVariable);
+                return true;
+            }
+            else if (inputValid === 0) {
+                //  console.log("show error triggered");
+                showError(inputVariable);
+                return false;
+            }
+
+
+
+
+
+        }
+        $("#login-submit").click(async function () {
+            var input_is_filled = true;
+            var input_list = $("input");
+
+            for (let i = 0; i < input_list.length; i++) {
+                const inputVariable = input_list[i];
+                input_is_filled &= await inputValidation(inputVariable);
+            }
+
+            console.log("input ", input_is_filled);
+            if (input_is_filled) {
+                $("#account").submit();
+            }
+        })
+    })
+</script>
 
 @* <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" /> *@
 @* <div class="row">

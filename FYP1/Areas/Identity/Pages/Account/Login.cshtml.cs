@@ -55,6 +55,8 @@ namespace FYP1.Areas.Identity.Pages.Account
         [TempData]
         public string ErrorMessage { get; set; }
 
+        public bool InvalidLogin { get; set; } = false;
+
         /// <summary>
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
         ///     directly from your code. This API may change or be removed in future releases.
@@ -129,6 +131,7 @@ namespace FYP1.Areas.Identity.Pages.Account
                 }
                 else
                 {
+                    InvalidLogin = true;
                     ModelState.AddModelError(string.Empty, "Invalid login attempt.");
                     return Page();
                 }
