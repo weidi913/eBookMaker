@@ -14,13 +14,13 @@ using Microsoft.AspNetCore.Identity;
 namespace FYP1.Pages.eBooks
 {
     [Authorize]
-    public class eBookDashBoard : DI_BasePageModel
+    public class DashboardModel : DI_BasePageModel
     {
         private readonly ApplicationDbContext _context;
         private readonly IAuthorizationService _authorizationService;
         private readonly UserManager<Member> _userManager;
 
-        public eBookDashBoard(
+        public DashboardModel(
             ApplicationDbContext context,
             IAuthorizationService authorizationService,
             UserManager<Member> userManager)

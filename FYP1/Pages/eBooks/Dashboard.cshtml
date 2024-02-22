@@ -1,0 +1,44 @@
+﻿@page
+@model FYP1.Pages.eBooks.DashboardModel
+
+@{
+    ViewData["Title"] = "Design Dashboard";
+}
+
+<div class="e-book-dashboard-container">
+    @Html.Partial("_HeaderLogin")
+    <div class="e-book-dashboard-window-size-container">
+        @Html.Partial("_SidebarLogin")
+        <div class="e-book-dashboard-content-vertical-container">
+            <div class="e-book-dashboard-recommend-container">
+                <h1 class="e-book-dashboard-recommend-heading">
+                    You might want to try...
+                </h1>
+                <div class="e-book-dashboard-recommend-list-container">
+                    @for(int i = 0; i <6; i++){
+                    <div class="design-recommendation-container">
+                        <div class="design-recommendation-preview-container"></div>
+                        <span class="design-title"><span>Text</span></span>
+                        <span class="design-subtitle"><span>Size / Type</span></span>
+                    </div>
+                    }
+                </div>
+            </div>
+            <div class="e-book-dashboard-item-container">
+                <h1 class="e-book-dashboard-item-heading">Recent</h1>
+                <div class="item-list-container-container design-all-container">
+                    @for(int i = 0; i <20; i++){
+                    <div class="item-container-feature-card">
+                        <div class="item-container-preview-container"></div>
+                        <h2 class="design-title"><span>Name of the project</span></h2>
+                        <span class="design-subtitle">
+                            <span>Type</span>
+                            <br />
+                        </span>
+                    </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
