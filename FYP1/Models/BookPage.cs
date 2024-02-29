@@ -23,6 +23,6 @@ namespace FYP1.Models
         public ICollection<Comment>? Comments { get; set; }
 
         [Timestamp]
-        public byte[] ConcurrencyToken { get; set; }
+        public byte[]? ConcurrencyToken { get; set; }
     }
 }

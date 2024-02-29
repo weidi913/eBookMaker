@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FYP1.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240218163952_first23")]
-    partial class first23
+    [Migration("20240225062119_first")]
+    partial class first
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -34,7 +34,6 @@ namespace FYP1.Migrations
 
                     b.Property<byte[]>("ConcurrencyToken")
                         .IsConcurrencyToken()
-                        .IsRequired()
                         .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("rowversion");
 
@@ -64,7 +63,6 @@ namespace FYP1.Migrations
 
                     b.Property<byte[]>("ConcurrencyToken")
                         .IsConcurrencyToken()
-                        .IsRequired()
                         .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("rowversion");
 
@@ -96,7 +94,6 @@ namespace FYP1.Migrations
 
                     b.Property<byte[]>("ConcurrencyToken")
                         .IsConcurrencyToken()
-                        .IsRequired()
                         .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("rowversion");
 
@@ -128,7 +125,6 @@ namespace FYP1.Migrations
 
                     b.Property<byte[]>("ConcurrencyToken")
                         .IsConcurrencyToken()
-                        .IsRequired()
                         .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("rowversion");
 
@@ -171,7 +167,6 @@ namespace FYP1.Migrations
 
                     b.Property<byte[]>("ConcurrencyToken")
                         .IsConcurrencyToken()
-                        .IsRequired()
                         .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("rowversion");
 
@@ -232,7 +227,6 @@ namespace FYP1.Migrations
 
                     b.Property<byte[]>("ConcurrencyToken")
                         .IsConcurrencyToken()
-                        .IsRequired()
                         .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("rowversion");
 
@@ -355,7 +349,6 @@ namespace FYP1.Migrations
 
                     b.Property<byte[]>("ConcurrencyToken")
                         .IsConcurrencyToken()
-                        .IsRequired()
                         .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("rowversion");
 

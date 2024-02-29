@@ -49,7 +49,7 @@ namespace FYP1.Pages.eBooks
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             // Store the current userid
-            var currentUserId = UserManager.GetUserId(User);
+            var currentUserId = UserManager.GetUserName(User);
             
             // Ensure the passed ID and dataset is not empty
             if (id == null || _context.eBook == null)
@@ -86,7 +86,7 @@ namespace FYP1.Pages.eBooks
             {
                 Collaboration = collaboration; 
             }
-            else if(currentUserId != ebook.authorID || !isAuthorized)
+            else if(currentUserId != ebook.authorID && !isAuthorized)
             {
                 return Forbid();
             }

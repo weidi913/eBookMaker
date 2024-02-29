@@ -50,7 +50,8 @@ namespace FYP1.Data
                 user = new Member
                 {
                     UserName = UserName,
-                    EmailConfirmed = true
+                    EmailConfirmed = true,
+                    gender = "Other",
                 };
                 await userManager.CreateAsync(user, testUserPw);
             }

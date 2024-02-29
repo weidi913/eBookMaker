@@ -19,6 +19,6 @@ namespace FYP1.Models
         //public User? User { get; set; }
 
         [Timestamp]
-        public byte[] ConcurrencyToken { get; set; }
+        public byte[]? ConcurrencyToken { get; set; }
     }
 }

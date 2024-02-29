@@ -28,20 +28,11 @@ namespace FYP1.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    MemberID = table.Column<int>(type: "int", nullable: true),
-                    OwnerID = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    email123 = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     firstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     lastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    phoneNo = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    street = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    city = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    state = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    zipcode = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    country = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     imageData = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Status = table.Column<int>(type: "int", nullable: true),
-                    ConcurrencyToken = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false),
+                    gender = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    birthday = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -78,7 +69,7 @@ namespace FYP1.Migrations
                     bookStatus = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     LastUpdate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     authorID = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    ConcurrencyToken = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false)
+                    ConcurrencyToken = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -200,7 +191,7 @@ namespace FYP1.Migrations
                     chapterName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     chapterNo = table.Column<int>(type: "int", nullable: false),
                     bookID = table.Column<int>(type: "int", nullable: false),
-                    ConcurrencyToken = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false)
+                    ConcurrencyToken = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -222,7 +213,7 @@ namespace FYP1.Migrations
                     authorID = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     bookID = table.Column<int>(type: "int", nullable: false),
                     eBookbookID = table.Column<int>(type: "int", nullable: true),
-                    ConcurrencyToken = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false)
+                    ConcurrencyToken = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -245,7 +236,7 @@ namespace FYP1.Migrations
                     versionDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     bookID = table.Column<int>(type: "int", nullable: false),
                     eBookbookID = table.Column<int>(type: "int", nullable: true),
-                    ConcurrencyToken = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false)
+                    ConcurrencyToken = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -266,7 +257,7 @@ namespace FYP1.Migrations
                     pageNo = table.Column<int>(type: "int", nullable: false),
                     pageLock = table.Column<bool>(type: "bit", nullable: false),
                     chapterID = table.Column<int>(type: "int", nullable: false),
-                    ConcurrencyToken = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false)
+                    ConcurrencyToken = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -291,7 +282,7 @@ namespace FYP1.Migrations
                     authorID = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     bookPageID = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PagebookPageID = table.Column<int>(type: "int", nullable: true),
-                    ConcurrencyToken = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false)
+                    ConcurrencyToken = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -315,7 +306,7 @@ namespace FYP1.Migrations
                     z_index = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     text = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     bookPageID = table.Column<int>(type: "int", nullable: false),
-                    ConcurrencyToken = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false)
+                    ConcurrencyToken = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: true)
                 },
                 constraints: table =>
                 {

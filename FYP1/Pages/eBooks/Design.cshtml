@@ -193,9 +193,16 @@
             <span class="design-add-page-heading-text">
                 <span>Image</span>
             </span>
-            <button type="button" class="design-add-page-black-element-button button">
-                <span>Upload your photo</span>
-            </button>
+             <button id="upload-photo-button" type="button" class="design-add-page-black-element-button button">
+                <span>Upload photo</span> 
+            </button> 
+            <input hidden type="file" id="upload-photo-input" name="file" accept=".jpg, .jpeg, .png" multiple="false" />
+
+@*             <div class="form-group">
+                <label asp-for="Post.postImageFile" class="control-label"></label>
+                <input type="file" asp-for="Post.postImageFile" class="form-control" />
+                <span asp-validation-for="Post.postImageFile" class="text-danger"></span>
+            </div> *@
             <img src="~/images/home-hero.png" class="design-add-page-gallery" />
         </div>
         <div id="add-chart" style="display:none"class="design-add-page-container">
@@ -318,7 +325,7 @@
                 <span>Open Color Palette</span>
             </button>
         </div>
-        <div id="edit-color" class="design-edit-page-container">
+        <div style="display:none" id="edit-color" class="design-edit-page-container">
             <div class="design-edit-page-heading-container">
                 <span class="design-edit-page-heading-text">
                     <span>Edit Color</span>
@@ -377,6 +384,10 @@
             <div class="e-book-design-top-tab-container">
                 <button type="button" class="e-book-design-edit-button button">
                     <span class="e-book-design-text">Position</span>
+                </button>
+                <div class="e-book-design-button-separator"></div>
+                <button type="button" class="e-book-design-edit-button button">
+                    <span class="e-book-design-text">Border</span>
                 </button>
                 <div class="e-book-design-button-separator"></div>
                 <button type="button" class="e-book-design-edit-button button">
@@ -456,7 +467,9 @@
                                 </button>
                             </div>
                         </div>
-                        <div class="design-page-content-page-content"></div>
+                        <div class="design-page-content-page-content">
+                            <div style="height:200px;width:200px;background:black"id="testing-image"></div>
+                        </div>
                     </div>
                     <button type="button"
                             class="e-book-design-add-chapter-button button">
@@ -525,6 +538,104 @@ colorPicker.addEventListener('change', function() {
     // Set the background color of the color box to the selected color
     colorBox.style.backgroundColor = colorPicker.value;
 });
+
+    $("#more-option").click(function () {
+        var sidebar = $(".sidebar-login-container");
+        if (sidebar.css("display") === "none") {
+            $(".sidebar-login-container").css("display", "flex");
+        }
+        else {
+            $(".sidebar-login-container").hide();
+        }
+    })
+
+    function hideAddEditContainer(){
+        $(".design-add-page-container").filter(":visible").hide();
+        $(".design-edit-page-container").filter(":visible").hide();
+    }
+
+    function toggleDisplay(containerId) {
+        var container = $("#" + containerId);
+        var display = container.css("display");
+        hideAddEditContainer();
+        if (display === "none") {
+            container.css("display", "flex");
+        }
+    }
+
+    $(document).ready(function () {
+
+        $("#upload-photo-button").click(function () {
+            $("#upload-photo-input").click();
+        });
+
+
+        $("#upload-photo-input").change(function (event) {
+            var file = event.target.files[0];
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                var img = new Image();
+                img.src = e.target.result;
+
+                img.onload = function (width,height) {
+                   // $("#testing-image").css("width", this.width);
+                   // $("#testing-image").css("height", this.height);
+                };
+                var base64Data = e.target.result.split(",")[1]; // Extract base64 data from the result
+                // Now you can use the base64 data as needed
+                $("#testing-image").css("background-image", "url('data:image/jpg;base64," + base64Data + "')");
+                $("#testing-image").css("background-size", "cover");
+                $("#testing-image").css("background-repeat", "no-repeat");
+
+
+                
+            };
+            reader.readAsDataURL(file);
+        });
+
+
+        $(".e-book-design-element-container").click(function(){
+            switch($(this).children("span").text()){
+                case "Text":
+                    toggleDisplay("add-text");
+                    break;
+                case "Chart":
+                    toggleDisplay("add-chart");
+                    break;
+                case "Shape":
+                    toggleDisplay("add-shape");
+                    break;
+                case "Image":
+                    toggleDisplay("add-image");
+                    break;
+                default:
+                    break;
+                   
+            }
+            
+            
+            //toggleDisplay(currentDisplaySituation);
+        })
+        
+        $(".e-book-design-top-tab-container button.button").children("span").click(function(){
+            switch ($(this).text()){
+                case "Position":
+                    toggleDisplay("edit-position");
+                    break;
+                case "Edit":
+                case "Border":
+                    toggleDisplay("edit-border");
+                    break;
+                case "Style":
+                    toggleDisplay("edit-style");
+                    break;
+
+                break;
+                default:
+                    break;
+            }
+        })
+    })
 </script>
 
 

@@ -32,7 +32,6 @@ namespace FYP1.Migrations
 
                     b.Property<byte[]>("ConcurrencyToken")
                         .IsConcurrencyToken()
-                        .IsRequired()
                         .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("rowversion");
 
@@ -62,7 +61,6 @@ namespace FYP1.Migrations
 
                     b.Property<byte[]>("ConcurrencyToken")
                         .IsConcurrencyToken()
-                        .IsRequired()
                         .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("rowversion");
 
@@ -94,7 +92,6 @@ namespace FYP1.Migrations
 
                     b.Property<byte[]>("ConcurrencyToken")
                         .IsConcurrencyToken()
-                        .IsRequired()
                         .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("rowversion");
 
@@ -126,7 +123,6 @@ namespace FYP1.Migrations
 
                     b.Property<byte[]>("ConcurrencyToken")
                         .IsConcurrencyToken()
-                        .IsRequired()
                         .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("rowversion");
 
@@ -169,7 +165,6 @@ namespace FYP1.Migrations
 
                     b.Property<byte[]>("ConcurrencyToken")
                         .IsConcurrencyToken()
-                        .IsRequired()
                         .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("rowversion");
 
@@ -230,7 +225,6 @@ namespace FYP1.Migrations
 
                     b.Property<byte[]>("ConcurrencyToken")
                         .IsConcurrencyToken()
-                        .IsRequired()
                         .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("rowversion");
 
@@ -353,7 +347,6 @@ namespace FYP1.Migrations
 
                     b.Property<byte[]>("ConcurrencyToken")
                         .IsConcurrencyToken()
-                        .IsRequired()
                         .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("rowversion");
 

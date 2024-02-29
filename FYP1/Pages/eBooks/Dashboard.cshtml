@@ -5,40 +5,448 @@
     ViewData["Title"] = "Design Dashboard";
 }
 
+<style>
+    .previewText {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 1; /* number of lines to show */
+        line-clamp: 1;
+        -webkit-box-orient: vertical;
+    }
+</style>
 <div class="e-book-dashboard-container">
     @Html.Partial("_HeaderLogin")
     <div class="e-book-dashboard-window-size-container">
         @Html.Partial("_SidebarLogin")
-        <div class="e-book-dashboard-content-vertical-container">
+        <div id="Home" style="display:none" class="e-book-dashboard-content-vertical-container">
             <div class="e-book-dashboard-recommend-container">
                 <h1 class="e-book-dashboard-recommend-heading">
                     You might want to try...
                 </h1>
                 <div class="e-book-dashboard-recommend-list-container">
-                    @for(int i = 0; i <6; i++){
                     <div class="design-recommendation-container">
                         <div class="design-recommendation-preview-container"></div>
-                        <span class="design-title"><span>Text</span></span>
-                        <span class="design-subtitle"><span>Size / Type</span></span>
+                        <span class="design-title">Document</span>
+                        <span class="design-subtitle">21.7 x 29.0</span>
                     </div>
-                    }
+                    <div class="design-recommendation-container">
+                        <div class="design-recommendation-preview-container"></div>
+                        <span class="design-title">Powerpoint Slides</span>
+                        <span class="design-subtitle">10.5 x 8.5</span>
+                    </div>
+                    <div class="design-recommendation-container">
+                        <div class="design-recommendation-preview-container"></div>
+                        <span class="design-title">Instagram Post</span>
+                        <span class="design-subtitle">5.0x5.0</span>
+                    </div>
+                    <div class="design-recommendation-container">
+                        <div class="design-recommendation-preview-container"></div>
+                        <span class="design-title">Resume</span>
+                        <span class="design-subtitle">16.0x19.0</span>
+                    </div>
+                    <div class="design-recommendation-container">
+                        <div class="design-recommendation-preview-container"></div>
+                        <span class="design-title">Logo</span>
+                        <span class="design-subtitle">7.0x7.0</span>
+                    </div>
                 </div>
             </div>
             <div class="e-book-dashboard-item-container">
                 <h1 class="e-book-dashboard-item-heading">Recent</h1>
                 <div class="item-list-container-container design-all-container">
-                    @for(int i = 0; i <20; i++){
-                    <div class="item-container-feature-card">
-                        <div class="item-container-preview-container"></div>
-                        <h2 class="design-title"><span>Name of the project</span></h2>
-                        <span class="design-subtitle">
-                            <span>Type</span>
-                            <br />
-                        </span>
+                    @foreach (var item in Model.recentBook)
+                    {
+                        <div class="item-container-feature-card">
+                            @{
+                                var pathSrc = "https://localhost:7171/eBooks/Design?id=" + item.bookID;
+                            }
+                            <div class="item-container-preview-container">
+                                <iframe style="width:100%;height:100%" scrolling="no" src=@pathSrc></iframe> 
+                            </div>
+                            <h2 class="design-title previewText">
+                                <a asp-page="./Design" asp-route-id="@item.bookID">
+                                    @Html.DisplayFor(modelItem => item.title)
+                                </a>
+                            </h2>
+                            <span class="design-subtitle">
+                                @Html.DisplayFor(modelItem => item.type)
+                            </span>
+                        </div>
+                    }
+@*                     @for (int i = 0; i < 20; i++)
+                    {
+                        <div class="item-container-feature-card">
+                            <div class="item-container-preview-container"></div>
+                            <h2 class="design-title"><span>Name of the project</span></h2>
+                            <span class="design-subtitle">
+                                <span>Type</span>
+                                <br />
+                            </span>
+                        </div>
+                    } *@
+                </div>
+            </div>
+        </div>
+        <div id="Management" style="display:none" class="e-book-dashboard-content-vertical-container">
+            <h1 class="e-book-dashboard-tab-title-heading">Management</h1>
+        </div>
+        <div id="Projects" style="display:none" class="e-book-dashboard-content-vertical-container">
+            <h1 class="e-book-dashboard-tab-title-heading">Your Projects</h1>
+            <div class="e-book-dashboard-filter-container">
+                <form method="get" class="e-book-dashboard-filter-form">
+                    <div class="e-book-dashboard-filter-input">
+                        <input hidden name="displayTab" type="text" value="Projects" />
+
+                        <input name="searchString" type="text" placeholder="Title" value="@Model.CurrentSearch" class="e-book-dashboard-name-input input" />
+                        <select name="typeFilter" class="e-book-dashboard-type-select">
+                            <option value="All">All</option>
+                            @foreach (var type in Model.bookTypes)
+                            {
+                                if (type == Model.CurrentTypeFilter)
+                                {
+                                    <option value="@type" selected>@type</option>
+                                }
+                                else
+                                {
+                                    <option value="@type">@type</option>
+                                }
+
+                            }
+                        </select>
+
+                        <select name="dateFilter" class="e-book-dashboard-time-select">
+                            <option value="0">Anytime</option>
+                            <option value="1">Today</option>
+                            <option value="7">Last 7 days</option>
+                            <option value="30">Last 30 days</option>
+                            <option value="90">Last 90 days</option>
+                            
+                        </select>
                     </div>
+                    <div class="e-book-dashboard-sorting-input">
+                        <svg fill="none" viewBox="0 0 48 48" class="e-book-dashboard-sequence-icon" xmlns="http://www.w3.org/2000/svg">
+                            <path d="m0 0h48v48h-48z" fill="#fff" fill-opacity=".01" />
+                            <g stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="4">
+                                <path d="m19 6v36" /><path d="m7 17.8995 12-12.00001" />
+                                <path d="m29 42.1005v-35.99999" /><path d="m29 42.1005 12-12" />
+                            </g>
+                        </svg>
+
+                        <select name="sortOrder" class="e-book-dashboard-sequence-select">
+                            <option value="name_asc">Name A-Z</option>
+                            <option value="name_des">Name Z-A</option>
+                            <option value="date_asc">Oldest Edited</option>
+                            <option value="date_dsc">Newest Edited</option>
+
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="e-book-dashboard-item-container">
+                <h1 class="e-book-dashboard-item-heading">Recent</h1>
+                <div class="item-list-container-container design-all-container">
+@*                                         @for (int i = 0; i < 20; i++)
+                    {
+                        <div class="item-container-feature-card">
+                            <div class="item-container-preview-container"></div>
+                            <h2 class="design-title"><span>Name of the project</span></h2>
+                            <span class="design-subtitle">
+                                <span>Type</span>
+                                <br />
+                            </span>
+                        </div>
+                    } *@
+
+                    @foreach (var item in Model.myBook)
+                    {
+                        <div class="item-container-feature-card">
+                            @{
+                                var pathSrc = "https://localhost:7171/eBooks/Design?id=" + item.bookID;
+                            }
+                            <div class="item-container-preview-container">
+                                <iframe scrolling="no" src=@pathSrc></iframe>
+                            </div>
+                            <h2 class="design-title previewText">
+                                <a asp-page="./Design" asp-route-id="@item.bookID">
+                                    @Html.DisplayFor(modelItem => item.title)
+                                </a>
+                            </h2>
+                            <span class="design-subtitle">
+                                @Html.DisplayFor(modelItem => item.type)
+                            </span>
+                        </div>
                     }
                 </div>
             </div>
         </div>
+        <div id="Shared" style="display:none" class="e-book-dashboard-content-vertical-container">
+            <h1 class="e-book-dashboard-tab-title-heading">Shared with You</h1>
+            <div class="e-book-dashboard-filter-container">
+                <form method="get" class="e-book-dashboard-filter-form">
+                    <div class="e-book-dashboard-filter-input">
+                        <input hidden name="displayTab" type="text" value="Shared" />
+
+                        <input name="searchString" type="text" placeholder="Title" value="@Model.CurrentSearch" class="e-book-dashboard-name-input input" />
+                        <select name="typeFilter" class="e-book-dashboard-type-select">
+                            <option value="All">All</option>
+                            @foreach (var type in Model.bookTypes)
+                            {
+                                if (type == Model.CurrentTypeFilter)
+                                {
+                                    <option value="@type" selected>@type</option>
+                                }
+                                else
+                                {
+                                    <option value="@type">@type</option>
+                                }
+
+                            }
+                        </select>
+
+                        <select name="dateFilter" class="e-book-dashboard-time-select">
+                            <option value="0">Anytime</option>
+                            <option value="1">Today</option>
+                            <option value="7">Last 7 days</option>
+                            <option value="30">Last 30 days</option>
+                            <option value="90">Last 90 days</option>
+
+                        </select>
+                    </div>
+                    <div class="e-book-dashboard-sorting-input">
+                        <svg fill="none" viewBox="0 0 48 48" class="e-book-dashboard-sequence-icon" xmlns="http://www.w3.org/2000/svg">
+                            <path d="m0 0h48v48h-48z" fill="#fff" fill-opacity=".01" />
+                            <g stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="4">
+                                <path d="m19 6v36" /><path d="m7 17.8995 12-12.00001" />
+                                <path d="m29 42.1005v-35.99999" /><path d="m29 42.1005 12-12" />
+                            </g>
+                        </svg>
+
+                        <select name="sortOrder" class="e-book-dashboard-sequence-select">
+                            <option value="name_asc">Name A-Z</option>
+                            <option value="name_des">Name Z-A</option>
+                            <option value="date_asc">Oldest Edited</option>
+                            <option value="date_dsc">Newest Edited</option>
+
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="e-book-dashboard-item-container">
+                <h1 class="e-book-dashboard-item-heading">Recent</h1>
+                <div class="item-list-container-container design-all-container">
+                    @foreach (var item in Model.sharedBook)
+                    {
+                        <div class="item-container-feature-card">
+                            @{
+                                var pathSrc = "https://localhost:7171/eBooks/Design?id=" + item.bookID;
+                            }
+                            <div class="item-container-preview-container">
+                                <iframe scrolling="no" src=@pathSrc></iframe>
+                            </div>
+                            <h2 class="design-title previewText">
+                                <a asp-page="./Design" asp-route-id="@item.bookID">
+                                    @Html.DisplayFor(modelItem => item.title)
+                                </a>
+                            </h2>
+                            <span class="design-subtitle">
+                                @Html.DisplayFor(modelItem => item.type)
+                            </span>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>
+
+<div style="display:none" id="create-ebook-container" class="create-book-background-container">
+    <div class="create-book-background-create-book-container">
+        <div class="create-book-background-title-container">
+            <span class="create-book-background-create-heading-text">
+                Create eBook
+            </span>
+            <button id="close-create-book" type="button" class="create-book-background-button">
+                <svg viewBox="0 0 1024 1024" class="create-book-background-icon">
+                    <path d="M810 274l-238 238 238 238-60 60-238-238-238 238-60-60 238-238-238-238 60-60 238 238 238-238z"></path>
+                </svg>
+            </button>
+        </div>
+        <div class="create-book-background-separator"></div>
+        <div class="create-book-background-content-container">
+            <div class="create-book-background-image-container"> </div>
+            <div class="create-book-background-form-container">
+                <form method="post" class="create-book-background-create-book-form">
+                    @* <form class="create-book-background-create-book-form"> *@
+                        <div class="create-book-background-input-container">
+                        <div class="create-book-background-label-container">
+                            <label asp-for="eBookAdd.title" class="create-book-background-input-label">Title</label>
+                        </div>
+
+                        <div class="create-book-background-one-input-container">
+                            <input asp-for="eBookAdd.title" type="text" placeholder="Title" class="create-book-background-text-input input" />
+                        </div>
+                    </div>
+                    <div class="create-book-background-input-container">
+                        <div class="create-book-background-label-container">
+                            <label asp-for="eBookAdd.type" class=" create-book-background-input-label">Type</label>
+                        </div>
+                        <div class="create-book-background-one-input-container">
+                            <select asp-for="eBookAdd.type" class=" create-book-background-select-input">
+                                @foreach (var type in Model.bookTypes)
+                                {
+                                    if (type == Model.CurrentTypeFilter)
+                                    {
+                                        <option value="@type" selected>@type</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@type">@type</option>
+                                    }
+
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="create-book-background-input-container">
+                        <div class="create-book-background-label-container">
+                            <label asp-for="eBookAdd.description" class="create-book-background-input-label">Description</label>
+                        </div>
+                        <div class="create-book-background-one-input-container">
+                            <textarea asp-for="eBookAdd.description" placeholder="Description" class="create-book-background-textarea textarea"></textarea>
+                        </div>
+                    </div>
+                    <div class="create-book-background-input-container">
+                        <div class="create-book-background-label-container">
+                            <label class="create-book-background-input-label">Size</label>
+                        </div>
+
+                        <div class="create-book-background-two-input-container">
+                            <input asp-for="eBookAdd.width" type="text" placeholder="placeholder" class="create-book-background-text-input input" />
+                            <input asp-for="eBookAdd.height" type="text" placeholder="placeholder" class="create-book-background-text-input input" />
+                            <label asp-for="eBookAdd.width" class="create-book-background-dimension-label">
+                                Width (mm)
+                            </label>
+                            <label asp-for="eBookAdd.height" class="create-book-background-dimension-label">
+                                Height (mm)
+                            </label>
+                        </div>
+                    </div>
+                    <input hidden value="@Model.curUser.UserName" asp-for="eBookAdd.authorID" class="form-control" />
+                    <button type="submit" asp-page-handler="Book" class="create-book-background-create-button button">
+                        Create
+                    </button>
+                </form>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+
+
+
+
+<script type="text/javascript">
+
+    $("iframe").on("load", function () {
+
+        var iframeSrc = $(this).attr("src");
+
+        // Append the ID of the div you want to load to the iframe's src attribute
+        var divClass = "e-book-design-book-content-container";
+        var newSrc = iframeSrc + "." + divClass;
+
+        // Set the new src attribute for the iframe
+       // $(this).attr("src", newSrc);/
+
+    })
+
+    $(document).ready(function () {
+
+        $("div.e-book-dashboard-filter-input input, div.e-book-dashboard-filter-input select").change(function () {
+            $(this).parents("form").submit();
+        })
+
+        var firstSelectedOption = 'select[name="dateFilter"] option[value="@Model.CurrentDateFilter"]';
+        // Find the option element with value === 0 and add the selected attribute
+        //$('select[name="dateFilter"] option[value="90"]').prop('selected', true);
+        $(firstSelectedOption).prop('selected', true);
+        var secondSelectedOption = 'select[name="sortOrder"] option[value="@Model.CurrentSort"]';
+        $(secondSelectedOption).prop('selected', true);
+
+        var curDisplayTab = '@Model.CurrentDisplay';
+        switch (curDisplayTab) {
+            case "Home":
+                console.log(curDisplayTab);
+                $("#Home").css("display", "flex");
+                break;
+            case "Management":
+                $("#Management").css("display", "flex");
+                break;
+            case "Projects":
+                $("#Projects").css("display", "flex");
+                break;
+            case "Shared":
+                $("#Shared").css("display", "flex");
+                break;
+            default:
+                //$("#Home").css("display", "flex");
+                break;
+
+        }
+
+        // Function to set the height of the first div to match the height of the second div
+        function setFirstDivHeight() {
+            var secondDivHeight = $(".create-book-background-form-container").outerHeight();
+            $(".create-book-background-image-container").height(secondDivHeight);
+        }
+
+        // Initial call to set the height of the first div
+        setFirstDivHeight();
+
+        // Call the function whenever the window is resized
+        $(window).resize(setFirstDivHeight);
+
+        var firstName = '@Model.curUser.firstName';
+        var maxLength = 10; // Maximum length you want to limit the string to
+
+        if (firstName.length > maxLength) {
+            firstName = firstName.substring(0, maxLength) + "..."; // Limit the string and add ellipsis
+        }
+        $(".sidebar-login-profile-name").text(firstName);
+        $(".sidebar-login-nav-container").click(function () {
+            var curTab = $(this).find("span").text();
+            $(".sidebar-login-nav-container").css("background-color", "#FFFFFF");
+            $(this).css("background-color", "#E1E4E7");
+            $(".e-book-dashboard-content-vertical-container").filter(":visible").css("display", "none");
+            $("#" + curTab).css("display", "flex");
+            //$(".e-book-dashboard-content-vertical-container").filter(":visible")
+        })
+        $("#create-button").click(function () {
+            $("#create-ebook-container").show();
+@*             $(".create-book-background-image-container").css("background-image", "url(‘http://www.birds.com/wp-content/uploads/home/bird4.jpg’)”;
+ *@        })
+        $("#more-option").click(function () {
+            var sidebar = $(".sidebar-login-container");
+            if (sidebar.css("display") === "none") {
+                $(".sidebar-login-container").css("display", "flex");
+            }
+            else{
+                $(".sidebar-login-container").hide();
+            }
+        })
+
+        $(".create-book-background-container, #close-create-book").click(function(){
+            $(".create-book-background-container").hide();
+        })
+        $(".create-book-background-create-book-container").click(function (event) {
+            // Prevent the click event from bubbling up to the parent container
+            event.stopPropagation();
+
+            // Your click event handler logic for the children container goes here
+        });
+    })
+</script>

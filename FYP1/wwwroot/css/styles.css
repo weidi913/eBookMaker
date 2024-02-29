@@ -52,6 +52,10 @@
     border-width: 1px;
     border-radius: 4px;
     background-color: var(--dl-color-gray-white);
+    cursor:pointer;
+  }
+  .button:hover{
+    background-color:var(--dl-color-hover);
   }
   .input {
     color: var(--dl-color-gray-black);
@@ -67,6 +71,9 @@
     outline:inherit;
     border-color:#1671E8;
   }
+  select{
+    border-radius: 4px;
+  }
   select:focus{
     outline:inherit;
     border-color:#1671E8;
@@ -79,6 +86,10 @@
     border-width: 1px;
     border-radius: 4px;
     background-color: var(--dl-color-gray-white);
+  }
+  textarea:focus{
+    outline:inherit;
+    border-color:#1671E8;
   }
   .list {
     width: 100%;
@@ -260,7 +271,7 @@
     font-size: calc(0.7*(15px + 0.390625vw));
     font-style: normal;
     font-weight: 400;
-    padding-top: var(--dl-space-space-halfunit);
+    /* padding-top: var(--dl-space-space-halfunit); */
   }
   .design-all-container {
     width: 100%;
@@ -711,7 +722,7 @@ a:hover{
     width: 100%;
     height: 80px;
     display: flex;
-    z-index: 1;
+    z-index: 100;
     position: relative;
     box-shadow: 5px 5px 10px 0px #d4d4d4;
     align-items: flex-start;
@@ -806,7 +817,7 @@ a:hover{
     width: 100vw;
     height: 100vh;
     display: none;
-    z-index: 1;
+    z-index: 100;
     position: fixed;
     top: 0px;
     background: rgba(0,0,0,0.5);
@@ -1234,7 +1245,8 @@ a:hover{
     user-select: none;
   }
   .sidebar-login-nav-container:hover{
-    background-color: var(--dl-color-hover); /* Change to desired color */
+    background-color: var(--dl-color-hover) !important; /* Change to desired color */
+    cursor:pointer;
   }
   .sidebar-login-nav-icon {
     width: 24px;
@@ -1358,7 +1370,7 @@ a:hover{
     justify-content: center;
   }
   .home-hero-text {
-    z-index: 100;
+    z-index: 50;
     font-size: var(--dl-font-size-flexible-section-header);
     align-self: center;
     background: linear-gradient(90deg, #001f3f, #8e44ad, #d35400);
@@ -2903,6 +2915,280 @@ a:hover{
     font-size: calc(15px + 0.390625vw);
   }
   
+  .e-book-dashboard-tab-title-heading {
+    font-size: calc((15px + 0.390625vw)*1.5);
+  }
+  .e-book-dashboard-filter-container {
+    flex: 0 0 auto;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding-top: var(--dl-space-space-unit);
+    padding-bottom: var(--dl-space-space-unit);
+    justify-content: flex-start;
+  }
+  .e-book-dashboard-filter-form {
+    width: 100%;
+    height: auto;
+    display: flex;
+  }
+  .e-book-dashboard-filter-input {
+    width: auto;
+    height: auto;
+    display: flex;
+    align-items: flex-start;
+    margin-right: auto;
+    flex-direction: row;
+  }
+  .e-book-dashboard-name-input {
+    width: 350px;
+    height: auto;
+    padding: var(--dl-space-space-unit);
+    font-size: calc(0.7*(15px + 0.390625vw));
+    border-color: var(--dl-color-gray-700);
+    margin-right: var(--dl-space-space-unit);
+  }
+  .e-book-dashboard-type-select {
+    width: auto;
+    height: auto;
+    padding: var(--dl-space-space-unit);
+    font-size: calc(0.7*(15px + 0.390625vw));
+    min-width: 50px;
+    border-color: var(--dl-color-gray-700);
+    border-width: 1px;
+    margin-right: var(--dl-space-space-unit);
+    border-radius: var(--dl-radius-radius-radius4);
+    padding-right: 16px;
+  }
+  .e-book-dashboard-time-select {
+    width: auto;
+    height: auto;
+    padding: var(--dl-space-space-unit);
+    font-size: calc(0.7*(15px + 0.390625vw));
+    min-width: 50px;
+    border-color: var(--dl-color-gray-700);
+    border-width: 1px;
+    border-radius: var(--dl-radius-radius-radius4);
+    padding-right: 16px;
+  }
+  .e-book-dashboard-sorting-input {
+    flex: 0 0 auto;
+    width: auto;
+    height: auto;
+    display: flex;
+    align-items: center;
+    margin-left: var(--dl-space-space-unit);
+    border-color: var(--dl-color-gray-700);
+    border-width: 1px;
+    border-radius: var(--dl-radius-radius-radius4);
+    justify-content: flex-start;
+  }
+  .e-book-dashboard-sequence-icon {
+    width: 24px;
+    height: 24px;
+    margin-left: var(--dl-space-space-unit);
+  }
+  .e-book-dashboard-sequence-select {
+    width: auto;
+    height: auto;
+    padding: var(--dl-space-space-unit);
+    margin-right:var(--dl-space-space-halfunit);
+    font-size: calc(0.7*(15px + 0.390625vw));
+    min-width: 50px;
+    border-radius: var(--dl-radius-radius-radius4);
+    padding-right: 16px;
+  }
+  @media(max-width: 1600px) {
+    .e-book-dashboard-name-input {
+      width: 300px;
+    }
+  }
+  @media(max-width: 1200px) {
+    .e-book-dashboard-name-input {
+      width: 220px;
+      margin-right: var(--dl-space-space-halfunit);
+    }
+    .e-book-dashboard-type-select {
+      margin-right: var(--dl-space-space-halfunit);
+    }
+    .e-book-dashboard-sorting-input {
+      margin-left: var(--dl-space-space-halfunit);
+    }
+  }
+
+  .create-book-background-container {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    align-items: center;
+    flex-direction: row;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 150;;
+    /* overflow:hidden; */
+  }
+  .create-book-background-create-book-container {
+    /* flex: 1; */
+    width: 80vw ;
+    max-width: 1200px; 
+    height: auto;
+    max-height: 80vh;
+    display: flex;
+    padding: var(--dl-space-space-unit) var(--dl-space-space-twounits) ;
+    align-items: flex-start;
+    border-radius: var(--dl-radius-radius-radius8);
+    animation-name: fadeIn;
+    flex-direction: column;
+    animation-delay: 0s;
+    background-color: var(--dl-color-gray-white);
+    animation-duration: 300ms;
+    animation-direction: normal;
+    animation-iteration-count: 1;
+    animation-timing-function: ease;
+    overflow:auto; 
+  }
+  .create-book-background-title-container {
+    flex: 0 0 auto;
+    width: 100%;
+    display: flex;
+    align-items: center;
+  }
+  .create-book-background-create-heading-text {
+    font-size: calc((15px + 0.390625vw)*1.5);
+    font-style: normal;
+    font-weight: 700;
+  }
+  .create-book-background-button {
+    height: 100%;
+    display: flex;
+    margin-left: auto;
+    flex-direction: row;
+  }
+  .create-book-background-icon {
+    height: calc((15px + 0.390625vw)*2);
+    aspect-ratio: 1/1;
+  }
+  .create-book-background-separator {
+    flex: 0 0 auto;
+    width: 100%;
+    display: flex;
+    margin-top: var(--dl-space-space-unit);
+    align-items: flex-start;
+    border-color: rgba(120, 120, 120, 0.4);
+    border-style: solid;
+    border-width: 1px;
+    margin-bottom: var(--dl-space-space-unit);
+  }
+  .create-book-background-content-container {
+    flex: 0 0 auto;
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+  }
+  .create-book-background-image-container {
+    width: 35%;
+    height: inherit;
+    align-self: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    display:block;
+    background-image: url("../../images/create_eBook.jpg");
+  }
+  .create-book-background-form-container {
+    flex: 1;
+    height: auto;
+    display: flex;
+    padding: var(--dl-space-space-unit);
+    overflow: auto;
+    align-items: flex-start;
+    flex-direction: column;
+  }
+  .create-book-background-create-book-form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  .create-book-background-input-container {
+    flex: 0 0 auto;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    margin-bottom: var(--dl-space-space-unit);
+    justify-content: flex-start;
+  }
+  .create-book-background-label-container {
+    flex: 0 0 auto;
+    width: 30%;
+    height: auto;
+    display: flex;
+    min-width: auto;
+    align-items: flex-start;
+  }
+  .create-book-background-input-label {
+    font-size: calc(0.8*(15px + 0.390625vw));
+  }
+  .create-book-background-one-input-container {
+    flex: 1;
+    height: auto;
+    display: flex;
+    align-items: flex-start;
+  }
+  .create-book-background-text-input {
+    font-size: calc(0.8*(15px + 0.390625vw));
+  }
+  .create-book-background-select-input {
+    flex: 1;
+    padding: 1rem;
+    font-size: calc(0.8*(15px + 0.390625vw));
+    border-color: var(--dl-color-gray-900);
+    border-width: 1px;
+  }
+  .create-book-background-textarea {
+    width: 100%;
+    height: 200px;
+    resize: vertical;
+    font-size: calc(0.8*(15px + 0.390625vw));
+    border-color: var(--dl-color-gray-900);
+  }
+  .create-book-background-two-input-container {
+    gap: 8px;
+    flex: 1;
+    height: auto;
+    display: grid;
+    align-items: flex-start;
+    grid-template-columns: 1fr 1fr;
+  }
+  .create-book-background-dimension-label {
+    font-size: calc(0.7*(15px + 0.390625vw));
+  }
+  .create-book-background-create-button {
+    transition: 0.3s;
+    margin-left: auto;
+  }
+  .create-book-background-create-button:hover {
+    cursor: pointer;
+    background-color: var(--dl-color-hover);
+  }
+  @media(max-width: 991px) {
+    .create-book-background-image-container {
+      display: none;
+    }
+  }
+  @media(max-width: 767px) {
+    .create-book-background-create-book-container {
+
+    }
+  }
+  @media(max-width: 479px) {
+    .create-book-background-create-book-container {
+
+    }
+  }
+  
   /* end of eBookDashboard section */
 
   /* eBook design section */
@@ -3284,6 +3570,11 @@ a:hover{
     aspect-ratio: 1/1;
     flex-direction: column;
     justify-content: center;
+    user-select: none;
+  }
+  .e-book-design-element-container:hover{
+    background-color: var(--dl-color-hover);
+    cursor:pointer;
   }
   .e-book-design-element-icon {
     width: 24px;
@@ -3606,6 +3897,7 @@ a:hover{
     align-items: flex-start;
     flex-direction: column;
     background-color: var(--dl-color-gray-white);
+    overflow:hidden;
   }
   .design-add-page-container {
     flex: 0 0 auto;
@@ -3619,6 +3911,33 @@ a:hover{
     flex-direction: column;
     background-color: var(--dl-color-gray-white);
   }
+  .custom-file-input {
+    width:100%;
+    height:100%;
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    /* Define your custom styles for the container */
+}
+
+.custom-file-input input[type="file"] {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+    /* Hide the default file input element */
+}
+
+.custom-file-input span {
+    /* Define your custom styles for the button */
+}
+
+/* Style the label as needed */
+
+  
   .design-add-page-search-container {
     flex: 0 0 auto;
     width: 100%;
