@@ -5,7 +5,7 @@ namespace FYP1.Pages
 {
     public class HomeModel : PageModel
     {
-        public void OnGet()
+        public async void OnGet()
         {
         }
     }

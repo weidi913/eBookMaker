@@ -18,9 +18,9 @@ namespace FYP1.Models
 
         public Chapter? Chapter { get; set; }
 
-        public ICollection<Element>? Elements { get; set; }
+        public IList<Element>? Elements { get; set; }
 
-        public ICollection<Comment>? Comments { get; set; }
+        public IList<Comment>? Comments { get; set; }
 
         [Timestamp]
         public byte[]? ConcurrencyToken { get; set; }

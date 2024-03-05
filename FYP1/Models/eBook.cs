@@ -40,11 +40,11 @@ namespace FYP1.Models
 
         //public User? User { get; set; }
 
-        public ICollection<Version>? Versions { get; set; }
+        public IList<Version>? Versions { get; set; }
 
-        public ICollection<Chapter>? Chapters { get; set; }
+        public IList<Chapter>? Chapters { get; set; }
 
-        public ICollection<Collaboration>? Collaborations { get; set; }
+        public IList<Collaboration>? Collaborations { get; set; }
 
         [Timestamp]
         public byte[]? ConcurrencyToken { get; set; }

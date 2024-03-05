@@ -18,7 +18,7 @@ namespace FYP1.Models
 
         public eBook? book { get; set; }
 
-        public ICollection<BookPage>? BookPages { get; set; }
+        public IList<BookPage>? BookPages { get; set; }
 
         [Timestamp]
         public byte[]? ConcurrencyToken { get; set; }

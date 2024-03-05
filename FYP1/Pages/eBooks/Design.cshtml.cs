@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using FYP1.Authorization;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace FYP1.Pages.eBooks
 {
@@ -43,9 +44,72 @@ namespace FYP1.Pages.eBooks
         public BookPage BookPageAdd { get; set; } = default!; // Bookpage intended to add to the database
         [BindProperty]
         public Element ElementAdd { get; set; } = default!; // Element intended to add to the database
+        public async Task<IActionResult> OnGetTesting()
+        {
+            return new JsonResult(new { status = 0, message = "Successfully updated" });
+        }
+        public async Task<IActionResult> OnPostTesting()
+        {
+            return new JsonResult(new { status = 0, message = "Successfully updated" });
+        }
+        public async Task<IActionResult> OnPostChapterTitle(string chapterName, int chapterID)
+        {
 
+            /*            var updateBook = await _context.eBook.FirstOrDefaultAsync(m => m.bookID == eBook.bookID);
+            */
+            var updateChapter = await _context.eBook.FirstOrDefaultAsync(m => m.bookID == chapterID);
+            if (updateChapter == null)
+            {
+                return new JsonResult(new { status = 1, message = "Deleted" });
+            }
+            /*            else if (updateBook.title != eBook.title) {
+                            return new JsonResult(new { status = 2, message = "Concurrency Error" });
+                        }*/
+            else
+            {
+                updateChapter.title = chapterName;
+                _context.Attach(updateChapter).State = EntityState.Modified;
 
+                try
+                {
+                    await _context.SaveChangesAsync();
+                    return new JsonResult(new { status = 0, message = "Successfully updated" });
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    return new JsonResult(new { status = 3, message = "Unable to update. Please try again" });
+                }
+            }
+        }
         // Retrieve all the data related to this book
+        public async Task<IActionResult> OnPostBookTitle(string newTitleName, int bookID)
+        {
+
+            /*            var updateBook = await _context.eBook.FirstOrDefaultAsync(m => m.bookID == eBook.bookID);
+            */
+            var updateBook = await _context.eBook.FirstOrDefaultAsync(m => m.bookID == bookID);
+            if (updateBook == null)
+            {
+                return new JsonResult(new { status = 1, message = "Deleted" });
+            }
+/*            else if (updateBook.title != eBook.title) {
+                return new JsonResult(new { status = 2, message = "Concurrency Error" });
+            }*/
+            else { 
+                updateBook.title = newTitleName;
+                _context.Attach(updateBook).State = EntityState.Modified;
+
+                try
+                {
+                    await _context.SaveChangesAsync();
+                    return new JsonResult(new { status = 0, message = "Successfully updated" });
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    return new JsonResult(new { status = 3, message = "Unable to update. Please try again" });
+                }
+            }
+        }
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             // Store the current userid

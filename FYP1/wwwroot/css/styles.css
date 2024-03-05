@@ -3409,7 +3409,7 @@ a:hover{
     flex-direction: column;
   }
   .header-design-title-input {
-    color: var(--dl-color-gray-white);
+    /* color: var(--dl-color-gray-white); */
     font-size: 14px;
     max-width: 700px;
     padding-top: var(--dl-space-space-halfunit);
@@ -3675,6 +3675,12 @@ a:hover{
     margin-right: auto;
     flex-direction: column;
   }
+  .e-book-design-chapter-container{
+    height:auto;
+    width: 100%;
+    display:flex;
+    flex-direction:column;
+  }
   .e-book-design-chapter-header-container {
     flex: 0 0 auto;
     width: 100%;
@@ -3789,11 +3795,37 @@ a:hover{
     border-right-width: 0px;
   }
   .e-book-design-scale-button {
-    display: flex;
+    width:50px;
+    align-content: center;
+    justify-content: center;
+    display: inline-block;
     padding: 4px;
     border-width: 0px;
     flex-direction: row;
     background-color: transparent;
+    position:relative;
+  }
+  .zoom-expandable-button-options-list {
+    position: absolute;
+    bottom: calc(100% + 5px); /* Position options below button */
+    right: 0;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: auto;
+    display: none;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    z-index: 1; /* Ensure options appear above other content */
+  }
+  
+  .zoom-expandable-button-options-list li {
+    padding: 8px 16px;
+    cursor: pointer;
+  }
+  
+  .zoom-expandable-button-options-list li:hover {
+    background-color: #f0f0f0;
   }
   .e-book-design-percentage-text {
     font-size: 14px;
