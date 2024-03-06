@@ -3930,6 +3930,7 @@ a:hover{
     flex-direction: column;
     background-color: var(--dl-color-gray-white);
     overflow:hidden;
+    margin-bottom: var(--dl-space-space-unit);
   }
   .design-add-page-container {
     flex: 0 0 auto;

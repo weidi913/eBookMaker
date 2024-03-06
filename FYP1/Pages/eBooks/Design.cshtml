@@ -63,7 +63,7 @@
                 </svg>
                 <div class="header-design-title-verticial-separator"></div>
             </div>
-            <input id="ebook-title-input" type="text" placeholder="Title" value="@Model.eBook.title" class="header-design-title-input input" />
+            <input id="ebook-title-input" type="text" placeholder="Title" value="@Model.curBook.title" class="header-design-title-input input" />
             <div class="header-design-right-group">
                 <img alt="image"
                      src="https://play.teleporthq.io/static/svg/default-img.svg"
@@ -101,9 +101,8 @@
             </div>
             <div class="e-book-design-element-container">
                 <svg viewBox="0 0 1024 1024" class="e-book-design-element-icon">
-            <path
-              d="M213.333 85.333c-35.328 0-67.413 14.379-90.496 37.504s-37.504 55.168-37.504 90.496v597.333c0 35.328 14.379 67.413 37.504 90.496s55.168 37.504 90.496 37.504h597.333c35.328 0 67.413-14.379 90.496-37.504s37.504-55.168 37.504-90.496v-597.333c0-35.328-14.379-67.413-37.504-90.496s-55.168-37.504-90.496-37.504zM469.333 362.667c0-29.44-11.989-56.149-31.232-75.435s-45.995-31.232-75.435-31.232-56.149 11.989-75.435 31.232-31.232 45.995-31.232 75.435 11.989 56.149 31.232 75.435 45.995 31.232 75.435 31.232 56.149-11.989 75.435-31.232 31.232-45.995 31.232-75.435zM384 362.667c0 5.888-2.347 11.179-6.229 15.104s-9.216 6.229-15.104 6.229-11.179-2.347-15.104-6.229-6.229-9.216-6.229-15.104 2.347-11.179 6.229-15.104 9.216-6.229 15.104-6.229 11.179 2.347 15.104 6.229 6.229 9.216 6.229 15.104zM316.331 853.333l366.336-366.336 170.667 170.667v153.003c0 11.776-4.736 22.4-12.501 30.165s-18.389 12.501-30.165 12.501zM853.333 537.003l-140.501-140.501c-16.683-16.683-43.691-16.683-60.331 0l-454.144 454.144c-5.76-2.133-10.88-5.504-15.189-9.813-7.765-7.765-12.501-18.389-12.501-30.165v-597.333c0-11.776 4.736-22.4 12.501-30.165s18.389-12.501 30.165-12.501h597.333c11.776 0 22.4 4.736 30.165 12.501s12.501 18.389 12.501 30.165z"
-            ></path>                </svg>
+                    <path d="M213.333 85.333c-35.328 0-67.413 14.379-90.496 37.504s-37.504 55.168-37.504 90.496v597.333c0 35.328 14.379 67.413 37.504 90.496s55.168 37.504 90.496 37.504h597.333c35.328 0 67.413-14.379 90.496-37.504s37.504-55.168 37.504-90.496v-597.333c0-35.328-14.379-67.413-37.504-90.496s-55.168-37.504-90.496-37.504zM469.333 362.667c0-29.44-11.989-56.149-31.232-75.435s-45.995-31.232-75.435-31.232-56.149 11.989-75.435 31.232-31.232 45.995-31.232 75.435 11.989 56.149 31.232 75.435 45.995 31.232 75.435 31.232 56.149-11.989 75.435-31.232 31.232-45.995 31.232-75.435zM384 362.667c0 5.888-2.347 11.179-6.229 15.104s-9.216 6.229-15.104 6.229-11.179-2.347-15.104-6.229-6.229-9.216-6.229-15.104 2.347-11.179 6.229-15.104 9.216-6.229 15.104-6.229 11.179 2.347 15.104 6.229 6.229 9.216 6.229 15.104zM316.331 853.333l366.336-366.336 170.667 170.667v153.003c0 11.776-4.736 22.4-12.501 30.165s-18.389 12.501-30.165 12.501zM853.333 537.003l-140.501-140.501c-16.683-16.683-43.691-16.683-60.331 0l-454.144 454.144c-5.76-2.133-10.88-5.504-15.189-9.813-7.765-7.765-12.501-18.389-12.501-30.165v-597.333c0-11.776 4.736-22.4 12.501-30.165s18.389-12.501 30.165-12.501h597.333c11.776 0 22.4 4.736 30.165 12.501s12.501 18.389 12.501 30.165z"></path>
+                </svg>
                 <span class="e-book-design-element-text">Shape</span>
             </div>
             <div class="e-book-design-element-container">
@@ -188,19 +187,19 @@
             <span class="design-add-page-heading-text">
                 <span>Image</span>
             </span>
-             <button id="upload-photo-button" type="button" class="design-add-page-black-element-button button">
-                <span>Upload photo</span> 
-            </button> 
+            <button id="upload-photo-button" type="button" class="design-add-page-black-element-button button">
+                <span>Upload photo</span>
+            </button>
             <input hidden type="file" id="upload-photo-input" name="file" accept=".jpg, .jpeg, .png" multiple="false" />
 
-@*             <div class="form-group">
-                <label asp-for="Post.postImageFile" class="control-label"></label>
-                <input type="file" asp-for="Post.postImageFile" class="form-control" />
-                <span asp-validation-for="Post.postImageFile" class="text-danger"></span>
+            @*             <div class="form-group">
+            <label asp-for="Post.postImageFile" class="control-label"></label>
+            <input type="file" asp-for="Post.postImageFile" class="form-control" />
+            <span asp-validation-for="Post.postImageFile" class="text-danger"></span>
             </div> *@
             <img src="~/images/home-hero.png" class="design-add-page-gallery" />
         </div>
-        <div id="add-chart" style="display:none"class="design-add-page-container">
+        <div id="add-chart" style="display:none" class="design-add-page-container">
             <div class="design-add-page-search-container">
                 <svg viewBox="0 0 950.8571428571428 1024"
                      class="design-add-page-search-icon">
@@ -334,9 +333,9 @@
             </div>
             <div class="design-edit-page-section-separator"></div>
             <span class="design-edit-page-section-header"><span>Color Picker</span></span>
-            <div  id="color-box" style="width:200px;height:50px;background: linear-gradient(to right,red, orange, yellow, green, cyan, blue, violet);">
+            <div id="color-box" style="width:200px;height:50px;background: linear-gradient(to right,red, orange, yellow, green, cyan, blue, violet);">
                 <div></div>
-                            <input style=" position: relative; visibility:hidden" id="color-picker" type="color" />
+                <input style=" position: relative; visibility:hidden" id="color-picker" type="color" />
             </div>
 
             <button type="button" class="design-edit-page-colour-picker-button button">
@@ -405,22 +404,18 @@
                 </button>
             </div>
             <div id="zoom-container" class="e-book-design-book-content-container">
-                <div class="e-book-design-book-container" style="width:(@Model.eBook.width)mm">
-                    @{
-                        int chapterNo = 0;
-                    }
-                    @foreach (var chapter in Model.ChapterList)
+                <div class="e-book-design-book-container" style="width:@(Model.curBook.width)mm">
+                    @foreach (var chapter in Model.curBook.Chapters)
                     {
-                        chapterNo++;
-                        <div id="@chapter.chapterID" class="e-book-design-chapter-container"> 
+                        <div id="@chapter.chapterID" class="e-book-design-chapter-container">
                             <div class="e-book-design-chapter-header-container">
                                 <div class="e-book-design-chapter-horizontal-container">
                                     <span class="e-book-design-chapter-number-text">
-                                        Chapter @chapterNo
+                                        Chapter @chapter.chapterNo
                                     </span>
                                     <input value="@chapter.chapterName" type="text"
-                                           data-chapter-itemid="@chapter.chapterID" data-chapter-no="@chapter.chapterNo"
-                                           placeholder="Chapter 1 Title"
+                                           data-chapter-itemid="@chapter.chapterID"
+                                           placeholder="Chapter Name"
                                            class="chapter-name-input e-book-design-chapter-title-input input" />
                                     <button type="button" class="chapter-toggle-button design-page-button">
                                         <svg viewBox="0 0 1024 1024" class="e-book-design-chapter-icon">
@@ -429,125 +424,77 @@
                                     </button>
                                 </div>
                             </div>
-                            <div class="design-page-content-container">
-                                <div class="design-page-content-page-tab-list">
-                                    <div class="design-page-content-left-container">
-                                        <span class="design-page-content-page-text"><span>Page </span></span>
-                                    </div>
-                                    <div class="design-page-content-right-container">
-                                        <button type="button"
-                                                class="design-page-content-middle-button design-page-button">
-                                            <svg viewBox="0 0 1024 1024" class="design-page-content-icon">
-                                                <path d="M798.165 609.835l-256-256c-16.683-16.683-43.691-16.683-60.331 0l-256 256c-16.683 16.683-16.683 43.691 0 60.331s43.691 16.683 60.331 0l225.835-225.835 225.835 225.835c16.683 16.683 43.691 16.683 60.331 0s16.683-43.691 0-60.331z"></path>
-                                            </svg>
-                                        </button>
-                                        <button type="button"
-                                                class="design-page-content-middle-button design-page-button">
-                                            <svg viewBox="0 0 1024 1024" class="design-page-content-icon">
-                                                <path d="M225.835 414.165l256 256c16.683 16.683 43.691 16.683 60.331 0l256-256c16.683-16.683 16.683-43.691 0-60.331s-43.691-16.683-60.331 0l-225.835 225.835-225.835-225.835c-16.683-16.683-43.691-16.683-60.331 0s-16.683 43.691 0 60.331z"></path>
-                                            </svg>
-                                        </button>
-                                        <button type="button"
-                                                class="design-page-content-middle-button design-page-button">
-                                            <svg viewBox="0 0 1024 1024" class="design-page-content-icon">
-                                                <path d="M768 854v-428h-512v428h512zM380 256v86h264v-86q0-54-39-93t-93-39-93 39-39 93zM768 342q34 0 60 25t26 59v428q0 34-26 59t-60 25h-512q-34 0-60-25t-26-59v-428q0-34 26-59t60-25h42v-86q0-88 63-151t151-63 151 63 63 151v86h42zM512 726q-34 0-60-26t-26-60 26-60 60-26 60 26 26 60-26 60-60 26z"></path>
-                                            </svg>
-                                            <svg viewBox="0 0 1024 1024" class="design-page-content-icon">
-                                                <path d="M768 854v-428h-512v428h512zM768 342q34 0 60 25t26 59v428q0 34-26 59t-60 25h-512q-34 0-60-25t-26-59v-428q0-34 26-59t60-25h388v-86q0-54-39-93t-93-39-93 39-39 93h-82q0-88 63-151t151-63 151 63 63 151v86h42zM512 726q-34 0-60-26t-26-60 26-60 60-26 60 26 26 60-26 60-60 26z"></path>
-                                            </svg>
-                                        </button>
-                                        <button type="button"
-                                                class="design-page-content-middle-button design-page-button">
-                                            <svg viewBox="0 0 1024 1024" class="design-page-content-icon">
-                                                <path d="M128 320v640c0 35.2 28.8 64 64 64h576c35.2 0 64-28.8 64-64v-640h-704zM320 896h-64v-448h64v448zM448 896h-64v-448h64v448zM576 896h-64v-448h64v448zM704 896h-64v-448h64v448z"></path>
-                                                <path d="M848 128h-208v-80c0-26.4-21.6-48-48-48h-224c-26.4 0-48 21.6-48 48v80h-208c-26.4 0-48 21.6-48 48v80h832v-80c0-26.4-21.6-48-48-48zM576 128h-192v-63.198h192v63.198z"></path>
-                                            </svg>
-                                        </button>
-                                        <button type="button" class="design-page-button">
-                                            <svg viewBox="0 0 1024 1024" class="design-page-content-icon">
-                                                <path d="M810 470v-86h-170v-170h-86v170h-170v86h170v170h86v-170h170zM854 86q34 0 59 25t25 59v512q0 34-25 60t-59 26h-512q-34 0-60-26t-26-60v-512q0-34 26-59t60-25h512zM170 256v598h598v84h-598q-34 0-59-25t-25-59v-598h84z"></path>
-                                            </svg>
-                                        </button>
-                                    </div>
-                                </div>
-                                <div class="design-page-content-page-content">
-                                    <div style="height:200px;width:200px;background:black"id="testing-image" class="selected"></div>
-                                </div>
-                            </div>
+                            @foreach (var bookPage in chapter.BookPages)
+                            {
 
+                                <div data-page-id="@bookPage.bookPageID" class="design-page-content-container">
+                                    <div class="design-page-content-page-tab-list">
+                                        <div class="design-page-content-left-container">
+                                            <span class="design-page-content-page-text"><span>Page @bookPage.pageNo </span></span>
+                                        </div>
+                                        <div class="design-page-content-right-container">
+                                            @* up button *@
+                                            <button type="button"
+                                                    class="design-page-content-middle-button design-page-button page-up-button">
+                                                <svg viewBox="0 0 1024 1024" class="design-page-content-icon">
+                                                    <path d="M798.165 609.835l-256-256c-16.683-16.683-43.691-16.683-60.331 0l-256 256c-16.683 16.683-16.683 43.691 0 60.331s43.691 16.683 60.331 0l225.835-225.835 225.835 225.835c16.683 16.683 43.691 16.683 60.331 0s16.683-43.691 0-60.331z"></path>
+                                                </svg>
+                                            </button>
+                                            @* down button *@
+                                            <button type="button"
+                                                    class="design-page-content-middle-button design-page-button page-down-button">
+                                                <svg viewBox="0 0 1024 1024" class="design-page-content-icon">
+                                                    <path d="M225.835 414.165l256 256c16.683 16.683 43.691 16.683 60.331 0l256-256c16.683-16.683 16.683-43.691 0-60.331s-43.691-16.683-60.331 0l-225.835 225.835-225.835-225.835c-16.683-16.683-43.691-16.683-60.331 0s-16.683 43.691 0 60.331z"></path>
+                                                </svg>
+                                            </button>
+                                            @* lock button *@
+                                            <button type="button"
+                                                    class="design-page-content-middle-button design-page-button page-lock-toggle-button">
+                                                <svg viewBox="0 0 1024 1024" class="design-page-content-icon page-lock-icon">
+                                                    <path d="M768 854v-428h-512v428h512zM380 256v86h264v-86q0-54-39-93t-93-39-93 39-39 93zM768 342q34 0 60 25t26 59v428q0 34-26 59t-60 25h-512q-34 0-60-25t-26-59v-428q0-34 26-59t60-25h42v-86q0-88 63-151t151-63 151 63 63 151v86h42zM512 726q-34 0-60-26t-26-60 26-60 60-26 60 26 26 60-26 60-60 26z"></path>
+                                                </svg>
+                                                <svg viewBox="0 0 1024 1024" class="design-page-content-icon page-unlock-icon">
+                                                    <path d="M768 854v-428h-512v428h512zM768 342q34 0 60 25t26 59v428q0 34-26 59t-60 25h-512q-34 0-60-25t-26-59v-428q0-34 26-59t60-25h388v-86q0-54-39-93t-93-39-93 39-39 93h-82q0-88 63-151t151-63 151 63 63 151v86h42zM512 726q-34 0-60-26t-26-60 26-60 60-26 60 26 26 60-26 60-60 26z"></path>
+                                                </svg>
+                                            </button>
+                                            @* delete button *@
+                                            <button type="button"
+                                                    class="design-page-content-middle-button design-page-button page-delete-button">
+                                                <svg viewBox="0 0 1024 1024" class="design-page-content-icon">
+                                                    <path d="M128 320v640c0 35.2 28.8 64 64 64h576c35.2 0 64-28.8 64-64v-640h-704zM320 896h-64v-448h64v448zM448 896h-64v-448h64v448zM576 896h-64v-448h64v448zM704 896h-64v-448h64v448z"></path>
+                                                    <path d="M848 128h-208v-80c0-26.4-21.6-48-48-48h-224c-26.4 0-48 21.6-48 48v80h-208c-26.4 0-48 21.6-48 48v80h832v-80c0-26.4-21.6-48-48-48zM576 128h-192v-63.198h192v63.198z"></path>
+                                                </svg>
+                                            </button>
+                                            @* add button *@
+                                            <button type="button" class="design-page-button page-add-button">
+                                                <svg viewBox="0 0 1024 1024" class="design-page-content-icon">
+                                                    <path d="M810 470v-86h-170v-170h-86v170h-170v86h170v170h86v-170h170zM854 86q34 0 59 25t25 59v512q0 34-25 60t-59 26h-512q-34 0-60-26t-26-60v-512q0-34 26-59t60-25h512zM170 256v598h598v84h-598q-34 0-59-25t-25-59v-598h84z"></path>
+                                                </svg>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div style="height:@(Model.curBook.height)mm"class="design-page-content-page-content">
+                                        <div style="height:200px;width:200px;background:black" id="testing-image" class="selected"></div>
+                                        @bookPage.bookPageID
+                                        @foreach (var element in bookPage.Elements)
+                                        {
+                                            <div id="@element.elementID"
+                                                 class="@element.elementType"
+                                                 style="@element.elementStyle">
+                                                @element.text
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            }
                         </div>
-                      
+
                     }
 
-                    <button type="button"
+                    <button id="add-chapter-button" type="button"
                             class="e-book-design-add-chapter-button button">
                         Add Chapter
                     </button>
-                    <div class="e-book-design-chapter-header-container">
-                        <div class="e-book-design-chapter-horizontal-container">
-                            <span class="e-book-design-chapter-number-text">
-                                Chapter 1 
-                            </span>
-                            <input type="text"
-                                   placeholder="Chapter 1 Title"
-                                   class="e-book-design-chapter-title-input input" />
-                            <button type="button" class="design-page-button">
-                                <svg viewBox="0 0 1024 1024" class="e-book-design-chapter-icon">
-                                    <path d="M448 576v416l-160-160-192 192-96-96 192-192-160-160zM1024 96l-192 192 160 160h-416v-416l160 160 192-192z"></path>
-                                </svg>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="design-page-content-container">
-                        <div class="design-page-content-page-tab-list">
-                            <div class="design-page-content-left-container">
-                                <span class="design-page-content-page-text"><span>Page 1</span></span>
-                            </div>
-                            <div class="design-page-content-right-container">
-                                <button type="button"
-                                        class="design-page-content-middle-button design-page-button">
-                                    <svg viewBox="0 0 1024 1024" class="design-page-content-icon">
-                                        <path d="M798.165 609.835l-256-256c-16.683-16.683-43.691-16.683-60.331 0l-256 256c-16.683 16.683-16.683 43.691 0 60.331s43.691 16.683 60.331 0l225.835-225.835 225.835 225.835c16.683 16.683 43.691 16.683 60.331 0s16.683-43.691 0-60.331z"></path>
-                                    </svg>
-                                </button>
-                                <button type="button"
-                                        class="design-page-content-middle-button design-page-button">
-                                    <svg viewBox="0 0 1024 1024" class="design-page-content-icon">
-                                        <path d="M225.835 414.165l256 256c16.683 16.683 43.691 16.683 60.331 0l256-256c16.683-16.683 16.683-43.691 0-60.331s-43.691-16.683-60.331 0l-225.835 225.835-225.835-225.835c-16.683-16.683-43.691-16.683-60.331 0s-16.683 43.691 0 60.331z"></path>
-                                    </svg>
-                                </button>
-                                <button type="button"
-                                        class="design-page-content-middle-button design-page-button">
-                                    <svg viewBox="0 0 1024 1024" class="design-page-content-icon">
-                                        <path d="M768 854v-428h-512v428h512zM380 256v86h264v-86q0-54-39-93t-93-39-93 39-39 93zM768 342q34 0 60 25t26 59v428q0 34-26 59t-60 25h-512q-34 0-60-25t-26-59v-428q0-34 26-59t60-25h42v-86q0-88 63-151t151-63 151 63 63 151v86h42zM512 726q-34 0-60-26t-26-60 26-60 60-26 60 26 26 60-26 60-60 26z"></path>
-                                    </svg>
-                                    <svg viewBox="0 0 1024 1024" class="design-page-content-icon">
-                                        <path d="M768 854v-428h-512v428h512zM768 342q34 0 60 25t26 59v428q0 34-26 59t-60 25h-512q-34 0-60-25t-26-59v-428q0-34 26-59t60-25h388v-86q0-54-39-93t-93-39-93 39-39 93h-82q0-88 63-151t151-63 151 63 63 151v86h42zM512 726q-34 0-60-26t-26-60 26-60 60-26 60 26 26 60-26 60-60 26z"></path>
-                                    </svg>
-                                </button>
-                                <button type="button"
-                                        class="design-page-content-middle-button design-page-button">
-                                    <svg viewBox="0 0 1024 1024" class="design-page-content-icon">
-                                        <path d="M128 320v640c0 35.2 28.8 64 64 64h576c35.2 0 64-28.8 64-64v-640h-704zM320 896h-64v-448h64v448zM448 896h-64v-448h64v448zM576 896h-64v-448h64v448zM704 896h-64v-448h64v448z"></path>
-                                        <path d="M848 128h-208v-80c0-26.4-21.6-48-48-48h-224c-26.4 0-48 21.6-48 48v80h-208c-26.4 0-48 21.6-48 48v80h832v-80c0-26.4-21.6-48-48-48zM576 128h-192v-63.198h192v63.198z"></path>
-                                    </svg>
-                                </button>
-                                <button type="button" class="design-page-button">
-                                    <svg viewBox="0 0 1024 1024" class="design-page-content-icon">
-                                        <path d="M810 470v-86h-170v-170h-86v170h-170v86h170v170h86v-170h170zM854 86q34 0 59 25t25 59v512q0 34-25 60t-59 26h-512q-34 0-60-26t-26-60v-512q0-34 26-59t60-25h512zM170 256v598h598v84h-598q-34 0-59-25t-25-59v-598h84z"></path>
-                                    </svg>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="design-page-content-page-content">
-                            <div style="height:200px;width:200px;background:black"id="testing-image" class="selected"></div>
-                        </div>
-                    </div>
-                    <button type="button"
-                            class="e-book-design-add-chapter-button button">
-                        Add Chapter
-                    </button>
- 
                 </div>
             </div>
             <div class="e-book-design-bottom-tab-container">
@@ -567,16 +514,16 @@
                 </div>
                 <div class="e-book-design-page-separator"></div>
                 <div class="bottom-bar">
-                    <input id="zoom-scale-input"type="range" min="10" max="400" value="100" class="e-book-design-scale-input input" />
+                    <input id="zoom-scale-input" type="range" min="10" max="400" value="100" class="e-book-design-scale-input input" />
                     <button id="zoom-expandable-button" type="button" class="e-book-design-scale-button button">
                         <span id="zoom-value" class="e-book-design-percentage-text">
                             100%
                         </span>
-                          <ul class="zoom-expandable-button-options-list">
+                        <ul class="zoom-expandable-button-options-list">
                             <li>50%</li>
                             <li>100%</li>
                             <li>200%</li>
-                          </ul>
+                        </ul>
                     </button>
                 </div>
                 <div class="e-book-design-help-container bottom-bar">
@@ -595,76 +542,76 @@
     </button>
 </div>
 
-    <script>
-interact('.selected')
-  .resizable({
-    // resize from all edges and corners
-    edges: { left: true, right: true, bottom: true, top: true },
-
-    listeners: {
-      move (event) {
-        var target = event.target
-        var x = (parseFloat(target.getAttribute('data-x')) || 0)
-        var y = (parseFloat(target.getAttribute('data-y')) || 0)
-
-        // update the element's style
-        target.style.width = event.rect.width + 'px'
-        target.style.height = event.rect.height + 'px'
-
-        // translate when resizing from top or left edges
-        x += event.deltaRect.left
-        y += event.deltaRect.top
-
-        target.style.transform = 'translate(' + x + 'px,' + y + 'px)'
-
-        target.setAttribute('data-x', x)
-        target.setAttribute('data-y', y)
-        target.textContent = Math.round(event.rect.width) + '\u00D7' + Math.round(event.rect.height)
-      }
-    },
-    modifiers: [
-      // keep the edges inside the parent
-      interact.modifiers.restrictEdges({
-        outer: 'parent'
-      }),
-
-      // minimum size
-      interact.modifiers.restrictSize({
-        min: { width: 100, height: 50 }
-      })
-    ],
-
-    inertia: true
-  })
-  .draggable({
-    listeners: { move: window.dragMoveListener },
-    inertia: true,
-    modifiers: [
-      interact.modifiers.restrictRect({
-        restriction: 'parent',
-        endOnly: true
-      })
-    ]
-  })
-
-    </script>
 <script>
-// Get references to the color box and the color picker input
-const colorBox = document.getElementById('color-box');
-const colorPicker = document.getElementById('color-picker');
+    interact('.selected')
+        .resizable({
+            // resize from all edges and corners
+            edges: { left: true, right: true, bottom: true, top: true },
 
-// Add click event listener to the color box
-colorBox.addEventListener('click', function() {
-    // Show the color picker input
-    console.log("123");
-    colorPicker.click();
-});
+            listeners: {
+                move(event) {
+                    var target = event.target
+                    var x = (parseFloat(target.getAttribute('data-x')) || 0)
+                    var y = (parseFloat(target.getAttribute('data-y')) || 0)
 
-// Add change event listener to the color picker input
-colorPicker.addEventListener('change', function() {
-    // Set the background color of the color box to the selected color
-    colorBox.style.backgroundColor = colorPicker.value;
-});
+                    // update the element's style
+                    target.style.width = event.rect.width + 'px'
+                    target.style.height = event.rect.height + 'px'
+
+                    // translate when resizing from top or left edges
+                    x += event.deltaRect.left
+                    y += event.deltaRect.top
+
+                    target.style.transform = 'translate(' + x + 'px,' + y + 'px)'
+
+                    target.setAttribute('data-x', x)
+                    target.setAttribute('data-y', y)
+                    target.textContent = Math.round(event.rect.width) + '\u00D7' + Math.round(event.rect.height)
+                }
+            },
+            modifiers: [
+                // keep the edges inside the parent
+                interact.modifiers.restrictEdges({
+                    outer: 'parent'
+                }),
+
+                // minimum size
+                interact.modifiers.restrictSize({
+                    min: { width: 100, height: 50 }
+                })
+            ],
+
+            inertia: true
+        })
+        .draggable({
+            listeners: { move: window.dragMoveListener },
+            inertia: true,
+            modifiers: [
+                interact.modifiers.restrictRect({
+                    restriction: 'parent',
+                    endOnly: true
+                })
+            ]
+        })
+
+</script>
+<script>
+    // Get references to the color box and the color picker input
+    const colorBox = document.getElementById('color-box');
+    const colorPicker = document.getElementById('color-picker');
+
+    // Add click event listener to the color box
+    colorBox.addEventListener('click', function () {
+        // Show the color picker input
+        console.log("123");
+        colorPicker.click();
+    });
+
+    // Add change event listener to the color picker input
+    colorPicker.addEventListener('change', function () {
+        // Set the background color of the color box to the selected color
+        colorBox.style.backgroundColor = colorPicker.value;
+    });
 
     $("#more-option").click(function () {
         var sidebar = $(".sidebar-login-container");
@@ -676,7 +623,7 @@ colorPicker.addEventListener('change', function() {
         }
     })
 
-    function hideAddEditContainer(){
+    function hideAddEditContainer() {
         $(".design-add-page-container").filter(":visible").hide();
         $(".design-edit-page-container").filter(":visible").hide();
     }
@@ -691,11 +638,11 @@ colorPicker.addEventListener('change', function() {
     }
 
     $(document).ready(function () {
-        var currentSection ="";
-        $(document).click(function(){
+        var currentSection = "";
+        $(document).click(function () {
             /*
             console.log(currentSection);
-            
+
             switch(currentSection){
                 case "zoom-button":
                 $(".zoom-expandable-button-options-list").css("display","none");
@@ -705,34 +652,32 @@ colorPicker.addEventListener('change', function() {
                 break;
             }*/
         })
-        $("input.chapter-name-input").change(function(){
-            console.log($(this).val());
-        })
-        $("button.chapter-toggle-button").click(function(){
+
+        $("button.chapter-toggle-button").click(function () {
             console.log("chapter-toggle-button is clciekd");
         })
         //zoom function
-        $("#zoom-scale-input").change(function(){
+        $("#zoom-scale-input").change(function () {
             var curZoomValue = $(this).val();
-            $("#zoom-value").text(curZoomValue +"%");
-            $("#zoom-container").css("zoom", curZoomValue+"%");
+            $("#zoom-value").text(curZoomValue + "%");
+            $("#zoom-container").css("zoom", curZoomValue + "%");
         })
-        $(".e-book-design-scale-button").click(function() {
-          var optionsList = this.querySelector(".zoom-expandable-button-options-list");
-          if( optionsList.style.display === "block"){
-              optionsList.style.display = "none";
-          } 
-          else{
-              optionsList.style.display = "block";
-              currentSection = "zoom-button";
-          }
-          
+        $(".e-book-design-scale-button").click(function () {
+            var optionsList = this.querySelector(".zoom-expandable-button-options-list");
+            if (optionsList.style.display === "block") {
+                optionsList.style.display = "none";
+            }
+            else {
+                optionsList.style.display = "block";
+                currentSection = "zoom-button";
+            }
+
         });
-        $(".zoom-expandable-button-options-list li").click(function(){
+        $(".zoom-expandable-button-options-list li").click(function () {
             var zoomValue = $(this).text().split("%")[0];
             $("#zoom-scale-input").val(zoomValue);
-            $("#zoom-value").text(zoomValue +"%");
-                $("#zoom-container").css("zoom", zoomValue+"%");
+            $("#zoom-value").text(zoomValue + "%");
+            $("#zoom-container").css("zoom", zoomValue + "%");
         })
         $("input.resizevalue").change(function () {
             $("div.scaleHere").css("zoom", (this).value + "%");
@@ -751,9 +696,9 @@ colorPicker.addEventListener('change', function() {
                 var img = new Image();
                 img.src = e.target.result;
 
-                img.onload = function (width,height) {
-                   // $("#testing-image").css("width", this.width);
-                   // $("#testing-image").css("height", this.height);
+                img.onload = function (width, height) {
+                    // $("#testing-image").css("width", this.width);
+                    // $("#testing-image").css("height", this.height);
                 };
                 var base64Data = e.target.result.split(",")[1]; // Extract base64 data from the result
                 // Now you can use the base64 data as needed
@@ -762,7 +707,7 @@ colorPicker.addEventListener('change', function() {
                 $("#testing-image").css("background-repeat", "no-repeat");
 
 
-                
+
             };
             reader.readAsDataURL(file);
         });
@@ -775,33 +720,259 @@ colorPicker.addEventListener('change', function() {
                 url: '/eBooks/Design?handler=BookTitle', // Endpoint URL for updating the title
                 method: 'POST',
                 //data:{},
-                data: { newTitleName : title, bookID : @Model.eBook.bookID },
+                data: { newTitleName: title, bookID: @Model.curBook.bookID },
                 dataType: 'json',
                 headers: {
                     RequestVerificationToken:
                         $('input:hidden[name="__RequestVerificationToken"]').val()
-                        }
-                        });
-        }
-
-                function testing(title) {
-            return $.ajax({
-                url: '/eBooks/Design?handler=Testing', // Endpoint URL for updating the title
-                method: 'POST',
-                data: { },
-                dataType: 'json',
-                    headers: {
-        RequestVerificationToken:
-            $('input:hidden[name="__RequestVerificationToken"]').val()
-    },
+                }
             });
         }
 
-        $("#ebook-title-input").change(async function(){
+        function testing(title) {
+            return $.ajax({
+                url: '/eBooks/Design?handler=Testing', // Endpoint URL for updating the title
+                method: 'POST',
+                data: {},
+                dataType: 'json',
+                headers: {
+                    RequestVerificationToken:
+                        $('input:hidden[name="__RequestVerificationToken"]').val()
+                },
+            });
+        }
+
+        $("#add-chapter-button").click(async function () {
+            try {
+                var response = await $.ajax({
+                    url: '/eBooks/Design?handler=Chapter', // Endpoint URL for updating the title
+                    method: 'POST',
+                    data: { bookID: @Model.curBook.bookID},
+                    dataType: 'json',
+                    headers: {
+                        RequestVerificationToken: $('input:hidden[name="__RequestVerificationToken"]').val()
+                    }
+                });
+
+                console.log("Response:", response); // Log the entire response for debugging
+                if (response && response.status === 0) {
+                    console.log("Book chapter add successfully!");
+                    // Append the HTML content to the specified container
+                    $(this).last().before(response.htmlContent);
+                } else {
+                    console.error("Error add book chapter try:", response.message);
+                }
+            } catch (error) {
+                console.error("Error add book chapter:", error);
+            }
+
+        })
+
+        $(document).on("click", ".page-add-button", async function () {
+            var ancestor = $(this).closest('.design-page-content-container');
+            console.log(ancestor);
+            var chapterAncestor = $(this).closest(".e-book-design-chapter-container");
+            console.log(chapterAncestor.attr("id"));
+            var chapterId = chapterAncestor.attr("id");
+            var pageId = ancestor.data('page-id');
+            console.log(pageId);
+
+            try {
+                var response = await $.ajax({
+                    url: '/eBooks/Design?handler=BookPage', // Endpoint URL for updating the title
+                    method: 'POST',
+                    data: { bookPageID: pageId },
+                    dataType: 'json',
+                    headers: {
+                        RequestVerificationToken: $('input:hidden[name="__RequestVerificationToken"]').val()
+                    }
+                });
+
+                console.log("Response:", response); // Log the entire response for debugging
+                if (response && response.status === 0) {
+                    console.log("Book page add successfully!");
+
+                    // Append the HTML content to the specified container
+                    ancestor.after(response.htmlContent);
+                    // Find all elements with the class 'e-book-design-chapter-number-text' after the deleted chapter
+                    var bookPagesToUpdate = chapterAncestor.find('.design-page-content-page-text span').slice(response.pageNo);
+
+
+                    // Update the chapter numbers for each chapter after the deleted one
+                    bookPagesToUpdate.each(function (index) {
+                        console.log($(this).text().trim().split(" ")[1]);
+                        $(this).text('Page ' + (parseInt($(this).text().trim().split(" ")[1]) + 1));
+                    });
+
+                } else {
+                    console.error("Error add book chapter try:", response.message);
+                }
+            } catch (error) {
+                console.error("Error add book chapter:", error);
+            }
+
+        })
+        $(document).on("click", ".page-delete-button", async function () {
+            var ancestor = $(this).closest('.design-page-content-container');
+            var pageNo = parseInt(ancestor.find('.design-page-content-page-text span').text().trim().split(" ")[1]);
+            var pageId = ancestor.data('page-id');
+
+            // Check if the chapter has any remaining pages
+            var chapterAncestor = $(this).closest('.e-book-design-chapter-container');
+            var chapterNumber = chapterAncestor.children(".e-book-design-chapter-header-container").find(".e-book-design-chapter-number-text").text().trim().split(" ")[1];
+            console.log("Here is something " ,chapterNumber, " end of line");
+
+            try {
+                var response = await $.ajax({
+                    url: '/eBooks/Design?handler=BookPageDelete', // Endpoint URL for updating the title
+                    method: 'POST',
+                    data: { bookPageID: pageId },
+                    dataType: 'json',
+                    headers: {
+                        RequestVerificationToken: $('input:hidden[name="__RequestVerificationToken"]').val()
+                    }
+                });
+
+                console.log("Response:", response); // Log the entire response for debugging
+                if (response && response.status === 0) {
+                    console.log("Bookpage delete successfully!");
+                    ancestor.remove();
+
+                    var bookPagesToUpdate = chapterAncestor.find('.design-page-content-page-text span').slice(pageNo-1);
+                    console.log(bookPagesToUpdate);
+
+                    // Update the chapter numbers for each chapter after the deleted one
+                    bookPagesToUpdate.each(function (index) {
+                        console.log($(this).text().trim().split(" ")[1]);
+                        $(this).text('Page ' + (parseInt($(this).text().trim().split(" ")[1]) - 1));
+                    });
+
+                    if (response.deleteChapter) {
+                        chapterAncestor.remove();
+
+                        // Find all elements with the class 'e-book-design-chapter-number-text' after the deleted chapter
+                        var chaptersToUpdate = $('.e-book-design-chapter-container .e-book-design-chapter-number-text').slice(chapterNumber-1);
+
+                        // Update the chapter numbers for each chapter after the deleted one
+                        chaptersToUpdate.each(function (index) {
+                            console.log($(this).text().trim().split(" ")[1]);
+                            var updatedChapterNumber = chapterNumber + index;
+                            $(this).text('Chapter ' + ($(this).text().trim().split(" ")[1] -1));
+                        });
+                    }
+                    else {
+                        ancestor.remove();
+                    }
+                } else {
+                    console.error("Error delete bookpage:", response.message);
+                }
+            } catch (error) {
+                console.error("Error delete bookpage:", error);
+            }
+
+
+        })
+        $(document).on("click",".page-up-button", async function(){
+            var ancestor = $(this).closest('.design-page-content-container');
+            var previousSibling = ancestor.prev('.design-page-content-container');
+
+            // Check if there is a previous sibling
+            if (previousSibling.length > 0) {
+
+                try {
+                var response = await $.ajax({
+                    url: '/eBooks/Design?handler=BookPageExchange', // Endpoint URL for updating the title
+                    method: 'POST',
+                    data: { bookPageID1: ancestor.data("page-id"), bookPageID2: previousSibling.data("page-id") },
+                    dataType: 'json',
+                    headers: {
+                        RequestVerificationToken: $('input:hidden[name="__RequestVerificationToken"]').val()
+                    }
+                });
+
+                console.log("Response:", response); // Log the entire response for debugging
+                if (response && response.status === 0) {
+                    console.log("Book page exchange successfully!");
+
+                // There is a previous sibling
+                ancestor.after(previousSibling);
+                ancestor.find('.design-page-content-page-text span').text("Page " + (parseInt( ancestor.find('.design-page-content-page-text span').text().trim().split(" ")[1]) - 1));
+                previousSibling.find('.design-page-content-page-text span').text("Page " + (parseInt( previousSibling.find('.design-page-content-page-text span').text().trim().split(" ")[1]) + 1));
+
+
+                } else {
+                    console.error("Error add book chapter try:", response.message);
+                }
+            } catch (error) {
+                console.error("Error add book chapter:", error);
+            }
+            }
+        })
+        $(document).on("click",".page-down-button", async function(){
+            var ancestor = $(this).closest('.design-page-content-container');
+            var nextSibling = ancestor.next('.design-page-content-container');
+
+            // Check if there is a previous sibling
+            if (nextSibling.length > 0) {
+
+                try {
+                var response = await $.ajax({
+                    url: '/eBooks/Design?handler=BookPageExchange', // Endpoint URL for updating the title
+                    method: 'POST',
+                    data: { bookPageID1: ancestor.data("page-id"), bookPageID2: nextSibling.data("page-id") },
+                    dataType: 'json',
+                    headers: {
+                        RequestVerificationToken: $('input:hidden[name="__RequestVerificationToken"]').val()
+                    }
+                });
+
+                console.log("Response:", response); // Log the entire response for debugging
+                if (response && response.status === 0) {
+                    console.log("Book page exchange successfully!");
+
+                                    // There is a previous sibling
+                nextSibling.insertBefore(ancestor);
+                ancestor.find('.design-page-content-page-text span').text("Page " + (parseInt( ancestor.find('.design-page-content-page-text span').text().trim().split(" ")[1]) + 1));
+                nextSibling.find('.design-page-content-page-text span').text("Page " + (parseInt( nextSibling.find('.design-page-content-page-text span').text().trim().split(" ")[1]) - 1));
+
+
+                } else {
+                    console.error("Error add book chapter try:", response.message);
+                }
+            } catch (error) {
+                console.error("Error add book chapter:", error);
+            }
+            }
+        })
+        $(document).on("change", ".chapter-name-input", async function () {
+            try {
+                var response = await $.ajax({
+                    url: '/eBooks/Design?handler=ChapterTitle', // Endpoint URL for updating the title
+                    method: 'POST',
+                    data: { chapterID: $(this).data("chapter-itemid"), chapterName: $(this).val() },
+                    dataType: 'json',
+                    headers: {
+                        RequestVerificationToken: $('input:hidden[name="__RequestVerificationToken"]').val()
+                    }
+                });
+
+                console.log("Response:", response); // Log the entire response for debugging
+                if (response && response.status === 0) {
+                    console.log("Chapter name update successfully!");
+
+                } else {
+                    console.error("Error change book chapter:", response.message);
+                }
+            } catch (error) {
+                console.error("Error change book chapter:", error);
+            }
+        })
+
+        $("#ebook-title-input").change(async function () {
             var newTitle = $(this).val(); // Get the new title from the input field
             try {
-               //var response = await testing(newTitle); // Send the AJAX request to update the title
-               var response = await updateBookTitle(newTitle); // Send the AJAX request to update the title
+                //var response = await testing(newTitle); // Send the AJAX request to update the title
+                var response = await updateBookTitle(newTitle); // Send the AJAX request to update the title
 
                 console.log("Response:", response); // Log the entire response for debugging
                 if (response && response.status === 0) {
@@ -813,8 +984,8 @@ colorPicker.addEventListener('change', function() {
                 console.error("Error updating book title:", error);
             }
         })
-        $(".e-book-design-element-container").click(function(){
-            switch($(this).children("span").text()){
+        $(".e-book-design-element-container").click(function () {
+            switch ($(this).children("span").text()) {
                 case "Text":
                     toggleDisplay("add-text");
                     break;
@@ -829,15 +1000,15 @@ colorPicker.addEventListener('change', function() {
                     break;
                 default:
                     break;
-                   
+
             }
-            
-            
+
+
             //toggleDisplay(currentDisplaySituation);
         })
-        
-        $(".e-book-design-top-tab-container button.button").children("span").click(function(){
-            switch ($(this).text()){
+
+        $(".e-book-design-top-tab-container button.button").children("span").click(function () {
+            switch ($(this).text()) {
                 case "Position":
                     toggleDisplay("edit-position");
                     break;
@@ -849,7 +1020,7 @@ colorPicker.addEventListener('change', function() {
                     toggleDisplay("edit-style");
                     break;
 
-                break;
+                    break;
                 default:
                     break;
             }
