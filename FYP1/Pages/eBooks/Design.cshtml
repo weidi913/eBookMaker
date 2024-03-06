@@ -5,6 +5,30 @@
 @{
     ViewData["Title"] = "Design";
 }
+<style>
+    .selected {
+
+/*         box-shadow: 0 0 0 5px transparent,
+        0 0 0 7px #8532FF； */
+        box-shadow: 0 0 0 2px white, 0 0 0 5px #8532FF; 
+    }
+
+    .rotation-handle {
+        padding: 3px 4px;
+        display: table;
+        position: absolute;
+        left: 50%;
+        right: 50%;
+        bottom: -35px;
+        background-color: #ff1661;
+        border-radius: 10rem;
+        line-height: 1;
+        text-align: center;
+        font-weight: bold;
+        color: #fff;
+        cursor: move;
+    }
+</style>
 @Html.AntiForgeryToken()
 <div class="e-book-design-container">
     <div class="header-design-container">
@@ -474,12 +498,15 @@
                                         </div>
                                     </div>
                                     <div style="height:@(Model.curBook.height)mm"class="design-page-content-page-content">
-                                        <div style="height:200px;width:200px;background:black" id="testing-image" class="selected"></div>
+                                        <div style="height:200px;width:200px;background:black;border: 1px solid transparent;" id="testing-image" class="element">
+
+                                         
+                                        </div>
                                         @bookPage.bookPageID
                                         @foreach (var element in bookPage.Elements)
                                         {
                                             <div id="@element.elementID"
-                                                 class="@element.elementType"
+                                                 class="@element.elementType element"
                                                  style="@element.elementStyle">
                                                 @element.text
                                             </div>
@@ -542,59 +569,6 @@
     </button>
 </div>
 
-<script>
-    interact('.selected')
-        .resizable({
-            // resize from all edges and corners
-            edges: { left: true, right: true, bottom: true, top: true },
-
-            listeners: {
-                move(event) {
-                    var target = event.target
-                    var x = (parseFloat(target.getAttribute('data-x')) || 0)
-                    var y = (parseFloat(target.getAttribute('data-y')) || 0)
-
-                    // update the element's style
-                    target.style.width = event.rect.width + 'px'
-                    target.style.height = event.rect.height + 'px'
-
-                    // translate when resizing from top or left edges
-                    x += event.deltaRect.left
-                    y += event.deltaRect.top
-
-                    target.style.transform = 'translate(' + x + 'px,' + y + 'px)'
-
-                    target.setAttribute('data-x', x)
-                    target.setAttribute('data-y', y)
-                    target.textContent = Math.round(event.rect.width) + '\u00D7' + Math.round(event.rect.height)
-                }
-            },
-            modifiers: [
-                // keep the edges inside the parent
-                interact.modifiers.restrictEdges({
-                    outer: 'parent'
-                }),
-
-                // minimum size
-                interact.modifiers.restrictSize({
-                    min: { width: 100, height: 50 }
-                })
-            ],
-
-            inertia: true
-        })
-        .draggable({
-            listeners: { move: window.dragMoveListener },
-            inertia: true,
-            modifiers: [
-                interact.modifiers.restrictRect({
-                    restriction: 'parent',
-                    endOnly: true
-                })
-            ]
-        })
-
-</script>
 <script>
     // Get references to the color box and the color picker input
     const colorBox = document.getElementById('color-box');
@@ -1025,6 +999,183 @@
                     break;
             }
         })
+
+        // Select the element when clicked
+        $(document).click(function(event) {
+            console.log("document is clicked");
+            console.log(event.target);
+
+            // Check if the clicked element has the 'selected' class
+            if ($(event.target).hasClass("selected")) {
+                // Do something if the clicked element is already selected
+            } else if ($(event.target).hasClass("element")) {
+
+                var prevSelectedElement = $("selected");
+                if(prevSelectedElement !== null){
+                    prevSelectedElement.removeClass("selected");
+                    $(".rotation-handle").remove();
+                }
+                // Add the 'selected' class to the clicked element if it has the 'element' class
+                $(event.target).addClass("selected");
+                $(event.target).append('<div class="rotation-handle">&circlearrowright;</div>');
+            } else {
+                // Remove the 'selected' class from all elements if the clicked element is neither selected nor an 'element'
+                $(".element").removeClass("selected");
+                // Remove the rotation handle from all elements
+                $(".rotation-handle").remove();
+            }
+        });
+
+        // Javascript interaction interact.js
+        interact(".selected").draggable({
+  
+        inertia: false,
+        // keep the element within the area of it's parent
+        restrict: {
+          restriction: "none",
+          endOnly: true,
+          elementRect: { top: 0, left: 0, bottom: 1, right: 1 },
+        },
+        // enable autoScroll
+        autoScroll: false,
+
+        onstart: function (event) {
+          console.log("onstart");
+        },
+
+        // call this function on every dragmove event
+        onmove: dragMoveListener,
+        // call this function on every dragend event
+        onend: function (event) {
+        },
+      });
+
+    interact(".rotation-handle").draggable({
+        onstart: function (event) {
+          var box = event.target.parentElement;
+          var rect = box.getBoundingClientRect();
+
+          // store the center as the element has css `transform-origin: center center`
+          box.setAttribute("data-center-x", rect.left + rect.width / 2);
+          box.setAttribute("data-center-y", rect.top + rect.height / 2);
+          // get the angle of the element when the drag starts
+          box.setAttribute("data-angle", getDragAngle(event));
+        },
+        onmove: function (event) {
+          var box = event.target.parentElement;
+
+          var pos = {
+            x: parseFloat(box.getAttribute("data-x")) || 0,
+            y: parseFloat(box.getAttribute("data-y")) || 0,
+          };
+
+          var angle = getDragAngle(event);
+
+          // update transform style on dragmove
+          box.style.transform =
+            "translate(" +
+            pos.x +
+            "px, " +
+            pos.y +
+            "px) rotate(" +
+            angle +
+            "rad" +
+            ")";
+        },
+        onend: function (event) {
+          var box = event.target.parentElement;
+
+          // save the angle on dragend
+          box.setAttribute("data-angle", getDragAngle(event));
+        },
+      });
+
+      function getDragAngle(event) {
+        var box = event.target.parentElement;
+        var startAngle = parseFloat(box.getAttribute("data-angle")) || 0;
+        var center = {
+          x: parseFloat(box.getAttribute("data-center-x")) || 0,
+          y: parseFloat(box.getAttribute("data-center-y")) || 0,
+        };
+        var angle = Math.atan2(
+          center.y - event.clientY,
+          center.x - event.clientX
+        );
+
+        return angle - startAngle;
+      }
+
+      //resize drag
+    interact(".selected")
+        .draggable({
+          onmove: window.dragMoveListener,
+        })
+        .resizable({
+          preserveAspectRatio: false,
+          edges: { left: true, right: true, bottom: true, top: true },
+        })
+        .on("resizemove", function (event) {
+          var target = event.target,
+            x = parseFloat(target.getAttribute("data-x")) || 0,
+            y = parseFloat(target.getAttribute("data-y")) || 0;
+
+          // update the element's style
+          target.style.width = event.rect.width + "px";
+          target.style.height = event.rect.height + "px";
+
+          // translate when resizing from top or left edges
+          x += event.deltaRect.left;
+          y += event.deltaRect.top;
+
+          target.style.webkitTransform = target.style.transform =
+            "translate(" + x + "px," + y + "px)";
+
+          target.setAttribute("data-x", x);
+          target.setAttribute("data-y", y);
+        });
+
+       function dragMoveListener(event) {
+                   // Get the parent container element
+        var parentContainer = event.target.parentElement;
+
+        // Get the parent container's bounding rectangle
+        var parentRect = parentContainer.getBoundingClientRect();
+
+        // Get the current mouse coordinates
+        var mouseX = event.clientX;
+        var mouseY = event.clientY;
+
+        // Check if the mouse cursor is outside the parent container
+        if (
+            mouseX < parentRect.left ||
+            mouseX > parentRect.right ||
+            mouseY < parentRect.top ||
+            mouseY > parentRect.bottom
+        ) {
+            // Stop the drag operation
+            event.stopPropagation();
+            event.stopImmediatePropagation();
+
+
+        }
+        else{
+                    var target = event.target,
+          // keep the dragged position in the data-x/data-y attributes
+          x = (parseFloat(target.getAttribute("data-x")) || 0) + event.dx,
+          y = (parseFloat(target.getAttribute("data-y")) || 0) + event.dy;
+
+        // translate the element
+        target.style.webkitTransform = target.style.transform =
+          "translate(" + x + "px, " + y + "px)";
+
+        // update the posiion attributes
+        target.setAttribute("data-x", x);
+        target.setAttribute("data-y", y);
+        }
+
+
+      }
+
     })
 </script>
 
