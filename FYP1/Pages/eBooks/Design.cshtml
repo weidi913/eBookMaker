@@ -1169,7 +1169,7 @@
                 (x - cx) * Math.sin(angle) + (y - cy) * Math.cos(angle) + cy,
             ];
         }
-        function adjustRectangle(rectangle, bottomRightX, bottomRightY, angle) {
+        function adjustRectangleBottomRight(rectangle, bottomRightX, bottomRightY, angle) {
    
             const center = [
                 rectangle.x + rectangle.width / 2,
@@ -1205,7 +1205,153 @@
             rectangle.width = newBottomRight[0] - newTopLeft[0];
             rectangle.height = newBottomRight[1] - newTopLeft[1];
 
-            console.log(rectangle);
+        }
+
+        function adjustRectangleTopLeft(rectangle, topLeftX, topLeftY, angle) {
+
+            const center = [
+                rectangle.x + rectangle.width / 2,
+                rectangle.y + rectangle.height / 2
+            ];
+
+            const cx = center[0];
+            const cy = center[1];
+
+            // Rotate the bottom-right corner
+            const rotatedD = rotate(rectangle.x + rectangle.width, rectangle.y + rectangle.height, cx, cy, angle);
+
+            // Calculate new center of the rectangle
+            const newCenter = [
+                (rotatedD[0] + topLeftX) / 2,
+                (rotatedD[1] + topLeftY) / 2,
+            ];
+
+            // Calculate new bottom-right corner after rotation
+            const newTopLeft = rotate(
+                topLeftX,
+                topLeftY,
+                newCenter[0],
+                newCenter[1],
+                -angle
+            );
+            const newBottomRight = rotate(
+                rotatedD[0],
+                rotatedD[1],
+                newCenter[0],
+                newCenter[1],
+                -angle
+            );
+
+            rectangle.x = newTopLeft[0];
+            rectangle.y = newTopLeft[1];
+            rectangle.width = newBottomRight[0] - newTopLeft[0];
+            rectangle.height = newBottomRight[1] - newTopLeft[1];
+        }
+
+        function adjustRectangleTopRight(rectangle, topRightX, topRightY, angle) {
+
+            const center = [
+                rectangle.x + rectangle.width / 2,
+                rectangle.y + rectangle.height / 2
+            ];
+
+            const cx = center[0];
+            const cy = center[1];
+
+            // Rotate the bottom-right corner
+            const rotatedC = rotate(rectangle.x, rectangle.y + rectangle.height, cx, cy, angle);
+
+            // Calculate new center of the rectangle
+            const newCenter = [
+                (rotatedC[0] + topRightX) / 2,
+                (rotatedC[1] + topRightY) / 2,
+            ];
+
+            const newTopRight = rotate(
+                topRightX,
+                topRightY,
+                newCenter[0],
+                newCenter[1],
+                -angle
+            );
+            const newBottomLeft = rotate(
+                rotatedC[0],
+                rotatedC[1],
+                newCenter[0],
+                newCenter[1],
+                -angle
+            );
+
+            rectangle.x = newBottomLeft[0];
+            rectangle.y = newTopRight[1];
+            rectangle.width = newTopRight[0] - newBottomLeft[0];
+            rectangle.height = newBottomLeft[1] - newTopRight[1];
+        }
+
+        function adjustRectangleBottomLeft(rectangle, bottomLeftX, bottomLeftY, angle) {
+
+            const center = [
+                rectangle.x + rectangle.width / 2,
+                rectangle.y + rectangle.height / 2
+            ];
+
+            const cx = center[0];
+            const cy = center[1];
+
+            // Rotate the bottom-right corner
+            const rotatedB = rotate(rectangle.x + rectangle.width, rectangle.y, cx, cy, angle);
+
+            // Calculate new center of the rectangle
+            const newCenter = [
+                (rotatedB[0] + bottomLeftX) / 2,
+                (rotatedB[1] + bottomLeftY) / 2,
+            ];
+
+            const newTopRight = rotate(
+                rotatedB[0],
+                rotatedB[1],
+                newCenter[0],
+                newCenter[1],
+                -angle
+            );
+            const newBottomLeft = rotate(
+                bottomLeftX,
+                bottomLeftY,
+                newCenter[0],
+                newCenter[1],
+                -angle
+            );
+
+            rectangle.x = newBottomLeft[0];
+            rectangle.y = newTopRight[1];
+            rectangle.width = newTopRight[0] - newBottomLeft[0];
+            rectangle.height = newBottomLeft[1] - newTopRight[1];
+        }
+
+        function rotatePoint(x, y, cx, cy, angle) {
+            // Calculate coordinates relative to the center of rotation
+            var x1r = x - cx;
+            var y1r = y - cy;
+
+            // Apply rotation transformation
+            var newX = x1r * Math.cos(angle) - y1r * Math.sin(angle) + cx;
+            var newY = x1r * Math.sin(angle) + y1r * Math.cos(angle) + cy;
+
+            return { x: newX, y: newY };
+        }
+
+        function calculateBottomRight(topLeftX, topLeftY, width, height, rotationAngle) {
+            // Calculate center of rotation
+            var cx = topLeftX + width / 2;
+            var cy = topLeftY + height / 2;
+
+            // Calculate coordinates of the bottom-right corner relative to the center of rotation
+            var bottomRightRelative = { x: topLeftX + width, y: topLeftY + height };
+
+            // Rotate the bottom-right corner
+            var bottomRightRotated = rotatePoint(bottomRightRelative.x, bottomRightRelative.y, cx, cy, rotationAngle);
+
+            return bottomRightRotated;
         }
 
         //resize drag
@@ -1284,7 +1430,6 @@
                 var rotatedBottomLeft = rotatePoint(left, top + target.offsetHeight, centerX, centerY, rotationAngle);
                 var rotatedBottomRight = rotatePoint(left + target.offsetWidth, top + target.offsetHeight, centerX, centerY, rotationAngle);
 
-                console.log(rotatedTopLeft);
 
                 var rectangle ={
                     x : left,
@@ -1292,12 +1437,17 @@
                     width: width,
                     height: height
                 }
-                console.log("Here is rectangle", rectangle);
-                adjustRectangle(rectangle, mouseX, mouseY, rotationAngle);
-                console.log(rectangle);
+
+         //       adjustRectangle(rectangle, mouseX, mouseY, rotationAngle);
+
+
+               // var rotatedPoint = rotate(mouseX, mouseY, centerX, centerY, angle);
 
                 if (event.edges.top && event.edges.left) 
                 {
+                    var bottomRight = calculateBottomRight(mouseX,mouseY,rectangle.width,rectangle.height,rotationAngle);
+
+                    adjustRectangleTopLeft(rectangle, mouseX, mouseY, rotationAngle);
                     // Top-left corner resizing
                     dx = topLeft.x - mouseXOriginal;
                     dy = topLeft.y - mouseYOriginal;
@@ -1322,23 +1472,25 @@
                 else if (event.edges.bottom && event.edges.left) 
                 {
                     console.log("bottom-left");
+                    adjustRectangleBottomLeft(rectangle, mouseX, mouseY, rotationAngle);
                 } 
                 else if (event.edges.right && event.edges.bottom) 
                 {
-                    adjustRectangle(rectangle, mouseX, mouseY, rotationAngle);
+                    adjustRectangleBottomRight(rectangle, mouseX, mouseY, rotationAngle);
                 } 
                 else if (event.edges.right && event.edges.top)
                 {
                     console.log("top-right");
+                    adjustRectangleTopRight(rectangle, mouseX, mouseY, rotationAngle);
                 }
 
-                if (newW < 10) {
-                    newW = width;
-                    newX = left;
+                if (rectangle.width < 10) {
+                    rectangle.width = width;
+                    rectangle.x = left;
                 }
-                if(newH<10){
-                    newH = height;
-                    newY = top;
+                if (rectangle.height < 10) {
+                    rectangle.height = height;
+                    rectangle.y = top;
                 }
 
                 // Update the target's style
