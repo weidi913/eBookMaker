@@ -7,10 +7,9 @@
 }
 <style>
     .selected {
-
-/*         box-shadow: 0 0 0 5px transparent,
-        0 0 0 7px #8532FF； */
-        box-shadow: 0 0 0 2px white, 0 0 0 5px #8532FF; 
+        /*         box-shadow: 0 0 0 5px transparent,
+            0 0 0 7px #8532FF； */
+        box-shadow: 0 0 0 1px white, 0 0 0 4px #8532FF;
     }
 
     .rotation-handle {
@@ -27,6 +26,32 @@
         font-weight: bold;
         color: #fff;
         cursor: move;
+    }
+
+    .pointer {
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        background-color: #fff;
+        border: 2px solid rgba(0, 0, 0, 0.9);
+        border-radius: 50%;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .top {
+        top: -7px;
+    }
+
+    .right {
+        right: -7px;
+    }
+
+    .left {
+        left: -7px;
+    }
+
+    .bottom {
+        bottom: -7px;
     }
 </style>
 @Html.AntiForgeryToken()
@@ -497,10 +522,8 @@
                                             </button>
                                         </div>
                                     </div>
-                                    <div style="height:@(Model.curBook.height)mm"class="design-page-content-page-content">
-                                        <div style="height:200px;width:200px;background:black;border: 1px solid transparent;" id="testing-image" class="element">
-
-                                         
+                                    <div style="height:@(Model.curBook.height)mm" class="design-page-content-page-content">
+                                        <div style="position:absolute;height:200px;width:200px;background:black;border: 1px solid transparent;" id="testing-image" class="element">
                                         </div>
                                         @bookPage.bookPageID
                                         @foreach (var element in bookPage.Elements)
@@ -794,7 +817,7 @@
             // Check if the chapter has any remaining pages
             var chapterAncestor = $(this).closest('.e-book-design-chapter-container');
             var chapterNumber = chapterAncestor.children(".e-book-design-chapter-header-container").find(".e-book-design-chapter-number-text").text().trim().split(" ")[1];
-            console.log("Here is something " ,chapterNumber, " end of line");
+            console.log("Here is something ", chapterNumber, " end of line");
 
             try {
                 var response = await $.ajax({
@@ -812,7 +835,7 @@
                     console.log("Bookpage delete successfully!");
                     ancestor.remove();
 
-                    var bookPagesToUpdate = chapterAncestor.find('.design-page-content-page-text span').slice(pageNo-1);
+                    var bookPagesToUpdate = chapterAncestor.find('.design-page-content-page-text span').slice(pageNo - 1);
                     console.log(bookPagesToUpdate);
 
                     // Update the chapter numbers for each chapter after the deleted one
@@ -825,13 +848,13 @@
                         chapterAncestor.remove();
 
                         // Find all elements with the class 'e-book-design-chapter-number-text' after the deleted chapter
-                        var chaptersToUpdate = $('.e-book-design-chapter-container .e-book-design-chapter-number-text').slice(chapterNumber-1);
+                        var chaptersToUpdate = $('.e-book-design-chapter-container .e-book-design-chapter-number-text').slice(chapterNumber - 1);
 
                         // Update the chapter numbers for each chapter after the deleted one
                         chaptersToUpdate.each(function (index) {
                             console.log($(this).text().trim().split(" ")[1]);
                             var updatedChapterNumber = chapterNumber + index;
-                            $(this).text('Chapter ' + ($(this).text().trim().split(" ")[1] -1));
+                            $(this).text('Chapter ' + ($(this).text().trim().split(" ")[1] - 1));
                         });
                     }
                     else {
@@ -846,7 +869,7 @@
 
 
         })
-        $(document).on("click",".page-up-button", async function(){
+        $(document).on("click", ".page-up-button", async function () {
             var ancestor = $(this).closest('.design-page-content-container');
             var previousSibling = ancestor.prev('.design-page-content-container');
 
@@ -854,35 +877,35 @@
             if (previousSibling.length > 0) {
 
                 try {
-                var response = await $.ajax({
-                    url: '/eBooks/Design?handler=BookPageExchange', // Endpoint URL for updating the title
-                    method: 'POST',
-                    data: { bookPageID1: ancestor.data("page-id"), bookPageID2: previousSibling.data("page-id") },
-                    dataType: 'json',
-                    headers: {
-                        RequestVerificationToken: $('input:hidden[name="__RequestVerificationToken"]').val()
+                    var response = await $.ajax({
+                        url: '/eBooks/Design?handler=BookPageExchange', // Endpoint URL for updating the title
+                        method: 'POST',
+                        data: { bookPageID1: ancestor.data("page-id"), bookPageID2: previousSibling.data("page-id") },
+                        dataType: 'json',
+                        headers: {
+                            RequestVerificationToken: $('input:hidden[name="__RequestVerificationToken"]').val()
+                        }
+                    });
+
+                    console.log("Response:", response); // Log the entire response for debugging
+                    if (response && response.status === 0) {
+                        console.log("Book page exchange successfully!");
+
+                        // There is a previous sibling
+                        ancestor.after(previousSibling);
+                        ancestor.find('.design-page-content-page-text span').text("Page " + (parseInt(ancestor.find('.design-page-content-page-text span').text().trim().split(" ")[1]) - 1));
+                        previousSibling.find('.design-page-content-page-text span').text("Page " + (parseInt(previousSibling.find('.design-page-content-page-text span').text().trim().split(" ")[1]) + 1));
+
+
+                    } else {
+                        console.error("Error add book chapter try:", response.message);
                     }
-                });
-
-                console.log("Response:", response); // Log the entire response for debugging
-                if (response && response.status === 0) {
-                    console.log("Book page exchange successfully!");
-
-                // There is a previous sibling
-                ancestor.after(previousSibling);
-                ancestor.find('.design-page-content-page-text span').text("Page " + (parseInt( ancestor.find('.design-page-content-page-text span').text().trim().split(" ")[1]) - 1));
-                previousSibling.find('.design-page-content-page-text span').text("Page " + (parseInt( previousSibling.find('.design-page-content-page-text span').text().trim().split(" ")[1]) + 1));
-
-
-                } else {
-                    console.error("Error add book chapter try:", response.message);
+                } catch (error) {
+                    console.error("Error add book chapter:", error);
                 }
-            } catch (error) {
-                console.error("Error add book chapter:", error);
-            }
             }
         })
-        $(document).on("click",".page-down-button", async function(){
+        $(document).on("click", ".page-down-button", async function () {
             var ancestor = $(this).closest('.design-page-content-container');
             var nextSibling = ancestor.next('.design-page-content-container');
 
@@ -890,32 +913,32 @@
             if (nextSibling.length > 0) {
 
                 try {
-                var response = await $.ajax({
-                    url: '/eBooks/Design?handler=BookPageExchange', // Endpoint URL for updating the title
-                    method: 'POST',
-                    data: { bookPageID1: ancestor.data("page-id"), bookPageID2: nextSibling.data("page-id") },
-                    dataType: 'json',
-                    headers: {
-                        RequestVerificationToken: $('input:hidden[name="__RequestVerificationToken"]').val()
+                    var response = await $.ajax({
+                        url: '/eBooks/Design?handler=BookPageExchange', // Endpoint URL for updating the title
+                        method: 'POST',
+                        data: { bookPageID1: ancestor.data("page-id"), bookPageID2: nextSibling.data("page-id") },
+                        dataType: 'json',
+                        headers: {
+                            RequestVerificationToken: $('input:hidden[name="__RequestVerificationToken"]').val()
+                        }
+                    });
+
+                    console.log("Response:", response); // Log the entire response for debugging
+                    if (response && response.status === 0) {
+                        console.log("Book page exchange successfully!");
+
+                        // There is a previous sibling
+                        nextSibling.insertBefore(ancestor);
+                        ancestor.find('.design-page-content-page-text span').text("Page " + (parseInt(ancestor.find('.design-page-content-page-text span').text().trim().split(" ")[1]) + 1));
+                        nextSibling.find('.design-page-content-page-text span').text("Page " + (parseInt(nextSibling.find('.design-page-content-page-text span').text().trim().split(" ")[1]) - 1));
+
+
+                    } else {
+                        console.error("Error add book chapter try:", response.message);
                     }
-                });
-
-                console.log("Response:", response); // Log the entire response for debugging
-                if (response && response.status === 0) {
-                    console.log("Book page exchange successfully!");
-
-                                    // There is a previous sibling
-                nextSibling.insertBefore(ancestor);
-                ancestor.find('.design-page-content-page-text span').text("Page " + (parseInt( ancestor.find('.design-page-content-page-text span').text().trim().split(" ")[1]) + 1));
-                nextSibling.find('.design-page-content-page-text span').text("Page " + (parseInt( nextSibling.find('.design-page-content-page-text span').text().trim().split(" ")[1]) - 1));
-
-
-                } else {
-                    console.error("Error add book chapter try:", response.message);
+                } catch (error) {
+                    console.error("Error add book chapter:", error);
                 }
-            } catch (error) {
-                console.error("Error add book chapter:", error);
-            }
             }
         })
         $(document).on("change", ".chapter-name-input", async function () {
@@ -1001,182 +1024,471 @@
         })
 
         // Select the element when clicked
-        $(document).click(function(event) {
+        $(document).click(function (event) {
             console.log("document is clicked");
             console.log(event.target);
 
             // Check if the clicked element has the 'selected' class
-            if ($(event.target).hasClass("selected")) {
+            if ($(event.target).hasClass("selected") || $(event.target).hasClass("pointer") || $(event.target).hasClass("rotation-handle")) {
                 // Do something if the clicked element is already selected
             } else if ($(event.target).hasClass("element")) {
 
-                var prevSelectedElement = $("selected");
-                if(prevSelectedElement !== null){
+                var prevSelectedElement = $(".selected");
+                if (prevSelectedElement !== null) {
                     prevSelectedElement.removeClass("selected");
                     $(".rotation-handle").remove();
+                    $(".pointer").remove();
                 }
                 // Add the 'selected' class to the clicked element if it has the 'element' class
                 $(event.target).addClass("selected");
-                $(event.target).append('<div class="rotation-handle">&circlearrowright;</div>');
+                $(event.target).append('<div class="rotation-handle">&circlearrowright;</div>'
+                    + "<div class='top left pointer'></div>"
+                    + "<div class='top right pointer'></div>"
+                    + "<div class='bottom left pointer'></div>"
+                    + "<div class='bottom right pointer'></div>");
             } else {
                 // Remove the 'selected' class from all elements if the clicked element is neither selected nor an 'element'
                 $(".element").removeClass("selected");
                 // Remove the rotation handle from all elements
                 $(".rotation-handle").remove();
+                $(".pointer").remove();
             }
         });
 
         // Javascript interaction interact.js
         interact(".selected").draggable({
-  
-        inertia: false,
-        // keep the element within the area of it's parent
-        restrict: {
-          restriction: "none",
-          endOnly: true,
-          elementRect: { top: 0, left: 0, bottom: 1, right: 1 },
-        },
-        // enable autoScroll
-        autoScroll: false,
 
-        onstart: function (event) {
-          console.log("onstart");
-        },
+            inertia: false,
+            // keep the element within the area of it's parent
+            restrict: {
+                restriction: "none",
+                endOnly: true,
+                elementRect: { top: 0, left: 0, bottom: 1, right: 1 },
+            },
+            // enable autoScroll
+            autoScroll: false,
 
-        // call this function on every dragmove event
-        onmove: dragMoveListener,
-        // call this function on every dragend event
-        onend: function (event) {
-        },
-      });
+            onstart: function (event) {
+                console.log("onstart");
+            },
 
-    interact(".rotation-handle").draggable({
-        onstart: function (event) {
-          var box = event.target.parentElement;
-          var rect = box.getBoundingClientRect();
-
-          // store the center as the element has css `transform-origin: center center`
-          box.setAttribute("data-center-x", rect.left + rect.width / 2);
-          box.setAttribute("data-center-y", rect.top + rect.height / 2);
-          // get the angle of the element when the drag starts
-          box.setAttribute("data-angle", getDragAngle(event));
-        },
-        onmove: function (event) {
-          var box = event.target.parentElement;
-
-          var pos = {
-            x: parseFloat(box.getAttribute("data-x")) || 0,
-            y: parseFloat(box.getAttribute("data-y")) || 0,
-          };
-
-          var angle = getDragAngle(event);
-
-          // update transform style on dragmove
-          box.style.transform =
-            "translate(" +
-            pos.x +
-            "px, " +
-            pos.y +
-            "px) rotate(" +
-            angle +
-            "rad" +
-            ")";
-        },
-        onend: function (event) {
-          var box = event.target.parentElement;
-
-          // save the angle on dragend
-          box.setAttribute("data-angle", getDragAngle(event));
-        },
-      });
-
-      function getDragAngle(event) {
-        var box = event.target.parentElement;
-        var startAngle = parseFloat(box.getAttribute("data-angle")) || 0;
-        var center = {
-          x: parseFloat(box.getAttribute("data-center-x")) || 0,
-          y: parseFloat(box.getAttribute("data-center-y")) || 0,
-        };
-        var angle = Math.atan2(
-          center.y - event.clientY,
-          center.x - event.clientX
-        );
-
-        return angle - startAngle;
-      }
-
-      //resize drag
-    interact(".selected")
-        .draggable({
-          onmove: window.dragMoveListener,
-        })
-        .resizable({
-          preserveAspectRatio: false,
-          edges: { left: true, right: true, bottom: true, top: true },
-        })
-        .on("resizemove", function (event) {
-          var target = event.target,
-            x = parseFloat(target.getAttribute("data-x")) || 0,
-            y = parseFloat(target.getAttribute("data-y")) || 0;
-
-          // update the element's style
-          target.style.width = event.rect.width + "px";
-          target.style.height = event.rect.height + "px";
-
-          // translate when resizing from top or left edges
-          x += event.deltaRect.left;
-          y += event.deltaRect.top;
-
-          target.style.webkitTransform = target.style.transform =
-            "translate(" + x + "px," + y + "px)";
-
-          target.setAttribute("data-x", x);
-          target.setAttribute("data-y", y);
+            // call this function on every dragmove event
+            onmove: dragMoveListener,
+            // call this function on every dragend event
+            onend: function (event) {
+            },
         });
 
-       function dragMoveListener(event) {
-                   // Get the parent container element
-        var parentContainer = event.target.parentElement;
+        interact(".rotation-handle").draggable({
+            onstart: function (event) {
+                var box = event.target.parentElement;
+                var rect = box.getBoundingClientRect();
 
-        // Get the parent container's bounding rectangle
-        var parentRect = parentContainer.getBoundingClientRect();
+                // store the center as the element has css `transform-origin: center center`
+                box.setAttribute("data-center-x", rect.left + rect.width / 2);
+                box.setAttribute("data-center-y", rect.top + rect.height / 2);
+                // get the angle of the element when the drag starts
+                box.setAttribute("data-angle", getDragAngle(event));
+            },
+            onmove: function (event) {
+                var box = event.target.parentElement;
 
-        // Get the current mouse coordinates
-        var mouseX = event.clientX;
-        var mouseY = event.clientY;
+                var angle = getDragAngle(event);
 
-        // Check if the mouse cursor is outside the parent container
-        if (
-            mouseX < parentRect.left ||
-            mouseX > parentRect.right ||
-            mouseY < parentRect.top ||
-            mouseY > parentRect.bottom
-        ) {
-            // Stop the drag operation
-            event.stopPropagation();
-            event.stopImmediatePropagation();
+                // update transform style on dragmove
+                box.style.transform =
+                    "rotate(" +
+                    angle +
+                    "rad" +
+                    ")";
+            },
+            onend: function (event) {
+                var box = event.target.parentElement;
+
+                // save the angle on dragend
+                box.setAttribute("data-angle", getDragAngle(event));
+
+
+
+            },
+        });
+
+        function getDragAngle(event) {
+            var box = event.target.parentElement;
+            var startAngle = parseFloat(box.getAttribute("data-angle")) || 0;
+            var center = {
+                x: parseFloat(box.getAttribute("data-center-x")) || 0,
+                y: parseFloat(box.getAttribute("data-center-y")) || 0,
+            };
+            var angle = Math.atan2(
+                center.y - event.clientY,
+                center.x - event.clientX
+            );
+
+            return angle - startAngle;
+        }
+        // Function to get the rotation angle of the container
+        function getContainerRotationAngle(container) {
+            // Get the rotation angle of the container
+            if (container !== null) {
+                var containerTransform = container.style.transform;
+                var match = containerTransform.match(/rotate\(([^)]+)\)/);
+                if (match && match[1]) {
+                    return parseFloat(match[1]) || 0;
+                }
+            }
+            return 0;
+        }
+
+        // Calculate the rotation angle of the container
+        //var rotationAngle = getContainerRotationAngle($(".selected"));
+
+        // Determine which edges should be enabled for resizing based on the rotation angle
+        /* var edges = {
+           left: rotationAngle >= 45 && rotationAngle < 135,
+           right: rotationAngle >= -135 && rotationAngle < -45,
+           top: rotationAngle >= -45 && rotationAngle < 45,
+           bottom: rotationAngle >= 135 || rotationAngle < -135
+         };
+         */
+        // Function to rotate a point (x, y) around a center point (cx, cy) by an angle in radians
+        function rotatePoint(x, y, cx, cy, angle) {
+            var cosAngle = Math.cos(angle);
+            var sinAngle = Math.sin(angle);
+            var dx = x - cx;
+            var dy = y - cy;
+            return {
+                x: cx + dx * cosAngle - dy * sinAngle,
+                y: cy + dx * sinAngle + dy * cosAngle
+            };
+        }
+        function rotate(x, y, cx, cy, angle) {
+
+            return [
+                (x - cx) * Math.cos(angle) - (y - cy) * Math.sin(angle) + cx,
+                (x - cx) * Math.sin(angle) + (y - cy) * Math.cos(angle) + cy,
+            ];
+        }
+        function adjustRectangle(rectangle, bottomRightX, bottomRightY, angle) {
+   
+            const center = [
+                rectangle.x + rectangle.width / 2,
+                rectangle.y + rectangle.height / 2
+            ];
+            
+            const cx = center[0];
+            const cy = center[1];
+        
+            const rotatedA = rotate(rectangle.x, rectangle.y, cx, cy, angle);
+
+            const newCenter = [
+                (rotatedA[0] + bottomRightX) / 2,
+                (rotatedA[1] + bottomRightY) / 2,
+            ];
+            const newTopLeft = rotate(
+                rotatedA[0],
+                rotatedA[1],
+                newCenter[0],
+                newCenter[1],
+                -angle
+            );
+            const newBottomRight = rotate(
+                bottomRightX,
+                bottomRightY,
+                newCenter[0],
+                newCenter[1],
+                -angle
+            );
+
+            rectangle.x = newTopLeft[0];
+            rectangle.y = newTopLeft[1];
+            rectangle.width = newBottomRight[0] - newTopLeft[0];
+            rectangle.height = newBottomRight[1] - newTopLeft[1];
+
+            console.log(rectangle);
+        }
+
+        //resize drag
+        interact(".selected")
+            .resizable({
+                preserveAspectRatio: false,
+                //edges: edges
+                edges: {
+                    left: ".left",
+                    right: ".right",
+                    bottom: ".bottom",
+                    top: ".top",
+                },
+            })
+            .on("resizemove", function (event) {
+                var rotationAngle = getContainerRotationAngle(document.querySelector(".selected"))
+                var target = event.target;
+                var containerRect = target.parentElement.getBoundingClientRect(); // Get the bounding rectangle of the parent container
+                // Calculate mouse position relative to the parent container
+                var mouseX = event.clientX - containerRect.left;
+                var mouseY = event.clientY - containerRect.top;
+
+                // Calculate initial container position
+                var top = parseFloat(target.style.top) || 0; // initial container top
+                var left = parseFloat(target.style.left) || 0; // initial container left
+                var width = target.offsetWidth;
+                var height = target.offsetHeight;
+                var topLeft = {
+                    x: left,
+                    y: top
+                };
+                var bottomLeft = {
+                    x: left,
+                    y: top + target.offsetHeight
+                };
+                var topRight = {
+                    x: left + target.offsetWidth,
+                    y: top
+                };
+                var bottomRight = {
+                    x: left + target.offsetWidth,
+                    y: top + target.offsetHeight
+                };
+
+
+
+
+                // Calculate new center x and y positions
+                var centerX = left + event.rect.width / 2;
+                var centerY = top + event.rect.height / 2;
+
+                // Relative to the container center point
+                var relativeMouseX = mouseX - centerX;
+                var relativcemouseY = mouseY - centerY;
+
+                // Original Position relative to center point
+                var relativeMouseXOriginal = mouseX * Math.cos(rotationAngle) + mouseY * Math.sin(rotationAngle);
+                var relativeMouseYOriginal = -mouseX * Math.sin(rotationAngle) + mouseY * Math.cos(rotationAngle);
+
+                // Original Position
+                var mouseXOriginal = relativeMouseXOriginal + centerX;
+                var mouseYOriginal = relativeMouseYOriginal + centerY;
+
+                console.log(centerX, centerY, mouseX,mouseY,relativeMouseX, relativcemouseY, relativeMouseXOriginal, relativeMouseYOriginal, mouseXOriginal, mouseYOriginal);
+                var newX = 0;
+                var newY = 0;
+                var newW = 0;
+                var newH = 0;
+
+                var dx = 0;
+                var dy = 0;
+
+                // Calculate rotated corner points
+                var rotatedTopLeft = rotatePoint(left, top, centerX, centerY, rotationAngle);
+                var rotatedTopRight = rotatePoint(left + target.offsetWidth, top, centerX, centerY, rotationAngle);
+                var rotatedBottomLeft = rotatePoint(left, top + target.offsetHeight, centerX, centerY, rotationAngle);
+                var rotatedBottomRight = rotatePoint(left + target.offsetWidth, top + target.offsetHeight, centerX, centerY, rotationAngle);
+
+                console.log(rotatedTopLeft);
+
+                var rectangle ={
+                    x : left,
+                    y : top,
+                    width: width,
+                    height: height
+                }
+                console.log("Here is rectangle", rectangle);
+                adjustRectangle(rectangle, mouseX, mouseY, rotationAngle);
+                console.log(rectangle);
+
+                if (event.edges.top && event.edges.left) 
+                {
+                    // Top-left corner resizing
+                    dx = topLeft.x - mouseXOriginal;
+                    dy = topLeft.y - mouseYOriginal;
+
+                    dx = rotatedTopLeft.x - mouseX;
+                    dy = rotatedTopLeft.y - mouseY;
+
+
+                    // Calculate new position
+                    newX = left - dx;
+                    newY = top - dy;
+                     
+                    // Calculate new width and height
+                    newW = width + dx;
+                    newH = height + dy;
+
+                    console.log(topLeft, mouseXOriginal, dx,
+                        mouseYOriginal, dy, newX, newY, newW, newH);
+
+                    
+                } 
+                else if (event.edges.bottom && event.edges.left) 
+                {
+                    console.log("bottom-left");
+                } 
+                else if (event.edges.right && event.edges.bottom) 
+                {
+                    adjustRectangle(rectangle, mouseX, mouseY, rotationAngle);
+                } 
+                else if (event.edges.right && event.edges.top)
+                {
+                    console.log("top-right");
+                }
+
+                if (newW < 10) {
+                    newW = width;
+                    newX = left;
+                }
+                if(newH<10){
+                    newH = height;
+                    newY = top;
+                }
+
+                // Update the target's style
+              //  target.style.width = newW + 'px';
+            //    target.style.height = newH + 'px';
+             //   target.style.left = newX + 'px';
+            //    target.style.top = newY + 'px';
+                target.style.width = rectangle.width + 'px';
+                target.style.height = rectangle.height + 'px';
+                target.style.left = rectangle.x + 'px';
+                target.style.top = rectangle.y + 'px';
+                /*
+                           var rotationAngle = getContainerRotationAngle(document.querySelector(".selected"))
+                             var target = event.target;
+        var containerRect = target.parentElement.getBoundingClientRect(); // Get the bounding rectangle of the parent container
+            // Calculate mouse position relative to the parent container
+            var mouseX = event.clientX - containerRect.left;
+             var mouseY = event.clientY - containerRect.top;
+                    // Calculate new top and left positions
+                    var top = parseFloat(target.style.top) || 0; // initial container top
+                    var left = parseFloat(target.style.left) || 0; // initial container left
+                    // Calculate new center x and y positions
+                    var centerX = left + event.rect.width / 2;
+                    var centerY = top + event.rect.height / 2;
+
+             mouseX -= centerX;
+                mouseY -= centerY;
+                    console.log(mouseX, mouseY);
+                // Calculate the inverse rotation transformation for the mouse coordinates
+        var mouseXOriginal = mouseX * Math.cos(rotationAngle) + mouseY * Math.sin(rotationAngle);
+        var mouseYOriginal = -mouseX * Math.sin(rotationAngle) + mouseY * Math.cos(rotationAngle);
+
+                    console.log(mouseXOriginal, mouseYOriginal);
+        mouseXOriginal += centerX;
+                mouseYOriginal += centerY;
+                    console.log(mouseXOriginal, mouseYOriginal);
+
+        console.log("After rotate X Y:",mouseX,mouseY,'Original Mouse X:', mouseXOriginal, 'Original Mouse Y:', mouseYOriginal, "Center XY:",centerX,centerY);
+                // Calculate the rotation angle of the container
+
+
+
+                var dx = mouseX - top;
+                    var dy = mouseY - left;
+                        // Apply the new top and left positions
+        var newX = mouseXOriginal - dx;
+        var newY = mouseYOriginal - dy;
+        console.log("New Top",newX, newY);
+        // Apply the new top and left positions
+                 //   target.style.top = mouseYOriginal + "px";
+                   // target.style.left = mouseXOriginal + "px";
+
+                // Calculate rotation-compensated initial top and left positions
+    var initialTopRotated = top * Math.cos(rotationAngle) - left * Math.sin(rotationAngle);
+    var initialLeftRotated = top * Math.sin(rotationAngle) + left * Math.cos(rotationAngle);
+
+
+
+       // console.log("Ori top left",top,left," Rotated top left",initialTopRotated,initialLeftRotated);
+
+
+
+        //           console.log(event.rect.width, event.rect.height,event.deltaRect.left,event.deltaRect.top);
+
+                // Calculate the change in top and left positions based on resizing movement
+
+
+                // Calculate rotation-compensated movement
+                var dxRotated = dx * Math.cos(rotationAngle) - dy * Math.sin(rotationAngle);
+                var dyRotated = dx * Math.sin(rotationAngle) + dy * Math.cos(rotationAngle);
+                // update the element's style
+               // target.style.width = event.rect.width + "px";
+              //  target.style.height = event.rect.height + "px";
+
+                // Update top and left positions based on resizing movement
+                top += dyRotated;
+                left += dxRotated;
+                */
+                // Apply the new top and left positions
+                //  target.style.top = top + "px";
+                //   target.style.left = left + "px";
+
+                /* normal case can work one
+                       var target = event.target,
+                           // Get the current top and left positions
+                           top = parseFloat(target.style.top) || 0,
+                           left = parseFloat(target.style.left) || 0;
+
+                       // Update the element's style with new width and height
+                       target.style.width = event.rect.width + "px";
+                       target.style.height = event.rect.height + "px";
+
+                       // Calculate the new top and left positions based on resizing movement
+                       top += event.deltaRect.top;
+                       left += event.deltaRect.left;
+
+                       // Apply the new top and left positions
+                       target.style.top = top + "px";
+                       target.style.left = left + "px";
+                       */
+
+
+
+
+            });
+
+        function dragMoveListener(event) {
+            // Get the parent container element
+            var parentContainer = event.target.parentElement;
+
+            // Get the parent container's bounding rectangle
+            var parentRect = parentContainer.getBoundingClientRect();
+
+            // Get the current mouse coordinates
+            var mouseX = event.clientX;
+            var mouseY = event.clientY;
+
+            // Check if the mouse cursor is outside the parent container
+            if (
+                mouseX < parentRect.left ||
+                mouseX > parentRect.right ||
+                mouseY < parentRect.top ||
+                mouseY > parentRect.bottom
+            ) {
+                // Stop the drag operation
+                event.stopPropagation();
+                event.stopImmediatePropagation();
+
+
+            }
+            else {
+                // If the mouse cursor is still inside the parent container, continue with the drag operation
+
+                var target = event.target,
+                    // keep the dragged position in the data-x/data-y attributes
+                    x = (parseFloat(target.style.left) || 0) + event.dx,
+                    y = (parseFloat(target.style.top) || 0) + event.dy;
+
+                // Set the top and left styles of the target element
+                target.style.top = y + "px";
+                target.style.left = x + "px";
+
+            }
 
 
         }
-        else{
-                    var target = event.target,
-          // keep the dragged position in the data-x/data-y attributes
-          x = (parseFloat(target.getAttribute("data-x")) || 0) + event.dx,
-          y = (parseFloat(target.getAttribute("data-y")) || 0) + event.dy;
-
-        // translate the element
-        target.style.webkitTransform = target.style.transform =
-          "translate(" + x + "px, " + y + "px)";
-
-        // update the posiion attributes
-        target.setAttribute("data-x", x);
-        target.setAttribute("data-y", y);
-        }
-
-
-      }
 
     })
+
+
 </script>
 
 
