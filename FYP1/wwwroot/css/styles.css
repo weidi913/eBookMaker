@@ -3620,6 +3620,8 @@ a:hover{
     padding-left: var(--dl-space-space-unit);
     padding-right: var(--dl-space-space-unit);
     padding-bottom: var(--dl-space-space-halfunit);
+    overflow-y: visible;
+    overflow-x: auto;
   }
   .e-book-design-edit-button {
     transition: 0.3s;

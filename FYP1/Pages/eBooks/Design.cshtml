@@ -38,6 +38,11 @@
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     }
 
+    .hidden {
+        display: none !important;
+        pointer-events:none !important;
+        user-select:none;
+    }
     .top {
         top: -7px;
     }
@@ -52,6 +57,32 @@
 
     .bottom {
         bottom: -7px;
+    }
+
+    .ql-editor{
+        pointer-events:none;
+        overflow:visible !important;
+        cursor:text;
+    }
+    .ql-snow {
+        .ql-picker
+
+    {
+        &.ql-size
+
+    {
+        .ql-picker-label, .ql-picker-item
+
+    {
+        &::before
+
+    {
+        content: attr(data-value) !important;
+    }
+
+    }
+    }
+    }
     }
 </style>
 @Html.AntiForgeryToken()
@@ -223,8 +254,8 @@
             </span>
             <div class="design-add-page-grid-container">
                 <div class="design-add-page-grid-content">
-                    <button type="button" class="design-add-page-grid-button">
-                        <div style="width:100%;height:100%;border:solid 1px"></div>
+                    <button id="rectangle-shape" type="button" class="design-add-page-grid-button">
+                        <div style="width:100%;height:100%;border:solid 2px"></div>
                     </button>
                     <button type="button" class="design-add-page-grid-button">
                         <div style="width:100%;height:100%;border:solid 1px;border-radius:50%"></div>
@@ -451,6 +482,9 @@
                         <path d="M768 854v-428h-512v428h512zM380 256v86h264v-86q0-54-39-93t-93-39-93 39-39 93zM768 342q34 0 60 25t26 59v428q0 34-26 59t-60 25h-512q-34 0-60-25t-26-59v-428q0-34 26-59t60-25h42v-86q0-88 63-151t151-63 151 63 63 151v86h42zM512 726q-34 0-60-26t-26-60 26-60 60-26 60 26 26 60-26 60-60 26z"></path>
                     </svg>
                 </button>
+                <div class="e-book-design-button-separator"></div>
+                <div id="toolbar">
+                </div>
             </div>
             <div id="zoom-container" class="e-book-design-book-content-container">
                 <div class="e-book-design-book-container" style="width:@(Model.curBook.width)mm">
@@ -523,7 +557,9 @@
                                         </div>
                                     </div>
                                     <div style="height:@(Model.curBook.height)mm" class="design-page-content-page-content">
-                                        <div style="position:absolute;height:200px;width:200px;background:black;border: 1px solid transparent;" id="testing-image" class="element">
+                                        <div style="left:50px;top:50px;position:absolute;height:200px;width:200px;background:yellow;border: 1px solid transparent;"
+                                             id="testing-image" 
+                                        class="editor element ">
                                         </div>
                                         @bookPage.bookPageID
                                         @foreach (var element in bookPage.Elements)
@@ -591,7 +627,8 @@
         </svg>
     </button>
 </div>
-
+<link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+<script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
 <script>
     // Get references to the color box and the color picker input
     const colorBox = document.getElementById('color-box');
@@ -633,8 +670,140 @@
             container.css("display", "flex");
         }
     }
-
+    var curActiveQuil = null;
     $(document).ready(function () {
+        let drag = false;
+        document.addEventListener(
+            'mousedown', () => drag = false);
+
+        document.addEventListener(
+            'mousemove', () => drag = true);
+
+        const fontSizeArr = ['8px', '9px', '10px', '12px', '14px', '16px', '20px', '24px', '32px', '42px', '54px', '68px', '84px', '98px'];
+
+        var Size = Quill.import('attributors/style/size');
+        Size.whitelist = fontSizeArr;
+        Quill.register(Size, true);
+
+        var toolbarOptions = [
+            ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
+           // ['blockquote', 'code-block'],
+
+           // [{ 'header': 1 }, { 'header': 2 }],               // custom button values
+            [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+            [{ 'script': 'sub' }, { 'script': 'super' }],      // superscript/subscript
+           // [{ 'indent': '-1' }, { 'indent': '+1' }],          // outdent/indent
+
+            [{ 'size': fontSizeArr }],  // custom dropdown
+        //    [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+
+            [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
+            [{ 'font': [] }],
+            [{ 'align': [] }],
+            // Custom color picker button
+           // [{ 'custom-color': '#000000' }]
+            ['clean']                                         // remove formatting button
+        ];
+        // Add a handler for the custom color picker button
+        var handlers = {
+            'color': function (value) {
+                var color = prompt("Please enter a color (hexadecimal value):", "#000000");
+                if (color) {
+                    this.quill.format('color', color);
+                }
+            }
+        };
+        var quillOptions = {
+            modules: {
+                toolbar: {
+                    container: toolbarOptions,
+                    handlers: handlers
+                }
+            },
+            theme: 'snow'
+        }
+
+        function initQuill(element, globalToolbarContainer) {
+            var quill = new Quill(element, quillOptions);
+            let parentContainer = quill.root.parentElement;
+            parentContainer.addEventListener("click", function (event) {
+                if(event.target.classList.contains("selected") && !drag){
+                    quill.root.style.pointerEvents = "auto";
+                    quill.focus();
+                    curActiveQuil = quill;
+                    $(parentContainer).removeClass("moveable");
+                }
+                // Find the <html> element
+                var htmlElement = document.querySelector('html');
+
+                // Remove the cursor style
+                htmlElement.style.cursor = 'unset';
+
+            })
+            quill.on('editor-change', (selection) => {
+                selectionChange(selection, quill)
+                }
+            );
+
+            var toolbar = quill.getModule('toolbar');
+            toolbar.container.classList.add("hidden");
+            globalToolbarContainer.appendChild(toolbar.container)
+
+            // search for existing toolbar and hide it
+            prevToolbar = toolbar.container.previousElementSibling
+            if (prevToolbar) {
+                hideToolbar(prevToolbar)
+            }
+        }
+
+
+        function selectionChange(selection, quill) {
+            console.log("selection change", selection, quill)
+            console.log(quill.root.parentElement);
+
+            const toolbar = quill.getModule('toolbar')
+            if (selection == null) {
+                hideToolbar(toolbar.container)
+            } else {
+                showToolbar(toolbar.container)
+            }
+        }
+
+        function hideToolbar(toolbarContainer) {
+            toolbarContainer.classList.add('hidden')
+        }
+
+        function showToolbar(toolbarContainer) {
+            // hide all other toolbars
+            const siblings = getSiblings(toolbarContainer).map((elem) => elem.classList.add('hidden'))
+            toolbarContainer.classList.remove('hidden')
+        }
+
+        function getSiblings(elem) {
+            // Setup siblings array and get the first sibling
+            var siblings = [];
+            var sibling = elem.parentNode.firstChild;
+
+            // Loop through each sibling and push to the array
+            while (sibling) {
+                if (sibling.nodeType === 1 && sibling !== elem) {
+                    siblings.push(sibling);
+                }
+                sibling = sibling.nextSibling
+            }
+
+            return siblings;
+        };
+
+        var elementList = $(".element");
+        for (var i = 0; i < elementList.length; i++) {
+            
+            initQuill(elementList[i], document.querySelector('#toolbar'));
+
+        }
+       
+
+
         var currentSection = "";
         $(document).click(function () {
             /*
@@ -649,7 +818,17 @@
                 break;
             }*/
         })
-
+       // let toolbar = new Quill({ toolbar: "#toolbar" });
+        $("#rectangle-shape").click(function(){
+            console.log("this is clicked");
+            console.log($(".design-page-content-page-content"));
+            
+            $(".design-page-content-page-content")
+                .append("<div id='s10000' class='element shape' style='position:absolute;top:50px;left:200px;width:50px;height:50px;border:2px solid black'></div>");
+            var newTextElement = document.querySelector("#s10000");
+            console.log(newTextElement);
+            initQuill(newTextElement, document.querySelector('#toolbar'))
+        })
         $("button.chapter-toggle-button").click(function () {
             console.log("chapter-toggle-button is clciekd");
         })
@@ -1023,24 +1202,70 @@
             }
         })
 
+        function findParentDiv(element) {
+            let parent = element.parentNode;
+            
+            while (parent !== document.documentElement) {
+                if (parent.nodeName === 'DIV') {
+                    // Parent is a <div> tag
+                    return parent;
+                }
+                parent = parent.parentNode;
+                console.log(parent);
+            }
+            // No parent <div> container found
+            return null;
+        }
+
         // Select the element when clicked
         $(document).click(function (event) {
-            console.log("document is clicked");
-            console.log(event.target);
+         //   console.log("document is clicked");
+            console.log("This is the container being clicked",event.target);
+            // Check if the clicked element or one of its ancestors has the 'selected' class
+            let clickedElement = $(event.target);
+            let hasClass = clickedElement.closest(".selected, .pointer, .rotation-handle, .ql-editor, .ql-script .ql-toolbar").length > 0;
+            let isDiv = clickedElement.prop('nodeName') === "DIV";
+            let isParentDiv = false;
+            if (!isDiv) {
+                let parentDiv = findParentDiv(event.target);
+                isParentDiv = parentDiv !== null && ($(parentDiv).hasClass("ql-editor") || $(parentDiv).hasClass("ql-toolbar"));
+            }
 
+            if (hasClass || isParentDiv) {
+                // Clicked element or ancestor meets the condition
+              //  console.log('Clicked element or ancestor meets the condition Closest');
+            }
+            
             // Check if the clicked element has the 'selected' class
-            if ($(event.target).hasClass("selected") || $(event.target).hasClass("pointer") || $(event.target).hasClass("rotation-handle")) {
+            if ($(event.target).hasClass("selected")
+                || $(event.target).hasClass("pointer")
+                || $(event.target).hasClass("rotation-handle")
+                || $(event.target).hasClass("ql-editor")
+                || $(event.target).hasClass("ql-script")
+                || $(event.target).hasClass("ql-toolbar")
+                || isParentDiv) {
                 // Do something if the clicked element is already selected
-            } else if ($(event.target).hasClass("element")) {
-
+               console.log('Clicked element or ancestor meets the condition hasClass');
+            } 
+            else if ($(event.target).hasClass("element")) {
                 var prevSelectedElement = $(".selected");
                 if (prevSelectedElement !== null) {
                     prevSelectedElement.removeClass("selected");
                     $(".rotation-handle").remove();
                     $(".pointer").remove();
                 }
+                if(curActiveQuil !== null){
+                    console.log("this quil remove selection have been triggered", curActiveQuil);
+                    curActiveQuil.root.style.pointerEvents = "none";
+                    curActiveQuil.blur();
+                    console.log(curActiveQuil);
+                    curActiveQuil = null;
+
+                }
+
+                $(".ql-toolbar").addClass("hidden");
                 // Add the 'selected' class to the clicked element if it has the 'element' class
-                $(event.target).addClass("selected");
+                $(event.target).addClass("selected moveable");
                 $(event.target).append('<div class="rotation-handle">&circlearrowright;</div>'
                     + "<div class='top left pointer'></div>"
                     + "<div class='top right pointer'></div>"
@@ -1052,11 +1277,19 @@
                 // Remove the rotation handle from all elements
                 $(".rotation-handle").remove();
                 $(".pointer").remove();
+                $(".ql-toolbar").addClass("hidden");
+
+                if (curActiveQuil !== null) {
+                    console.log("this quil remove selection have been triggered");
+                    curActiveQuil.root.style.pointerEvents = "none";
+                    curActiveQuil.blur();
+                   curActiveQuil = null;
+                }
             }
         });
 
         // Javascript interaction interact.js
-        interact(".selected").draggable({
+        interact(".selected.moveable").draggable({
 
             inertia: false,
             // keep the element within the area of it's parent
@@ -1076,6 +1309,7 @@
             onmove: dragMoveListener,
             // call this function on every dragend event
             onend: function (event) {
+                console.log("drag move event end ");
             },
         });
 
@@ -1598,6 +1832,10 @@
             });
 
         function dragMoveListener(event) {
+            if (!drag) {
+                return;
+                console.log("end drag");
+            }
             // Get the parent container element
             var parentContainer = event.target.parentElement;
 
