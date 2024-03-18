@@ -1288,8 +1288,71 @@
             }
         });
 
+
+        //resize drag
+        interact(".selected")
+            .resizable({
+                preserveAspectRatio: false,
+                edges: {
+                    left: ".left",
+                    right: ".right",
+                    bottom: ".bottom",
+                    top: ".top",
+                },
+            })
+            .on("resizemove", function (event) {
+                console.log("123");
+                var rotationAngle = getContainerRotationAngle(document.querySelector(".selected"))
+                var target = event.target;
+                var containerRect = target.parentElement.getBoundingClientRect(); // Get the bounding rectangle of the parent container
+                // Calculate mouse position relative to the parent container
+                var mouseX = event.clientX - containerRect.left;
+                var mouseY = event.clientY - containerRect.top;
+
+                // Calculate initial container position
+                var left = parseFloat(target.style.left) || 0; // initial container left
+                var top = parseFloat(target.style.top) || 0; // initial container top
+                var width = target.offsetWidth;
+                var height = target.offsetHeight;
+
+                var rectangle = {
+                    x: left,
+                    y: top,
+                    width: width,
+                    height: height
+                }
+
+                if (event.edges.top && event.edges.left) {
+                    adjustRectangleTopLeft(rectangle, mouseX, mouseY, rotationAngle);
+                }
+                else if (event.edges.bottom && event.edges.left) {
+                    adjustRectangleBottomLeft(rectangle, mouseX, mouseY, rotationAngle);
+                }
+                else if (event.edges.right && event.edges.bottom) {
+                    adjustRectangleBottomRight(rectangle, mouseX, mouseY, rotationAngle);
+                }
+                else if (event.edges.right && event.edges.top) {
+                    adjustRectangleTopRight(rectangle, mouseX, mouseY, rotationAngle);
+                }
+
+                if (rectangle.width < 10) {
+                    rectangle.width = width;
+                    rectangle.x = left;
+                }
+                if (rectangle.height < 10) {
+                    rectangle.height = height;
+                    rectangle.y = top;
+                }
+
+                target.style.width = rectangle.width + 'px';
+                target.style.height = rectangle.height + 'px';
+                target.style.left = rectangle.x + 'px';
+                target.style.top = rectangle.y + 'px';
+            });
+
+
         // Javascript interaction interact.js
-        interact(".selected.moveable").draggable({
+        interact(".moveable").draggable({
 
             inertia: false,
             // keep the element within the area of it's parent
@@ -1312,6 +1375,7 @@
                 console.log("drag move event end ");
             },
         });
+
 
         interact(".rotation-handle").draggable({
             onstart: function (event) {
@@ -1588,248 +1652,6 @@
             return bottomRightRotated;
         }
 
-        //resize drag
-        interact(".selected")
-            .resizable({
-                preserveAspectRatio: false,
-                //edges: edges
-                edges: {
-                    left: ".left",
-                    right: ".right",
-                    bottom: ".bottom",
-                    top: ".top",
-                },
-            })
-            .on("resizemove", function (event) {
-                var rotationAngle = getContainerRotationAngle(document.querySelector(".selected"))
-                var target = event.target;
-                var containerRect = target.parentElement.getBoundingClientRect(); // Get the bounding rectangle of the parent container
-                // Calculate mouse position relative to the parent container
-                var mouseX = event.clientX - containerRect.left;
-                var mouseY = event.clientY - containerRect.top;
-
-                // Calculate initial container position
-                var top = parseFloat(target.style.top) || 0; // initial container top
-                var left = parseFloat(target.style.left) || 0; // initial container left
-                var width = target.offsetWidth;
-                var height = target.offsetHeight;
-                var topLeft = {
-                    x: left,
-                    y: top
-                };
-                var bottomLeft = {
-                    x: left,
-                    y: top + target.offsetHeight
-                };
-                var topRight = {
-                    x: left + target.offsetWidth,
-                    y: top
-                };
-                var bottomRight = {
-                    x: left + target.offsetWidth,
-                    y: top + target.offsetHeight
-                };
-
-
-
-
-                // Calculate new center x and y positions
-                var centerX = left + event.rect.width / 2;
-                var centerY = top + event.rect.height / 2;
-
-                // Relative to the container center point
-                var relativeMouseX = mouseX - centerX;
-                var relativcemouseY = mouseY - centerY;
-
-                // Original Position relative to center point
-                var relativeMouseXOriginal = mouseX * Math.cos(rotationAngle) + mouseY * Math.sin(rotationAngle);
-                var relativeMouseYOriginal = -mouseX * Math.sin(rotationAngle) + mouseY * Math.cos(rotationAngle);
-
-                // Original Position
-                var mouseXOriginal = relativeMouseXOriginal + centerX;
-                var mouseYOriginal = relativeMouseYOriginal + centerY;
-
-                console.log(centerX, centerY, mouseX,mouseY,relativeMouseX, relativcemouseY, relativeMouseXOriginal, relativeMouseYOriginal, mouseXOriginal, mouseYOriginal);
-                var newX = 0;
-                var newY = 0;
-                var newW = 0;
-                var newH = 0;
-
-                var dx = 0;
-                var dy = 0;
-
-                // Calculate rotated corner points
-                var rotatedTopLeft = rotatePoint(left, top, centerX, centerY, rotationAngle);
-                var rotatedTopRight = rotatePoint(left + target.offsetWidth, top, centerX, centerY, rotationAngle);
-                var rotatedBottomLeft = rotatePoint(left, top + target.offsetHeight, centerX, centerY, rotationAngle);
-                var rotatedBottomRight = rotatePoint(left + target.offsetWidth, top + target.offsetHeight, centerX, centerY, rotationAngle);
-
-
-                var rectangle ={
-                    x : left,
-                    y : top,
-                    width: width,
-                    height: height
-                }
-
-         //       adjustRectangle(rectangle, mouseX, mouseY, rotationAngle);
-
-
-               // var rotatedPoint = rotate(mouseX, mouseY, centerX, centerY, angle);
-
-                if (event.edges.top && event.edges.left) 
-                {
-                    var bottomRight = calculateBottomRight(mouseX,mouseY,rectangle.width,rectangle.height,rotationAngle);
-
-                    adjustRectangleTopLeft(rectangle, mouseX, mouseY, rotationAngle);
-                    // Top-left corner resizing
-                    dx = topLeft.x - mouseXOriginal;
-                    dy = topLeft.y - mouseYOriginal;
-
-                    dx = rotatedTopLeft.x - mouseX;
-                    dy = rotatedTopLeft.y - mouseY;
-
-
-                    // Calculate new position
-                    newX = left - dx;
-                    newY = top - dy;
-                     
-                    // Calculate new width and height
-                    newW = width + dx;
-                    newH = height + dy;
-
-                    console.log(topLeft, mouseXOriginal, dx,
-                        mouseYOriginal, dy, newX, newY, newW, newH);
-
-                    
-                } 
-                else if (event.edges.bottom && event.edges.left) 
-                {
-                    console.log("bottom-left");
-                    adjustRectangleBottomLeft(rectangle, mouseX, mouseY, rotationAngle);
-                } 
-                else if (event.edges.right && event.edges.bottom) 
-                {
-                    adjustRectangleBottomRight(rectangle, mouseX, mouseY, rotationAngle);
-                } 
-                else if (event.edges.right && event.edges.top)
-                {
-                    console.log("top-right");
-                    adjustRectangleTopRight(rectangle, mouseX, mouseY, rotationAngle);
-                }
-
-                if (rectangle.width < 10) {
-                    rectangle.width = width;
-                    rectangle.x = left;
-                }
-                if (rectangle.height < 10) {
-                    rectangle.height = height;
-                    rectangle.y = top;
-                }
-
-                // Update the target's style
-              //  target.style.width = newW + 'px';
-            //    target.style.height = newH + 'px';
-             //   target.style.left = newX + 'px';
-            //    target.style.top = newY + 'px';
-                target.style.width = rectangle.width + 'px';
-                target.style.height = rectangle.height + 'px';
-                target.style.left = rectangle.x + 'px';
-                target.style.top = rectangle.y + 'px';
-                /*
-                           var rotationAngle = getContainerRotationAngle(document.querySelector(".selected"))
-                             var target = event.target;
-        var containerRect = target.parentElement.getBoundingClientRect(); // Get the bounding rectangle of the parent container
-            // Calculate mouse position relative to the parent container
-            var mouseX = event.clientX - containerRect.left;
-             var mouseY = event.clientY - containerRect.top;
-                    // Calculate new top and left positions
-                    var top = parseFloat(target.style.top) || 0; // initial container top
-                    var left = parseFloat(target.style.left) || 0; // initial container left
-                    // Calculate new center x and y positions
-                    var centerX = left + event.rect.width / 2;
-                    var centerY = top + event.rect.height / 2;
-
-             mouseX -= centerX;
-                mouseY -= centerY;
-                    console.log(mouseX, mouseY);
-                // Calculate the inverse rotation transformation for the mouse coordinates
-        var mouseXOriginal = mouseX * Math.cos(rotationAngle) + mouseY * Math.sin(rotationAngle);
-        var mouseYOriginal = -mouseX * Math.sin(rotationAngle) + mouseY * Math.cos(rotationAngle);
-
-                    console.log(mouseXOriginal, mouseYOriginal);
-        mouseXOriginal += centerX;
-                mouseYOriginal += centerY;
-                    console.log(mouseXOriginal, mouseYOriginal);
-
-        console.log("After rotate X Y:",mouseX,mouseY,'Original Mouse X:', mouseXOriginal, 'Original Mouse Y:', mouseYOriginal, "Center XY:",centerX,centerY);
-                // Calculate the rotation angle of the container
-
-
-
-                var dx = mouseX - top;
-                    var dy = mouseY - left;
-                        // Apply the new top and left positions
-        var newX = mouseXOriginal - dx;
-        var newY = mouseYOriginal - dy;
-        console.log("New Top",newX, newY);
-        // Apply the new top and left positions
-                 //   target.style.top = mouseYOriginal + "px";
-                   // target.style.left = mouseXOriginal + "px";
-
-                // Calculate rotation-compensated initial top and left positions
-    var initialTopRotated = top * Math.cos(rotationAngle) - left * Math.sin(rotationAngle);
-    var initialLeftRotated = top * Math.sin(rotationAngle) + left * Math.cos(rotationAngle);
-
-
-
-       // console.log("Ori top left",top,left," Rotated top left",initialTopRotated,initialLeftRotated);
-
-
-
-        //           console.log(event.rect.width, event.rect.height,event.deltaRect.left,event.deltaRect.top);
-
-                // Calculate the change in top and left positions based on resizing movement
-
-
-                // Calculate rotation-compensated movement
-                var dxRotated = dx * Math.cos(rotationAngle) - dy * Math.sin(rotationAngle);
-                var dyRotated = dx * Math.sin(rotationAngle) + dy * Math.cos(rotationAngle);
-                // update the element's style
-               // target.style.width = event.rect.width + "px";
-              //  target.style.height = event.rect.height + "px";
-
-                // Update top and left positions based on resizing movement
-                top += dyRotated;
-                left += dxRotated;
-                */
-                // Apply the new top and left positions
-                //  target.style.top = top + "px";
-                //   target.style.left = left + "px";
-
-                /* normal case can work one
-                       var target = event.target,
-                           // Get the current top and left positions
-                           top = parseFloat(target.style.top) || 0,
-                           left = parseFloat(target.style.left) || 0;
-
-                       // Update the element's style with new width and height
-                       target.style.width = event.rect.width + "px";
-                       target.style.height = event.rect.height + "px";
-
-                       // Calculate the new top and left positions based on resizing movement
-                       top += event.deltaRect.top;
-                       left += event.deltaRect.left;
-
-                       // Apply the new top and left positions
-                       target.style.top = top + "px";
-                       target.style.left = left + "px";
-                       */
-
-
-
-
-            });
 
         function dragMoveListener(event) {
             if (!drag) {
