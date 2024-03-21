@@ -6,6 +6,9 @@
     ViewData["Title"] = "Design";
 }
 <style>
+    .tab-selected{
+        background-color: rgba(64,87,109,.07);
+    }
     .selected {
         /*         box-shadow: 0 0 0 5px transparent,
             0 0 0 7px #8532FF； */
@@ -182,26 +185,26 @@
 
     <div class="e-book-design-design-container">
         <div class="e-book-design-element-list-container">
-            <div class="e-book-design-element-container">
+            <div id="add-text-tab-button" class="e-book-design-element-container">
                 <svg viewBox="0 0 878.2994285714285 1024"
                      class="e-book-design-element-icon">
                     <path d="M46.286 73.714l30.857 15.429c4 1.714 108.571 2.857 120.571 2.857 50.286 0 100.571-2.286 150.857-2.286 151.429 0 304.571-3.429 456 1.714 12.571 0.571 24.571-7.429 32-17.714l24-0.571c5.143 0 10.857 0.571 16 0.571 1.143 64 1.143 128 1.143 192 0 20.571 0.571 42.286-2.857 62.286-12.571 4.571-25.714 8.571-38.857 10.286-13.143-22.857-22.286-48-30.857-73.143-4-11.429-18.286-88.571-18.857-89.714-4-5.143-9.143-8.571-15.429-10.857-4.571-1.714-32-1.143-37.714-1.143-70.286 0-151.429-4-220.571 4-2.857 25.143-5.143 52-4.571 77.714l0.571 86.857v-29.714c0.571 93.143 1.714 185.714 1.714 278.286 0 44-6.857 90.286 5.714 132.571 43.429 22.286 94.857 25.714 139.429 45.714 1.143 9.143 2.857 18.857 2.857 28.571 0 5.143-0.571 10.857-1.714 16.571l-19.429 0.571c-81.143 2.286-161.143-10.286-242.857-10.286-57.714 0-115.429 10.286-173.143 10.286-0.571-9.714-1.714-20-1.714-29.714v-5.143c21.714-34.857 100-35.429 136-56.571 14.286-32 10.286-302.286 10.286-352.571 0-8-2.857-16.571-2.857-25.143 0-23.429 4-157.714-4.571-167.429-8-8.571-82.857-6.857-92.571-6.857-24 0-158.286 12.571-172 21.714-26.857 17.714-27.429 132.571-61.714 135.429-10.286-6.286-24.571-15.429-32-25.143v-218.857zM748.571 806.286c20 0 96 68 111.429 80 8.571 6.857 14.857 16.571 14.857 28s-6.286 21.143-14.857 28c-15.429 12-91.429 80-111.429 80-26.286 0-17.143-61.143-17.143-71.429h-585.143c0 10.286 9.143 71.429-17.143 71.429-20 0-96-68-111.429-80-8.571-6.857-14.857-16.571-14.857-28s6.286-21.143 14.857-28c15.429-12 91.429-80 111.429-80 26.286 0 17.143 61.143 17.143 71.429h585.143c0-10.286-9.143-71.429 17.143-71.429z"></path>
                 </svg>
                 <span class="e-book-design-element-text">Text</span>
             </div>
-            <div class="e-book-design-element-container">
+            <div id="add-shape-tab-button" class="e-book-design-element-container">
                 <svg viewBox="0 0 1024 1024" class="e-book-design-element-icon">
                     <path d="M213.333 85.333c-35.328 0-67.413 14.379-90.496 37.504s-37.504 55.168-37.504 90.496v597.333c0 35.328 14.379 67.413 37.504 90.496s55.168 37.504 90.496 37.504h597.333c35.328 0 67.413-14.379 90.496-37.504s37.504-55.168 37.504-90.496v-597.333c0-35.328-14.379-67.413-37.504-90.496s-55.168-37.504-90.496-37.504zM469.333 362.667c0-29.44-11.989-56.149-31.232-75.435s-45.995-31.232-75.435-31.232-56.149 11.989-75.435 31.232-31.232 45.995-31.232 75.435 11.989 56.149 31.232 75.435 45.995 31.232 75.435 31.232 56.149-11.989 75.435-31.232 31.232-45.995 31.232-75.435zM384 362.667c0 5.888-2.347 11.179-6.229 15.104s-9.216 6.229-15.104 6.229-11.179-2.347-15.104-6.229-6.229-9.216-6.229-15.104 2.347-11.179 6.229-15.104 9.216-6.229 15.104-6.229 11.179 2.347 15.104 6.229 6.229 9.216 6.229 15.104zM316.331 853.333l366.336-366.336 170.667 170.667v153.003c0 11.776-4.736 22.4-12.501 30.165s-18.389 12.501-30.165 12.501zM853.333 537.003l-140.501-140.501c-16.683-16.683-43.691-16.683-60.331 0l-454.144 454.144c-5.76-2.133-10.88-5.504-15.189-9.813-7.765-7.765-12.501-18.389-12.501-30.165v-597.333c0-11.776 4.736-22.4 12.501-30.165s18.389-12.501 30.165-12.501h597.333c11.776 0 22.4 4.736 30.165 12.501s12.501 18.389 12.501 30.165z"></path>
                 </svg>
                 <span class="e-book-design-element-text">Shape</span>
             </div>
-            <div class="e-book-design-element-container">
+            <div id="add-image-tab-button" class="e-book-design-element-container">
                 <svg viewBox="0 0 1024 1024" class="e-book-design-element-icon">
                     <path d="M213.333 85.333c-35.328 0-67.413 14.379-90.496 37.504s-37.504 55.168-37.504 90.496v597.333c0 35.328 14.379 67.413 37.504 90.496s55.168 37.504 90.496 37.504h597.333c35.328 0 67.413-14.379 90.496-37.504s37.504-55.168 37.504-90.496v-597.333c0-35.328-14.379-67.413-37.504-90.496s-55.168-37.504-90.496-37.504zM469.333 362.667c0-29.44-11.989-56.149-31.232-75.435s-45.995-31.232-75.435-31.232-56.149 11.989-75.435 31.232-31.232 45.995-31.232 75.435 11.989 56.149 31.232 75.435 45.995 31.232 75.435 31.232 56.149-11.989 75.435-31.232 31.232-45.995 31.232-75.435zM384 362.667c0 5.888-2.347 11.179-6.229 15.104s-9.216 6.229-15.104 6.229-11.179-2.347-15.104-6.229-6.229-9.216-6.229-15.104 2.347-11.179 6.229-15.104 9.216-6.229 15.104-6.229 11.179 2.347 15.104 6.229 6.229 9.216 6.229 15.104zM316.331 853.333l366.336-366.336 170.667 170.667v153.003c0 11.776-4.736 22.4-12.501 30.165s-18.389 12.501-30.165 12.501zM853.333 537.003l-140.501-140.501c-16.683-16.683-43.691-16.683-60.331 0l-454.144 454.144c-5.76-2.133-10.88-5.504-15.189-9.813-7.765-7.765-12.501-18.389-12.501-30.165v-597.333c0-11.776 4.736-22.4 12.501-30.165s18.389-12.501 30.165-12.501h597.333c11.776 0 22.4 4.736 30.165 12.501s12.501 18.389 12.501 30.165z"></path>
                 </svg>
                 <span class="e-book-design-element-text">Image</span>
             </div>
-            <div class="e-book-design-element-container">
+            <div id="add-chart-tab-button" class="e-book-design-element-container">
                 <svg viewBox="0 0 1024 1024" class="e-book-design-element-icon">
                     <path d="M365.714 512v292.571h-146.286v-292.571h146.286zM585.143 219.429v585.143h-146.286v-585.143h146.286zM1170.286 877.714v73.143h-1170.286v-877.714h73.143v804.571h1097.143zM804.571 365.714v438.857h-146.286v-438.857h146.286zM1024 146.286v658.286h-146.286v-658.286h146.286z"></path>
                 </svg>
@@ -214,7 +217,7 @@
                 <span class="e-book-design-back-text">Back</span>
             </div>
         </div>
-        <div style="display:none" id="add-text" class="design-add-page-container">
+        <div id="add-text" class="hidden design-add-page-container">
             <div class="design-add-page-search-container">
                 <svg viewBox="0 0 950.8571428571428 1024"
                      class="design-add-page-search-icon">
@@ -249,7 +252,7 @@
                 <p><strong style="font-size:16px;color: rgb(255, 0, 0);">Warning Text</strong></p>
             </button>
         </div>
-        <div style="display:none" id="add-shape" class="design-add-page-container">
+        <div id="add-shape" class="hidden design-add-page-container">
             <div class="design-add-page-search-container">
                 <svg viewBox="0 0 950.8571428571428 1024"
                      class="design-add-page-search-icon">
@@ -356,7 +359,7 @@
                 </div>
             </div>
         </div>
-        <div id="add-image" style="display:none" class="design-add-page-container">
+        <div id="add-image" class="hidden design-add-page-container">
             <span class="design-add-page-heading-text">
                 <span>Image</span>
             </span>
@@ -380,7 +383,7 @@
             <img id="view-ebook-action" src="~/images/design-images/view-ebook-action.jpeg" class="design-add-page-gallery" />
             <img id="book-flying-effects" src="~/images/design-images/book-flying-effects.png" class="design-add-page-gallery" />
         </div>
-        <div id="add-chart" style="display:none" class="design-add-page-container">
+        <div id="add-chart" class="design-add-page-container hidden">
             <div class="design-add-page-search-container">
                 <svg viewBox="0 0 950.8571428571428 1024"
                      class="design-add-page-search-icon">
@@ -417,7 +420,7 @@
                 </div>
             </div>
         </div>
-        <div id="edit-position" style="display:none" class="design-edit-page-container">
+        <div id="edit-position" class=" hidden design-edit-page-container">
             <div class="design-edit-page-heading-container">
                 <span class="design-edit-page-heading-text">
                     <span>Edit Position</span>
@@ -462,7 +465,7 @@
                 <input id="height" type="text" placeholder="172 px" class="design-edit-page-size-input input" />
             </div>
         </div>
-        <div id="edit-border" style="display:none" class="design-edit-page-container">
+        <div id="edit-border" class="hidden design-edit-page-container">
             <div class="design-edit-page-heading-container">
                 <span class="design-edit-page-heading-text">
                     <span>Edit Border</span>
@@ -500,7 +503,7 @@
                 <span>Open Color Palette</span>
             </button>
         </div>
-        <div style="display:none" id="edit-color" class="design-edit-page-container">
+        <div id="edit-color" class="hidden design-edit-page-container">
             <div class="design-edit-page-heading-container">
                 <span class="design-edit-page-heading-text">
                     <span>Edit Color</span>
@@ -557,34 +560,35 @@
         </div>
         <div class="e-book-design-content-container">
             <div class="e-book-design-top-tab-container">
-                <button type="button" class="e-book-design-edit-button button">
+                <button id="position-button" type="button" class="e-book-design-edit-button button hidden">
                     <span class="e-book-design-text">Position</span>
                 </button>
-                <div class="e-book-design-button-separator"></div>
-                <button type="button" class="e-book-design-edit-button button">
+                <div class="e-book-design-button-separator hidden"></div>
+                <button id="border-button" type="button" class="e-book-design-edit-button button hidden">
                     <span class="e-book-design-text">Border</span>
                 </button>
-                <div class="e-book-design-button-separator"></div>
-                <button type="button" class="e-book-design-edit-button button">
+                <div class="e-book-design-button-separator hidden"></div>
+                <button id="style-button" type="button" class="e-book-design-edit-button button hidden">
                     <span class="e-book-design-text">Style</span>
                 </button>
-                <div class="e-book-design-button-separator"></div>
+                <div class="e-book-design-button-separator hidden"></div>
                 <button type="button"
-                        id="element-delete-icon"
-                        class="e-book-design-top-function-icon-button design-page-button">
+                        id="element-delete-button"
+                        class="e-book-design-top-function-icon-button design-page-button hidden">
                     <svg viewBox="0 0 1024 1024"
                          class="e-book-design-top-function-icon">
                         <path d="M662 170h148v86h-596v-86h148l44-42h212zM342 384v426h340v-426h-340zM256 810v-512h512v512q0 34-26 60t-60 26h-340q-34 0-60-26t-26-60z"></path>
                     </svg>
                 </button>
                 <button type="button"
-                        class="e-book-design-top-function-icon-button design-page-button">
+                    id="element-lock-button"
+                        class="e-book-design-top-function-icon-button design-page-button hidden">
                     <svg viewBox="0 0 1024 1024"
                          class="e-book-design-top-function-icon">
                         <path d="M768 854v-428h-512v428h512zM380 256v86h264v-86q0-54-39-93t-93-39-93 39-39 93zM768 342q34 0 60 25t26 59v428q0 34-26 59t-60 25h-512q-34 0-60-25t-26-59v-428q0-34 26-59t60-25h42v-86q0-88 63-151t151-63 151 63 63 151v86h42zM512 726q-34 0-60-26t-26-60 26-60 60-26 60 26 26 60-26 60-60 26z"></path>
                     </svg>
                 </button>
-                <div class="e-book-design-button-separator"></div>
+                <div class="e-book-design-button-separator hidden"></div>
                 <div id="toolbar">
                 </div>
             </div>
@@ -860,8 +864,6 @@
                 hideToolbar(prevToolbar)
             }
         }
-
-
         function selectionChange(selection, quill) {
             console.log("selection change", selection, quill)
             console.log(quill.root.parentElement);
@@ -873,11 +875,9 @@
                 showToolbar(toolbar.container)
             }
         }
-
         function hideToolbar(toolbarContainer) {
             toolbarContainer.classList.add('hidden')
         }
-
         function showToolbar(toolbarContainer) {
             // hide all other toolbars
             const siblings = getSiblings(toolbarContainer).map((elem) => elem.classList.add('hidden'))
@@ -1207,7 +1207,7 @@
                 }
             });
         }
-        $("#element-delete-icon").click(async function () {
+        $("#element-delete-button").click(async function () {
 
             var elementSelected = $(".selected");
             var elementID = elementSelected.attr("id");
@@ -1482,16 +1482,16 @@
         $(".e-book-design-element-container").click(function () {
             switch ($(this).children("span").text()) {
                 case "Text":
-                    toggleDisplay("add-text");
+                  //  toggleDisplay("add-text");
                     break;
                 case "Chart":
-                    toggleDisplay("add-chart");
+                  //  toggleDisplay("add-chart");
                     break;
                 case "Shape":
-                    toggleDisplay("add-shape");
+                  //  toggleDisplay("add-shape");
                     break;
                 case "Image":
-                    toggleDisplay("add-image");
+                 //   toggleDisplay("add-image");
                     break;
                 default:
                     break;
@@ -1502,17 +1502,90 @@
             //toggleDisplay(currentDisplaySituation);
         })
 
+        $(".e-book-design-edit-button, .e-book-design-element-container").click(function () {
+            // Remove the 'tab-selected' class from all other elements
+            $(".e-book-design-edit-button, .e-book-design-element-container").not(this).removeClass("tab-selected").each(function () {
+
+                var openTab = "";
+                switch ($(this).attr("id")) {
+                    case "position-button":
+                        openTab = "edit-position";
+                        break;
+                    case "border-button":
+                        openTab = "edit-border";
+                        break;
+                    case "style-button":
+                        openTab = "edit-style";
+                        break;
+                    case "add-text-tab-button":
+                        openTab = "add-text";
+                        break;
+                    case "add-chart-tab-button":
+                        openTab = "add-chart";
+                        break;
+                    case "add-image-tab-button":
+                        openTab = "add-image";
+                        break;
+                    case "add-shape-tab-button":
+                        openTab = "add-shape";
+                        break;
+                    default:
+                        break;
+                }
+
+                $("#" + openTab).addClass("hidden");
+            })
+
+
+            // Toggle the 'tab-selected' class on the clicked element
+            $(this).toggleClass("tab-selected");
+            var idValue = console.log($(this).attr("id"));
+            var openTab = "";
+            switch ($(this).attr("id")) {
+                case "position-button":
+                    openTab = "edit-position";
+                    break;
+                case "border-button":
+                    openTab = "edit-border";
+                    break;
+                case "style-button":
+                    openTab = "edit-style";
+                    break;
+                case "add-text-tab-button":
+                    openTab = "add-text";
+                    break;
+                case "add-chart-tab-button":
+                    openTab = "add-chart";
+                    break;
+                case "add-image-tab-button":
+                    openTab = "add-image";
+                    break;
+                case "add-shape-tab-button":
+                    openTab = "add-shape";
+                    break;
+                default:
+                    break;
+            }
+            if ($(this).hasClass("tab-selected")) {
+                $("#" + openTab).removeClass("hidden");
+            }
+            else{
+                $("#" + openTab).addClass("hidden");
+            }
+
+
+        })
         $(".e-book-design-top-tab-container button.button").children("span").click(function () {
             switch ($(this).text()) {
                 case "Position":
-                    toggleDisplay("edit-position");
+                    //toggleDisplay("edit-position");
                     break;
                 case "Edit":
                 case "Border":
-                    toggleDisplay("edit-border");
+                   // toggleDisplay("edit-border");
                     break;
                 case "Style":
-                    toggleDisplay("edit-style");
+                   // toggleDisplay("edit-style");
                     break;
 
                     break;
@@ -1542,22 +1615,8 @@
             console.log("This is the container being clicked",event.target);
             // Check if the clicked element or one of its ancestors has the 'selected' class
             let clickedElement = $(event.target);
-            let isAncestorOrSelf = clickedElement.closest(".selected, .pointer, .rotation-handle, .ql-editor, .ql-script, .ql-toolbar, .e-book-design-top-tab-container, .pointer ").length > 0;
+            let isAncestorOrSelf = clickedElement.closest(".selected, .pointer, .rotation-handle, .ql-editor, .ql-script, .ql-toolbar, .e-book-design-top-tab-container, .pointer, .design-edit-page-container ").length > 0;
             let isDiv = clickedElement.prop('nodeName') === "DIV";
-
-
-
-            // Check if the clicked element has the 'selected' class
-            if ($(event.target).hasClass("selected")
-                || $(event.target).hasClass("pointer")
-                || $(event.target).hasClass("rotation-handle")
-                || $(event.target).hasClass("ql-editor")
-                || $(event.target).hasClass("ql-script")
-                || $(event.target).hasClass("ql-toolbar")
-                || isParentDiv) {
-                // Do something if the clicked element is already selected
-               console.log('Clicked element or ancestor meets the condition hasClass');
-            } 
 
             if(isAncestorOrSelf){
                 console.log('Clicked element or ancestor meets the condition isAncestorOrSelf');
@@ -1581,7 +1640,7 @@
                         content = "";
                     }
                     else if (prevSelectedElement.hasClass("text")) {
-                        content += "<div class='editor' style='border:none'>";
+                        content = "<div class='editor' style='border:none'>";
                         content += prevSelectedElement.find(".ql-editor").html();
                         content += "</div>";
                         console.log(content);
@@ -1607,6 +1666,48 @@
                     + "<div class='top right pointer'></div>"
                     + "<div class='bottom left pointer'></div>"
                     + "<div class='bottom right pointer'></div>");
+
+                if ($(event.target).hasClass("text")) {
+                    $("#position-button").removeClass("hidden");
+                    $("#position-button").next("div").removeClass("hidden");
+                    $("#border-button").removeClass("hidden");
+                    $("#border-button").next("div").removeClass("hidden");
+                    $("#element-delete-button").removeClass("hidden");
+                    $("#element-lock-button").removeClass("hidden");
+                }
+                else if ($(event.target).hasClass("image")) {
+                    $("#position-button").removeClass("hidden");
+                    $("#position-button").next("div").removeClass("hidden");
+                    $("#border-button").removeClass("hidden");
+                    $("#border-button").next("div").removeClass("hidden");
+                    $("#element-delete-button").removeClass("hidden");
+                    $("#element-lock-button").removeClass("hidden");
+                }
+                else if ($(event.target).hasClass("shape")) {
+                    $("#position-button").removeClass("hidden");
+                    $("#position-button").next("div").removeClass("hidden");
+                    $("#border-button").addClass("hidden");
+                    $("#border-button").next("div").addClass("hidden");
+                    $("#edit-border").addClass("hidden");
+                    $("#border-button").removeClass("tab-selected");
+                    $("#element-delete-button").removeClass("hidden");
+                    $("#element-lock-button").removeClass("hidden");
+                }
+                else {
+                    $("#position-button").addClass("hidden");
+                    $("#position-button").next("div").addClass("hidden");
+                    $("#border-button").addClass("hidden");
+                    $("#border-button").next("div").addClass("hidden");
+                    $("#element-delete-button").addClass("hidden");
+                    $("#element-lock-button").addClass("hidden");
+                    $("#edit-position").addClass("hidden");
+                    $("#position-button").removeClass("tab-selected");
+                    $("#edit-border").addClass("hidden");
+                    $("#border-button").removeClass("tab-selected");
+                    $("#edit-style").addClass("hidden");
+                    $("#style-button").removeClass("tab-selected");
+                }
+                $(".design-edit-page-container:not(hidden)");
             } else {
                 var prevSelectedElement = $(".selected");
                 if (prevSelectedElement.length > 0) {
@@ -1634,12 +1735,6 @@
 
                     await EditElementFunc(prevSelectedElement.attr("id"), content, prevSelectedElement.attr("style"));
                 }
-                /*
-                // Remove the 'selected' class from all elements if the clicked element is neither selected nor an 'element'
-                $(".element").removeClass("selected");
-                // Remove the rotation handle from all elements
-                $(".rotation-handle").remove();
-                $(".pointer").remove();*/
                 $(".ql-toolbar").addClass("hidden");
 
                 if (curActiveQuil !== null) {
@@ -1648,8 +1743,92 @@
                     curActiveQuil.blur();
                    curActiveQuil = null;
                 }
+
+                if ($(event.target).hasClass("text")) {
+                    $("#position-button").removeClass("hidden");
+                    $("#position-button").next("div").removeClass("hidden");
+                    $("#border-button").removeClass("hidden");
+                    $("#border-button").next("div").removeClass("hidden");
+                    $("#element-delete-button").removeClass("hidden");
+                    $("#element-lock-button").removeClass("hidden");
+                }
+                else if ($(event.target).hasClass("image")) {
+                    $("#position-button").removeClass("hidden");
+                    $("#position-button").next("div").removeClass("hidden");
+                    $("#border-button").removeClass("hidden");
+                    $("#border-button").next("div").removeClass("hidden");
+                    $("#element-delete-button").removeClass("hidden");
+                    $("#element-lock-button").removeClass("hidden");
+                }
+                else if ($(event.target).hasClass("shape")) {
+                    $("#position-button").removeClass("hidden");
+                    $("#position-button").next("div").removeClass("hidden");
+                    $("#border-button").addClass("hidden");
+                    $("#border-button").next("div").addClass("hidden");
+                    $("#edit-border").addClass("hidden");
+                    $("#border-button").removeClass("tab-selected");
+                    $("#element-delete-button").removeClass("hidden");
+                    $("#element-lock-button").removeClass("hidden");
+                }
+                else{
+                    $("#position-button").addClass("hidden");
+                    $("#position-button").next("div").addClass("hidden");
+                    $("#border-button").addClass("hidden");
+                    $("#border-button").next("div").addClass("hidden");
+                    $("#element-delete-button").addClass("hidden");
+                    $("#element-lock-button").addClass("hidden");
+                    $("#edit-position").addClass("hidden");
+                    $("#position-button").removeClass("tab-selected");
+                    $("#edit-border").addClass("hidden");
+                    $("#border-button").removeClass("tab-selected");
+                    $("#edit-style").addClass("hidden");
+                    $("#style-button").removeClass("tab-selected");
+                }
             }
         });
+
+        function toggleTabListContainer(container){
+            if (container.hasClass("text")) {
+                $("#position-button").removeClass("hidden");
+                $("#position-button").next("div").removeClass("hidden");
+                $("#border-button").removeClass("hidden");
+                $("#border-button").next("div").removeClass("hidden");
+                $("#element-delete-button").removeClass("hidden");
+                $("#element-lock-button").removeClass("hidden");
+            }
+            else if (container.hasClass("image")) {
+                $("#position-button").removeClass("hidden");
+                $("#position-button").next("div").removeClass("hidden");
+                $("#border-button").removeClass("hidden");
+                $("#border-button").next("div").removeClass("hidden");
+                $("#element-delete-button").removeClass("hidden");
+                $("#element-lock-button").removeClass("hidden");
+            }
+            else if (container.hasClass("shape")) {
+                $("#position-button").removeClass("hidden");
+                $("#position-button").next("div").removeClass("hidden");
+                $("#border-button").addClass("hidden");
+                $("#border-button").next("div").addClass("hidden");
+                $("#edit-border").addClass("hidden");
+                $("#border-button").removeClass("tab-selected");
+                $("#element-delete-button").removeClass("hidden");
+                $("#element-lock-button").removeClass("hidden");
+            }
+            else {
+                $("#position-button").addClass("hidden");
+                $("#position-button").next("div").addClass("hidden");
+                $("#border-button").addClass("hidden");
+                $("#border-button").next("div").addClass("hidden");
+                $("#element-delete-button").addClass("hidden");
+                $("#element-lock-button").addClass("hidden");
+                $("#edit-position").addClass("hidden");
+                $("#position-button").removeClass("tab-selected");
+                $("#edit-border").addClass("hidden");
+                $("#border-button").removeClass("tab-selected");
+                $("#edit-style").addClass("hidden");
+                $("#style-button").removeClass("tab-selected");
+            }
+        }
 
 
         //resize drag
