@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.IO;
 using System;
 using System.Net;
+using Microsoft.EntityFrameworkCore.Update.Internal;
 
 namespace FYP1.Pages.eBooks
 {
@@ -35,11 +36,56 @@ namespace FYP1.Pages.eBooks
             _authorizationService = authorizationService;
             _userManager = userManager;
         }
+
+        public static string GenerateElementStyleTemplate(string type)
+        {
+            switch (type)
+            {
+                case "square":
+                    return "left:20px;top:20px;position:absolute;height:200px;width:200px;background:#C9D2DA;  ";
+                case "triangle":
+                    return "left:20px;top:20px;position:absolute;height:100px;width:200px;background:#C9D2DA; clip-path: polygon(50% 0%, 0% 100%, 100% 100%);";
+                case "circle":
+                    return "left:20px;top:20px;position:absolute;height:200px;width:200px;background:#C9D2DA; clip-path: circle(50% at center);";
+                case "pentagon":
+                    return "left:20px;top:20px;position:absolute;height:200px;width:200px;background:#C9D2DA; clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);";
+                case "parallelogram":
+                    return "left:20px;top:20px;position:absolute;height:100px;width:200px;background:#C9D2DA; clip-path: polygon(20% 0%, 100% 0%, 80% 100%, 0% 100%); ";
+                case "star":
+                    return "left:20px;top:20px;position:absolute;height:200px;width:200px;background:#C9D2DA; clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%); ";
+                case "hexagon":
+                    return "left:20px;top:20px;position:absolute;height:100px;width:200px;background:#C9D2DA; clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%); ";
+                case "octagon":
+                    return "left:20px;top:20px;position:absolute;height:200px;width:200px;background:#C9D2DA; clip-path: polygon(25% 0%, 75% 0%, 100% 25%, 100% 75%, 75% 100%, 25% 100%, 0% 75%, 0% 25%);";
+                case "diamond":
+                    return "left:20px;top:20px;position:absolute;height:100px;width:200px;background:#C9D2DA; clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%); ";
+                case "cross":
+                    return "left:20px;top:20px;position:absolute;height:200px;width:200px;background:#C9D2DA; clip-path: polygon(0% 30%, 30% 30%, 30% 0%, 70% 0%, 70% 30%, 100% 30%, 100% 70%, 70% 70%, 70% 100%, 30% 100%, 30% 70%, 0% 70%); ";
+                case "message":
+                    return "left:20px;top:20px;position:absolute;height:100px;width:200px;background:#C9D2DA; clip-path: polygon(0% 0%, 100% 0%, 100% 75%, 75% 75%, 75% 100%, 50% 75%, 0% 75%); ";
+                case "close":
+                    return "left:20px;top:20px;position:absolute;height:200px;width:200px;background:#C9D2DA; clip-path: polygon(20% 0%, 0% 20%, 30% 50%, 0% 80%, 20% 100%, 50% 70%, 80% 100%, 100% 80%, 70% 50%, 100% 20%, 80% 0%, 50% 30%); ";
+                case "left-chevron":
+                    return "left:20px;top:20px;position:absolute;height:100px;width:200px;background:#C9D2DA; clip-path: polygon(100% 0%, 75% 50%, 100% 100%, 25% 100%, 0% 50%, 25% 0%); ";
+                case "right-chevron":
+                    return "left:20px;top:20px;position:absolute;height:200px;width:200px;background:#C9D2DA; clip-path: polygon(75% 0%, 100% 50%, 75% 100%, 0% 100%, 25% 50%, 0% 0%); ";
+                case "right-arrow":
+                    return "left:20px;top:20px;position:absolute;height:100px;width:200px;background:#C9D2DA; clip-path: polygon(0% 20%, 60% 20%, 60% 0%, 100% 50%, 60% 100%, 60% 80%, 0% 80%); ";
+                case "left-arrow":
+                    return "left:20px;top:20px;position:absolute;height:200px;width:200px;background:#C9D2DA; clip-path: polygon(40% 0%, 40% 20%, 100% 20%, 100% 80%, 40% 80%, 40% 100%, 0% 50%); ";
+                case "trapezoid":
+                    return "left:20px;top:20px;position:absolute;height:100px;width:200px;background:#C9D2DA; clip-path: polygon(20% 0%, 80% 0%, 100% 100%, 0% 100%); ";
+                case "heart":
+                    return "left:20px;top:20px;position:absolute;height:200px;width:200px;background:#C9D2DA; mask: radial-gradient(at 70% 31%,#000 29%,#0000 30%),radial-gradient(at 30% 31%,#000 29%,#0000 30%),linear-gradient(#000 0 0) bottom/100% 50% no-repeat; clip-path: polygon(-41% 0,50% 91%, 141% 0); ";
+                default:
+                    return "left:20px;top:20px;position:absolute;height:200px;width:200px;";
+            }
+        }
         public static string GenerateElementTemplate(int elementID, string elementStyle, string text)
         {
             // Construct the HTML string using C# string interpolation
             return $@"
-                        <div
+                        <div class=""element""
                             id=""{elementID}""
                             style=""{elementStyle}"">
                             {text}
@@ -138,13 +184,83 @@ namespace FYP1.Pages.eBooks
         public BookPage BookPageAdd { get; set; } = default!; // Bookpage intended to add to the database
         [BindProperty]
         public Element ElementAdd { get; set; } = default!; // Element intended to add to the database
-        public async Task<IActionResult> OnGetTesting()
+
+        public async Task<IActionResult> OnPostElementUpdate(int elementID, string? text, string? style)
         {
-            return new JsonResult(new { status = 0, message = "Successfully updated" });
+            var elementUpdate = await _context.Element.FindAsync(elementID);
+            if(elementUpdate == null)
+            {
+                return new JsonResult(new { status = 1, message = "Deleted" });
+            }
+
+            if (text != null) {
+                elementUpdate.text = text;
+            }
+            if(style != null)
+            {
+                elementUpdate.elementStyle = style;
+            }
+            _context.Attach(elementUpdate).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+                return new JsonResult(new { status = 0, message = "Successfully updated" });
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                return new JsonResult(new { status = 3, message = "Unable to update. Please try again" });
+            }
         }
-        public async Task<IActionResult> OnPostTesting()
+            public async Task<IActionResult> OnPostElementDelete(int elementID)
         {
-            return new JsonResult(new { status = 0, message = "Successfully updated" });
+            var elementDelete = await _context.Element.FindAsync(elementID);
+
+            if (elementDelete != null)
+            {
+                _context.Element.Remove(elementDelete);
+                await _context.SaveChangesAsync();
+
+                var remainingElements = await _context.Element
+                    .Where(p => p.elementID == elementDelete.elementID && p.z_index > elementDelete.z_index)
+                    .ToListAsync();
+
+                // Update the page numbers
+                foreach (var element in remainingElements)
+                {
+                    element.z_index -= 1;
+                    _context.Element.Update(element);
+                }
+
+                await _context.SaveChangesAsync();
+
+                return new JsonResult(new { status = 0, message = "Element successfully deleted" });
+            }
+            else
+            {
+                return new JsonResult(new { status = 1, message = "Already deleted nowhere" });
+            }
+        }
+        public async Task<IActionResult> OnPostElement(int bookPageID, string elementType)
+        {
+            var elementAdd = new Element();
+            int elementCount = _context.Element.Count(e => e.bookPageID == bookPageID);
+            elementAdd.bookPageID = bookPageID;
+            elementAdd.z_index = elementCount;
+            elementAdd.text = "";
+
+            string elementTemplate = GenerateElementStyleTemplate(elementType);
+            elementAdd.elementType = elementType;
+            elementAdd.elementStyle = elementTemplate;
+
+            _context.Element.Add(elementAdd);
+            await _context.SaveChangesAsync();
+
+            return new JsonResult(new { status = 0, message="successful", elementID = elementAdd.elementID, bookPageID = elementAdd.bookPageID,
+                htmlContent = GenerateElementTemplate(elementAdd.elementID,elementAdd.elementStyle,elementAdd.text)});
+       //         chapterID = chapterAdd.chapterID, 
+        //        pageID = bookPageAdd.bookPageID, 
+         //       htmlContent = GenerateChapterTemplate(chapterAdd, bookPageAdd.bookPageID) });
         }
         public async Task<IActionResult> OnPostChapterTitle(string chapterName, int chapterID)
         {

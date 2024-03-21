@@ -17,7 +17,7 @@ namespace FYP1.Models
         public string? elementStyle { get; set; }
 
         //Suppose not nullable
-        public string? z_index { get; set; }
+        public int z_index { get; set; }
 
         
         public string? text { get; set; }
