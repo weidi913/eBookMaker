@@ -36,63 +36,87 @@ namespace FYP1.Pages.eBooks
             _authorizationService = authorizationService;
             _userManager = userManager;
         }
-
-        public static string GenerateElementStyleTemplate(string type)
+        public static string GenerateShapeContentTemplate(string type)
         {
+            string content = "<div class=\"clip-path\" style=\"";
+
             switch (type)
             {
                 case "square":
-                    return "left:20px;top:20px;position:absolute;height:200px;width:200px;background:#C9D2DA;  ";
+                    content += "height:100%;width:100%; position:absolute; top:0%; bottom:0%; border: none; background:#C9D2DA;   ";
+                    break;
                 case "triangle":
-                    return "left:20px;top:20px;position:absolute;height:100px;width:200px;background:#C9D2DA; clip-path: polygon(50% 0%, 0% 100%, 100% 100%);";
+                    content += "height:100%;width:100%; position:absolute; top:0%; bottom:0%; border: none; background:#C9D2DA; clip-path: polygon(50% 0%, 0% 100%, 100% 100%);";
+                    break;
                 case "circle":
-                    return "left:20px;top:20px;position:absolute;height:200px;width:200px;background:#C9D2DA; clip-path: circle(50% at center);";
+                    content += "height:100%;width:100%; position:absolute; top:0%; bottom:0%; border: none; background:#C9D2DA; border-radius: 50%;";
+                    break;
                 case "pentagon":
-                    return "left:20px;top:20px;position:absolute;height:200px;width:200px;background:#C9D2DA; clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);";
+                    content += "height:100%;width:100%; position:absolute; top:0%; bottom:0%; border: none; background:#C9D2DA; clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);";
+                    break;
                 case "parallelogram":
-                    return "left:20px;top:20px;position:absolute;height:100px;width:200px;background:#C9D2DA; clip-path: polygon(20% 0%, 100% 0%, 80% 100%, 0% 100%); ";
+                    content += "height:100%;width:100%; position:absolute; top:0%; bottom:0%; border: none; background:#C9D2DA; clip-path: polygon(20% 0%, 100% 0%, 80% 100%, 0% 100%); ";
+                    break;
                 case "star":
-                    return "left:20px;top:20px;position:absolute;height:200px;width:200px;background:#C9D2DA; clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%); ";
+                    content += "height:100%;width:100%; position:absolute; top:0%; bottom:0%; border: none; background:#C9D2DA; clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%); ";
+                    break;
                 case "hexagon":
-                    return "left:20px;top:20px;position:absolute;height:100px;width:200px;background:#C9D2DA; clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%); ";
+                    content += "height:100%;width:100%; position:absolute; top:0%; bottom:0%; border: none; background:#C9D2DA; clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%); ";
+                    break;
                 case "octagon":
-                    return "left:20px;top:20px;position:absolute;height:200px;width:200px;background:#C9D2DA; clip-path: polygon(25% 0%, 75% 0%, 100% 25%, 100% 75%, 75% 100%, 25% 100%, 0% 75%, 0% 25%);";
+                    content += "height:100%;width:100%; position:absolute; top:0%; bottom:0%; border: none; background:#C9D2DA; clip-path: polygon(25% 0%, 75% 0%, 100% 25%, 100% 75%, 75% 100%, 25% 100%, 0% 75%, 0% 25%);";
+                    break;
                 case "diamond":
-                    return "left:20px;top:20px;position:absolute;height:100px;width:200px;background:#C9D2DA; clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%); ";
+                    content += "height:100%;width:100%; position:absolute; top:0%; bottom:0%; border: none; background:#C9D2DA; clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%); ";
+                    break;
                 case "cross":
-                    return "left:20px;top:20px;position:absolute;height:200px;width:200px;background:#C9D2DA; clip-path: polygon(0% 30%, 30% 30%, 30% 0%, 70% 0%, 70% 30%, 100% 30%, 100% 70%, 70% 70%, 70% 100%, 30% 100%, 30% 70%, 0% 70%); ";
+                    content += "height:100%;width:100%; position:absolute; top:0%; bottom:0%; border: none; background:#C9D2DA; clip-path: polygon(0% 30%, 30% 30%, 30% 0%, 70% 0%, 70% 30%, 100% 30%, 100% 70%, 70% 70%, 70% 100%, 30% 100%, 30% 70%, 0% 70%); ";
+                    break;
                 case "message":
-                    return "left:20px;top:20px;position:absolute;height:100px;width:200px;background:#C9D2DA; clip-path: polygon(0% 0%, 100% 0%, 100% 75%, 75% 75%, 75% 100%, 50% 75%, 0% 75%); ";
+                    content += "height:100%;width:100%; position:absolute; top:0%; bottom:0%; border: none; background:#C9D2DA; clip-path: polygon(0% 0%, 100% 0%, 100% 75%, 75% 75%, 75% 100%, 50% 75%, 0% 75%); ";
+                    break;
                 case "close":
-                    return "left:20px;top:20px;position:absolute;height:200px;width:200px;background:#C9D2DA; clip-path: polygon(20% 0%, 0% 20%, 30% 50%, 0% 80%, 20% 100%, 50% 70%, 80% 100%, 100% 80%, 70% 50%, 100% 20%, 80% 0%, 50% 30%); ";
+                    content += "height:100%;width:100%; position:absolute; top:0%; bottom:0%; border: none; background:#C9D2DA; clip-path: polygon(20% 0%, 0% 20%, 30% 50%, 0% 80%, 20% 100%, 50% 70%, 80% 100%, 100% 80%, 70% 50%, 100% 20%, 80% 0%, 50% 30%); ";
+                    break;
                 case "left-chevron":
-                    return "left:20px;top:20px;position:absolute;height:100px;width:200px;background:#C9D2DA; clip-path: polygon(100% 0%, 75% 50%, 100% 100%, 25% 100%, 0% 50%, 25% 0%); ";
+                    content += "height:100%;width:100%; position:absolute; top:0%; bottom:0%; border: none; background:#C9D2DA; clip-path: polygon(100% 0%, 75% 50%, 100% 100%, 25% 100%, 0% 50%, 25% 0%); ";
+                    break;
                 case "right-chevron":
-                    return "left:20px;top:20px;position:absolute;height:200px;width:200px;background:#C9D2DA; clip-path: polygon(75% 0%, 100% 50%, 75% 100%, 0% 100%, 25% 50%, 0% 0%); ";
+                    content += "height:100%;width:100%; position:absolute; top:0%; bottom:0%; border: none; background:#C9D2DA; clip-path: polygon(75% 0%, 100% 50%, 75% 100%, 0% 100%, 25% 50%, 0% 0%); ";
+                    break;
                 case "right-arrow":
-                    return "left:20px;top:20px;position:absolute;height:100px;width:200px;background:#C9D2DA; clip-path: polygon(0% 20%, 60% 20%, 60% 0%, 100% 50%, 60% 100%, 60% 80%, 0% 80%); ";
+                    content += "height:100%;width:100%; position:absolute; top:0%; bottom:0%; border: none; background:#C9D2DA; clip-path: polygon(0% 20%, 60% 20%, 60% 0%, 100% 50%, 60% 100%, 60% 80%, 0% 80%); ";
+                    break;
                 case "left-arrow":
-                    return "left:20px;top:20px;position:absolute;height:200px;width:200px;background:#C9D2DA; clip-path: polygon(40% 0%, 40% 20%, 100% 20%, 100% 80%, 40% 80%, 40% 100%, 0% 50%); ";
+                    content += "height:100%;width:100%; position:absolute; top:0%; bottom:0%; border: none; background:#C9D2DA; clip-path: polygon(40% 0%, 40% 20%, 100% 20%, 100% 80%, 40% 80%, 40% 100%, 0% 50%); ";
+                    break;
                 case "trapezoid":
-                    return "left:20px;top:20px;position:absolute;height:100px;width:200px;background:#C9D2DA; clip-path: polygon(20% 0%, 80% 0%, 100% 100%, 0% 100%); ";
+                    content += "height:100%;width:100%; position:absolute; top:0%; bottom:0%; border: none; background:#C9D2DA; clip-path: polygon(20% 0%, 80% 0%, 100% 100%, 0% 100%); ";
+                    break;
                 case "heart":
-                    return "left:20px;top:20px;position:absolute;height:200px;width:200px;background:#C9D2DA; mask: radial-gradient(at 70% 31%,#000 29%,#0000 30%),radial-gradient(at 30% 31%,#000 29%,#0000 30%),linear-gradient(#000 0 0) bottom/100% 50% no-repeat; clip-path: polygon(-41% 0,50% 91%, 141% 0); ";
+                    content += "height:100%;width:100%; position:absolute; top:0%; bottom:0%; border: none; background:#C9D2DA; mask: radial-gradient(at 70% 31%,#000 29%,#0000 30%),radial-gradient(at 30% 31%,#000 29%,#0000 30%),linear-gradient(#000 0 0) bottom/100% 50% no-repeat; clip-path: polygon(-41% 0,50% 91%, 141% 0); ";
+                    break;
                 default:
-                    return "left:20px;top:20px;position:absolute;height:200px;width:200px;";
+                    content += "height:100%;width:100%; position:absolute; top:0%; bottom:0%;";
+                    break;
             }
+
+            content += "\">  </div> <div class=\"editor\" style='border:none'> </div>";
+            return content;
         }
-        public static string GenerateElementTemplate(int elementID, string elementStyle, string text)
+
+        public static string GenerateElementTemplate(int elementID, string elementStyle, string type, string text)
         {
             // Construct the HTML string using C# string interpolation
             return $@"
-                        <div class=""element""
+                        <div class=""element {type}""
                             id=""{elementID}""
                             style=""{elementStyle}"">
                             {text}
                         </div>";
         }
 
-        public static string GeneratePageTemplate(int bookPageId, int bookPageNo)
+        public static string GeneratePageTemplate(int bookPageId, int bookPageNo, float height)
         {
             return $@"
                     <div data-page-id=""{bookPageId}"" class=""design-page-content-container"">
@@ -136,13 +160,13 @@ namespace FYP1.Pages.eBooks
                                 </button>
                             </div>
                         </div>
-                        <div class=""design-page-content-page-content"">
+                        <div style='height: {height} mm' class=""design-page-content-page-content"">
                             <!-- Additional content goes here -->
                         </div>
                     </div>";
         }
 
-        public static string GenerateChapterTemplate(Chapter chapter, int bookPageId)
+        public static string GenerateChapterTemplate(Chapter chapter, int bookPageId, float height)
         {
             string chapterTemplate = $@"
                 <div id=""{chapter.chapterID}"" class=""e-book-design-chapter-container""> 
@@ -163,7 +187,7 @@ namespace FYP1.Pages.eBooks
                         </div>
                     </div>";
 
-                    chapterTemplate += GeneratePageTemplate(bookPageId, 1);
+                    chapterTemplate += GeneratePageTemplate(bookPageId, 1, height);
                     chapterTemplate += @"
                 </div>";
 
@@ -212,7 +236,7 @@ namespace FYP1.Pages.eBooks
                 return new JsonResult(new { status = 3, message = "Unable to update. Please try again" });
             }
         }
-            public async Task<IActionResult> OnPostElementDelete(int elementID)
+        public async Task<IActionResult> OnPostElementDelete(int elementID)
         {
             var elementDelete = await _context.Element.FindAsync(elementID);
 
@@ -241,7 +265,30 @@ namespace FYP1.Pages.eBooks
                 return new JsonResult(new { status = 1, message = "Already deleted nowhere" });
             }
         }
-        public async Task<IActionResult> OnPostElement(int bookPageID, string elementType)
+        public async Task<IActionResult> OnPostTextElement(int bookPageID, string textContent)
+        {
+            var elementAdd = new Element();
+            int elementCount = _context.Element.Count(e => e.bookPageID == bookPageID);
+            elementAdd.bookPageID = bookPageID;
+            elementAdd.z_index = elementCount;
+            elementAdd.text = textContent;
+
+            elementAdd.elementType = "text";
+            elementAdd.elementStyle = "left:20px;top:20px;position:absolute; border: none; width:200px; height:200px;";
+
+            _context.Element.Add(elementAdd);
+            await _context.SaveChangesAsync();
+
+            return new JsonResult(new
+            {
+                status = 0,
+                message = "successful",
+                elementID = elementAdd.elementID,
+                bookPageID = elementAdd.bookPageID,
+                htmlContent = GenerateElementTemplate(elementAdd.elementID, elementAdd.elementStyle, "text", elementAdd.text)
+            });
+        }
+        public async Task<IActionResult> OnPostImageElement(int bookPageID, string imageContent)
         {
             var elementAdd = new Element();
             int elementCount = _context.Element.Count(e => e.bookPageID == bookPageID);
@@ -249,18 +296,38 @@ namespace FYP1.Pages.eBooks
             elementAdd.z_index = elementCount;
             elementAdd.text = "";
 
-            string elementTemplate = GenerateElementStyleTemplate(elementType);
-            elementAdd.elementType = elementType;
-            elementAdd.elementStyle = elementTemplate;
+            elementAdd.elementType = "image";
+            elementAdd.elementStyle = "left:20px;top:20px;position:absolute; border: none;";
+            elementAdd.elementStyle += imageContent;
+
+            _context.Element.Add(elementAdd);
+            await _context.SaveChangesAsync();
+
+            return new JsonResult(new
+            {
+                status = 0,
+                message = "successful",
+                elementID = elementAdd.elementID,
+                bookPageID = elementAdd.bookPageID,
+                htmlContent = GenerateElementTemplate(elementAdd.elementID, elementAdd.elementStyle, "image", elementAdd.text)
+            });
+        }
+        public async Task<IActionResult> OnPostShapeElement(int bookPageID, string elementType)
+        {
+            var elementAdd = new Element();
+            int elementCount = _context.Element.Count(e => e.bookPageID == bookPageID);
+            elementAdd.bookPageID = bookPageID;
+            elementAdd.z_index = elementCount;
+            elementAdd.text = GenerateShapeContentTemplate(elementType);
+
+            elementAdd.elementType = "shape";
+            elementAdd.elementStyle = "left:20px;top:20px;position:absolute;height:200px;width:200px; border: none;";
 
             _context.Element.Add(elementAdd);
             await _context.SaveChangesAsync();
 
             return new JsonResult(new { status = 0, message="successful", elementID = elementAdd.elementID, bookPageID = elementAdd.bookPageID,
-                htmlContent = GenerateElementTemplate(elementAdd.elementID,elementAdd.elementStyle,elementAdd.text)});
-       //         chapterID = chapterAdd.chapterID, 
-        //        pageID = bookPageAdd.bookPageID, 
-         //       htmlContent = GenerateChapterTemplate(chapterAdd, bookPageAdd.bookPageID) });
+                htmlContent = GenerateElementTemplate(elementAdd.elementID,elementAdd.elementStyle, "shape", elementAdd.text)});
         }
         public async Task<IActionResult> OnPostChapterTitle(string chapterName, int chapterID)
         {
@@ -294,6 +361,7 @@ namespace FYP1.Pages.eBooks
         public async Task<IActionResult> OnPostChapter(int bookID)
         {
             var chapterAdd = new Chapter();
+            var eBook = await _context.eBook.FirstOrDefaultAsync(b => b.bookID == bookID);
             int chapterCount = _context.Chapter.Count(c => c.bookID == bookID);
             chapterAdd.chapterNo = chapterCount+1;
             chapterAdd.bookID = bookID;
@@ -309,7 +377,8 @@ namespace FYP1.Pages.eBooks
             _context.BookPage.Add(bookPageAdd);
             await _context.SaveChangesAsync();
 
-            return new JsonResult(new { status = 0,chapterID = chapterAdd.chapterID, pageID = bookPageAdd.bookPageID, htmlContent = GenerateChapterTemplate(chapterAdd,bookPageAdd.bookPageID) });
+            return new JsonResult(new { status = 0,chapterID = chapterAdd.chapterID, pageID = bookPageAdd.bookPageID, 
+                htmlContent = GenerateChapterTemplate(chapterAdd,bookPageAdd.bookPageID, eBook.height) });
         }
 
         public async Task<IActionResult> OnPostBookPage(int bookPageID)
@@ -321,8 +390,22 @@ namespace FYP1.Pages.eBooks
 
             if(curBookPage == null)
             {
-                return new JsonResult(new { status = 0, message= "Cur Book PAge not found" });
+                return new JsonResult(new { status = 1, message= "Cur Book PAge not found" });
             }
+            var chapter = await _context.Chapter.FirstOrDefaultAsync(c => c.chapterID == curBookPage.chapterID);
+
+            // Check if the chapter exists
+            if (chapter == null)
+            {
+                return new JsonResult(new { status = 2, message = "Cur chapter not found" });
+            }
+            var eBook = await _context.eBook.FirstOrDefaultAsync(b => b.bookID == chapter.bookID);
+            if(eBook == null)
+            {
+                return new JsonResult(new { status = 3, message = "Cur ebook not found" });
+
+            }
+
             bookPageAdd.chapterID = curBookPage.chapterID;
             bookPageAdd.pageNo = curBookPage.pageNo +1;
 
@@ -342,7 +425,7 @@ namespace FYP1.Pages.eBooks
 
             await _context.SaveChangesAsync();
 
-            return new JsonResult(new { status = 0, pageNo = bookPageAdd.pageNo, htmlContent = GeneratePageTemplate(bookPageAdd.bookPageID,bookPageAdd.pageNo) });
+            return new JsonResult(new { status = 0, pageNo = bookPageAdd.pageNo, htmlContent = GeneratePageTemplate(bookPageAdd.bookPageID,bookPageAdd.pageNo, eBook.height) });
         }
         public async Task<IActionResult> OnPostBookPageExchange(int bookPageID1, int bookPageID2)
         {

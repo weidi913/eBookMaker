@@ -9,9 +9,13 @@
     .selected {
         /*         box-shadow: 0 0 0 5px transparent,
             0 0 0 7px #8532FF； */
-        box-shadow: 0 0 0 1px white, 0 0 0 4px #8532FF;
+        box-shadow: 0 0 0 1px white, 0 0 0 4px #8532FF !important;
+        z-index : 100;
     }
-
+    .clip-path, .editor{
+        user-select:none;
+        pointer-events: none !important;
+    }
     .rotation-handle {
         padding: 3px 4px;
         display: table;
@@ -26,6 +30,7 @@
         font-weight: bold;
         color: #fff;
         cursor: move;
+        z-index : 100;
     }
 
     .pointer {
@@ -36,6 +41,7 @@
         border: 2px solid rgba(0, 0, 0, 0.9);
         border-radius: 50%;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        z-index: 100;
     }
 
     .hidden {
@@ -83,6 +89,10 @@
     }
     }
     }
+    }
+
+    .ql-container.ql-snow {
+        border: none; /* or border: 0; */
     }
 </style>
 @Html.AntiForgeryToken()
@@ -218,25 +228,25 @@
                 <span>Default Text Style</span>
             </span>
             <button type="button" class="design-add-page-black-element-button button">
-                <span>Default Text</span>
+                <p><span style="font-size:13px">Default Text</span></p>
             </button>
             <span class="design-add-page-heading-text">
                 <span>Predesigned Text</span>
             </span>
             <button type="button" val="123" class="design-add-page-white-element-button button">
-                <span>Heading Text</span>
+                <p><strong style="font-size:32px;color: rgb(0, 0, 0);">Heading Text</strong></p>
             </button>
             <button type="button" val="123" class="design-add-page-white-element-button button">
-                <span>Subtitle Text</span>
+                <p><span style="font-size:24px;color: rgb(0, 0, 0);">Subtitle Text</span></p>
             </button>
             <button type="button" val="123" class="design-add-page-white-element-button button">
-                <span>Body Text</span>
+                <p><span style="font-size:16px;color: rgb(0, 0, 0);">Body Text</span></p>
             </button>
             <button type="button" val="123" class="design-add-page-white-element-button button">
-                <span>Quote Text</span>
+                <p><i style="font-size:20px;color: rgb(0, 0, 0);">Description Text</i></p>
             </button>
             <button type="button" val="123" class="design-add-page-white-element-button button">
-                <span>Description Text</span>
+                <p><strong style="font-size:16px;color: rgb(255, 0, 0);">Warning Text</strong></p>
             </button>
         </div>
         <div style="display:none" id="add-shape" class="design-add-page-container">
@@ -350,9 +360,11 @@
             <span class="design-add-page-heading-text">
                 <span>Image</span>
             </span>
+            <div style="height:48px !important; width:100%">
             <button id="upload-photo-button" type="button" class="design-add-page-black-element-button button">
                 <span>Upload photo</span>
             </button>
+            </div>
             <input hidden type="file" id="upload-photo-input" name="file" accept=".jpg, .jpeg, .png" multiple="false" />
 
             @*             <div class="form-group">
@@ -360,7 +372,13 @@
             <input type="file" asp-for="Post.postImageFile" class="form-control" />
             <span asp-validation-for="Post.postImageFile" class="text-danger"></span>
             </div> *@
-            <img src="~/images/home-hero.png" class="design-add-page-gallery" />
+            <img id="brown-ebook-explanation" src="~/images/design-images/brown-ebook-explanation.jpeg" class="design-add-page-gallery" />
+            <img id="brown-ebook-image" src="~/images/design-images/brown-ebook-image.jpg" class="design-add-page-gallery" />
+            <img id="children-in-classroom" src="~/images/design-images/children-in-classroom.jpg" class="design-add-page-gallery" />
+            <img id="children-reading-image" src="~/images/design-images/children-reading-image.jpg" class="design-add-page-gallery" />
+            <img id="green-ebook-image" src="~/images/design-images/green-ebook-image.jpeg" class="design-add-page-gallery" />
+            <img id="view-ebook-action" src="~/images/design-images/view-ebook-action.jpeg" class="design-add-page-gallery" />
+            <img id="book-flying-effects" src="~/images/design-images/book-flying-effects.png" class="design-add-page-gallery" />
         </div>
         <div id="add-chart" style="display:none" class="design-add-page-container">
             <div class="design-add-page-search-container">
@@ -788,7 +806,7 @@
         ];
         // Add a handler for the custom color picker button
         var handlers = {
-            'color': function (value) {
+            'background': function (value) {
                 var color = prompt("Please enter a color (hexadecimal value):", "#000000");
                 if (color) {
                     this.quill.format('color', color);
@@ -807,13 +825,18 @@
 
         function initQuill(element, globalToolbarContainer) {
             var quill = new Quill(element, quillOptions);
-            let parentContainer = quill.root.parentElement;
-            parentContainer.addEventListener("click", function (event) {
+            var currentElement = quill.root;
+           
+            while (currentElement && !currentElement.classList.contains("element")) {
+                currentElement = currentElement.parentElement;
+            }
+
+            currentElement.addEventListener("click", function (event) {
                 if(event.target.classList.contains("selected") && !drag){
                     quill.root.style.pointerEvents = "auto";
                     quill.focus();
                     curActiveQuil = quill;
-                    $(parentContainer).removeClass("moveable");
+                    $(currentElement).removeClass("moveable");
                 }
                 // Find the <html> element
                 var htmlElement = document.querySelector('html');
@@ -879,8 +902,15 @@
 
         var elementList = $(".element");
         for (var i = 0; i < elementList.length; i++) {
-            
-            initQuill(elementList[i], document.querySelector('#toolbar'));
+            var element = elementList[i];
+            if (element.classList.contains("shape")) {
+                initQuill(element.querySelector(".editor"), document.querySelector('#toolbar'));
+            }
+            else if (element.classList.contains("image")) {
+            }
+            else {
+            initQuill(element, document.querySelector('#toolbar'));
+        }
 
         }
 
@@ -913,12 +943,18 @@
 
             if (scrollPosition === 0) {
                 currentChapter = 1;
+                currentPage = 1;
             }
             // Check if the user scrolled to the bottom
             else if (scrollPosition + container.height() >= container[0].scrollHeight) {
                 // Get the last chapter and last page
-                currentChapter = $('.e-book-design-chapter-container').last().find(".e-book-design-chapter-number-text").text().split(" ")[1];
+                currentChapter = $('.e-book-design-chapter-container').last().find(".e-book-design-chapter-number-text").text().trim().split(" ")[1];
                 currentPage = $('.e-book-design-chapter-container').last().find('.design-page-content-page-content').length;
+            }
+            else if(parentSections.length > 0){
+                console.log(parentSections.find(".e-book-design-chapter-number-text"));
+                currentChapter = parentSections.find(".e-book-design-chapter-number-text").text().trim().split(" ")[1];
+                console.log(currentChapter);
             }
 
             // Update the page indicator
@@ -954,7 +990,6 @@
                 },
                 success: function (response) {
                     if (response.status === 0) {
-                        alert("successful update");
                     }
                     else {
                         alert("fail update. the element is deleted");
@@ -970,10 +1005,123 @@
             });
 
         }
-        // let toolbar = new Quill({ toolbar: "#toolbar" });
-        async function addElementFunc(bookPageID, elementType, pageContainer) {
+        async function addTextElementFunc(bookPageID, textContent, pageContainer) {
             $.ajax({
-                url: '/eBooks/Design?handler=Element', // Endpoint URL for updating the title
+                url: '/eBooks/Design?handler=TextElement', // Endpoint URL for updating the title
+                method: 'POST',
+                data: { bookPageID: bookPageID, textContent: textContent },
+                dataType: 'json',
+                headers: {
+                    RequestVerificationToken: $('input:hidden[name="__RequestVerificationToken"]').val()
+                },
+                success: function (response) {
+                    if (response.status === 0) {
+                        pageContainer.append(response.htmlContent);
+
+                                                var newTextElement = pageContainer.find("div.element").last().find(".editor");
+                        initQuill(newTextElement[0], document.querySelector('#toolbar'))
+                    }
+                    else {
+                        alert(response.status);
+                        location.reload();
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error occurred:", error);
+                    // Handle error
+                }
+
+            });
+
+        }
+        $("#add-text button").click(async function(){
+            var chapter = parseInt($("#scroll-chapter-number-input").val());
+            var page = parseInt($("#scroll-page-number-input").val());
+            var chapterContainer = $(".e-book-design-chapter-container").eq(chapter - 1);
+            var pageContent = chapterContainer.find(".design-page-content-container").eq(page - 1);
+            var pageID = pageContent.attr("data-page-id");
+            var pageContainer = pageContent.find(".design-page-content-page-content");
+
+            var textContent = "<div class='editor' style='border:none'>";
+            textContent += $(this).html();
+            textContent += "</div>";
+            await addTextElementFunc(pageID, textContent, pageContainer);
+        })
+        async function addImageElementFunc(bookPageID, imageContent, pageContainer) {
+            $.ajax({
+                url: '/eBooks/Design?handler=ImageElement', // Endpoint URL for updating the title
+                method: 'POST',
+                data: { bookPageID: bookPageID, imageContent: imageContent },
+                dataType: 'json',
+                headers: {
+                    RequestVerificationToken: $('input:hidden[name="__RequestVerificationToken"]').val()
+                },
+                success: function (response) {
+                    if (response.status === 0) {
+                        pageContainer.append(response.htmlContent);
+                    }
+                    else {
+                        alert(response.status);
+                        location.reload();
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error occurred:", error);
+                    // Handle error
+                }
+
+            });
+
+        }
+        $(".design-add-page-gallery").click(async function(){
+            var chapter = parseInt($("#scroll-chapter-number-input").val());
+            var page = parseInt($("#scroll-page-number-input").val());
+            var chapterContainer = $(".e-book-design-chapter-container").eq(chapter - 1);
+            var pageContent = chapterContainer.find(".design-page-content-container").eq(page - 1);
+            var pageID = pageContent.attr("data-page-id");
+            var pageContainer = pageContent.find(".design-page-content-page-content");
+
+            var imageStyleContent = "background-image: url('" + $(this).attr("src") + "');";
+            imageStyleContent += "background-size: 100% 100%;";
+            imageStyleContent += "background-repeat: no-repeat;";
+            imageStyleContent += "width: " + this.width + "px;";
+            imageStyleContent += "height: " + this.height + "px;";
+
+            await addImageElementFunc(pageID, imageStyleContent, pageContainer);
+        })
+        $("#upload-photo-input").change(async function (event) {
+            var file = event.target.files[0];
+            var reader = new FileReader();
+            reader.onload = async function (e) {
+                var img = new Image();
+                img.src = e.target.result;
+
+                img.onload = async function () {
+
+                    var base64Data = e.target.result.split(",")[1]; // Extract base64 data from the result
+
+                    var chapter = parseInt($("#scroll-chapter-number-input").val());
+                    var page = parseInt($("#scroll-page-number-input").val());
+                    var chapterContainer = $(".e-book-design-chapter-container").eq(chapter - 1);
+                    var pageContent = chapterContainer.find(".design-page-content-container").eq(page - 1);
+                    var pageID = pageContent.attr("data-page-id");
+                    var pageContainer = pageContent.find(".design-page-content-page-content");
+
+                    var imageStyleContent = "background-image: url('data:image/jpg;base64," + base64Data + "');";
+                    imageStyleContent += "background-size: 100% 100%;";
+                    imageStyleContent += "background-repeat: no-repeat;";
+                    imageStyleContent += "width: " + this.width + "px;";
+                    imageStyleContent += "height: " + this.height + "px;";
+
+                    await addImageElementFunc(pageID, imageStyleContent, pageContainer);
+                 };
+
+            };
+            reader.readAsDataURL(file);
+        });
+        async function addShapeElementFunc(bookPageID, elementType, pageContainer) {
+            $.ajax({
+                url: '/eBooks/Design?handler=ShapeElement', // Endpoint URL for updating the title
                 method: 'POST',
                 data: { bookPageID: bookPageID, elementType: elementType },
                 dataType: 'json',
@@ -984,7 +1132,7 @@
                     if (response.status === 0) {
                         pageContainer.append(response.htmlContent);
 
-                        var newTextElement = pageContainer.find("div.element").last();
+                        var newTextElement = pageContainer.find("div.element").last().find(".editor");
                         initQuill(newTextElement[0], document.querySelector('#toolbar'))
                     }
                     else {
@@ -1007,8 +1155,7 @@
             var pageID = pageContent.attr("data-page-id");
             var pageContainer = pageContent.find(".design-page-content-page-content");
             var type = $(this).attr("id");
-            console.log("here", type);
-            await addElementFunc(pageID, "rectangle", pageContainer);
+            await addShapeElementFunc(pageID, type, pageContainer);
 
 
         })
@@ -1046,33 +1193,6 @@
         $("#upload-photo-button").click(function () {
             $("#upload-photo-input").click();
         });
-
-
-        $("#upload-photo-input").change(function (event) {
-            var file = event.target.files[0];
-            var reader = new FileReader();
-            reader.onload = function (e) {
-                var img = new Image();
-                img.src = e.target.result;
-
-                img.onload = function (width, height) {
-                    // $("#testing-image").css("width", this.width);
-                    // $("#testing-image").css("height", this.height);
-                };
-                var base64Data = e.target.result.split(",")[1]; // Extract base64 data from the result
-                // Now you can use the base64 data as needed
-                $("#testing-image").css("background-image", "url('data:image/jpg;base64," + base64Data + "')");
-                $("#testing-image").css("background-size", "cover");
-                $("#testing-image").css("background-repeat", "no-repeat");
-
-
-
-            };
-            reader.readAsDataURL(file);
-        });
-
-
-
         function updateBookTitle(title) {
             console.log(title);
             return $.ajax({
@@ -1085,19 +1205,6 @@
                     RequestVerificationToken:
                         $('input:hidden[name="__RequestVerificationToken"]').val()
                 }
-            });
-        }
-
-        function testing(title) {
-            return $.ajax({
-                url: '/eBooks/Design?handler=Testing', // Endpoint URL for updating the title
-                method: 'POST',
-                data: {},
-                dataType: 'json',
-                headers: {
-                    RequestVerificationToken:
-                        $('input:hidden[name="__RequestVerificationToken"]').val()
-                },
             });
         }
         $("#element-delete-icon").click(async function () {
@@ -1129,7 +1236,6 @@
                 locatin.reload();
             }
         })
-
         $("#add-chapter-button").click(async function () {
             try {
                 var response = await $.ajax({
@@ -1157,7 +1263,6 @@
             }
 
         })
-
         $(document).on("click", ".page-add-button", async function () {
             var ancestor = $(this).closest('.design-page-content-container');
             console.log(ancestor);
@@ -1439,11 +1544,7 @@
             let clickedElement = $(event.target);
             let isAncestorOrSelf = clickedElement.closest(".selected, .pointer, .rotation-handle, .ql-editor, .ql-script, .ql-toolbar, .e-book-design-top-tab-container, .pointer ").length > 0;
             let isDiv = clickedElement.prop('nodeName') === "DIV";
-            let isParentDiv = false;
-            if (!isDiv) {
-                let parentDiv = findParentDiv(event.target);
-                isParentDiv = parentDiv !== null && ($(parentDiv).hasClass("ql-editor") || $(parentDiv).hasClass("ql-toolbar"));
-            }
+
 
 
             // Check if the clicked element has the 'selected' class
@@ -1465,9 +1566,29 @@
                 var prevSelectedElement = $(".selected");
                 if (prevSelectedElement.length > 0) {
                     prevSelectedElement.removeClass("selected");
+                    prevSelectedElement.removeClass("moveable");
                     $(".rotation-handle").remove();
                     $(".pointer").remove();
-                    await EditElementFunc(prevSelectedElement.attr("id"), prevSelectedElement.find(".ql-editor").html(), prevSelectedElement.attr("style"));
+
+                    var content;
+                    if (prevSelectedElement.hasClass("shape")){
+                        content = prevSelectedElement.find("div:first")[0].outerHTML;
+                        content += "<div class='editor' style='border:none'>";
+                        content += prevSelectedElement.find(".ql-editor").html();
+                        content += "</div>";
+                    }
+                    else if (prevSelectedElement.hasClass("image")) {
+                        content = "";
+                    }
+                    else if (prevSelectedElement.hasClass("text")) {
+                        content += "<div class='editor' style='border:none'>";
+                        content += prevSelectedElement.find(".ql-editor").html();
+                        content += "</div>";
+                        console.log(content);
+                    }
+
+                    await EditElementFunc(prevSelectedElement.attr("id"), content, prevSelectedElement.attr("style"));
+
                 }
                 if(curActiveQuil !== null){
                     console.log("this quil remove selection have been triggered", curActiveQuil);
@@ -1490,11 +1611,28 @@
                 var prevSelectedElement = $(".selected");
                 if (prevSelectedElement.length > 0) {
                     prevSelectedElement.removeClass("selected");
+                    prevSelectedElement.removeClass("moveable");
                     $(".rotation-handle").remove();
                     $(".pointer").remove();
-                    console.log("123");
-                    console.log(prevSelectedElement.attr("style"));
-                    await EditElementFunc(prevSelectedElement.attr("id"), prevSelectedElement.find(".ql-editor").html(), prevSelectedElement.attr("style"));
+                    var content;
+                    if (prevSelectedElement.hasClass("shape")){
+                        content = prevSelectedElement.find("div:first")[0].outerHTML;
+                        content += "<div class='editor' style='border:none'>";
+                        content += prevSelectedElement.find(".ql-editor").html();
+                        content += "</div>";
+                    }
+                    else if (prevSelectedElement.hasClass("image")) {
+                        content = "";
+                    }
+                    else if (prevSelectedElement.hasClass("text")) {
+                        content = "<div class='editor' style='border:none'>";
+                        content += prevSelectedElement.find(".ql-editor").html();
+                        content += "</div>";
+                        console.log(content);
+
+                    }
+
+                    await EditElementFunc(prevSelectedElement.attr("id"), content, prevSelectedElement.attr("style"));
                 }
                 /*
                 // Remove the 'selected' class from all elements if the clicked element is neither selected nor an 'element'

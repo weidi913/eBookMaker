@@ -4056,6 +4056,9 @@ a:hover{
   .design-add-page-gallery {
     width: 100%;
     object-fit: cover;
+    margin-top: var(--dl-space-space-halfunit);
+    margin-bottom: var(--dl-space-space-halfunit);
+    cursor: pointer;
   }
   .design-edit-page-container {
     flex: 0 0 auto;
