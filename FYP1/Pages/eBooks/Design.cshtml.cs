@@ -209,6 +209,29 @@ namespace FYP1.Pages.eBooks
         [BindProperty]
         public Element ElementAdd { get; set; } = default!; // Element intended to add to the database
 
+        public async Task<IActionResult> OnPostElementExchange(int elementID1, int elementID2)
+        {
+
+
+            var element1 = await _context.Element.FirstOrDefaultAsync(e => e.elementID == elementID1);
+            var element2 = await _context.Element.FirstOrDefaultAsync(e => e.elementID == elementID2);
+            if (element1 == null || element2 == null)
+            {
+                return new JsonResult(new { status = 1, message = "element not found" });
+            }
+
+            // Exchange the positions of the BookPage records
+            int tempPageNo = element1.z_index;
+            element1.z_index = element2.z_index;
+            element2.z_index = tempPageNo;
+
+            // Update the database with the modified BookPage records
+            _context.Element.Update(element1);
+            _context.Element.Update(element2);
+            await _context.SaveChangesAsync();
+
+            return new JsonResult(new { status = 0, message = "element exchanged successfully" });
+        }
         public async Task<IActionResult> OnPostElementUpdate(int elementID, string? text, string? style)
         {
             var elementUpdate = await _context.Element.FindAsync(elementID);
@@ -246,7 +269,7 @@ namespace FYP1.Pages.eBooks
                 await _context.SaveChangesAsync();
 
                 var remainingElements = await _context.Element
-                    .Where(p => p.elementID == elementDelete.elementID && p.z_index > elementDelete.z_index)
+                    .Where(e => e.bookPageID == elementDelete.bookPageID && e.z_index > elementDelete.z_index)
                     .ToListAsync();
 
                 // Update the page numbers

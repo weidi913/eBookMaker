@@ -10,10 +10,24 @@
         background-color: rgba(64,87,109,.07);
     }
     .selected {
-        /*         box-shadow: 0 0 0 5px transparent,
-            0 0 0 7px #8532FF； */
-        box-shadow: 0 0 0 1px white, 0 0 0 4px #8532FF !important;
+        /* box-shadow: 0 0 0 1px white, 0 0 0 4px #8532FF !important; */
         z-index : 100;
+    }
+
+    .selected::before {
+        content: ""; /* Add content to the pseudo-element */
+        position: absolute; /* Position the pseudo-element absolutely */
+        top: calc(-1 * var(--border-width)); /* Compensate for border width */
+        left: calc(-1 * var(--border-width)); /* Compensate for border width */
+        right: calc(-1 * var(--border-width)); /* Compensate for border width */
+        bottom: calc(-1 * var(--border-width)); /* Compensate for border width */
+        /* box-shadow: 0 0 0 5px rgba(0, 0, 0, 0.3); /* Adjust the shadow properties as needed */ 
+        box-shadow: 0 0 0 1px white, 0 0 0 4px #8532FF !important;
+        z-index: -1; /* Ensure the shadow is below the container */
+    }
+
+    .selected-border-type{
+        border: solid 1px #8532FF !important;
     }
     .clip-path, .editor{
         user-select:none;
@@ -24,8 +38,8 @@
         display: table;
         position: absolute;
         left: 50%;
-        right: 50%;
-        bottom: -35px;
+        transform: translateX(-50%); /* Center horizontally */
+        bottom: calc(-1 * var(--border-width) - 35px); /* Compensate for border width and additional 7px */
         background-color: #ff1661;
         border-radius: 10rem;
         line-height: 1;
@@ -47,25 +61,26 @@
         z-index: 100;
     }
 
-    .hidden {
-        display: none !important;
-        pointer-events:none !important;
-        user-select:none;
-    }
     .top {
-        top: -7px;
+        top: calc(-1 * var(--border-width) - 7px); /* Compensate for border width and additional 7px */
     }
 
     .right {
-        right: -7px;
+        right: calc(-1 * var(--border-width) - 7px); /* Compensate for border width and additional 7px */
     }
 
     .left {
-        left: -7px;
+        left: calc(-1 * var(--border-width) - 7px); /* Compensate for border width and additional 7px */
     }
 
     .bottom {
-        bottom: -7px;
+        bottom: calc(-1 * var(--border-width) - 7px); /* Compensate for border width and additional 7px */
+    }
+
+    .hidden {
+        display: none !important;
+        pointer-events: none !important;
+        user-select: none;
     }
 
     .ql-editor{
@@ -170,7 +185,7 @@
                     <path d="M768 770.612v-52.78c70.498-39.728 128-138.772 128-237.832 0-159.058 0-288-192-288s-192 128.942-192 288c0 99.060 57.502 198.104 128 237.832v52.78c-217.102 17.748-384 124.42-384 253.388h896c0-128.968-166.898-235.64-384-253.388z"></path>
                     <path d="M327.196 795.328c55.31-36.15 124.080-63.636 199.788-80.414-15.054-17.784-28.708-37.622-40.492-59.020-30.414-55.234-46.492-116.058-46.492-175.894 0-86.042 0-167.31 30.6-233.762 29.706-64.504 83.128-104.496 159.222-119.488-16.914-76.48-61.94-126.75-181.822-126.75-192 0-192 128.942-192 288 0 99.060 57.502 198.104 128 237.832v52.78c-217.102 17.748-384 124.42-384 253.388h279.006c14.518-12.91 30.596-25.172 48.19-36.672z"></path>
                 </svg>
-                <button>
+                <button id="print-button">
                     <span class="button header-design-print-text">
                         <span class="header-design-text">Print</span>
                         <br />
@@ -428,20 +443,20 @@
             </div>
             <span class="design-edit-page-section-header"><span>Arrange</span></span>
             <div class="design-edit-page-arrange-container">
-                <div class="design-edit-page-arrange-content">
+                <div class="design-edit-page-arrange-content element-up-button">
                     <svg viewBox="0 0 1024 1024" class="design-edit-page-arrange-icon">
                         <path d="M470 384h128v128h-128v-128zM470 554h128v300h-128v-300zM682 554h128v86h-128v-86zM682 682h128v172h-128v-172zM256 214h128v170h-128v-170zM256 426h128v428h-128v-428z"></path>
                     </svg>
                     <span class="design-edit-page-arrange-text">
-                        <span>To forward</span>
+                        <span>Forward</span>
                     </span>
                 </div>
-                <div class="design-edit-page-arrange-content">
+                <div class="design-edit-page-arrange-content element-down-button">
                     <svg viewBox="0 0 1024 1024" class="design-edit-page-arrange-icon">
-                        <path d="M470 384h128v128h-128v-128zM470 554h128v300h-128v-300zM682 554h128v86h-128v-86zM682 682h128v172h-128v-172zM256 214h128v170h-128v-170zM256 426h128v428h-128v-428z"></path>
+                        <path d="M554 384h-128v128h128v-128zM554 554h-128v300h128v-300zM342 554h-128v86h128v-86zM342 682h-128v172h128v-172zM768 214h-128v170h128v-170zM768 426h-128v428h128v-428z"></path>
                     </svg>
                     <span class="design-edit-page-arrange-text">
-                        <span>To backward(replace icon)</span>
+                        <span>Backward</span>
                     </span>
                 </div>
             </div>
@@ -961,24 +976,8 @@
             $('#scroll-page-number-input').val(currentPage);
             $('#scroll-chapter-number-input').val(currentChapter);
         }
-
         // Listen for scroll event on the container and update the displayed page number
         $('#zoom-container').on('scroll', updateCurrentPage);
-
-        var currentSection = "";
-        $(document).click(function () {
-            /*
-            console.log(currentSection);
-
-            switch(currentSection){
-                case "zoom-button":
-                $(".zoom-expandable-button-options-list").css("display","none");
-                currentSection ="";
-                break;
-                default:
-                break;
-            }*/
-        })
         async function EditElementFunc(elementID, text, style) {
             $.ajax({
                 url: '/eBooks/Design?handler=ElementUpdate', // Endpoint URL for updating the title
@@ -1463,6 +1462,499 @@
             }
         })
 
+        // Add event listener for input event on the input field
+        $("#border-width").on("input", function () {
+            // Get the entered value
+            var enteredValue = $(this).val();
+
+            // Remove any non-numeric characters except dot (.)
+            var sanitizedValue = enteredValue.replace(/[^0-9.]/g, '');
+            
+
+            // Ensure there is at most one dot in the value
+            var dotIndex = sanitizedValue.indexOf('.');
+            if (dotIndex !== -1) {
+                var remainingValue = sanitizedValue.substring(dotIndex + 1);
+                sanitizedValue = sanitizedValue.substring(0, dotIndex + 1) + remainingValue.replace('.', '');
+            }
+
+            // Remove leading zeros unless they are followed by a dot
+            sanitizedValue = sanitizedValue.replace(/^0+(?!$|\.)/, '');
+
+            // Add back a single leading zero if the value is zero and not followed by a dot
+            if (sanitizedValue === '' || sanitizedValue === '.') {
+                sanitizedValue = '0';
+            }
+
+            // Ensure the value is between 0 and 100 (exclusive)
+            var numericValue = parseFloat(sanitizedValue);
+            if (isNaN(numericValue) || numericValue < 0) {
+                // If value is not a number or out of range, revert to the previous value
+                $(this).val(0);
+            }
+            else if (numericValue >= 100){
+                $(this).val(100)
+            } else {
+                // Save the current value as the previous value
+                $(this).data('previousValue', sanitizedValue);
+
+                // Update the input value with the sanitized value
+                $(this).val(sanitizedValue);
+            }
+        });
+        // Get the page dimensions
+        var pageWidth = @Model.curBook.width;
+        var pageHeight = @Model.curBook.height;
+
+        $(document).on("click", ".element-up-button", async function () {
+            var currentElement = $(".selected");
+            var nextElement = currentElement.next('.element');
+            // Check if there is a previous sibling
+            if (nextElement.length > 0) {
+
+                try {
+                    var response = await $.ajax({
+                        url: '/eBooks/Design?handler=ElementExchange', // Endpoint URL for updating the title
+                        method: 'POST',
+                        data: { elementID1: currentElement.attr("id"), elementID2: nextElement.attr("id") },
+                        dataType: 'json',
+                        headers: {
+                            RequestVerificationToken: $('input:hidden[name="__RequestVerificationToken"]').val()
+                        }
+                    });
+
+                    console.log("Response:", response); // Log the entire response for debugging
+                    if (response && response.status === 0) {
+                        console.log("element exchange successfully!");
+
+                        // There is a previous sibling
+                        nextElement.after(currentElement);
+                    } else {
+                        alert("Error exchange element:", response.message);
+                    }
+                } catch (error) {
+                    alert("Error exchange element:", error);
+                }
+            }
+        })
+        $(document).on("click", ".element-down-button", async function () {
+            var currentElement = $(".selected");
+            var prevElement = currentElement.prev('.element');
+            // Check if there is a previous sibling
+            if (prevElement.length > 0) {
+
+                try {
+                    var response = await $.ajax({
+                        url: '/eBooks/Design?handler=ElementExchange', // Endpoint URL for updating the title
+                        method: 'POST',
+                        data: { elementID1: currentElement.attr("id"), elementID2: prevElement.attr("id") },
+                        dataType: 'json',
+                        headers: {
+                            RequestVerificationToken: $('input:hidden[name="__RequestVerificationToken"]').val()
+                        }
+                    });
+
+                    console.log("Response:", response); // Log the entire response for debugging
+                    if (response && response.status === 0) {
+                        // There is a previous sibling
+                        currentElement.after(prevElement);
+                    } else {
+                        alert("Error exchange element:", response.message);
+                    }
+                } catch (error) {
+                    alert("Error exchange element:", error);
+                }
+            }
+        })
+
+        $("#print-button").click(function(){
+            // Get the content of the specified div
+            var chapterList = $(".e-book-design-chapter-container");
+            var pageWidth = '@Model.curBook.width';
+            var pageHeight = '@Model.curBook.height';
+
+
+            // Open a new window for printing
+            var printWindow = window.open('', '_blank');
+            printWindow.document.open();
+
+
+            // Customize the document size using CSS
+            printWindow.document.write('<html><head><title>');
+            printWindow.document.write('@Model.curBook.title');
+            printWindow.document.write('</title>');
+            printWindow.document.write('<style>');
+            printWindow.document.write('@@page { size: ' + pageWidth + 'mm ' + pageHeight + 'mm; }'); // Customize the document size based on book width and height
+            printWindow.document.write('p { margin:0}'); // CSS rule to force page break after each page
+            printWindow.document.write('.page { overflow:hidden;page-break-after: always; position:relative;width:' + pageWidth + 'mm;height:' + pageHeight + 'mm}'); // CSS rule to force page break after each page
+            printWindow.document.write('.ql-editor {position:relative;box-sizing:border-box;line-height: 1.42;height: 100%;outline: none;padding: 12px 15px;tab-size: 4;-moz-tab-size: 4;text-align: left;white-space: pre-wrap;word-wrap: break-word;font-family: Helvetica, Arial, sans-serif; font-size: 13px;}'); // CSS rule to force page break after each page
+
+            printWindow.document.write('</style>');
+            printWindow.document.write('</head><body>');
+
+            for (var i = 0; i < chapterList.length; i++) {
+                var pageList = $(chapterList[i]).find(".design-page-content-page-content");
+                var chapterName = $(chapterList[i]).find(".chapter-name-input").val();
+                var chapterNumber = "Chapter " + (i+1); 
+                printWindow.document.write('<div class="page" style="display: flex; justify-content: center; align-items: center;">');
+                printWindow.document.write('<div style="text-align:center">' + chapterNumber + '<br> ' + chapterName + '</div>'); // Add chapter name and number
+                printWindow.document.write('</div>');
+              //  printWindow.document.write(chapterContent);
+                for (var j = 0; j < pageList.length; j++) {
+                    printWindow.document.write('<div class="page">');
+                    var elementList = $(pageList[j]).find(".element");
+                    for (var k = 0; k < elementList.length; k++){
+                        console.log(elementList[k].style);
+                        if (elementList[k].classList.contains("text")) {
+                            printWindow.document.write('<div style="' + $(elementList[k]).attr("style") + '">');
+                            printWindow.document.write('<div class="ql-editor">')
+                            printWindow.document.write(elementList[k].querySelector(".ql-editor").innerHTML);
+                            printWindow.document.write("</div>");
+                            printWindow.document.write("</div>");
+                        }
+                        else if (elementList[k].classList.contains("image")){
+                            printWindow.document.write(elementList[k].outerHTML);
+                        }
+                        else if (elementList[k].classList.contains("shape")) {
+                            printWindow.document.write('<div style="' + $(elementList[k]).attr("style") + '">');
+                            printWindow.document.write(elementList[k].querySelector(".clip-path").outerHTML);
+                            printWindow.document.write('<div class="ql-editor">')
+                            printWindow.document.write(elementList[k].querySelector(".ql-editor").innerHTML);
+                            printWindow.document.write("</div>");
+                            printWindow.document.write("</div>");
+                        }
+                    }
+    
+                    printWindow.document.write("</div>");
+                }
+            }
+
+
+            printWindow.document.write("</body" + "></h" + "tml>");
+            printWindow.document.close();
+
+            //Trigger the print dialog for the print window
+            printWindow.print();
+        })
+        $("#x-position").on("input", function () {
+            var enteredValue = $(this).val();            // Get the entered value
+            var sanitizedValue = enteredValue.replace(/[^0-9.]/g, '');            // Remove any non-numeric characters except dot (.)
+
+            // Ensure there is at most one dot in the value
+            var dotIndex = sanitizedValue.indexOf('.');
+            if (dotIndex !== -1) {
+                var remainingValue = sanitizedValue.substring(dotIndex + 1);
+                sanitizedValue = sanitizedValue.substring(0, dotIndex + 1) + remainingValue.replace(/\./g, '');
+            }
+
+            // Limit the number of decimal places to 4
+            var decimalIndex = sanitizedValue.indexOf('.');
+            if (decimalIndex !== -1) {
+                var integerPart = sanitizedValue.substring(0, decimalIndex);
+                var decimalPart = sanitizedValue.substring(decimalIndex + 1, decimalIndex + 5); // Limit to 4 decimal places
+                sanitizedValue = integerPart + '.' + decimalPart;
+            }
+
+            // Remove leading zeros unless they are followed by a dot
+            sanitizedValue = sanitizedValue.replace(/^0+(?!$|\.)/, '');
+
+            // Add back a single leading zero if the value is zero and not followed by a dot
+            if (sanitizedValue === '' || sanitizedValue === '.') {
+                sanitizedValue = '0';
+            }
+
+            // Ensure the value is between 0 and 100 (exclusive)
+            var numericValue = parseFloat(sanitizedValue);
+            if (isNaN(numericValue)) {
+                // If value is not a number or out of range, revert to the previous value
+                $(this).val(0);
+      //      } else if (numericValue >= 100) {
+      //          $(this).val(100);
+            } else {
+                // Save the current value as the previous value
+                $(this).data('previousValue', sanitizedValue);
+
+                // Update the input value with the sanitized value
+                $(this).val(sanitizedValue);
+            }
+        });
+
+        // Restrict y-position input
+        $("#y-position").on("input", function () {
+            var enteredValue = $(this).val();            // Get the entered value
+            var sanitizedValue = enteredValue.replace(/[^0-9.]/g, '');            // Remove any non-numeric characters except dot (.)
+
+            // Ensure there is at most one dot in the value
+            var dotIndex = sanitizedValue.indexOf('.');
+            if (dotIndex !== -1) {
+                var remainingValue = sanitizedValue.substring(dotIndex + 1);
+                sanitizedValue = sanitizedValue.substring(0, dotIndex + 1) + remainingValue.replace(/\./g, '');
+            }
+
+            // Limit the number of decimal places to 4
+            var decimalIndex = sanitizedValue.indexOf('.');
+            if (decimalIndex !== -1) {
+                var integerPart = sanitizedValue.substring(0, decimalIndex);
+                var decimalPart = sanitizedValue.substring(decimalIndex + 1, decimalIndex + 5); // Limit to 4 decimal places
+                sanitizedValue = integerPart + '.' + decimalPart;
+            }
+
+            // Remove leading zeros unless they are followed by a dot
+            sanitizedValue = sanitizedValue.replace(/^0+(?!$|\.)/, '');
+
+            // Add back a single leading zero if the value is zero and not followed by a dot
+            if (sanitizedValue === '' || sanitizedValue === '.') {
+                sanitizedValue = '0';
+            }
+
+            // Ensure the value is between 0 and 100 (exclusive)
+            var numericValue = parseFloat(sanitizedValue);
+            if (isNaN(numericValue)) {
+                // If value is not a number or out of range, revert to the previous value
+                $(this).val(0);
+                //      } else if (numericValue >= 100) {
+                //          $(this).val(100);
+            } else {
+                // Save the current value as the previous value
+                $(this).data('previousValue', sanitizedValue);
+
+                // Update the input value with the sanitized value
+                $(this).val(sanitizedValue);
+            }
+        });
+
+        // Restrict width input
+        $("#width").on("input", function () {
+            var enteredValue = $(this).val();            // Get the entered value
+            var sanitizedValue = enteredValue.replace(/[^0-9.]/g, '');            // Remove any non-numeric characters except dot (.)
+
+            // Ensure there is at most one dot in the value
+            var dotIndex = sanitizedValue.indexOf('.');
+            if (dotIndex !== -1) {
+                var remainingValue = sanitizedValue.substring(dotIndex + 1);
+                sanitizedValue = sanitizedValue.substring(0, dotIndex + 1) + remainingValue.replace(/\./g, '');
+            }
+
+            // Limit the number of decimal places to 4
+            var decimalIndex = sanitizedValue.indexOf('.');
+            if (decimalIndex !== -1) {
+                var integerPart = sanitizedValue.substring(0, decimalIndex);
+                var decimalPart = sanitizedValue.substring(decimalIndex + 1, decimalIndex + 5); // Limit to 4 decimal places
+                sanitizedValue = integerPart + '.' + decimalPart;
+            }
+
+            // Remove leading zeros unless they are followed by a dot
+            sanitizedValue = sanitizedValue.replace(/^0+(?!$|\.)/, '');
+
+            // Add back a single leading zero if the value is zero and not followed by a dot
+            if (sanitizedValue === '' || sanitizedValue === '.') {
+                sanitizedValue = '0';
+            }
+
+            // Ensure the value is between 0 and 100 (exclusive)
+            var numericValue = parseFloat(sanitizedValue);
+            if (isNaN(numericValue)) {
+                // If value is not a number or out of range, revert to the previous value
+                $(this).val(0);
+                //      } else if (numericValue >= 100) {
+                //          $(this).val(100);
+            } else {
+                // Save the current value as the previous value
+                $(this).data('previousValue', sanitizedValue);
+
+                // Update the input value with the sanitized value
+                $(this).val(sanitizedValue);
+            }
+        });
+
+        // Restrict height input
+        $("#height").on("input", function () {
+            var enteredValue = $(this).val();            // Get the entered value
+            var sanitizedValue = enteredValue.replace(/[^0-9.]/g, '');            // Remove any non-numeric characters except dot (.)
+
+            // Ensure there is at most one dot in the value
+            var dotIndex = sanitizedValue.indexOf('.');
+            if (dotIndex !== -1) {
+                var remainingValue = sanitizedValue.substring(dotIndex + 1);
+                sanitizedValue = sanitizedValue.substring(0, dotIndex + 1) + remainingValue.replace(/\./g, '');
+            }
+
+            // Limit the number of decimal places to 4
+            var decimalIndex = sanitizedValue.indexOf('.');
+            if (decimalIndex !== -1) {
+                var integerPart = sanitizedValue.substring(0, decimalIndex);
+                var decimalPart = sanitizedValue.substring(decimalIndex + 1, decimalIndex + 5); // Limit to 4 decimal places
+                sanitizedValue = integerPart + '.' + decimalPart;
+            }
+
+            // Remove leading zeros unless they are followed by a dot
+            sanitizedValue = sanitizedValue.replace(/^0+(?!$|\.)/, '');
+
+            // Add back a single leading zero if the value is zero and not followed by a dot
+            if (sanitizedValue === '' || sanitizedValue === '.') {
+                sanitizedValue = '0';
+            }
+
+            // Ensure the value is between 0 and 100 (exclusive)
+            var numericValue = parseFloat(sanitizedValue);
+            if (isNaN(numericValue)) {
+                // If value is not a number or out of range, revert to the previous value
+                $(this).val(0);
+                //      } else if (numericValue >= 100) {
+                //          $(this).val(100);
+            } else {
+                // Save the current value as the previous value
+                $(this).data('previousValue', sanitizedValue);
+
+                // Update the input value with the sanitized value
+                $(this).val(sanitizedValue);
+            }
+        });
+
+        // Restrict rotate-position input
+        $("#rotate-position").on("input", function () {
+            var enteredValue = $(this).val();            // Get the entered value
+            var sanitizedValue = enteredValue.replace(/[^0-9.]/g, '');            // Remove any non-numeric characters except dot (.)
+
+            // Ensure there is at most one dot in the value
+            var dotIndex = sanitizedValue.indexOf('.');
+            if (dotIndex !== -1) {
+                var remainingValue = sanitizedValue.substring(dotIndex + 1);
+                sanitizedValue = sanitizedValue.substring(0, dotIndex + 1) + remainingValue.replace(/\./g, '');
+            }
+
+            // Limit the number of decimal places to 4
+            var decimalIndex = sanitizedValue.indexOf('.');
+            if (decimalIndex !== -1) {
+                var integerPart = sanitizedValue.substring(0, decimalIndex);
+                var decimalPart = sanitizedValue.substring(decimalIndex + 1, decimalIndex + 6); // Limit to 4 decimal places
+                sanitizedValue = integerPart + '.' + decimalPart;
+            }
+
+            // Remove leading zeros unless they are followed by a dot
+            sanitizedValue = sanitizedValue.replace(/^0+(?!$|\.)/, '');
+
+            // Add back a single leading zero if the value is zero and not followed by a dot
+            if (sanitizedValue === '' || sanitizedValue === '.') {
+                sanitizedValue = '0';
+            }
+
+            // Ensure the value is between 0 and 100 (exclusive)
+            var numericValue = parseFloat(sanitizedValue);
+            if (isNaN(numericValue)) {
+                // If value is not a number or out of range, revert to the previous value
+                $(this).val(0);
+                //      } else if (numericValue >= 100) {
+                //          $(this).val(100);
+            } else {
+                // Save the current value as the previous value
+                $(this).data('previousValue', sanitizedValue);
+
+                // Update the input value with the sanitized value
+                $(this).val(sanitizedValue);
+            }
+        });
+        // Attach event handler when input field gains focus
+        $("#x-position").focus(function () {
+            $(this).on("change", function () {
+                 $(".selected").css("left",$(this).val() +"px");
+            });
+        });
+        $("#y-position").focus(function () {
+            $(this).on("change", function () {
+                $(".selected").css("top", $(this).val() + "px");
+            });
+        });
+        $("#width").focus(function () {
+            $(this).on("change", function () {
+                $(".selected").css("width", $(this).val() + "px");
+            });
+        });
+        $("#height").focus(function () {
+            $(this).on("change", function () {
+                $(".selected").css("height", $(this).val() + "px");
+            });
+        });
+        $("#rotate-position").focus(function () {
+            $(this).on("change", function () {
+                $(".selected").css("transform", "rotate(" + $(this).val() + "rad)");
+            });
+        });
+        // Detach event handler when input field loses focus
+        $("#x-position,#y-position,#rotate-position,#width,#height").focusout(function () {
+            $(this).off("change");
+        });
+        // Add event listener for input event on the border roundness input field
+        $("#border-round").on("input", function () {
+            // Get the entered value
+            var enteredValue = $(this).val();
+
+            // Remove any non-numeric characters
+            var sanitizedValue = enteredValue.replace(/[^0-9]/g, '');
+
+            // Ensure the value is between 0 and 100 (exclusive)
+            var numericValue = parseInt(sanitizedValue);
+            if (isNaN(numericValue)  || numericValue < 0) {
+                // If value is not a number or out of range, revert to the previous value
+                $(this).val(0);
+            }
+            else if (numericValue >= 100) {
+                $(this).val(100);
+            } else {
+                // Save the current value as the previous value
+                $(this).data('previousValue', sanitizedValue);
+
+                // Update the input value with the sanitized value
+                $(this).val(sanitizedValue);
+            }
+        });
+        $("#border-width, #border-round").change(function () {
+
+            var selectedContainer = $(".selected");
+            if (selectedContainer.length > 0) {
+                console.log("selected", selectedContainer);
+                if (selectedContainer.hasClass("text") || selectedContainer.hasClass("image")) {
+                    var border = $(this).attr("id");
+
+                    switch (border) {
+                        case "border-width":
+                            selectedContainer.css("border-width", $(this).val() + "px");
+                            $(".selected").css('--border-width', $(this).val() + "px");
+                            break;
+                        case "border-round":
+                            selectedContainer.css("border-radius", $(this).val() + "px");
+                            break;
+
+                    }
+                }
+            }
+        })
+        $(".design-edit-page-border-type-container").click(function(){
+            var borderTypeList = $(".selected-border-type").not(this);
+            for(var i = 0 ; i < borderTypeList.length ; i++){
+                borderTypeList.removeClass("selected-border-type");
+            }
+            $(this).addClass("selected-border-type");
+            var borderClass = $(this).find("div");
+            console.log(borderClass);
+            if (borderClass.hasClass("design-edit-page-no-border")) {
+                $(".selected").css("border-style", "none");
+            }
+            else if (borderClass.hasClass("design-edit-page-solid-border")) {
+                $(".selected").css("border-style", "solid");
+            }
+            else if (borderClass.hasClass("design-edit-page-dotted-border")) {
+                $(".selected").css("border-style", "dotted");
+            }
+            else if (borderClass.hasClass("design-edit-page-dashed-border")) {
+                $(".selected").css("border-style", "dashed");
+            }
+            else if (borderClass.hasClass("design-edit-page-double-border")) {
+                $(".selected").css("border-style", "double");
+            }
+            $(".selected").css('--border-width', $(".selected").css("border-width"));
+
+        })
         $("#ebook-title-input").change(async function () {
             var newTitle = $(this).val(); // Get the new title from the input field
             try {
@@ -1479,29 +1971,6 @@
                 console.error("Error updating book title:", error);
             }
         })
-        $(".e-book-design-element-container").click(function () {
-            switch ($(this).children("span").text()) {
-                case "Text":
-                  //  toggleDisplay("add-text");
-                    break;
-                case "Chart":
-                  //  toggleDisplay("add-chart");
-                    break;
-                case "Shape":
-                  //  toggleDisplay("add-shape");
-                    break;
-                case "Image":
-                 //   toggleDisplay("add-image");
-                    break;
-                default:
-                    break;
-
-            }
-
-
-            //toggleDisplay(currentDisplaySituation);
-        })
-
         $(".e-book-design-edit-button, .e-book-design-element-container").click(function () {
             // Remove the 'tab-selected' class from all other elements
             $(".e-book-design-edit-button, .e-book-design-element-container").not(this).removeClass("tab-selected").each(function () {
@@ -1567,30 +2036,19 @@
                     break;
             }
             if ($(this).hasClass("tab-selected")) {
+                switch(openTab){
+                    case "edit-border":
+                        retrieveBorderValue($(".selected"));
+                        break;
+                    case "edit-position":
+                        retrievePositionValue($(".selected"));
+                        break;
+                }
+                
                 $("#" + openTab).removeClass("hidden");
             }
             else{
                 $("#" + openTab).addClass("hidden");
-            }
-
-
-        })
-        $(".e-book-design-top-tab-container button.button").children("span").click(function () {
-            switch ($(this).text()) {
-                case "Position":
-                    //toggleDisplay("edit-position");
-                    break;
-                case "Edit":
-                case "Border":
-                   // toggleDisplay("edit-border");
-                    break;
-                case "Style":
-                   // toggleDisplay("edit-style");
-                    break;
-
-                    break;
-                default:
-                    break;
             }
         })
 
@@ -1608,7 +2066,6 @@
             // No parent <div> container found
             return null;
         }
-
         // Select the element when clicked
         $(document).click(async function (event) {
          //   console.log("document is clicked");
@@ -1660,6 +2117,8 @@
 
                 $(".ql-toolbar").addClass("hidden");
                 // Add the 'selected' class to the clicked element if it has the 'element' class
+                
+                $(event.target).css('--border-width', $(event.target).css("border-width"));
                 $(event.target).addClass("selected moveable");
                 $(event.target).append('<div class="rotation-handle">&circlearrowright;</div>'
                     + "<div class='top left pointer'></div>"
@@ -1667,47 +2126,17 @@
                     + "<div class='bottom left pointer'></div>"
                     + "<div class='bottom right pointer'></div>");
 
-                if ($(event.target).hasClass("text")) {
-                    $("#position-button").removeClass("hidden");
-                    $("#position-button").next("div").removeClass("hidden");
-                    $("#border-button").removeClass("hidden");
-                    $("#border-button").next("div").removeClass("hidden");
-                    $("#element-delete-button").removeClass("hidden");
-                    $("#element-lock-button").removeClass("hidden");
+                toggleTabListContainer($(event.target));
+                var showingTab = $(".design-edit-page-container:not(.hidden)");
+                if(showingTab.length > 0){
+                    var id = showingTab.attr("id");
+                    if(id === "edit-position"){
+                        retrievePositionValue($(event.target));
+                    }
+                    else if(id === "edit-border"){
+                        retrieveBorderValue($(event.target));
+                    }
                 }
-                else if ($(event.target).hasClass("image")) {
-                    $("#position-button").removeClass("hidden");
-                    $("#position-button").next("div").removeClass("hidden");
-                    $("#border-button").removeClass("hidden");
-                    $("#border-button").next("div").removeClass("hidden");
-                    $("#element-delete-button").removeClass("hidden");
-                    $("#element-lock-button").removeClass("hidden");
-                }
-                else if ($(event.target).hasClass("shape")) {
-                    $("#position-button").removeClass("hidden");
-                    $("#position-button").next("div").removeClass("hidden");
-                    $("#border-button").addClass("hidden");
-                    $("#border-button").next("div").addClass("hidden");
-                    $("#edit-border").addClass("hidden");
-                    $("#border-button").removeClass("tab-selected");
-                    $("#element-delete-button").removeClass("hidden");
-                    $("#element-lock-button").removeClass("hidden");
-                }
-                else {
-                    $("#position-button").addClass("hidden");
-                    $("#position-button").next("div").addClass("hidden");
-                    $("#border-button").addClass("hidden");
-                    $("#border-button").next("div").addClass("hidden");
-                    $("#element-delete-button").addClass("hidden");
-                    $("#element-lock-button").addClass("hidden");
-                    $("#edit-position").addClass("hidden");
-                    $("#position-button").removeClass("tab-selected");
-                    $("#edit-border").addClass("hidden");
-                    $("#border-button").removeClass("tab-selected");
-                    $("#edit-style").addClass("hidden");
-                    $("#style-button").removeClass("tab-selected");
-                }
-                $(".design-edit-page-container:not(hidden)");
             } else {
                 var prevSelectedElement = $(".selected");
                 if (prevSelectedElement.length > 0) {
@@ -1744,50 +2173,60 @@
                    curActiveQuil = null;
                 }
 
-                if ($(event.target).hasClass("text")) {
-                    $("#position-button").removeClass("hidden");
-                    $("#position-button").next("div").removeClass("hidden");
-                    $("#border-button").removeClass("hidden");
-                    $("#border-button").next("div").removeClass("hidden");
-                    $("#element-delete-button").removeClass("hidden");
-                    $("#element-lock-button").removeClass("hidden");
-                }
-                else if ($(event.target).hasClass("image")) {
-                    $("#position-button").removeClass("hidden");
-                    $("#position-button").next("div").removeClass("hidden");
-                    $("#border-button").removeClass("hidden");
-                    $("#border-button").next("div").removeClass("hidden");
-                    $("#element-delete-button").removeClass("hidden");
-                    $("#element-lock-button").removeClass("hidden");
-                }
-                else if ($(event.target).hasClass("shape")) {
-                    $("#position-button").removeClass("hidden");
-                    $("#position-button").next("div").removeClass("hidden");
-                    $("#border-button").addClass("hidden");
-                    $("#border-button").next("div").addClass("hidden");
-                    $("#edit-border").addClass("hidden");
-                    $("#border-button").removeClass("tab-selected");
-                    $("#element-delete-button").removeClass("hidden");
-                    $("#element-lock-button").removeClass("hidden");
-                }
-                else{
-                    $("#position-button").addClass("hidden");
-                    $("#position-button").next("div").addClass("hidden");
-                    $("#border-button").addClass("hidden");
-                    $("#border-button").next("div").addClass("hidden");
-                    $("#element-delete-button").addClass("hidden");
-                    $("#element-lock-button").addClass("hidden");
-                    $("#edit-position").addClass("hidden");
-                    $("#position-button").removeClass("tab-selected");
-                    $("#edit-border").addClass("hidden");
-                    $("#border-button").removeClass("tab-selected");
-                    $("#edit-style").addClass("hidden");
-                    $("#style-button").removeClass("tab-selected");
-                }
+                toggleTabListContainer($(event.target));
             }
         });
 
-        function toggleTabListContainer(container){
+        function retrievePositionValue(container){
+            var xPosition = extractNumericValue(container.css("left"));
+            $("#x-position").val(xPosition);
+            var yPosition = extractNumericValue(container.css("top"));
+            $("#y-position").val(yPosition);
+            var rotatePosition = getContainerRotationAngle(container[0]);
+            $("#rotate-position").val(rotatePosition);
+            var width = extractNumericValue(container.css("width"));
+            $("#width").val(width);
+            var height = extractNumericValue(container.css("height"));
+            $("#height").val(height);
+        }
+
+        function retrieveBorderValue(container){
+            var borderWidth = extractNumericValue(container.css("border-width"));
+            $("#border-width").val(borderWidth);
+
+            var borderRadius = extractNumericValue(container.css("border-radius"));
+            $("#border-round").val(borderRadius);
+
+            var borderStyle = container.css("border-style");
+            $(".selected-border-type").removeClass("selected-border-type");
+            var classSelected = "";
+            switch (borderStyle) {
+                case "none":
+                    $(".design-edit-page-no-border").closest(".design-edit-page-border-type-container").addClass("selected-border-type");
+                    break;
+                case "solid":
+                    $(".design-edit-page-solid-border").closest(".design-edit-page-border-type-container").addClass("selected-border-type");
+                    break;
+                case "dotted":
+                    $(".design-edit-page-dotted-border").closest(".design-edit-page-border-type-container").addClass("selected-border-type");
+                    break;
+                case "dashed":
+                    $(".design-edit-page-dashed-border").closest(".design-edit-page-border-type-container").addClass("selected-border-type");
+                    break;
+                case "double":
+                    $(".design-edit-page-double-border").closest(".design-edit-page-border-type-container").addClass("selected-border-type");
+                    break;
+
+            }
+        }
+
+        // Function to extract numeric value from a CSS property value
+        function extractNumericValue(value) {
+            // Remove any non-numeric characters
+            return parseFloat(value.replace(/[^\d.]/g, ''));
+        }
+
+        function toggleTabListContainer(container) {
             if (container.hasClass("text")) {
                 $("#position-button").removeClass("hidden");
                 $("#position-button").next("div").removeClass("hidden");
@@ -1889,6 +2328,11 @@
                 target.style.height = rectangle.height + 'px';
                 target.style.left = rectangle.x + 'px';
                 target.style.top = rectangle.y + 'px';
+
+                $("#x-position").val(rectangle.x);
+                $("#y-position").val(rectangle.y);
+                $("#width").val(rectangle.width);
+                $("#height").val(rectangle.height);
             });
         interact(".moveable").draggable({
 
@@ -1935,6 +2379,8 @@
                     angle +
                     "rad" +
                     ")";
+
+                $("#rotate-position").val(angle);
             },
             onend: function (event) {
                 var box = event.target.parentElement;
@@ -2178,7 +2624,8 @@
                 // Set the top and left styles of the target element
                 target.style.top = y + "px";
                 target.style.left = x + "px";
-
+                $("#x-position").val(x);
+                $("#y-position").val(y);
             }
 
 

@@ -4109,9 +4109,10 @@ a:hover{
     padding: var(--dl-space-space-halfunit);
     transition: 0.3s;
     align-items: center;
+    cursor:pointer;
   }
   .design-edit-page-arrange-content:hover {
-    background-color: E1E4E7;
+    background-color: #E1E4E7;
   }
   .design-edit-page-arrange-icon {
     width: 24px;
@@ -4119,7 +4120,7 @@ a:hover{
     margin-right: var(--dl-space-space-halfunit);
   }
   .design-edit-page-arrange-text {
-    font-size: 14px;
+    /* font-size: 14px; */
     font-style: normal;
     font-weight: 600;
   }
@@ -4201,6 +4202,7 @@ a:hover{
     padding-right: var(--dl-space-space-unit);
     padding-bottom: var(--dl-space-space-unit);
     justify-content: center;
+    cursor:pointer;
   }
   .design-edit-page-no-border {
     flex: 0 0 auto;
