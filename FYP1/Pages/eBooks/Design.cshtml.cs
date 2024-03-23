@@ -13,6 +13,7 @@ using System.IO;
 using System;
 using System.Net;
 using Microsoft.EntityFrameworkCore.Update.Internal;
+using Tesseract;
 
 namespace FYP1.Pages.eBooks
 {
@@ -209,6 +210,31 @@ namespace FYP1.Pages.eBooks
         [BindProperty]
         public Element ElementAdd { get; set; } = default!; // Element intended to add to the database
 
+        public async Task<IActionResult> OnPostOCR(IFormFile postedFile)
+        {
+            if (postedFile != null && postedFile.Length > 0)
+            {
+                using (var memoryStream = new MemoryStream())
+                {
+                    postedFile.CopyTo(memoryStream);
+                    memoryStream.Position = 0;
+
+                    string tessDataPath = Path.Combine(Directory.GetCurrentDirectory(), "tessdata");
+                    using (TesseractEngine engine = new TesseractEngine(tessDataPath, "eng", EngineMode.Default))
+                    {
+                        using (Pix pix = Pix.LoadFromMemory(memoryStream.ToArray()))
+                        {
+                            using (Tesseract.Page page = engine.Process(pix))
+                            {
+                                return new JsonResult(new { status = 0, message = "OCR function complete", result = page.GetText() });
+                            }
+                        }
+                    }
+                }
+            }
+
+            return new JsonResult(new { status = 0, message = "OCR function complete", result="hooray" });
+        }
         public async Task<IActionResult> OnPostElementExchange(int elementID1, int elementID2)
         {
 

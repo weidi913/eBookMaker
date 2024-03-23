@@ -1,7 +1,8 @@
 ﻿@page
 @model FYP1.Pages.eBooks.DesignModel
 
-
+<input type="file" id="fileInput" />
+<button id="OCRbutton">Upload and Extract Text</button>
 @{
     ViewData["Title"] = "Design";
 }
@@ -112,6 +113,13 @@
     .ql-container.ql-snow {
         border: none; /* or border: 0; */
     }
+    #toolbar .ql-toolbar.ql-snow{
+        border:none;
+        padding:0;
+    }
+    .ql-toolbar{
+        white-space: nowrap;
+    }
 </style>
 @Html.AntiForgeryToken()
 <div class="e-book-design-container">
@@ -208,8 +216,20 @@
                 <span class="e-book-design-element-text">Text</span>
             </div>
             <div id="add-shape-tab-button" class="e-book-design-element-container">
-                <svg viewBox="0 0 1024 1024" class="e-book-design-element-icon">
-                    <path d="M213.333 85.333c-35.328 0-67.413 14.379-90.496 37.504s-37.504 55.168-37.504 90.496v597.333c0 35.328 14.379 67.413 37.504 90.496s55.168 37.504 90.496 37.504h597.333c35.328 0 67.413-14.379 90.496-37.504s37.504-55.168 37.504-90.496v-597.333c0-35.328-14.379-67.413-37.504-90.496s-55.168-37.504-90.496-37.504zM469.333 362.667c0-29.44-11.989-56.149-31.232-75.435s-45.995-31.232-75.435-31.232-56.149 11.989-75.435 31.232-31.232 45.995-31.232 75.435 11.989 56.149 31.232 75.435 45.995 31.232 75.435 31.232 56.149-11.989 75.435-31.232 31.232-45.995 31.232-75.435zM384 362.667c0 5.888-2.347 11.179-6.229 15.104s-9.216 6.229-15.104 6.229-11.179-2.347-15.104-6.229-6.229-9.216-6.229-15.104 2.347-11.179 6.229-15.104 9.216-6.229 15.104-6.229 11.179 2.347 15.104 6.229 6.229 9.216 6.229 15.104zM316.331 853.333l366.336-366.336 170.667 170.667v153.003c0 11.776-4.736 22.4-12.501 30.165s-18.389 12.501-30.165 12.501zM853.333 537.003l-140.501-140.501c-16.683-16.683-43.691-16.683-60.331 0l-454.144 454.144c-5.76-2.133-10.88-5.504-15.189-9.813-7.765-7.765-12.501-18.389-12.501-30.165v-597.333c0-11.776 4.736-22.4 12.501-30.165s18.389-12.501 30.165-12.501h597.333c11.776 0 22.4 4.736 30.165 12.501s12.501 18.389 12.501 30.165z"></path>
+                <svg class="e-book-design-element-icon"
+                     viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                    <g id="Free-Icons" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round">
+                        <g transform="translate(-525.000000, -600.000000)" id="Group" stroke="#000000" stroke-width="2">
+                            <g transform="translate(523.000000, 598.000000)" id="Shape">
+                                <path d="M11,8 L18,8 C19.6568542,8 21,9.34314575 21,11 L21,18 C21,19.6568542 19.6568542,21 18,21 L11,21 C9.34314575,21 8,19.6568542 8,18 L8,11 C8,9.34314575 9.34314575,8 11,8 Z">
+
+                                </path>
+                                <path d="M14.8977454,7.89115917 C14.3775792,5.10718156 11.9348689,3 9,3 C5.6862915,3 3,5.6862915 3,9 C3,11.9667237 5.15317212,14.4305472 7.98204766,14.9140016">
+
+                                </path>
+                            </g>
+                        </g>
+                    </g>
                 </svg>
                 <span class="e-book-design-element-text">Shape</span>
             </div>
@@ -224,6 +244,18 @@
                     <path d="M365.714 512v292.571h-146.286v-292.571h146.286zM585.143 219.429v585.143h-146.286v-585.143h146.286zM1170.286 877.714v73.143h-1170.286v-877.714h73.143v804.571h1097.143zM804.571 365.714v438.857h-146.286v-438.857h146.286zM1024 146.286v658.286h-146.286v-658.286h146.286z"></path>
                 </svg>
                 <span class="e-book-design-element-text">Chart</span>
+            </div>
+            <div id="add-OCR-tab-button" class="e-book-design-element-container">
+                <svg style="vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" class="e-book-design-element-icon">
+                    <path d="M1022.54 731.84v182.08c0 60.23-49.01 109.25-109.25 109.25H694.81c-20.14 0-36.42-16.28-36.42-36.42s16.28-36.42 36.42-36.42H913.3c20.1 0 36.42-16.31 36.42-36.41V731.84c0-20.14 16.27-36.42 36.42-36.42 20.13 0 36.4 16.28 36.4 36.42zM294.07 950.33H111.99c-20.06 0-36.41-16.31-36.41-36.41V731.84c0-20.14-16.31-36.42-36.42-36.42-20.1 0-36.41 16.28-36.41 36.42v182.08c0 60.23 49.01 109.25 109.24 109.25h182.08c20.1 0 36.42-16.28 36.42-36.42s-16.32-36.42-36.42-36.42zM38.16 328.1c20.1 0 36.42-16.31 36.42-36.41V109.61c0-20.07 16.35-36.42 36.41-36.42h182.08c20.1 0 36.42-16.31 36.42-36.41 0-20.1-16.31-36.42-36.42-36.42H110.99C50.76 0.36 1.75 49.38 1.75 109.61v182.08c0 20.1 16.31 36.41 36.41 36.41zM914.3 0.36H695.81c-20.14 0-36.42 16.31-36.42 36.42 0 20.1 16.28 36.41 36.42 36.41H914.3c20.1 0 36.42 16.35 36.42 36.42v182.08c0 20.1 16.27 36.41 36.42 36.41 20.14 0 36.41-16.31 36.41-36.41V109.61C1023.54 49.38 974.53 0.36 914.3 0.36zM383.4 509.78c0 97.6-55.2 156-136.4 156s-136.4-58.4-136.4-156 55.2-152.8 136.4-152.8 136.4 55.6 136.4 152.8z m-72.8 0c0-57.6-24.4-91.6-63.6-91.6s-63.2 34-63.2 91.6c0 58 24 94.4 63.2 94.4s63.6-36.4 63.6-94.4z m246.8 94.4c-42 0-69.2-34.4-69.2-93.6 0-58 31.6-92.4 70-92.4 21.2 0 36.8 9.6 51.6 23.2l37.6-45.6c-20.4-20.8-51.6-38.8-90.4-38.8-75.6 0-142 56.8-142 156 0 100.8 64 152.8 139.6 152.8 38.8 0 72-14.8 97.2-44l-37.6-44.8c-14 15.2-33.2 27.2-56.8 27.2z m302.4-62l66.4 118h-80l-54.8-104.8H757v104.8h-71.6v-297.6h109.2c63.6 0 116.4 21.6 116.4 93.6 0 43.6-20.4 71.6-51.2 86z m-18.8-86c0-28-18-37.2-52-37.2h-32v80h32c34 0 52-14.8 52-42.8z" />
+                </svg>
+                <span class="e-book-design-element-text">OCR</span>
+            </div>
+            <div id="add-background-tab-button" class="e-book-design-element-container">
+                <svg viewBox="0 0 121.17 122.88" style="enable-background:new 0 0 121.17 122.88" class="e-book-design-element-icon">
+                    <path d="M7.23,0h106.7c1.98,0,3.78,0.81,5.1,2.12l0.02,0.02c0.2,0.2,0.39,0.42,0.57,0.64c0.17,0.2,0.32,0.41,0.45,0.64 c0.7,1.11,1.1,2.42,1.1,3.81v108.41c0,1.98-0.81,3.78-2.12,5.1l-0.02,0.02c-1.32,1.31-3.12,2.11-5.09,2.11H7.23 c-1.98,0-3.78-0.81-5.1-2.12l-0.02-0.02c-0.2-0.2-0.39-0.42-0.57-0.64c-0.17-0.2-0.33-0.42-0.45-0.64c-0.69-1.11-1.1-2.42-1.1-3.81 V7.24c0-1.98,0.81-3.78,2.12-5.1l0.02-0.02C3.46,0.81,5.26,0,7.23,0L7.23,0z M86.29,115.24L113.53,88V70.5l-44.74,44.74H86.29 L86.29,115.24z M113.53,98.8l-16.44,16.44h16.44V98.8L113.53,98.8z M57.99,115.24l55.54-55.54V42.2l-73.04,73.04H57.99 L57.99,115.24z M29.68,115.24l83.85-83.85V13.9L12.19,115.24H29.68L29.68,115.24z M7.64,108.98L108.98,7.64h-17.5L7.64,91.48 V108.98L7.64,108.98z M7.64,80.68L80.68,7.64h-17.5L7.64,63.18V80.68L7.64,80.68z M7.64,52.38L52.38,7.64h-17.5L7.64,34.88V52.38 L7.64,52.38z M7.64,24.08L24.08,7.64H7.64V24.08L7.64,24.08z" />
+                </svg>
+                <span class="e-book-design-element-text">Background</span>
             </div>
             <div class="e-book-design-back-container">
                 <svg viewBox="0 0 1024 1024" class="e-book-design-back-icon">
@@ -384,12 +416,6 @@
             </button>
             </div>
             <input hidden type="file" id="upload-photo-input" name="file" accept=".jpg, .jpeg, .png" multiple="false" />
-
-            @*             <div class="form-group">
-            <label asp-for="Post.postImageFile" class="control-label"></label>
-            <input type="file" asp-for="Post.postImageFile" class="form-control" />
-            <span asp-validation-for="Post.postImageFile" class="text-danger"></span>
-            </div> *@
             <img id="brown-ebook-explanation" src="~/images/design-images/brown-ebook-explanation.jpeg" class="design-add-page-gallery" />
             <img id="brown-ebook-image" src="~/images/design-images/brown-ebook-image.jpg" class="design-add-page-gallery" />
             <img id="children-in-classroom" src="~/images/design-images/children-in-classroom.jpg" class="design-add-page-gallery" />
@@ -397,6 +423,21 @@
             <img id="green-ebook-image" src="~/images/design-images/green-ebook-image.jpeg" class="design-add-page-gallery" />
             <img id="view-ebook-action" src="~/images/design-images/view-ebook-action.jpeg" class="design-add-page-gallery" />
             <img id="book-flying-effects" src="~/images/design-images/book-flying-effects.png" class="design-add-page-gallery" />
+        </div>
+        <div id="add-OCR" class="hidden design-add-page-container">
+            <span class="design-add-page-heading-text">
+                <span>Optical Character Recognition</span>
+            </span>
+            <div style="height:48px !important; width:100%">
+                <button id="upload-OCR-button" type="button" class="design-add-page-black-element-button button">
+                    <span>Upload photo</span>
+                </button>
+            </div>
+            <input hidden type="file" id="upload-OCR-input" name="file" accept=".jpg, .jpeg, .png" multiple="false" />
+            <span class="design-add-page-heading-text">
+                <span>Result</span>
+            </span>
+            <div id="OCR-result" style="width:100%; overflow:auto; line-height:1.5;white-space:pre-wrap"> No photo has been uploaded</div>
         </div>
         <div id="add-chart" class="design-add-page-container hidden">
             <div class="design-add-page-search-container">
@@ -749,6 +790,35 @@
 <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
 <script>
+    $("#OCRbutton").click( uploadImageAndExtractText);
+    function uploadImageAndExtractText() {
+        var fileInput = document.getElementById('fileInput');
+        var file = fileInput.files[0];
+        var formData = new FormData();
+        formData.append('postedFile', file);
+
+        $.ajax({
+            url: '/eBooks/Design?handler=OCR',
+            method: 'POST',
+            data: formData,
+            headers: {
+                'RequestVerificationToken': $('input:hidden[name="__RequestVerificationToken"]').val()
+            },
+            contentType: false, // Important: Set to false to let the browser set the content type
+            processData: false, // Important: Set to false to prevent jQuery from processing the data
+            success: function (response) {
+                if (response.status === 0) {
+                    console.log('OCR function complete: ' + response.result);
+                } else {
+                    alert('Error: ' + response.message);
+                }
+            },
+            error: function (xhr, status, error) {
+                alert('Error occurred while processing the request. ' + error);
+            }
+        });
+    }
+    
     // Get references to the color box and the color picker input
     const colorBox = document.getElementById('color-box');
     const colorPicker = document.getElementById('color-picker');
@@ -1118,6 +1188,33 @@
             };
             reader.readAsDataURL(file);
         });
+        $("#upload-OCR-input").change(async function (event) {
+            var file = this.files[0];
+            var formData = new FormData();
+            formData.append('postedFile', file);
+
+            $.ajax({
+                url: '/eBooks/Design?handler=OCR',
+                method: 'POST',
+                data: formData,
+                headers: {
+                    'RequestVerificationToken': $('input:hidden[name="__RequestVerificationToken"]').val()
+                },
+                contentType: false, // Important: Set to false to let the browser set the content type
+                processData: false, // Important: Set to false to prevent jQuery from processing the data
+                success: function (response) {
+                    if (response.status === 0) {
+                        console.log('OCR function complete: ' + response.result);
+                        $("#OCR-result").text(response.result);
+                    } else {
+                        alert('Error: ' + response.message);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    alert('Error occurred while processing the request. ' + error);
+                }
+            });
+        });
         async function addShapeElementFunc(bookPageID, elementType, pageContainer) {
             $.ajax({
                 url: '/eBooks/Design?handler=ShapeElement', // Endpoint URL for updating the title
@@ -1191,6 +1288,9 @@
         })
         $("#upload-photo-button").click(function () {
             $("#upload-photo-input").click();
+        });
+        $("#upload-OCR-button").click(function () {
+            $("#upload-OCR-input").click();
         });
         function updateBookTitle(title) {
             console.log(title);
@@ -1992,6 +2092,12 @@
                     case "add-chart-tab-button":
                         openTab = "add-chart";
                         break;
+                    case "add-OCR-tab-button":
+                        openTab = "add-OCR";
+                        break;
+                    case "add-background-tab-button":
+                        openTab = "add-background";
+                        break;
                     case "add-image-tab-button":
                         openTab = "add-image";
                         break;
@@ -2031,6 +2137,12 @@
                     break;
                 case "add-shape-tab-button":
                     openTab = "add-shape";
+                    break;
+                case "add-OCR-tab-button":
+                    openTab = "add-OCR";
+                    break;
+                case "add-background-tab-button":
+                    openTab = "add-background";
                     break;
                 default:
                     break;
@@ -2072,7 +2184,7 @@
             console.log("This is the container being clicked",event.target);
             // Check if the clicked element or one of its ancestors has the 'selected' class
             let clickedElement = $(event.target);
-            let isAncestorOrSelf = clickedElement.closest(".selected, .pointer, .rotation-handle, .ql-editor, .ql-script, .ql-toolbar, .e-book-design-top-tab-container, .pointer, .design-edit-page-container ").length > 0;
+            let isAncestorOrSelf = clickedElement.closest(".selected, .pointer, .rotation-handle, .ql-editor, .ql-script, .ql-toolbar, .e-book-design-top-tab-container, .pointer, .design-edit-page-container, .e-book-design-element-list-container ").length > 0;
             let isDiv = clickedElement.prop('nodeName') === "DIV";
 
             if(isAncestorOrSelf){

@@ -3582,7 +3582,8 @@ a:hover{
   }
   .e-book-design-element-text {
     font-size: 10px;
-    margin-top: 2px;
+    margin-top: 4px;
+    font-weight: 500;
   }
   .e-book-design-back-container {
     flex: 0 0 auto;
@@ -3593,6 +3594,10 @@ a:hover{
     aspect-ratio: 1/1;
     flex-direction: column;
     justify-content: center;
+  }
+  .e-book-design-back-container:hover{
+    background-color: var(--dl-color-hover);
+    cursor:pointer;
   }
   .e-book-design-back-icon {
     width: 24px;
