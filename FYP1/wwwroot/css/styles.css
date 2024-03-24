@@ -4026,7 +4026,7 @@ a:hover{
     margin-bottom: 4px;
   }
   .design-add-page-white-element-button:hover {
-    background-color: E1E4E7;
+    background-color: #E1E4E7;
   }
   .design-add-page-grid-container {
     flex: 0 0 auto;
@@ -4043,6 +4043,28 @@ a:hover{
     height: auto;
     display: flex;
     align-items: flex-start;
+  }
+  .design-add-page-grid-content:hover{
+    cursor:pointer;
+    background-color: var(--dl-color-hover);
+  }
+  .design-add-page-chart-container {
+    flex: 0 0 auto;
+    width: 100%;
+    height: auto;
+    display: grid;
+    grid-gap: 4px;
+    align-items: flex-start;
+    grid-template-columns: 1fr;
+  }
+  .design-add-page-canvas-content{
+    width:100% !important;
+    height:100% ;
+    pointer-events:none;
+  }
+  .design-edit-page-canvas-content{
+    width:100% !important;
+    height:100% !important;
   }
   .design-add-page-grid-button {
     width: 100%;

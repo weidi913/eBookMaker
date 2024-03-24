@@ -1,8 +1,6 @@
 ﻿@page
 @model FYP1.Pages.eBooks.DesignModel
 
-<input type="file" id="fileInput" />
-<button id="OCRbutton">Upload and Extract Text</button>
 @{
     ViewData["Title"] = "Design";
 }
@@ -49,8 +47,8 @@
         color: #fff;
         cursor: move;
         z-index : 100;
+        font-size:16px;
     }
-
     .pointer {
         position: absolute;
         width: 10px;
@@ -450,6 +448,63 @@
                        class="design-add-page-search-input input" />
             </div>
             <span class="design-add-page-heading-text">
+                <span>Bar Chart</span>
+            </span>
+            <div class="design-add-page-chart-container">
+                <div class="design-add-page-grid-content">
+                     <canvas id="bar-chart-horizontal" class="design-add-page-canvas-content"></canvas>
+                </div>
+                <div class="design-add-page-grid-content">
+                    <canvas id="bar-chart-vertical" class="design-add-page-canvas-content"></canvas>
+                </div>
+            </div>
+            <span class="design-add-page-heading-text">
+                <span>Line Chart</span>
+            </span>
+            <div class="design-add-page-chart-container">
+                <div class="design-add-page-grid-content">
+                    <canvas id="line-chart-1" class="design-add-page-canvas-content"></canvas>
+                </div>
+            </div>
+            <span class="design-add-page-heading-text">
+                <span>Radar Chart</span>
+            </span>
+            <div class="design-add-page-chart-container">
+                <div class="design-add-page-grid-content">
+                    <canvas id="radar-chart-1" class="design-add-page-canvas-content"></canvas>
+                </div>
+            </div>
+            <span class="design-add-page-heading-text">
+                <span>Polar Area Chart</span>
+            </span>
+            <div class="design-add-page-chart-container">
+                <div class="design-add-page-grid-content">
+                    <canvas id="polar-area-chart-1" class="design-add-page-canvas-content"></canvas>
+                </div>
+            </div>
+            <span class="design-add-page-heading-text">
+                <span>Pie Chart</span>
+            </span>
+            <div class="design-add-page-chart-container">
+                <div class="design-add-page-grid-content">
+                    <canvas id="pie-chart-doughnut" class="design-add-page-canvas-content"></canvas>
+                </div>
+                <div class="design-add-page-grid-content">
+                    <canvas id="pie-chart-pie" class="design-add-page-canvas-content"></canvas>
+                </div>
+            </div>
+        </div>       
+        <div id="add-background" class="design-add-page-container hidden">
+            <div class="design-add-page-search-container">
+                <svg viewBox="0 0 950.8571428571428 1024"
+                     class="design-add-page-search-icon">
+                    <path d="M658.286 475.429c0-141.143-114.857-256-256-256s-256 114.857-256 256 114.857 256 256 256 256-114.857 256-256zM950.857 950.857c0 40-33.143 73.143-73.143 73.143-19.429 0-38.286-8-51.429-21.714l-196-195.429c-66.857 46.286-146.857 70.857-228 70.857-222.286 0-402.286-180-402.286-402.286s180-402.286 402.286-402.286 402.286 180 402.286 402.286c0 81.143-24.571 161.143-70.857 228l196 196c13.143 13.143 21.143 32 21.143 51.429z"></path>
+                </svg>
+                <input id="search-chart" type="text"
+                       placeholder="Search Item...."
+                       class="design-add-page-search-input input" />
+            </div>
+            <span class="design-add-page-heading-text">
                 <span>Bar Graph</span>
             </span>
             <div class="design-add-page-grid-container">
@@ -504,12 +559,12 @@
             <div class="design-edit-page-section-separator"></div>
             <span class="design-edit-page-section-header"><span>Advanced</span></span>
             <div class="design-edit-page-position-container">
-                <span class="design-edit-page-position-text"><span>X</span></span>
-                <span class="design-edit-page-position-text"><span>Y</span></span>
-                <span class="design-edit-page-position-text"><span>Rotate</span></span>
-                <input id="x-position" type="text" placeholder="172 px" class="design-edit-page-position-input input" />
-                <input id="y-position" type="text" placeholder="172 px" class="design-edit-page-position-input input" />
-                <input id="rotate-position" type="text" placeholder="172 px" class="design-edit-page-position-input input" />
+                <span class="design-edit-page-position-text"><span>X (px)</span></span>
+                <span class="design-edit-page-position-text"><span>Y (px)</span></span>
+                <span class="design-edit-page-position-text"><span>Rotate (rad)</span></span>
+                <input id="x-position" type="text" placeholder="0 px" class="design-edit-page-position-input input" />
+                <input id="y-position" type="text" placeholder="0 px" class="design-edit-page-position-input input" />
+                <input id="rotate-position" type="text" placeholder="0 px" class="design-edit-page-position-input input" />
             </div>
             <div class="design-edit-page-section-separator"></div>
             <span class="design-edit-page-section-header"><span>Container Size</span></span>
@@ -749,14 +804,6 @@
                     <span class="e-book-design-page-text">Page</span>
                     <input id="scroll-page-number-input" type="text" value="1"
                            class="e-book-design-page-input input" />
-@*                     <span class="e-book-design-page-slash-text">
-                        <span>/</span>
-                        <br />
-                    </span>
-                    <span class="e-book-design-page-total-text">
-                        <span>10</span>
-                        <br />
-                    </span> *@
                 </div>
                 <div class="e-book-design-page-separator"></div>
                 <div class="bottom-bar">
@@ -787,38 +834,11 @@
         </svg>
     </button>
 </div>
+ <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> 
 <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
 <script>
-    $("#OCRbutton").click( uploadImageAndExtractText);
-    function uploadImageAndExtractText() {
-        var fileInput = document.getElementById('fileInput');
-        var file = fileInput.files[0];
-        var formData = new FormData();
-        formData.append('postedFile', file);
-
-        $.ajax({
-            url: '/eBooks/Design?handler=OCR',
-            method: 'POST',
-            data: formData,
-            headers: {
-                'RequestVerificationToken': $('input:hidden[name="__RequestVerificationToken"]').val()
-            },
-            contentType: false, // Important: Set to false to let the browser set the content type
-            processData: false, // Important: Set to false to prevent jQuery from processing the data
-            success: function (response) {
-                if (response.status === 0) {
-                    console.log('OCR function complete: ' + response.result);
-                } else {
-                    alert('Error: ' + response.message);
-                }
-            },
-            error: function (xhr, status, error) {
-                alert('Error occurred while processing the request. ' + error);
-            }
-        });
-    }
-    
+   
     // Get references to the color box and the color picker input
     const colorBox = document.getElementById('color-box');
     const colorPicker = document.getElementById('color-picker');
@@ -860,7 +880,487 @@
         }
     }
     var curActiveQuil = null;
+    const barChartConfigHorizontal = {
+        type: 'bar',
+        data: {
+            labels: ["1", "2", "3", "4", "5", "6"],
+            datasets: [{
+                label: 'Company A',
+                data: [65, 59, 80, 81, 56, 55, 40],
+                backgroundColor: [
+                    '#6CE5E8',
+                ],
+            }, {
+                label: 'Company B',
+                data: [55, 60, 40, 90, 20, 80, 70],
+                backgroundColor: [
+                    '#41B8D5',
+                ],
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: true // Hide the legend
+                },
+                title: {
+                    display: true,
+                    text: 'Quantity vs Month',
+                    font: {
+                        size: 16, // Adjust the font size as needed
+                        weight: 'bold' // Adjust the font weight as needed
+                    }
+                }
+            },
+            scales: {
+                x: {
+                    grid: {
+                        display: false, // Do not display grid lines for the X axis
+                    },
+                    title: {
+                        display: true,
+                        text: 'Month'
+                    }
+                },
+                y: {
+                    beginAtZero: true,
+                    grid: {
+                        display: true, // Display grid lines for the Y axis
+                    },
+                    title: {
+                        display: true,
+                        text: 'Quantity'
+                    }
+                }
+            }
+        }
+    };
+    const barChartConfigVertical = {
+        type: 'bar',
+        data: {
+            labels: ["1", "2", "3", "4", "5", "6"],
+            datasets: [{
+                label: 'Company A',
+                data: [65, 59, 80, 81, 56, 55, 40],
+                backgroundColor: [
+                    '#6CE5E8',
+                ],
+            }, {
+                label: 'Company B',
+                data: [55, 60, 40, 90, 20, 80, 70],
+                backgroundColor: [
+                    '#41B8D5',
+                ],
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            indexAxis: 'y',
+            plugins: {
+                legend: {
+                    display: true // Hide the legend
+                },
+                title: {
+                    display: true,
+                    text: 'Quantity vs Month',
+                    font: {
+                        size: 16, // Adjust the font size as needed
+                        weight: 'bold' // Adjust the font weight as needed
+                    }
+                }
+            },
+            scales: {
+                x: {
+                    grid: {
+                        display: false, // Do not display grid lines for the X axis
+                    },
+                    title: {
+                        display: true,
+                        text: 'Month'
+                    }
+                },
+                y: {
+                    beginAtZero: true,
+                    grid: {
+                        display: true, // Display grid lines for the Y axis
+                    },
+                    title: {
+                        display: true,
+                        text: 'Quantity'
+                    }
+                }
+            }
+        }
+    };
+    const radarChartConfig = {
+        type: 'radar',
+        data: {
+            labels: [ 'Eating',
+                'Drinking',
+                'Sleeping',
+                'Designing',
+                'Coding',
+                'Cycling',
+                'Running'
+            ],
+            datasets: [{
+                label: 'People A',
+                data: [65, 59, 70, 81, 56, 55, 40],
+                fill: true,
+                backgroundColor: 'rgba(108, 229, 232, 0.2)',
+                borderColor: 'rgb(108, 229, 232)',
+                pointBackgroundColor: 'rgb(108, 229, 232)',
+            }, {
+                label: 'People B',
+                data: [28, 48, 40, 19, 76, 27, 60],
+                fill: true,
+                backgroundColor: 'rgb(65, 184, 213, 0.2)',
+                borderColor: 'rgb(65, 184, 213)',
+                pointBackgroundColor: 'rgb(65, 184, 213)',
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: true // Hide the legend
+                },
+                title: {
+                    display: true,
+                    text: 'Quantity vs Month',
+                    font: {
+                        size: 16, // Adjust the font size as needed
+                        weight: 'bold' // Adjust the font weight as needed
+                    }
+                }
+            },
+            elements: {
+                line: {
+                    borderWidth: 2
+                }
+            },
+        }
+    };
+    const lineChartConfig = {
+        type: 'line',
+        data: {
+            labels: ["1", "2", "3", "4", "5", "6"],
+            datasets: [{
+                label: 'Company A',
+                data: [65, 59, 80, 81, 56, 55, 40],
+                fill: false,
+                borderColor: '#6CE5E8',
+                backgroundColor: '#6CE5E8',
+                tension: 0.1
+            }, {
+                label: 'Company B',
+                data: [55, 60, 40, 90, 20, 80, 70],
+                fill: false,
+                borderColor: '#41B8D5',
+                backgroundColor: '#41B8D5',
+                tension: 0.1
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: true // Hide the legend
+                },
+                title: {
+                    display: true,
+                    text: 'Quantity vs Month',
+                    font: {
+                        size: 16, // Adjust the font size as needed
+                        weight: 'bold' // Adjust the font weight as needed
+                    }
+                }
+            },
+            scales: {
+                x: {
+                    grid: {
+                        display: false, // Do not display grid lines for the X axis
+                    },
+                    title: {
+                        display: true,
+                        text: 'Month'
+                    }
+                },
+                y: {
+                    beginAtZero: true,
+                    grid: {
+                        display: true, // Display grid lines for the Y axis
+                    },
+                    title: {
+                        display: true,
+                        text: 'Quantity'
+                    }
+                }
+            }
+        }
+    };
+    const polarChartConfig = {
+        type: "polarArea",
+        data: {
+            labels: [
+                "Red",
+                "Green",
+                "Yellow",
+                "Grey",
+                "Blue"
+            ],
+            datasets: [
+                {
+                    data: [11, 16, 7, 3, 14],
+                    backgroundColor: [
+                        "#30356F",
+                        "#2E5791",
+                        "#2A7AAE",
+                        "#2F9DC6",
+                        "#6CE5E8",
+                    ]
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: true // Hide the legend
+                },
+                title: {
+                    display: true,
+                    text: 'Favourite Colour',
+                    font: {
+                        size: 16, // Adjust the font size as needed
+                        weight: 'bold' // Adjust the font weight as needed
+                    }
+                }
+            },
+        }
+    };
+    const pieChartConfigDoughnut = {
+        type: "doughnut",
+        data: {
+            labels: [
+                "Red",
+                "Blue",
+                "Yellow",
+                "Purple"
+            ],
+            datasets: [
+                {
+                    label: "My First Dataset",
+                    data: [300, 50, 100, 80],
+                    backgroundColor: [
+                        "#3A5F94",
+                        "#478AB6",
+                        "#62B7D2",
+                        "#8BE2E6",
+                    ],
+                    "hoverOffset": 4
+                },
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: true // Hide the legend
+                },
+                title: {
+                    display: true,
+                    text: 'Favourite Colour',
+                    font: {
+                        size: 16, // Adjust the font size as needed
+                        weight: 'bold' // Adjust the font weight as needed
+                    }
+                }
+            },
+        }
+    }
+    const pieChartConfigPie = {
+        type: "pie",
+        data: {
+            labels: [
+                "Red",
+                "Blue",
+                "Yellow"
+            ],
+            datasets: [
+                {
+                    label: "My First Dataset",
+                    data: [300, 50, 100],
+                    backgroundColor: [
+                        "#2A7AAE",
+                        "#2F9DC6",
+                        "#6CE5E8",
+                    ],
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: true // Hide the legend
+                },
+                title: {
+                    display: true,
+                    text: 'Favourite Colour',
+                    font: {
+                        size: 16, // Adjust the font size as needed
+                        weight: 'bold' // Adjust the font weight as needed
+                    }
+                }
+            },
+        }
+    }
+
+
+
+
+
     $(document).ready(function () {
+        // Function to perform deep copy of an object
+        function deepCopy(obj) {
+            return JSON.parse(JSON.stringify(obj));
+        }
+        var chartOptionList = $(".design-add-page-canvas-content");
+        chartOptionList.each(function(){
+            var chartType = $(this).attr("id");
+            var ctx;
+            var config;
+            switch(chartType){
+                case "bar-chart-horizontal":
+                    ctx = document.getElementById("bar-chart-horizontal");
+                    config = deepCopy(barChartConfigHorizontal);
+                    config.options.plugins.title.display = false;
+                    config.options.scales.x.title.display = false;
+                    config.options.scales.y.title.display = false;
+                    config.options.plugins.legend.display = false;
+                break;
+                case "bar-chart-vertical":
+                    ctx = document.getElementById("bar-chart-vertical");
+                    config = deepCopy(barChartConfigVertical);
+                    config.options.plugins.title.display = false;
+                    config.options.scales.x.title.display = false;
+                    config.options.scales.y.title.display = false;
+                    config.options.plugins.legend.display = false;
+                    break;
+                case "line-chart-1":
+                    ctx = document.getElementById("line-chart-1");
+                    config = deepCopy(lineChartConfig);
+                    config.options.plugins.title.display = false;
+                    config.options.scales.x.title.display = false;
+                    config.options.scales.y.title.display = false;
+                    config.options.plugins.legend.display = false;
+                    break;
+                case "radar-chart-1":
+                    ctx = document.getElementById("radar-chart-1");
+                    config = deepCopy(radarChartConfig);
+                    config.options.plugins.title.display = false;
+                    config.options.plugins.legend.display = false;
+
+                    break;
+                case "polar-area-chart-1":
+                    ctx = document.getElementById("polar-area-chart-1");
+                    config = deepCopy(polarChartConfig);
+                    config.options.plugins.title.display = false;
+                    config.options.plugins.legend.display = false;
+                    break;
+                case "pie-chart-doughnut":
+                    ctx = document.getElementById("pie-chart-doughnut");
+                    config = deepCopy(pieChartConfigDoughnut);
+                    config.options.plugins.title.display = false;
+                    config.options.plugins.legend.display = false;
+                    break;
+                case "pie-chart-pie":
+                    ctx = document.getElementById("pie-chart-pie");
+                    config = deepCopy(pieChartConfigPie);
+                    config.options.plugins.title.display = false;
+                    config.options.plugins.legend.display = false;
+                    break;
+            }
+
+            new Chart(ctx, config);
+        })
+
+        function initChart(element){
+            var configStr = element.innerHTML;
+            var configJSON = JSON.parse(configStr);
+            // Clear the innerHTML of the element
+            element.innerHTML = '';
+
+            // Create a new canvas element and append it to the element
+            var canvas = document.createElement('canvas');
+            canvas.classList.add('design-edit-page-canvas-content');
+            element.appendChild(canvas);
+
+            // Get the canvas context and initialize the Chart.js chart
+            var ctx = canvas.getContext('2d');
+            new Chart(ctx, configJSON);
+        }
+
+        var chartList = $(".chart");
+        chartList.each(function(){
+            initChart(this);
+        })
+        /*
+        // Get the canvas element using its ID
+        var canvas = document.querySelector("div.chart canvas");
+
+        // Get the 2D rendering context of the canvas
+        var ctx = canvas.getContext('2d');
+
+        // Get the Chart.js instance associated with the canvas
+        var myChart = Chart.getChart(ctx);
+
+        // Check if the chart instance exists
+        if (myChart) {
+            // Access the chart data
+            var chartData = myChart.data;
+
+            // Access the datasets
+            var datasets = chartData.datasets;
+
+            // Loop through the datasets
+            datasets.forEach(function (dataset, index) {
+                // Access dataset properties such as label, data, etc.
+                var label = dataset.label;
+                var data = dataset.data;
+
+                // Do something with the dataset
+                console.log('Dataset ' + index + ' - Label: ' + label);
+                console.log('Dataset ' + index + ' - Data: ', data);
+            });
+        } else {
+            console.error('Chart instance not found.');
+        }
+
+        // Function to update the chart
+        function updateChart() {
+            // Modify data or options as needed
+            myChart.data.datasets[0].data = [];
+
+            // Call update() method
+            myChart.update();
+        }
+
+        // Call updateChart() initially to render the chart
+        updateChart();
+
+        // Update the chart every second
+        setInterval(updateChart, 1000);
+        */
         let drag = false;
         document.addEventListener(
             'mousedown', () => drag = false);
@@ -993,6 +1493,8 @@
             }
             else if (element.classList.contains("image")) {
             }
+            else if (element.classList.contains("chart")) {
+            }
             else {
             initQuill(element, document.querySelector('#toolbar'));
         }
@@ -1115,6 +1617,74 @@
             textContent += $(this).html();
             textContent += "</div>";
             await addTextElementFunc(pageID, textContent, pageContainer);
+        })
+        async function addChartElementFunc(bookPageID, chartContent, pageContainer) {
+            $.ajax({
+                url: '/eBooks/Design?handler=ChartElement', // Endpoint URL for updating the title
+                method: 'POST',
+                data: { bookPageID: bookPageID, chartContent: chartContent },
+                dataType: 'json',
+                headers: {
+                    RequestVerificationToken: $('input:hidden[name="__RequestVerificationToken"]').val()
+                },
+                success: function (response) {
+                    
+                    if (response.status === 0) {
+                        pageContainer.append(response.htmlContent);
+                        console.log(response.htmlContent);
+    
+                        initChart(pageContainer.find("div:last")[0]);
+                    }
+                    else {
+                        alert("Chart element error "+response.status);
+                        location.reload();
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error occurred:", error);
+                    // Handle error
+                }
+
+            });
+
+        }
+        $(".design-add-page-chart-container .design-add-page-grid-content").click(async function () {
+            var chapter = parseInt($("#scroll-chapter-number-input").val());
+            var page = parseInt($("#scroll-page-number-input").val());
+            var chapterContainer = $(".e-book-design-chapter-container").eq(chapter - 1);
+            var pageContent = chapterContainer.find(".design-page-content-container").eq(page - 1);
+            var pageID = pageContent.attr("data-page-id");
+            var pageContainer = pageContent.find(".design-page-content-page-content");
+    
+            var chartType = $(this).find("canvas").attr("id");
+            var config;
+            switch (chartType) {
+                case "bar-chart-horizontal":
+                    config = barChartConfigHorizontal;
+                    break;
+                case "bar-chart-vertical":
+                    config = barChartConfigVertical;
+                    break;
+                case "line-chart-1":
+                    config = lineChartConfig;
+                    break;
+                case "radar-chart-1":
+                    config = radarChartConfig;
+                    break;
+                case "polar-area-chart-1":
+                    config = polarChartConfig;
+                    break;
+                case "pie-chart-doughnut":
+                    config = pieChartConfigDoughnut;
+                    break;
+                case "pie-chart-pie":
+                    config = pieChartConfigPie;
+                    break;
+            }
+
+            var chartContent = JSON.stringify(config);
+
+            await addChartElementFunc(pageID, chartContent, pageContainer);
         })
         async function addImageElementFunc(bookPageID, imageContent, pageContainer) {
             $.ajax({
@@ -1362,6 +1932,9 @@
             }
 
         })
+        $(document).on("click", "canvas", function (event) {
+            $(this).closest("div.element").click();
+        });
         $(document).on("click", ".page-add-button", async function () {
             var ancestor = $(this).closest('.design-page-content-container');
             console.log(ancestor);
@@ -1721,6 +2294,16 @@
                             printWindow.document.write('<div class="ql-editor">')
                             printWindow.document.write(elementList[k].querySelector(".ql-editor").innerHTML);
                             printWindow.document.write("</div>");
+                            printWindow.document.write("</div>");
+                        }
+                        else if (elementList[k].classList.contains("chart")) {
+                            printWindow.document.write('<div style="' + $(elementList[k]).attr("style") + '">');
+                            // Convert canvas to data URL
+                            var dataURL = elementList[k].querySelector("canvas").toDataURL();
+                            // Create an image element
+                            var img = new Image();
+                            img.src = dataURL;
+                            printWindow.document.write('<img src="' + dataURL + '" style="height:100%;width:100%">');
                             printWindow.document.write("</div>");
                         }
                     }
@@ -2365,6 +2948,16 @@
                 $("#element-delete-button").removeClass("hidden");
                 $("#element-lock-button").removeClass("hidden");
             }
+            else if(container.hasClass("chart")){
+                $("#position-button").removeClass("hidden");
+                $("#position-button").next("div").removeClass("hidden");
+                $("#border-button").addClass("hidden");
+                $("#border-button").next("div").addClass("hidden");
+                $("#edit-border").addClass("hidden");
+                $("#border-button").removeClass("tab-selected");
+                $("#element-delete-button").removeClass("hidden");
+                $("#element-lock-button").removeClass("hidden");
+            }
             else {
                 $("#position-button").addClass("hidden");
                 $("#position-button").next("div").addClass("hidden");
@@ -2651,7 +3244,7 @@
                 newCenter[1],
                 -angle
             );
-
+            console.log("resizehere");
             rectangle.x = newBottomLeft[0];
             rectangle.y = newTopRight[1];
             rectangle.width = newTopRight[0] - newBottomLeft[0];
@@ -2727,7 +3320,7 @@
             }
             else {
                 // If the mouse cursor is still inside the parent container, continue with the drag operation
-
+                console.log("moving here here here");
                 var target = event.target,
                     // keep the dragged position in the data-x/data-y attributes
                     x = (parseFloat(target.style.left) || 0) + event.dx,

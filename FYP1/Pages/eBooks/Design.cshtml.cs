@@ -314,6 +314,29 @@ namespace FYP1.Pages.eBooks
                 return new JsonResult(new { status = 1, message = "Already deleted nowhere" });
             }
         }
+        public async Task<IActionResult> OnPostChartElement(int bookPageID, string chartContent)
+        {
+            var elementAdd = new Element();
+            int elementCount = _context.Element.Count(e => e.bookPageID == bookPageID);
+            elementAdd.bookPageID = bookPageID;
+            elementAdd.z_index = elementCount;
+            elementAdd.text = chartContent;
+
+            elementAdd.elementType = "chart";
+            elementAdd.elementStyle = "left:20px;top:20px;position:absolute; border: none; width:200px; height:200px;font-size:0px;";
+
+            _context.Element.Add(elementAdd);
+            await _context.SaveChangesAsync();
+
+            return new JsonResult(new
+            {
+                status = 0,
+                message = "successful",
+                elementID = elementAdd.elementID,
+                bookPageID = elementAdd.bookPageID,
+                htmlContent = GenerateElementTemplate(elementAdd.elementID, elementAdd.elementStyle, "chart", elementAdd.text)
+            });
+        }
         public async Task<IActionResult> OnPostTextElement(int bookPageID, string textContent)
         {
             var elementAdd = new Element();
@@ -370,7 +393,7 @@ namespace FYP1.Pages.eBooks
             elementAdd.text = GenerateShapeContentTemplate(elementType);
 
             elementAdd.elementType = "shape";
-            elementAdd.elementStyle = "left:20px;top:20px;position:absolute;height:200px;width:200px; border: none;";
+            elementAdd.elementStyle = "left:20px;top:20px;position:absolute;height:200px;width:200px;justify-content:center;align-items:center;border: none;";
 
             _context.Element.Add(elementAdd);
             await _context.SaveChangesAsync();
