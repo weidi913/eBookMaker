@@ -4149,6 +4149,7 @@ ul.nav-link-dropdown-list {
   padding:9px;
   width:100%;
   height:100%;
+  cursor:pointer;
 }
 .design-edit-page-color-container{
   position:absolute;
@@ -4219,12 +4220,61 @@ ul.nav-link-dropdown-list {
   aspect-ratio:1/1;
   border-radius:4px;
   background-color:#000000;
+  cursor:pointer;
+  border:solid 1px #D9DDE1;
+}
+.design-edit-page-chart-label-add-row{
+  background-color:#F6F7F8;
+  text-align: center;
+  color:#4A4B4B;
+  font-weight: 550;
+  height:40px;
+  cursor: pointer;
+  padding:4px;
+}
+.design-edit-page-chart-label-delete-icon:hover,
+.design-edit-page-chart-dataset-delete-icon:hover,
+.design-edit-page-chart-label-add-row:hover{
+  background-color:#E1E4E7;
+}
+.design-edit-page-chart-label-delete-row, .design-edit-page-chart-dataset-delete-row{
+  display: flex;
+  flex-direction: row;
+  height:100%;
+  width:100%;
+  align-items: center;
+}
+.design-edit-page-chart-label-delete-row input,.design-edit-page-chart-dataset-delete-row input{
+  flex:1;
+}
+.design-edit-page-chart-label-delete-icon, .design-edit-page-chart-dataset-delete-icon{
+  height: 30px;
+  width: 30px;
+  aspect-ratio: 1/1;
+  padding:4px;
+  cursor:pointer;
+}
+.design-edit-page-chart-label-delete-icon svg{
+  pointer-events: none;
+}
+.design-edit-page-chart-dataset-add-row{
+  background-color:#F6F7F8;
+  text-align: center;
+  color:#4A4B4B;
+  font-weight: 550;
+  height:40px;
+  cursor: pointer;
+  padding:4px;
+}
+.design-edit-page-chart-dataset-add-row:hover{
+  background-color:#E1E4E7;
 }
 .design-edit-page-chart-color-background{
   padding:4px;
   background-color:red;
   height:100%;
   width:100%;
+  border:1px solid #D9DDE1;
 }
 .design-edit-page-chart-title-input{
   font-weight: bold;

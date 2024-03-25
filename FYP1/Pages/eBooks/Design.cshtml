@@ -23,10 +23,6 @@
         border:1px solid #D9DDE1;
         padding:4px;
     }
-    td input{
-        width:100%;
-        height:100%;
-    }
     .switch {
         position: relative;
         display: inline-block;
@@ -766,53 +762,6 @@
                             <button class="design-edit-page-chart-color-button">
                                 <div class="design-edit-page-chart-color-background"></div>
                             </button>
-                            <div class="design-edit-page-color-container">
-                                
-                                <div class="design-edit-page-color-container-title-container">
-                                    <div class="design-edit-page-color-container-title-text">Current Color</div>
-                                    <div class="design-edit-page-color-container-current-color"></div>
-                                    <div class="design-edit-page-color-container-exit">
-                                        <svg viewBox="0 0 1024 1024">
-                                            <path d="M810 274l-238 238 238 238-60 60-238-238-238 238-60-60 238-238-238-238 60-60 238 238 238-238z"></path>
-                                        </svg>
-                                    </div>
-                                </div>
-                                <div class="design-edit-page-color-container-color-grid-list">
-                                    <div class="design-edit-page-color-container-color-picker">
-                                        <input type="color">
-                                        <div class="design-edit-page-color-container-plus-icon">
-                                            <svg viewBox="0 0 1024 1024" style="width: 100%; scale: 0.6; height: 100%; align-self: center;">
-                                                <path d="M810 554h-256v256h-84v-256h-256v-84h256v-256h84v256h256v84z"></path>
-                                            </svg>
-                                        </div>
-                                    </div>
-                                    <div class="design-edit-page-color-container-solid-color" background-color:#000000;></div>
-                                    <div style="height:auto;width:100%;aspect-ratio:1/1;background-color:#545454"></div>
-                                    <div style="height:auto;width:100%;aspect-ratio:1/1;background-color:#737373"></div>
-                                    <div style="height:auto;width:100%;aspect-ratio:1/1;background-color:#a6a6a6"></div>
-                                    <div style="height:auto;width:100%;aspect-ratio:1/1;background-color:#d9d9d9"></div>
-                                    <div style="height:auto;width:100%;aspect-ratio:1/1;background-color:#ff3131"></div>
-                                    <div style="height:auto;width:100%;aspect-ratio:1/1;background-color:#ff5757"></div>
-                                    <div style="height:auto;width:100%;aspect-ratio:1/1;background-color:#ff66c4"></div>
-                                    <div style="height:auto;width:100%;aspect-ratio:1/1;background-color:#cb6ce6"></div>
-                                    <div style="height:auto;width:100%;aspect-ratio:1/1;background-color:#8252ff"></div>
-                                    <div style="height:auto;width:100%;aspect-ratio:1/1;background-color:#5e17eb"></div>
-                                    <div style="height:auto;width:100%;aspect-ratio:1/1;background-color:#0097b2"></div>
-                                    <div style="height:auto;width:100%;aspect-ratio:1/1;background-color:#0cc0df"></div>
-                                    <div style="height:auto;width:100%;aspect-ratio:1/1;background-color:#5ce1e6"></div>
-                                    <div style="height:auto;width:100%;aspect-ratio:1/1;background-color:#38b6ff"></div>
-                                    <div style="height:auto;width:100%;aspect-ratio:1/1;background-color:#5271ff"></div>
-                                    <div style="height:auto;width:100%;aspect-ratio:1/1;background-color:#004aad"></div>
-                                    <div style="height:auto;width:100%;aspect-ratio:1/1;background-color:#00bf63"></div>
-                                    <div style="height:auto;width:100%;aspect-ratio:1/1;background-color:#7ed957"></div>
-                                    <div style="height:auto;width:100%;aspect-ratio:1/1;background-color:#c1ff72"></div>
-                                    <div style="height:auto;width:100%;aspect-ratio:1/1;background-color:#ffde59"></div>
-                                    <div style="height:auto;width:100%;aspect-ratio:1/1;background-color:#ffbd59"></div>
-                                    <div style="height:auto;width:100%;aspect-ratio:1/1;background-color:#ff914d"></div>
-                                </div>
-
-
-                            </div>
                         </td>
                         <td><input type="text" class="chart-title-input design-edit-page-chart-title-input" placeholder="Chart Title"></td>
                     </tr>
@@ -1116,7 +1065,7 @@
     const barChartConfigHorizontal = {
         type: 'bar',
         data: {
-            labels: ["1", "2", "3", "4", "5", "6"],
+            labels: ["1", "2", "3", "4", "5", "6","7"],
             datasets: [{
                 label: 'Company A',
                 data: [65, 59, 80, 81, 56, 55, 40],
@@ -1173,7 +1122,7 @@
     const barChartConfigVertical = {
         type: 'bar',
         data: {
-            labels: ["1", "2", "3", "4", "5", "6"],
+            labels: ["1", "2", "3", "4", "5", "6","7"],
             datasets: [{
                 label: 'Company A',
                 data: [65, 59, 80, 81, 56, 55, 40],
@@ -1281,7 +1230,7 @@
     const lineChartConfig = {
         type: 'line',
         data: {
-            labels: ["1", "2", "3", "4", "5", "6"],
+            labels: ["1", "2", "3", "4", "5", "6","7"],
             datasets: [{
                 label: 'Company A',
                 data: [65, 59, 80, 81, 56, 55, 40],
@@ -1458,26 +1407,249 @@
         }
     }
 
-    const colors = [
-        '#000000', '#545454', '#737373', '#a6a6a6', '#d9d9d9',
+    const colorsListAvailable = [
+        '#000000', '#545454', '#737373', '#a6a6a6', '#d9d9d9', '#FFFFFF',
         '#ff3131', '#ff5757', '#ff66c4', '#cb6ce6', '#8252ff',
         '#5e17eb', '#0097b2', '#0cc0df', '#5ce1e6', '#38b6ff',
         '#5271ff', '#004aad', '#00bf63', '#7ed957', '#c1ff72',
         '#ffde59', '#ffbd59', '#ff914d'
     ];
 
+    function updateColour(container,colour){
 
+        $(".design-edit-page-color-container").prev("button").find("div").css("background-color", colour);
+        var myChart = Chart.getChart($(".selected").find("canvas")[0].getContext("2d"));
+        if (container.hasClass("chart-info-row")) {
+            $(".selected").css("background-color", colour);
+        }
+        else if (container.hasClass("chart-data-header-row")){
+            var index = container.find("td input[type='text']").attr("data-chart-datasets");
+            if (myChart.config.type === "bar") {
+                myChart.data.datasets[index].backgroundColor = colour;
+            }
+            else if (myChart.config.type === "line") {
+                myChart.data.datasets[index].backgroundColor = colour;
+                myChart.data.datasets[index].borderColor = colour;
+            }
+            else if (myChart.config.type === "radar") {
+                myChart.data.datasets[index].backgroundColor = colour.replace('rgb', 'rgba').replace(')', `, 0.2)`);
+                myChart.data.datasets[index].borderColor = colour;
+                myChart.data.datasets[index].pointBackgroundColor = colour;
+            }
+        }
+        else if (container.hasClass("chart-label-row")) {
+            var index = container.index();
+            if (myChart.config.type === "polarArea") {
+                myChart.data.datasets[0].backgroundColor[index] = colour;
+            }
+            else if (myChart.config.type === "doughnut") {
+                myChart.data.datasets[0].backgroundColor[index] = colour;
+            }
+            else if (myChart.config.type === "pie") {
+                myChart.data.datasets[0].backgroundColor[index] = colour;
+            }
+        }
+
+        myChart.update();
+    }
 
     $(document).ready(function () {
+        $(document).on("click",".design-edit-page-chart-dataset-delete-icon",function(){
+            var datasetIndex = $(this).prev().attr("data-chart-datasets");
+            var myChart = Chart.getChart($(".selected").find("canvas")[0].getContext("2d"));
+
+            myChart.data.datasets.splice(datasetIndex, 1);
+
+            myChart.update();
+            retrieveChartValue($(".selected"));
+        })
+        $(document).on("click", ".design-edit-page-chart-label-delete-icon", function () {
+            var labelIndex = $(this).closest("tr").index();
+            var myChart = Chart.getChart($(".selected").find("canvas")[0].getContext("2d"));
+            var chartType = myChart.config.type;
+
+            if (chartType === "bar") {
+                myChart.data.labels.splice(labelIndex, 1);
+                myChart.data.datasets.forEach(function (dataset) {
+                    dataset.data.splice(labelIndex, 1);
+                });
+            }
+            else if (chartType === "line") {
+                myChart.data.labels.splice(labelIndex, 1);
+                myChart.data.datasets.forEach(function (dataset) {
+                    dataset.data.splice(labelIndex, 1);
+                });
+            }
+            else if (chartType === "radar") {
+                myChart.data.labels.splice(labelIndex, 1);
+                myChart.data.datasets.forEach(function (dataset) {
+                    dataset.data.splice(labelIndex, 1);
+                });
+            }
+            else if (chartType === "polarArea") {
+                myChart.data.labels.splice(labelIndex, 1);
+                myChart.data.datasets[0].data.splice(labelIndex, 1);
+                myChart.data.datasets[0].backgroundColor.splice(labelIndex, 1);
+            }
+            else if (chartType === "doughnut") {
+                myChart.data.labels.splice(labelIndex, 1);
+                myChart.data.datasets[0].data.splice(labelIndex, 1);
+                myChart.data.datasets[0].backgroundColor.splice(labelIndex, 1);
+            }
+            else if (chartType === "pie") {
+                myChart.data.labels.splice(labelIndex, 1);
+                myChart.data.datasets[0].data.splice(labelIndex, 1);
+                myChart.data.datasets[0].backgroundColor.splice(labelIndex, 1);
+            }
+
+            myChart.update();
+            retrieveChartValue($(".selected"));
+        })
+        $(document).on("click", ".design-edit-page-chart-label-add-row", function () {
+            var myChart = Chart.getChart($(".selected").find("canvas")[0].getContext("2d"));
+            var chartType = myChart.config.type;
+
+            if (chartType === "bar" || chartType === "line" || chartType === "radar") {
+                myChart.data.labels.push('New Label');
+                myChart.data.datasets.forEach((dataset) => {
+                    dataset.data.push(Math.random() * 100); // Random data for demo purposes
+                });
+            }
+            else if (chartType === "polarArea" || chartType === "pie" || chartType === "doughnut") {
+                var noLabel = myChart.data.labels.length;
+                myChart.data.labels.push('New Label');
+                myChart.data.datasets[0].data.push(Math.random() * 100); // Random data for demo purposes
+                myChart.data.datasets[0].backgroundColor.push(colorsListAvailable[noLabel]); // Random data for demo purposes
+            }
+
+            
+            myChart.update();
+            retrieveChartValue($(".selected"));
+        })
+        $(document).on("click", ".design-edit-page-chart-dataset-add-row", function () {
+            var myChart = Chart.getChart($(".selected").find("canvas")[0].getContext("2d"));
+            var chartType = myChart.config.type;
+            var labelsNumber = myChart.data.labels.length;
+            var datasetNumber = myChart.data.datasets.length;
+            var newDataset ;
+            if (chartType === "bar") {
+                newDataset  = {
+                    label: "New Dataset",
+                    data: [],
+                    backgroundColor: colorsListAvailable[datasetNumber],
+                };
+                for(var i = 0 ; i < labelsNumber; i++){
+                    newDataset.data.push(Math.random() * 100);
+                }
+            }
+            else if (chartType === "line") {
+                newDataset = {
+                    label: "New Dataset",
+                    data: [],
+                    fill: false,
+                    backgroundColor: colorsListAvailable[datasetNumber],
+                    borderColor: colorsListAvailable[datasetNumber],
+                    tension: 0.1
+                };
+                for (var i = 0; i < labelsNumber; i++) {
+                    newDataset.data.push(Math.random() * 100);
+                }
+            }
+            else if( chartType === "radar") {
+                newDataset = {
+                    label: "New Dataset",
+                    data: [],
+                    fill: true,
+                    backgroundColor: colorsListAvailable[datasetNumber].replace('#', 'rgba(').replace(/../g, '$&' + parseInt(0.2 * 255) + ',').slice(0, -1) + ')',
+                    borderColor: colorsListAvailable[datasetNumber],
+                    pointBackgroundColor: colorsListAvailable[datasetNumber],
+                };
+                for (var i = 0; i < labelsNumber; i++) {
+                    newDataset.data.push(Math.random() * 100);
+                }
+            }
+            else if (chartType === "polarArea"){
+                return;
+
+            }
+            else if(chartType === "pie"){
+                return;
+
+            }
+            else if(chartType === "doughnut") {
+                return;
+            }
+            else{
+                return;
+            }
+
+            // Add the new dataset to the chart
+            myChart.data.datasets.push(newDataset);
+
+            myChart.update();
+            retrieveChartValue($(".selected"));
+        })
+        $(document).on("input", "input.design-edit-page-color-picker-input", function () {
+            var tr = $(this).closest("tr");
+            var changedColour = $(this).val();
+            updateColour(tr, changedColour);
+        })
+        $(document).on("click", ".design-edit-page-color-container-solid-color", function () {
+            var tr = $(this).closest("tr");
+            var changedColour = $(this).css("background-color");
+            updateColour(tr, changedColour);
+        })
+        $(document).on("click",".design-edit-page-color-container-exit", function(){
+
+            $(".selected").css("background-color", $(this).css("background-color"));
+            $(".design-edit-page-color-container").remove();
+        })
+        $(document).on("click", ".design-edit-page-chart-color-button", function () {
+            if($(this).next("div").length > 0){
+                $(".design-edit-page-color-container").remove();
+                return;
+            }
+            $(".design-edit-page-color-container").remove();
+            var bgColor = $(this).closest(".design-edit-page-chart-first-column").css("background-color");
+            var colorContainer = `
+            <div class="design-edit-page-color-container">
+                <div class="design-edit-page-color-container-title-container">
+                    <div class="design-edit-page-color-container-title-text">Current Color</div>
+                    <div class="design-edit-page-color-container-current-color" style="background-color:${bgColor};"></div>
+                    <div class="design-edit-page-color-container-exit keep">
+                        <svg style="pointer-events:none" viewBox="0 0 1024 1024">
+                            <path d="M810 274l-238 238 238 238-60 60-238-238-238 238-60-60 238-238-238-238 60-60 238 238 238-238z"></path>
+                        </svg>
+                    </div>
+                </div>
+                <div class="design-edit-page-color-container-color-grid-list">
+                    <div class="design-edit-page-color-container-color-picker">
+                        <input class="design-edit-page-color-picker-input" type="color" value="${bgColor}">
+                        <div class="design-edit-page-color-container-plus-icon">
+                            <svg viewBox="0 0 1024 1024" style="width: 100%; scale: 0.6; height: 100%; align-self: center;">
+                                <path d="M810 554h-256v256h-84v-256h-256v-84h256v-256h84v256h256v84z"></path>
+                            </svg>
+                        </div>
+                    </div>`;
+            colorContainer += `<div class="design-edit-page-color-container-solid-color keep" style="background-image: url('../images/transparent.jpg'); background-color: #00000000;"></div>`;
+
+            for (var i = 0; i < colorsListAvailable.length; i++) {
+                colorContainer += `<div class="design-edit-page-color-container-solid-color keep" style="background-color:${colorsListAvailable[i]};"></div>`;
+            }
+            colorContainer += `</div></div>`;
+            $(this).closest(".design-edit-page-chart-first-column").append(colorContainer);
+        });
 
         $(document).on("change", "input.chart-data-input", function () {
             var dataValue = $(this).val();
             var myChart = Chart.getChart($(".selected").find("canvas")[0].getContext("2d"));
-
-       //     var datasetsIndex = $(this).closest("tr.chart-data-row").prevAll(".chart-data-header-row").first().find("input").attr("data-chart-datasets");
-            var datasetsIndex = $(this).closest("tr.chart-data-row").prev(".chart-data-header-row").find("input").attr("data-chart-datasets");
+            var datasetsIndex = 0;
+            if (myChart.config.type === "line" || myChart.config.type === "bar" || myChart.config.type === "radar" ) {
+                var datasetsIndex = $(this).closest("tr.chart-data-row").prevAll(".chart-data-header-row").first().find("input").attr("data-chart-datasets");
+            }
+            //var datasetsIndex = $(this).closest("tr.chart-data-row").prev(".chart-data-header-row").find("input").attr("data-chart-datasets");
             var dataIndex = $(this).attr("data-chart-data");
-
+            console.log("datasetsIndex: " + datasetsIndex + " dataIndex: " + dataIndex);
             // Update the data value in the chart dataset
             myChart.data.datasets[datasetsIndex].data[dataIndex] = parseFloat(dataValue);
 
@@ -2203,6 +2375,15 @@
                     console.log("element delete successfully!");
                     // Append the HTML content to the specified container
                     elementSelected.remove();
+
+                    // Iterate over each child element of e-book-design-top-tab-container
+                    $(".e-book-design-top-tab-container").children().each(function () {
+                        // Check if the current element does not have the hidden class
+                        if (!$(this).hasClass("hidden")) {
+                            // Add the hidden class to the current element
+                            $(this).addClass("hidden");
+                        }
+                    });
                 } else {
                     alert("Error add book chapter try:", response.message);
                     location.reload();
@@ -3083,7 +3264,7 @@
             console.log("This is the container being clicked",event.target);
             // Check if the clicked element or one of its ancestors has the 'selected' class
             let clickedElement = $(event.target);
-            let isAncestorOrSelf = clickedElement.closest(".selected, .pointer, .rotation-handle, .ql-editor, .ql-script, .ql-toolbar, .e-book-design-top-tab-container, .pointer, .design-edit-page-container, .e-book-design-element-list-container ").length > 0;
+            let isAncestorOrSelf = clickedElement.closest(".selected, .pointer, .rotation-handle, .ql-editor, .ql-script, .ql-toolbar, .e-book-design-top-tab-container, .pointer, .design-edit-page-container, .e-book-design-element-list-container, .keep ").length > 0;
             let isDiv = clickedElement.prop('nodeName') === "DIV";
 
             if(isAncestorOrSelf){
@@ -3361,8 +3542,6 @@
                     $("#chart-axis-title-option").closest(".design-edit-page-chart-setting-rule-container").addClass("hidden");
                     $("input.chart-x-title-input").closest(".chart-info-row").addClass("hidden");
                     $("input.chart-y-title-input").closest(".chart-info-row").addClass("hidden");
-
-
                 }
 
                 var chartBG = $(".selected").css("background-color");
@@ -3387,9 +3566,27 @@
                         labelInfo += '</td>';
 
                     }
-                    labelInfo += '<td> <input type="text" class="chart-label-input" placeholder="Label Name" value="' + label + '"> </td>';
+                    labelInfo += '<td><div class="design-edit-page-chart-label-delete-row"><input type="text" class="chart-label-input" placeholder="Label Name" value="' + label + '">';
+                    //labelInfo += '<td><div class="design-edit-page-chart-label-delete-row"><div style="flex:1";><input type="text" class="chart-label-input" placeholder="Label Name" value="' + label + '"></div>';
+                    labelInfo += '<div class="design-edit-page-chart-label-delete-icon keep"><svg viewBox="0 0 1024 1024">';
+                    labelInfo += '<path d="M662 170h148v86h-596v-86h148l44-42h212zM342 384v426h340v-426h-340zM256 810v-512h512v512q0 34-26 60t-60 26h-340q-34 0-60-26t-26-60z"></path>';
+                    labelInfo += '</svg></div></td>';
                     labelInfo += '</tr>';
                 });
+                
+                
+                labelInfo += '<tr class="chart-label-row">';
+
+
+                labelInfo += '<tr><td colspan="2" class="design-edit-page-chart-label-add-row keep">Add label row</tr>';
+
+               // if (chartType === "bar" || chartType === "line" || chartType === "radar") {
+               //     labelInfo += '<tr><td colspan="2" class="more-dataset design-edit-page-chart-label-add-row">Add label row</tr>';
+               // }
+               // else if (chartType === "polarArea" || chartType === "pie" || chartType === "doughnut") {
+               //     labelInfo += '<tr><td colspan="2" class="one-dataset design-edit-page-chart-label-add-row">Add label row</tr>';
+               // }
+
                 $("#chart-labels table").html(labelInfo);
 
                 var datasetsInfo = "";
@@ -3404,10 +3601,20 @@
                         datasetsInfo += '<tr class="chart-data-header-row">';
                         datasetsInfo += '<td class="design-edit-page-chart-first-column">';
                         datasetsInfo += '<button class="design-edit-page-chart-color-button">';
-                        datasetsInfo += '<div style="background-color:' + dataset.backgroundColor + '" class="design-edit-page-chart-color-background"></div>';
+                        if (chartType === "bar" || chartType === "line") {
+
+                            datasetsInfo += '<div style="background-color:' + dataset.backgroundColor + '" class="design-edit-page-chart-color-background"></div>';
+                        }
+                        else if ( chartType === "radar") {
+                            datasetsInfo += '<div style="background-color:' + dataset.borderColor + '" class="design-edit-page-chart-color-background"></div>';
+
+                        }
                         datasetsInfo += '</button>';
                         datasetsInfo += '</td>';
-                        datasetsInfo += '<td><input type="text" data-chart-datasets="' + index + '" class="chart-datasets-title-input design-edit-page-chart-title-input" placeholder="Datasets" value="' + dataset.label + '"></td>';
+                        datasetsInfo += '<td><div class="design-edit-page-chart-dataset-delete-row"><input type="text" data-chart-datasets="' + index + '" class="chart-datasets-title-input design-edit-page-chart-title-input" placeholder="Datasets" value="' + dataset.label + '">';
+                        datasetsInfo += '<div class="design-edit-page-chart-dataset-delete-icon"><svg viewBox="0 0 1024 1024">';
+                        datasetsInfo += '<path d="M662 170h148v86h-596v-86h148l44-42h212zM342 384v426h340v-426h-340zM256 810v-512h512v512q0 34-26 60t-60 26h-340q-34 0-60-26t-26-60z"></path>';
+                        datasetsInfo += '</svg></div></td>';
                         datasetsInfo += '</tr>';
                     }
                     else if (chartType === "polarArea" || chartType === "pie" || chartType === "doughnut") {
@@ -3421,7 +3628,15 @@
                         datasetsInfo += '<td><input type="text" data-chart-data="' + dataIndex + '" class="chart-data-input" placeholder="Data Value" value="' + dataValue + '"></td>';
                         datasetsInfo += '</tr>';
                     });
+
+
                 });
+
+                if (chartType === "bar" || chartType === "line" || chartType === "radar") {
+                    datasetsInfo += '<tr><td colspan="2" class="more-dataset design-edit-page-chart-dataset-add-row keep">Add dataset</tr>';
+                }
+                else if (chartType === "polarArea" || chartType === "pie" || chartType === "doughnut") {
+                }
                 $("#chart-datasets table").html(datasetsInfo);
 
 
