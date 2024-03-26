@@ -4222,6 +4222,7 @@ ul.nav-link-dropdown-list {
   background-color:#000000;
   cursor:pointer;
   border:solid 1px #D9DDE1;
+  margin:4px;
 }
 .design-edit-page-chart-label-add-row{
   background-color:#F6F7F8;
@@ -4289,6 +4290,10 @@ ul.nav-link-dropdown-list {
 }
 .design-edit-page-section-description {
   font-style: normal;
+}
+.quil-editor-toolbar-container{
+  width:100%;
+  height:auto;
 }
 .design-edit-page-arrange-container {
   flex: 0 0 auto;

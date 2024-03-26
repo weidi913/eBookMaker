@@ -186,17 +186,61 @@
     }
     }
     }
-
+    .ql-toolbar.ql-snow .ql-formats{
+        margin-right:0px !important;
+    }
     .ql-container.ql-snow {
         border: none; /* or border: 0; */
     }
     #toolbar .ql-toolbar.ql-snow{
         border:none;
         padding:0;
+        display:flex;
+        flex-direction:column;
+        padding:4px;
+    }
+    #toolbar .ql-toolbar.ql-snow > span{
+        margin-top:4px;
+        margin-bottom:4px;
     }
     .ql-toolbar{
-        white-space: nowrap;
+        /* white-space: nowrap; */
     }
+    .quil-editor-toolbar-container .ql-toolbar.ql-snow .ql-formats:first-child{
+        display:flex;
+    }
+    .quil-editor-toolbar-container .ql-toolbar.ql-snow .ql-formats:first-child span{
+        flex:1;
+    }
+
+    .quil-editor-toolbar-container .ql-toolbar.ql-snow .ql-formats:nth-child(n + 2) {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    }
+    span.ql-picker.ql-color-picker span.ql-picker-options[aria-hidden="false"]{
+        width:300px;
+        display:grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+        border-radius:8px;
+    }
+
+    span.ql-picker.ql-color-picker span.ql-picker-options[aria-hidden="false"] .ql-picker-item:nth-child(n+36) {
+        grid-column: span 7; /* Combining the last 7 items into one cell */;
+        aspect-ratio:7/1;
+        display:flex;
+    }
+
+    span.ql-picker.ql-color-picker span.ql-picker-options[aria-hidden="false"] .ql-picker-item{
+        height:auto;
+        aspect-ratio:1/1;
+        border: #D9DDE1;
+        display:grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+        margin:4px;
+        width:auto;
+          border-radius:4px;
+    }
+
 </style>
 @Html.AntiForgeryToken()
 <div class="e-book-design-container">
@@ -748,6 +792,14 @@
                 </button>
             </div>
         </div>
+        <div id="edit-style" class="hidden design-edit-page-container">
+            <div class="design-edit-page-heading-container">
+                <span class="design-edit-page-heading-text">
+                    <span>Edit Text</span>
+                </span>
+            </div>
+            <div id="toolbar" class="quil-editor-toolbar-container"></div>
+        </div>
         <div id="edit-chart" class="hidden design-edit-page-container">
             <div class="design-edit-page-heading-container">
                 <span class="design-edit-page-heading-text">
@@ -882,8 +934,7 @@
                     </svg>
                 </button>
                 <div class="e-book-design-button-separator hidden"></div>
-                <div id="toolbar">
-                </div>
+                @* <div id="toolbar"> </div> *@
             </div>
             <div id="zoom-container" class="e-book-design-book-content-container">
                 <div class="e-book-design-book-container" style="width:@(Model.curBook.width)mm">
@@ -1454,6 +1505,10 @@
     }
 
     $(document).ready(function () {
+        $(document).on("input", ".design-edit-page-text-color-picker-input", function(){
+            curActiveQuil.format("color", $(this).val());
+        })
+
         $(document).on("click",".design-edit-page-chart-dataset-delete-icon",function(){
             var datasetIndex = $(this).prev().attr("data-chart-datasets");
             var myChart = Chart.getChart($(".selected").find("canvas")[0].getContext("2d"));
@@ -1624,7 +1679,7 @@
                 </div>
                 <div class="design-edit-page-color-container-color-grid-list">
                     <div class="design-edit-page-color-container-color-picker">
-                        <input class="design-edit-page-color-picker-input" type="color" value="${bgColor}">
+                        <input class="design-edit-page-text-color-picker-input" type="color" value="${bgColor}">
                         <div class="design-edit-page-color-container-plus-icon">
                             <svg viewBox="0 0 1024 1024" style="width: 100%; scale: 0.6; height: 100%; align-self: center;">
                                 <path d="M810 554h-256v256h-84v-256h-256v-84h256v-256h84v256h256v84z"></path>
@@ -1854,23 +1909,11 @@
         Quill.register(Size, true);
 
         var toolbarOptions = [
-            ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
-           // ['blockquote', 'code-block'],
-
-           // [{ 'header': 1 }, { 'header': 2 }],               // custom button values
-            [{ 'list': 'ordered' }, { 'list': 'bullet' }],
-            [{ 'script': 'sub' }, { 'script': 'super' }],      // superscript/subscript
-           // [{ 'indent': '-1' }, { 'indent': '+1' }],          // outdent/indent
-
-            [{ 'size': fontSizeArr }],  // custom dropdown
-        //    [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-
-            [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
-            [{ 'font': [] }],
-            [{ 'align': [] }],
+            [{ 'font': [] }, { 'size': fontSizeArr }],
+            [{ 'color': [] }, { 'background': [] },'bold', 'italic', 'underline', 'strike', { 'script': 'sub' }, { 'script': 'super' },{ 'direction': 'rtl' }, 'clean'],        // toggled buttons
+            [{ 'list': 'ordered' }, { 'list': 'bullet' }, { 'list': 'check' },'blockquote', 'code-block', 'link', 'formula',{ 'align': [] },{ 'indent': '-1' }, { 'indent': '+1' }],
             // Custom color picker button
            // [{ 'custom-color': '#000000' }]
-            ['clean']                                         // remove formatting button
         ];
         // Add a handler for the custom color picker button
         var handlers = {
@@ -1919,6 +1962,21 @@
             );
 
             var toolbar = quill.getModule('toolbar');
+            console.log(toolbar);
+            console.log($(toolbar.container));
+            console.log($(toolbar.container).find(".ql-picker.ql-color-picker .ql-picker-options"));
+            //$(toolbar.container).find(".ql-picker.ql-color-picker .ql-picker-options").append("<span class='ql-picker-item'></span>");
+            $(toolbar.container).find(".ql-picker.ql-color-picker .ql-picker-options").append(
+                `<span class='ql-picker-item design-edit-page-color-container-color-picker'>
+                    <input class="design-edit-page-text-color-picker-input" type="color">
+                    <div class="design-edit-page-color-container-plus-icon">
+                        <svg viewBox="0 0 1024 1024" style="width: 100%; scale: 0.6; height: 100%; align-self: center;">
+                            <path d="M810 554h-256v256h-84v-256h-256v-84h256v-256h84v256h256v84z"></path>
+                        </svg>
+                    </div>
+                </span>`
+            );
+
             toolbar.container.classList.add("hidden");
             globalToolbarContainer.appendChild(toolbar.container)
 
@@ -3703,6 +3761,9 @@
                 $("#chart-button").addClass("hidden");
                 $("#chart-button").next("div").addClass("hidden");
                 $("#edit-chart").addClass("hidden");
+;
+                $("#style-button").next("div").removeClass("hidden");
+                $("#style-button").removeClass("hidden");
             }
             else if (container.hasClass("image")) {
                 $("#position-button").removeClass("hidden");
@@ -3714,6 +3775,11 @@
                 $("#chart-button").addClass("hidden");
                 $("#chart-button").next("div").addClass("hidden");
                 $("#edit-chart").addClass("hidden");
+
+                $("#edit-style").addClass("hidden");
+                $("#style-button").next("div").addClass("hidden");
+                $("#style-button").removeClass("tab-selected");
+                $("#style-button").addClass("hidden");
             }
             else if (container.hasClass("shape")) {
                 $("#position-button").removeClass("hidden");
@@ -3728,6 +3794,9 @@
                 $("#element-lock-button").removeClass("hidden");
                 $("#chart-button").addClass("hidden");
                 $("#edit-chart").addClass("hidden");
+
+                $("#style-button").next("div").removeClass("hidden");
+                $("#style-button").removeClass("hidden");
             }
             else if (container.hasClass("chart") || container.prop("tagName").toUpperCase() === "CANVAS") {
                 $("#position-button").removeClass("hidden");
@@ -3741,7 +3810,11 @@
 
                 $("#chart-button").removeClass("hidden");
                 $("#chart-button").next("div").removeClass("hidden");
- 
+
+                $("#edit-style").addClass("hidden");
+                $("#style-button").next("div").addClass("hidden");
+                $("#style-button").removeClass("tab-selected");
+                $("#style-button").addClass("hidden");
             }
             else {
                 $("#position-button").addClass("hidden");
@@ -3759,7 +3832,9 @@
 
 
                 $("#edit-style").addClass("hidden");
+                $("#style-button").next("div").addClass("hidden");
                 $("#style-button").removeClass("tab-selected");
+                $("#style-button").addClass("hidden");
 
                 $("#chart-button").addClass("hidden");
                 $("#chart-button").next("div").addClass("hidden");
