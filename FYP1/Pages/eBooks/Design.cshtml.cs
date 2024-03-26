@@ -235,6 +235,40 @@ namespace FYP1.Pages.eBooks
 
             return new JsonResult(new { status = 0, message = "OCR function complete", result="hooray" });
         }
+        public async Task<IActionResult> OnPostElementToggleLock(int elementID)
+        {
+            var element = await _context.Element.FirstOrDefaultAsync(e => e.elementID == elementID);
+
+            if (element == null)
+            {
+                return new JsonResult(new { status = 1, message = "element not found" });
+            }
+
+            element.elementLock = !element.elementLock;
+
+            // Update the database with the modified BookPage records
+            _context.Element.Update(element);
+            await _context.SaveChangesAsync();
+
+            return new JsonResult(new { status = 0, message = "Element locked successfully" });
+        }
+        public async Task<IActionResult> OnPostBookPageToggleLock(int bookPageID)
+        {
+            var bookPage = await _context.BookPage.FirstOrDefaultAsync(e => e.bookPageID == bookPageID);
+
+            if (bookPage == null)
+            {
+                return new JsonResult(new { status = 1, message = "book page not found" });
+            }
+
+            bookPage.pageLock = !bookPage.pageLock;
+
+            // Update the database with the modified BookPage records
+            _context.BookPage.Update(bookPage);
+            await _context.SaveChangesAsync();
+
+            return new JsonResult(new { status = 0, message = "book page locked successfully" });
+        }
         public async Task<IActionResult> OnPostElementExchange(int elementID1, int elementID2)
         {
 

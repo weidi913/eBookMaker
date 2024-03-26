@@ -5,6 +5,12 @@
     ViewData["Title"] = "Design";
 }
 <style>
+    .tab-lock, .page-lock, .selected.element-lock{
+        cursor:not-allowed;
+    }
+    .tab-lock *,.page-lock * , .element-lock *{
+        pointer-events: none; 
+    }
     input[type=color] {
         position: absolute;
         top: 0;
@@ -940,6 +946,9 @@
                          class="e-book-design-top-function-icon">
                         <path d="M768 854v-428h-512v428h512zM380 256v86h264v-86q0-54-39-93t-93-39-93 39-39 93zM768 342q34 0 60 25t26 59v428q0 34-26 59t-60 25h-512q-34 0-60-25t-26-59v-428q0-34 26-59t60-25h42v-86q0-88 63-151t151-63 151 63 63 151v86h42zM512 726q-34 0-60-26t-26-60 26-60 60-26 60 26 26 60-26 60-60 26z"></path>
                     </svg>
+                    <svg viewBox="0 0 1024 1024" class="e-book-design-top-function-icon">
+                        <path d="M768 854v-428h-512v428h512zM768 342q34 0 60 25t26 59v428q0 34-26 59t-60 25h-512q-34 0-60-25t-26-59v-428q0-34 26-59t60-25h388v-86q0-54-39-93t-93-39-93 39-39 93h-82q0-88 63-151t151-63 151 63 63 151v86h42zM512 726q-34 0-60-26t-26-60 26-60 60-26 60 26 26 60-26 60-60 26z"></path>
+                    </svg>
                 </button>
                 <div class="e-book-design-button-separator hidden"></div>
                 @* <div id="toolbar"> </div> *@
@@ -958,11 +967,11 @@
                                            data-chapter-itemid="@chapter.chapterID"
                                            placeholder="Chapter Name"
                                            class="chapter-name-input e-book-design-chapter-title-input input" />
-                                    <button type="button" class="chapter-toggle-button design-page-button">
+@*                                     <button type="button" class="chapter-toggle-button design-page-button">
                                         <svg viewBox="0 0 1024 1024" class="e-book-design-chapter-icon">
                                             <path d="M448 576v416l-160-160-192 192-96-96 192-192-160-160zM1024 96l-192 192 160 160h-416v-416l160 160 192-192z"></path>
                                         </svg>
-                                    </button>
+                                    </button> *@
                                 </div>
                             </div>
                             @foreach (var bookPage in chapter.BookPages)
@@ -991,10 +1000,10 @@
                                             @* lock button *@
                                             <button type="button"
                                                     class="design-page-content-middle-button design-page-button page-lock-toggle-button">
-                                                <svg viewBox="0 0 1024 1024" class="design-page-content-icon page-lock-icon">
+                                                <svg viewBox="0 0 1024 1024" class="design-page-content-icon page-lock-icon @(bookPage.pageLock ? "hidden" : "") ">
                                                     <path d="M768 854v-428h-512v428h512zM380 256v86h264v-86q0-54-39-93t-93-39-93 39-39 93zM768 342q34 0 60 25t26 59v428q0 34-26 59t-60 25h-512q-34 0-60-25t-26-59v-428q0-34 26-59t60-25h42v-86q0-88 63-151t151-63 151 63 63 151v86h42zM512 726q-34 0-60-26t-26-60 26-60 60-26 60 26 26 60-26 60-60 26z"></path>
                                                 </svg>
-                                                <svg viewBox="0 0 1024 1024" class="design-page-content-icon page-unlock-icon">
+                                                <svg viewBox="0 0 1024 1024" class="design-page-content-icon page-unlock-icon @(bookPage.pageLock ? "" : "hidden")">
                                                     <path d="M768 854v-428h-512v428h512zM768 342q34 0 60 25t26 59v428q0 34-26 59t-60 25h-512q-34 0-60-25t-26-59v-428q0-34 26-59t60-25h388v-86q0-54-39-93t-93-39-93 39-39 93h-82q0-88 63-151t151-63 151 63 63 151v86h42zM512 726q-34 0-60-26t-26-60 26-60 60-26 60 26 26 60-26 60-60 26z"></path>
                                                 </svg>
                                             </button>
@@ -1014,11 +1023,12 @@
                                             </button>
                                         </div>
                                     </div>
-                                    <div style="height:@(Model.curBook.height)mm" class="design-page-content-page-content">
+                                    <div style="height:@(Model.curBook.height)mm" class="@(bookPage.pageLock ? "design-page-content-page-content  page-lock" : "design-page-content-page-content")">
+                                    @* <div style="height:@(Model.curBook.height)mm" class="design-page-content-page-content"> *@
                                         @foreach (var element in bookPage.Elements)
                                         {
                                             <div id="@element.elementID"
-                                                 class="@element.elementType element"
+                                                 class="@element.elementType element @(element.elementLock ? "element-lock" : "")"
                                                  style="@element.elementStyle">
                                                 @* @element.text *@
                                                 @Html.Raw(element.text)
@@ -1924,20 +1934,11 @@
             // Custom color picker button
            // [{ 'custom-color': '#000000' }]
         ];
-        // Add a handler for the custom color picker button
-        var handlers = {
-            'background': function (value) {
-                var color = prompt("Please enter a color (hexadecimal value):", "#000000");
-                if (color) {
-                    this.quill.format('color', color);
-                }
-            }
-        };
+
         var quillOptions = {
             modules: {
                 toolbar: {
                     container: toolbarOptions,
-                    handlers: handlers
                 }
             },
             theme: 'snow'
@@ -1952,7 +1953,7 @@
             }
 
             currentElement.addEventListener("click", function (event) {
-                if(event.target.classList.contains("selected") && !drag){
+                if(event.target.classList.contains("selected") && !drag && !event.target.classList.contains("element-lock")){
                     quill.root.style.pointerEvents = "auto";
                     quill.focus();
                     curActiveQuil = quill;
@@ -2118,7 +2119,7 @@
         // Listen for scroll event on the container and update the displayed page number
         $('#zoom-container').on('scroll', updateCurrentPage);
         async function EditElementFunc(elementID, text, style) {
-            $.ajax({
+            await $.ajax({
                 url: '/eBooks/Design?handler=ElementUpdate', // Endpoint URL for updating the title
                 method: 'POST',
                 data: { elementID: elementID, text: text, style: style },
@@ -2443,6 +2444,40 @@
                 }
             });
         }
+        $("#element-lock-button").click(async function(e){
+            var elementSelected = $(".selected");
+            var elementID = elementSelected.attr("id");
+
+            await updateElementFunc(elementSelected);
+            try {
+                var response = await $.ajax({
+                    url: '/eBooks/Design?handler=ElementToggleLock', // Endpoint URL for updating the title
+                    method: 'POST',
+                    data: { elementID: elementID },
+                    dataType: 'json',
+                    headers: {
+                        RequestVerificationToken: $('input:hidden[name="__RequestVerificationToken"]').val()
+                    }
+                });
+
+                if (response && response.status === 0) {
+                    console.log("element toggle lock successfully!");
+                    $(this).find("svg").toggleClass("hidden");
+                    $(".selected").toggleClass("element-lock");
+                    toggleLockTabListContainer($(".selected"));
+
+                } else {
+                    console.log(response);
+                    alert("Response Error element toggle lock:", response, response.message);
+                  //  location.reload();
+                }
+            } catch (error) {
+                alert("Try Catch Error element toggle lock:", error);
+                console.log(error);
+               // location.reload();
+            }
+            
+        })
         $("#element-delete-button").click(async function () {
 
             var elementSelected = $(".selected");
@@ -2613,6 +2648,37 @@
                 console.error("Error delete bookpage:", error);
             }
 
+
+        })
+        $(document).on("click", ".page-lock-toggle-button", async function(){
+            var ancestor = $(this).closest('.design-page-content-container');
+            var targetPage = ancestor.find(".design-page-content-page-content");
+            var pageId = ancestor.data('page-id');
+
+            try {
+                var response = await $.ajax({
+                    url: '/eBooks/Design?handler=BookPageToggleLock', // Endpoint URL for updating the title
+                    method: 'POST',
+                    data: { bookPageID: pageId },
+                    dataType: 'json',
+                    headers: {
+                        RequestVerificationToken: $('input:hidden[name="__RequestVerificationToken"]').val()
+                    }
+                });
+
+                console.log("Response:", response); // Log the entire response for debugging
+                if (response && response.status === 0) {
+                    console.log("Bookpage toggle lock successfully!");
+                    targetPage.toggleClass("page-lock");
+                    $(this).find("svg").toggleClass("hidden");
+                } else {
+                    alert("Error delete bookpage:", response.message);
+                    location.reload();
+                }
+            } catch (error) {
+                alert("Error delete bookpage:", error);
+                location.reload();
+            }
 
         })
         $(document).on("click", ".page-up-button", async function () {
@@ -3366,36 +3432,7 @@
                     $(".rotation-handle").remove();
                     $(".pointer").remove();
 
-                    var content;
-                    if (prevSelectedElement.hasClass("shape")){
-                        content = prevSelectedElement.find("div:first")[0].outerHTML;
-                        content += "<div class='editor' style='border:none'>";
-                        content += prevSelectedElement.find(".ql-editor").html();
-                        content += "</div>";
-                    }
-                    else if (prevSelectedElement.hasClass("image")) {
-                        content = "";
-                    }
-                    else if (prevSelectedElement.hasClass("text")) {
-                        content = "<div class='editor' style='border:none'>";
-                        content += prevSelectedElement.find(".ql-editor").html();
-                        content += "</div>";
-                        console.log(content);
-                    }
-                    else if (prevSelectedElement.hasClass("chart")) {
-                        content = "";
-
-                        // Get the canvas element using its ID
-                        var myChart = Chart.getChart(prevSelectedElement.find("canvas")[0].getContext("2d"));
-                        var config = {
-                            type: myChart.config.type,
-                            data: myChart.config.data,
-                            options: myChart.config.options
-                        };
-                        content = JSON.stringify(config);
-                    }
-
-                    await EditElementFunc(prevSelectedElement.attr("id"), content, prevSelectedElement.attr("style"));
+                    await updateElementFunc(prevSelectedElement);
 
                 }
                 if(curActiveQuil !== null){
@@ -3411,14 +3448,11 @@
                 // Add the 'selected' class to the clicked element if it has the 'element' class
                 
                 $(event.target).css('--border-width', $(event.target).css("border-width"));
-                $(event.target).addClass("selected moveable");
-                $(event.target).append('<div class="rotation-handle">&circlearrowright;</div>'
-                    + "<div class='top left pointer'></div>"
-                    + "<div class='top right pointer'></div>"
-                    + "<div class='bottom left pointer'></div>"
-                    + "<div class='bottom right pointer'></div>");
+                $(event.target).addClass("selected");
 
                 toggleTabListContainer($(event.target));
+                toggleLockTabListContainer($(".selected"));
+
                 var showingTab = $(".design-edit-page-container:not(.hidden)");
                 if(showingTab.length > 0){
                     var id = showingTab.attr("id");
@@ -3494,85 +3528,39 @@
                 toggleTabListContainer($(event.target));
             }
         });
-        /*
-            const barChartConfigHorizontal = {
-        type: 'bar',
-        data: {
-            labels: ["1", "2", "3", "4", "5", "6"],
-            datasets: [{
-                label: 'Company A',
-                data: [65, 59, 80, 81, 56, 55, 40],
-                backgroundColor: [
-                    '#6CE5E8',
-                ],
-            }, {
-                label: 'Company B',
-                data: [55, 60, 40, 90, 20, 80, 70],
-                backgroundColor: [
-                    '#41B8D5',
-                ],
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                legend: {
-                    display: true // Hide the legend
-                },
-                title: {
-                    display: true,
-                    text: 'Quantity vs Month',
-                    font: {
-                        size: 16, // Adjust the font size as needed
-                        weight: 'bold' // Adjust the font weight as needed
-                    }
-                }
-            },
-            scales: {
-                x: {
-                    grid: {
-                        display: false, // Do not display grid lines for the X axis
-                    },
-                    title: {
-                        display: true,
-                        text: 'Month'
-                    }
-                },
-                y: {
-                    beginAtZero: true,
-                    grid: {
-                        display: true, // Display grid lines for the Y axis
-                    },
-                    title: {
-                        display: true,
-                        text: 'Quantity'
-                    }
-                }
+        async function updateElementFunc(selectedContainer){
+            var prevSelectedElement = selectedContainer;
+            var content;
+            if (prevSelectedElement.hasClass("shape")) {
+                content = prevSelectedElement.find("div:first")[0].outerHTML;
+                content += "<div class='editor' style='border:none'>";
+                content += prevSelectedElement.find(".ql-editor").html();
+                content += "</div>";
             }
+            else if (prevSelectedElement.hasClass("image")) {
+                content = "";
+            }
+            else if (prevSelectedElement.hasClass("text")) {
+                content = "<div class='editor' style='border:none'>";
+                content += prevSelectedElement.find(".ql-editor").html();
+                content += "</div>";
+                console.log(content);
+            }
+            else if (prevSelectedElement.hasClass("chart")) {
+                content = "";
+
+                // Get the canvas element using its ID
+                var myChart = Chart.getChart(prevSelectedElement.find("canvas")[0].getContext("2d"));
+                var config = {
+                    type: myChart.config.type,
+                    data: myChart.config.data,
+                    options: myChart.config.options
+                };
+                content = JSON.stringify(config);
+            }
+
+            await EditElementFunc(prevSelectedElement.attr("id"), content, prevSelectedElement.attr("style"));
         }
-    };
-                <div id="chart-information" class="design-edit-page-section-chart-data-container">
-
-            </div>
-            <div class="design-edit-page-section-separator"></div>
-            <span class="design-edit-page-section-header"><span>Labels</span></span>
-            <div id="chart-labels" class="design-edit-page-section-chart-data-container">
-                <table class="design-edit-page-section-chart-data">
-                    <tr class="chart-label-row">
-                        <td class="design-edit-page-chart-item-row">1</td>
-                        <td><input type="text" class="chart-label-input" placeholder="Label 1"></td>
-                    </tr>
-                </table>
-            </div>
-            <div class="design-edit-page-section-separator"></div>
-            <span class="design-edit-page-section-header"><span>Data</span></span>
-
-            <div id="chart-datasets" class="design-edit-page-section-chart-data-container">
-                <table class="design-edit-page-section-chart-data">
-                </table>
-            </div>
-        */
         function retrieveChartValue(container){
             if(container === null){
                 return;
@@ -3779,8 +3767,41 @@
             // Remove any non-numeric characters
             return parseFloat(value.replace(/[^\d.]/g, ''));
         }
+        function toggleLockTabListContainer(container){
+            console.log(container);
+            if(container.hasClass("element-lock")){
+                $("#edit-position").addClass("tab-lock");
+                $("#edit-border").addClass("tab-lock");
+                $("#edit-style").addClass("tab-lock");
+                $("#edit-chart").addClass("tab-lock");
 
+                $("#element-lock-button").find("svg:first-child").removeClass("hidden");
+                $("#element-lock-button").find("svg:nth-child(2)").addClass("hidden");
+
+                container.removeClass("moveable");
+                $(".rotation-handle").remove();
+                $(".pointer").remove();
+            }
+            else{
+
+                $("#edit-position").removeClass("tab-lock");
+                $("#edit-border").removeClass("tab-lock");
+                $("#edit-style").removeClass("tab-lock");
+                $("#edit-chart").removeClass("tab-lock");
+
+                container.addClass("moveable");
+                container.append('<div class="rotation-handle">&circlearrowright;</div>'
+                    + "<div class='top left pointer'></div>"
+                    + "<div class='top right pointer'></div>"
+                    + "<div class='bottom left pointer'></div>"
+                    + "<div class='bottom right pointer'></div>");
+
+                $("#element-lock-button").find("svg:first-child").addClass("hidden");
+                $("#element-lock-button").find("svg:nth-child(2)").removeClass("hidden");
+            }
+        }
         function toggleTabListContainer(container) {
+            
             if (container.hasClass("text")) {
                 $("#position-button").removeClass("hidden");
                 $("#position-button").next("div").removeClass("hidden");

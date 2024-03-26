@@ -297,6 +297,10 @@ textarea:focus{
   align-items: center;
   flex-direction: row;
   justify-content: center;
+  cursor:pointer;
+}
+.design-page-button:hover{
+  background-color: #DFE1E7;
 }
 .Content {
   font-size: 16px;
