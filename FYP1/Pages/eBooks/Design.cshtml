@@ -206,14 +206,16 @@
     .ql-toolbar{
         /* white-space: nowrap; */
     }
-    .quil-editor-toolbar-container .ql-toolbar.ql-snow .ql-formats:first-child{
+
+    .quil-editor-toolbar-container .ql-toolbar.ql-snow .ql-formats:nth-child(-n+6) {
         display:flex;
     }
-    .quil-editor-toolbar-container .ql-toolbar.ql-snow .ql-formats:first-child span{
+
+    .quil-editor-toolbar-container .ql-toolbar.ql-snow .ql-formats:nth-child(-n+6) span {
         flex:1;
     }
 
-    .quil-editor-toolbar-container .ql-toolbar.ql-snow .ql-formats:nth-child(n + 2) {
+    .quil-editor-toolbar-container .ql-toolbar.ql-snow .ql-formats:nth-child(n + 7) {
         display: grid;
         grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
     }
@@ -240,7 +242,13 @@
         width:auto;
           border-radius:4px;
     }
-
+    .ql-font, .ql-header, .ql-size{
+        padding:8px;
+        margin:2px;
+        border: solid 1px #C5C9CD;
+        border-radius:4px;
+        height:auto !important;
+    }
 </style>
 @Html.AntiForgeryToken()
 <div class="e-book-design-container">
@@ -1909,9 +1917,10 @@
         Quill.register(Size, true);
 
         var toolbarOptions = [
+            [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
             [{ 'font': [] }, { 'size': fontSizeArr }],
             [{ 'color': [] }, { 'background': [] },'bold', 'italic', 'underline', 'strike', { 'script': 'sub' }, { 'script': 'super' },{ 'direction': 'rtl' }, 'clean'],        // toggled buttons
-            [{ 'list': 'ordered' }, { 'list': 'bullet' }, { 'list': 'check' },'blockquote', 'code-block', 'link', 'formula',{ 'align': [] },{ 'indent': '-1' }, { 'indent': '+1' }],
+            [{ 'align': [] },{ 'indent': '-1' }, { 'indent': '+1' },{ 'list': 'ordered' }, { 'list': 'bullet' }, { 'list': 'check' },'blockquote', 'code-block', 'link', 'formula'],
             // Custom color picker button
            // [{ 'custom-color': '#000000' }]
         ];
@@ -1965,6 +1974,27 @@
             console.log(toolbar);
             console.log($(toolbar.container));
             console.log($(toolbar.container).find(".ql-picker.ql-color-picker .ql-picker-options"));
+
+                        
+            
+            $(toolbar.container).find("span.ql-formats").each(function (index) {
+                // Create a new heading element
+                if(index === 0){
+                    var heading = $('<div class="design-edit-page-section-header"><span>Text Style</span></div>');
+                    $(this).before(heading);
+                }
+                else if(index === 1){
+                    var heading = $('<div class="design-edit-page-section-separator"></div><div class="design-edit-page-section-header"><span>Style Format</span></div>');
+                    $(this).before(heading);
+                }
+                else if(index === 2){
+                    var heading = $('<div class="design-edit-page-section-separator"></div><div class="design-edit-page-section-header"><span>Text Format</span></div>');
+                    $(this).before(heading);
+
+                }
+                // Insert the heading before the current <span> element
+                
+            })
             //$(toolbar.container).find(".ql-picker.ql-color-picker .ql-picker-options").append("<span class='ql-picker-item'></span>");
             $(toolbar.container).find(".ql-picker.ql-color-picker .ql-picker-options").append(
                 `<span class='ql-picker-item design-edit-page-color-container-color-picker'>
