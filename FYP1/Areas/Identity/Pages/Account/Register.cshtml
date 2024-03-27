@@ -469,7 +469,18 @@
                     $("#birthday-year").prev("label.enter-label").removeClass("error-label");
                     $("#birthday-year").removeClass("error-input");
 
-                    $("#birthday-date").val(birthday.toISOString().split('T')[0]);
+  //                  $("#birthday-date").val(birthday.toISOString().split('T')[0]);
+
+//                    $("#birthday-date").val(birthday.getFullYear() + '-' + 
+                      //  ('0' + (birthday.getMonth() + 1)).slice(-2) + '-' + 
+                    //    ('0' + birthday.getDate()).slice(-2));
+                  //  $("#birthday-date").val(('0' + birthday.getDate()).slice(-2) + '/' +
+                //        ('0' + (birthday.getMonth() + 1)).slice(-2) + '/' +
+              //          birthday.getFullYear());
+
+                    $("#birthday-date").val(birthday.getFullYear() + '-' +
+                        ('0' + (birthday.getMonth() + 1)).slice(-2) + '-' +
+                        ('0' + birthday.getDate()).slice(-2));
                 }
                 else {
                     $(inputVariable).next("div").find("span").text(errorText);
