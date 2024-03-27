@@ -1023,7 +1023,7 @@
                                             </button>
                                         </div>
                                     </div>
-                                    <div style="height:@(Model.curBook.height)mm" class="@(bookPage.pageLock ? "design-page-content-page-content  page-lock" : "design-page-content-page-content")">
+                                    <div style="height:@(Model.curBook.height - 20)mm" class="@(bookPage.pageLock ? "design-page-content-page-content  page-lock" : "design-page-content-page-content")">
                                     @* <div style="height:@(Model.curBook.height)mm" class="design-page-content-page-content"> *@
                                         @foreach (var element in bookPage.Elements)
                                         {
@@ -2901,7 +2901,11 @@
             printWindow.document.write('<style>');
             printWindow.document.write('@@page { size: ' + pageWidth + 'mm ' + pageHeight + 'mm; }'); // Customize the document size based on book width and height
             printWindow.document.write('p { margin:0}'); // CSS rule to force page break after each page
-            printWindow.document.write('.page { overflow:hidden;page-break-after: always; position:relative;width:' + pageWidth + 'mm;height:' + pageHeight + 'mm}'); // CSS rule to force page break after each page
+            printWindow.document.write('body { margin:0px;background-color:#EBECF0;display:flex;flex-direction:column;align-items:center}'); // CSS rule to force page break after each page
+            printWindow.document.write('.page {background-color:white;overflow:hidden;page-break-after: always; position:relative;width:' + pageWidth + 'mm;height:' + pageHeight + 'mm}'); // CSS rule to force page break after each page
+            printWindow.document.write('.header {color:#B1B1B1;background-color:white;overflow:hidden;page-break-after: always; position:relative;width:100%;height:10mm;align-items: center;display:flex;font-size:10px;padding:10px;box-sizing:border-box}'); // CSS rule to force page break after each page
+            printWindow.document.write('.content {background-color:white;overflow:hidden;page-break-after: always; position:relative;width:100%;height:'+(pageWidth-20)+'mm}'); // CSS rule to force page break after each page
+            printWindow.document.write('.footer {font-size:10px;color:#B1B1B1;background-color:white;overflow:hidden;page-break-after: always; display: flex; justify-content: center; align-items: center;position:relative;width:100%;height:10mm;text-align:center}'); // CSS rule to force page break after each page
             printWindow.document.write('.ql-editor {position:relative;box-sizing:border-box;line-height: 1.42;height: 100%;outline: none;padding: 12px 15px;tab-size: 4;-moz-tab-size: 4;text-align: left;white-space: pre-wrap;word-wrap: break-word;font-family: Helvetica, Arial, sans-serif; font-size: 13px;}'); // CSS rule to force page break after each page
 
             printWindow.document.write('</style>');
@@ -2911,12 +2915,15 @@
                 var pageList = $(chapterList[i]).find(".design-page-content-page-content");
                 var chapterName = $(chapterList[i]).find(".chapter-name-input").val();
                 var chapterNumber = "Chapter " + (i+1); 
-                printWindow.document.write('<div class="page" style="display: flex; justify-content: center; align-items: center;">');
-                printWindow.document.write('<div style="text-align:center">' + chapterNumber + '<br> ' + chapterName + '</div>'); // Add chapter name and number
-                printWindow.document.write('</div>');
+              //  printWindow.document.write('<div class="page" style="display: flex; justify-content: center; align-items: center;">');
+              //  printWindow.document.write('<div style="text-align:center">' + chapterNumber + '<br> ' + chapterName + '</div>'); // Add chapter name and number
+              //  printWindow.document.write('</div>');
               //  printWindow.document.write(chapterContent);
                 for (var j = 0; j < pageList.length; j++) {
                     printWindow.document.write('<div class="page">');
+
+                    printWindow.document.write('<div class="header">' + chapterNumber +" "+ chapterName + '</div>'); // Add chapter name and number
+                    printWindow.document.write('<div class="content">');
                     var elementList = $(pageList[j]).find(".element");
                     for (var k = 0; k < elementList.length; k++){
                         console.log(elementList[k].style);
@@ -2949,8 +2956,12 @@
                             printWindow.document.write("</div>");
                         }
                     }
-    
+
+
                     printWindow.document.write("</div>");
+                    printWindow.document.write('<div class="footer">' + j + '</div>'); // Add chapter name and number
+                    printWindow.document.write('</div>');
+
                 }
             }
 

@@ -1,0 +1,127 @@
+﻿@page
+@model ProfileModel
+@{
+    ViewData["Title"] = "Profile";
+    //  ViewData["ActivePage"] = ManageNavPages.ChangePassword;
+}
+
+
+<div style="display:flex;flex-direction:column;min-height:100vh;width:100%;">
+    @Html.Partial("_HeaderLogin")
+
+    <div class="profile-page-container">
+        <div class="profile-page-profile-container">
+            <div class="profile-page-welcome-background"></div>
+            <div class="profile-page-profile-image"></div>
+            <span class="profile-page-profile-title">Welcome @Model.curUser.lastName @Model.curUser.firstName</span>
+            <span class="profile-page-profile-subtitle">
+                Embark on your profile journey today and enjoy the experience!
+            </span>
+            <span class="profile-page-profile-description">
+                Welcome to your profile management hub! Here, you have full control
+                over your personal information, and account security. Update your
+                details and ensure your account remains secure with just a few
+                clicks. Feel empowered as you navigate through this space tailored
+                to your needs, ensuring your online presence reflects exactly who
+                you are.
+            </span>
+            <div class="profile-page-input-text-container">
+                <span class="profile-page-text">Text</span>
+            </div>
+            <div class="profile-page-input-select-container"></div>
+            <div class="profile-page-input-birthday-container">
+                <span class="profile-page-birthday-title">Text</span>
+                <span class="profile-page-birthday-left">Text</span>
+                <span class="profile-page-birthday-middle">Text</span>
+                <span class="profile-page-birthday-right">Text</span>
+            </div>
+        </div>
+    </div>
+    <div class="profile-page-container">
+        <div class="profile-page-profile-container">
+            <div class="profile-page-profile-image"></div>
+            <span class="profile-page-profile-title">Basic Information</span>
+            <span class="profile-page-profile-subtitle">
+                Embark on your profile journey today and enjoy the experience!
+            </span>
+            <span class="profile-page-profile-description">
+                Welcome to your profile management hub!
+            </span>
+            <div class="profile-page-input-text-container">
+                <span class="profile-page-text">Text</span>
+            </div>
+            <div class="profile-page-input-select-container"></div>
+            <div class="profile-page-input-birthday-container">
+                <span class="profile-page-birthday-title">Text</span>
+                <span class="profile-page-birthday-left">Text</span>
+                <span class="profile-page-birthday-middle">Text</span>
+                <span class="profile-page-birthday-right">Text</span>
+            </div>
+        </div>
+    </div>
+    <div class="profile-page-container">
+        <div class="profile-page-profile-container">
+            <div class="profile-page-profile-image"></div>
+            <span class="profile-page-profile-title">Welcome @Model.curUser.lastName @Model.curUser.firstName</span>
+            <span class="profile-page-profile-subtitle">
+                Embark on your profile journey today and enjoy the experience!
+            </span>
+            <span class="profile-page-profile-description">
+                Welcome to your profile management hub! Here, you have full control
+                over your personal information, and account security. Update your
+                details and ensure your account remains secure with just a few
+                clicks. Feel empowered as you navigate through this space tailored
+                to your needs, ensuring your online presence reflects exactly who
+                you are.
+            </span>
+            <div class="profile-page-input-text-container">
+                <span class="profile-page-text">Text</span>
+            </div>
+            <div class="profile-page-input-select-container"></div>
+            <div class="profile-page-input-birthday-container">
+                <span class="profile-page-birthday-title">Text</span>
+                <span class="profile-page-birthday-left">Text</span>
+                <span class="profile-page-birthday-middle">Text</span>
+                <span class="profile-page-birthday-right">Text</span>
+            </div>
+        </div>
+    </div>
+
+
+    @Html.Partial("_FooterGuest")
+</div>
+
+
+
+
+@* <h3>@ViewData["Title"]</h3> *@
+@* <partial name="_StatusMessage" for="StatusMessage" /> *@
+
+@*
+<div class="row">
+    <div class="col-md-6">
+        <form id="change-password-form" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-floating">
+                <input asp-for="Input.OldPassword" class="form-control" autocomplete="current-password" aria-required="true" />
+                <label asp-for="Input.OldPassword" class="form-label"></label>
+                <span asp-validation-for="Input.OldPassword" class="text-danger"></span>
+            </div>
+            <div class="form-floating">
+                <input asp-for="Input.NewPassword" class="form-control" autocomplete="new-password" aria-required="true" />
+                <label asp-for="Input.NewPassword" class="form-label"></label>
+                <span asp-validation-for="Input.NewPassword" class="text-danger"></span>
+            </div>
+            <div class="form-floating">
+                <input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" />
+                <label asp-for="Input.ConfirmPassword" class="form-label"></label>
+                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+            </div>
+            <button type="submit" class="w-100 btn btn-lg btn-primary">Update password</button>
+        </form>
+    </div>
+</div>
+ *@
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

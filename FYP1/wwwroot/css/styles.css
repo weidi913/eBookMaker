@@ -4585,3 +4585,175 @@ ul.nav-link-dropdown-list {
     
   
 /* End of ebook design section */
+
+/* profile page section */
+.profile-page-container {
+  flex: 1;
+  width: auto;
+  height: auto;
+  display: flex;
+  min-height: 100vh;
+  align-items: center;
+  flex-direction: column;
+}
+.profile-page-profile-container {
+  flex: 0 0 auto;
+  width: 100%;
+  height: auto;
+  margin: var(--dl-space-space-fourunits);
+  display: flex;
+  padding: var(--dl-space-space-oneandhalfunits);
+  position: relative;
+  max-width: 800px;
+  box-shadow: 5px 5px 10px 0px #d4d4d4;
+  margin-top: var(--dl-space-space-twounits);
+  align-items: flex-start;
+  margin-left: var(--dl-space-space-twounits);
+  border-color: var(--dl-color-gray-900);
+  border-width: 1px;
+  margin-right: var(--dl-space-space-twounits);
+  border-radius: var(--dl-radius-radius-radius4);
+  margin-bottom: var(--dl-space-space-twounits);
+  flex-direction: column;
+}
+.profile-page-welcome-background {
+  flex: 0 0 auto;
+  width: 100%;
+  height: 150px;
+  display: flex;
+  background: linear-gradient(90deg, rgba(254,238,222,1) 0%, rgba(200,149,247,1) 100%);
+  align-items: flex-start;
+  border-radius: var(--dl-radius-radius-radius4);
+  margin-bottom: var(--dl-space-space-unit);
+}
+.profile-page-profile-image {
+  top: 80px;
+  flex: 0 0 auto;
+  right: 38px;
+  width: 150px;
+  border: 2px dashed rgba(120, 120, 120, 0.4);
+  height: 150px;
+  display: flex;
+  position: absolute;
+  box-shadow: 5px 5px 10px 0px #d4d4d4;
+  align-items: flex-start;
+  aspect-ratio: 1/1;
+  border-color: var(--dl-color-gray-white);
+  border-style: solid;
+  border-width: 4px;
+  border-radius: var(--dl-radius-radius-round);
+  background-size: cover;
+  background-image: url('https://images.unsplash.com/photo-1607746882042-944635dfe10e?ixid=M3w5MTMyMXwwfDF8c2VhcmNofDF8fHByb2ZpbGUlMjBpY29ufGVufDB8fHx8MTcxMTQ3MDgwMnww&ixlib=rb-4.0.3&w=200');
+}
+.profile-page-profile-title {
+  font-size: 32px;
+  text-align: center;
+  font-weight: 700;
+  margin-bottom: var(--dl-space-space-halfunit);
+  max-width: 70%;
+  overflow:hidden;
+  word-wrap: break-word; 
+  text-overflow: ellipsis;
+  display: -webkit-box;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
+}
+.profile-page-profile-subtitle {
+  text-align: center;
+  margin-bottom: var(--dl-space-space-unit);
+}
+.profile-page-profile-description {
+  text-align: justify;
+}
+.profile-page-input-text-container {
+  flex: 0 0 auto;
+  width: 100%;
+  display: grid;
+  align-items: center;
+  margin-bottom: var(--dl-space-space-unit);
+  grid-template-columns: 30% 70%;
+}
+.profile-page-text {
+  color: var(--dl-color-gray-500);
+  font-style: normal;
+  font-weight: 600;
+}
+.profile-page-input-select-container {
+  flex: 0 0 auto;
+  width: 100%;
+  border: 2px dashed rgba(120, 120, 120, 0.4);
+  display: grid;
+  align-items: center;
+  margin-bottom: var(--dl-space-space-unit);
+  grid-template-columns: 30% 70%;
+}
+.profile-page-input-birthday-container {
+  flex: 0 0 auto;
+  width: 100%;
+  display: grid;
+  align-items: center;
+  margin-bottom: var(--dl-space-space-unit);
+  grid-template-columns: 30% 20% 20% 30%;
+}
+@media(max-width: 991px) {
+  .profile-page-profile-container {
+    max-width: calc(100vw - 96px);
+  }
+}
+@media(max-width: 767px) {
+  .profile-page-profile-container {
+    max-width: calc(100vw - 32px);
+  }
+  .profile-page-profile-image {
+    top: -85px;
+    right: unset;
+    position: relative;
+    align-self: center;
+  }
+  .profile-page-profile-title {
+    top: -80px;
+    position: relative;
+    align-self: center;
+  }
+  .profile-page-profile-subtitle {
+    top: -80px;
+    position: relative;
+    align-self: center;
+  }
+  .profile-page-profile-description {
+    top: -80px;
+    position: relative;
+  }
+  .profile-page-input-text-container {
+    grid-gap: 4px;
+    grid-template-columns: 1fr;
+  }
+  .profile-page-input-select-container {
+    grid-gap: 4px;
+    grid-template-columns: 1fr;
+  }
+  .profile-page-input-birthday-container {
+    grid-template-areas: "a a a" "b c d";
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+  .profile-page-birthday-title {
+    grid-area: a;
+  }
+  .profile-page-birthday-left {
+    grid-area: b;
+  }
+  .profile-page-birthday-middle {
+    grid-area: c;
+  }
+  .profile-page-birthday-right {
+    grid-area: d;
+  }
+}
+@media(max-width: 479px) {
+  .profile-page-profile-title {
+    text-align: center;
+  }
+}
+
+
+/* end of profile page section */

@@ -6,10 +6,12 @@
     else
     {
         Layout = "/Areas/Identity/Pages/_Layout.cshtml";
+        Layout = "/Pages/Shared/_BaseLayout.cshtml";
+
     }
 }
-
-<h1>Manage your account</h1>
+@* 
+ <h1>Manage your account</h1>
 
 <div>
     <h2>Change your account settings</h2>
@@ -22,8 +24,9 @@
             @RenderBody()
         </div>
     </div>
-</div>
-
+</div> 
+  *@
+@RenderBody()
 @section Scripts {
     @RenderSection("Scripts", required: false)
 }
