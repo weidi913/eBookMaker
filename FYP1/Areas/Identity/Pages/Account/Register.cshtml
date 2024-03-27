@@ -338,39 +338,6 @@
                 dataType: 'json'
             });
         }
-
-        /*
-        function checkEmailExist(email) {
-            // Make a GET request to the server-side endpoint
-            return fetch(`/Identity/Account/Register?handler=CheckEmailExist&email=${email}`)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    return data; // True if email exists, false otherwise
-                })
-                .catch(error => {
-                    console.error('There was a problem with the fetch operation:', error);
-                    return false; // Return false in case of error
-                });
-        }*/
-        /*async function checkEmailExist(email) {
-            try {
-                const response = await fetch(`/Identity/Account/Register?handler=CheckEmailExist&email=${email}`);
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                const data = await response.json();
-                return data; // True if email exists, false otherwise
-            } catch (error) {
-                console.error('There was a problem with the fetch operation:', error);
-                return false; // Return false in case of error
-            }
-        }
-        */
         async function handleEmailCheck(id_val, inputVariable, inputValid) {
             try {
                 // Make the AJAX request
@@ -614,12 +581,7 @@
             var input_is_filled = true;
             var input_container_input_list = input_container_list.eq(cur_number).find("input");
             var input_container_select_list = input_container_list.eq(cur_number).find("select");
-            /*
-            input_container_input_list.each(async function () {
-                console.log("looping");
-                input_is_filled &= await inputValidation(this);
-                console.log("next loop");
-            })*/
+
             // Use a for loop instead of each()
             for (let i = 0; i < input_container_input_list.length; i++) {
                 const inputVariable = input_container_input_list[i];
@@ -663,22 +625,6 @@
                 default:
             }
         });
-
-        /*
-
-        $("#next-button1").click(function () {
-            console.log(123);
-            var currentContainer = $(".input-container").filter(":visible");
-            var nextContainer = currentContainer.next(".input-container");
-            console.log(currentContainer);
-            console.log(nextContainer);
-            if (nextContainer.length) {
-                currentContainer.hide();
-                nextContainer.show();
-            }
-        });*/
-
-
     });
 </script>
 @*

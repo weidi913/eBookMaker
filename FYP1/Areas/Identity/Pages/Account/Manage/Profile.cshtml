@@ -1,18 +1,66 @@
 ﻿@page
-@model ProfileModel
+@model ChangePasswordModel1
 @{
-    ViewData["Title"] = "Profile";
-    //  ViewData["ActivePage"] = ManageNavPages.ChangePassword;
+    ViewData["Title"] = "Change password";
+    //ViewData["ActivePage"] = ManageNavPages.ChangePassword;
 }
 
+<h3>@ViewData["Title"]</h3>
+@* <partial name="_StatusMessage" for="StatusMessage" /> *@
+<div class="row">
+    <div class="col-md-6">
+        <form asp-page-handler="Password" id="change-password-form" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-floating">
+                <input value="123" asp-for="Input.OldPassword" class="form-control" autocomplete="current-password" aria-required="true" />
+                <label asp-for="Input.OldPassword" class="form-label"></label>
+                <span asp-validation-for="Input.OldPassword" class="text-danger"></span>
+            </div>
+            <div class="form-floating">
+                <input value="123456" asp-for="Input.NewPassword" class="form-control" autocomplete="new-password" aria-required="true" />
+                <label asp-for="Input.NewPassword" class="form-label"></label>
+                <span asp-validation-for="Input.NewPassword" class="text-danger"></span>
+            </div>
+            <div class="form-floating">
+                <input value="123456"asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" />
+                <label asp-for="Input.ConfirmPassword" class="form-label"></label>
+                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+            </div>
+            <button type="button" class="w-100 btn btn-lg btn-primary">Update password</button>
+        </form>
+    </div>
+</div>
+<script>
+    $("button").click(function () {$("form").submit() });</script>
 
+
+@* @page
+ *@@* @model ProfileModel *@
+@* @{
+    ViewData["Title"] = "Profile";
+    //  ViewData["ActivePage"] = ManageNavPages.ChangePassword;
+} *@
+
+@* <style>
+    option {
+    color: black;
+    }
+</style>
 <div style="display:flex;flex-direction:column;min-height:100vh;width:100%;">
     @Html.Partial("_HeaderLogin")
-
+    @Html.AntiForgeryToken()
     <div class="profile-page-container">
         <div class="profile-page-profile-container">
             <div class="profile-page-welcome-background"></div>
-            <div class="profile-page-profile-image"></div>
+            @if (Model.curUser != null && !string.IsNullOrEmpty(Model.curUser.imageData))
+            {
+                <div class="profile-page-profile-image" style="background-image: url(data:image/jpg;base64,@Model.curUser.imageData)"></div>
+            }
+            else
+            {
+                <div class="profile-page-profile-image"></div>
+            }
+
             <span class="profile-page-profile-title">Welcome @Model.curUser.lastName @Model.curUser.firstName</span>
             <span class="profile-page-profile-subtitle">
                 Embark on your profile journey today and enjoy the experience!
@@ -25,103 +73,454 @@
                 to your needs, ensuring your online presence reflects exactly who
                 you are.
             </span>
-            <div class="profile-page-input-text-container">
-                <span class="profile-page-text">Text</span>
-            </div>
-            <div class="profile-page-input-select-container"></div>
-            <div class="profile-page-input-birthday-container">
-                <span class="profile-page-birthday-title">Text</span>
-                <span class="profile-page-birthday-left">Text</span>
-                <span class="profile-page-birthday-middle">Text</span>
-                <span class="profile-page-birthday-right">Text</span>
-            </div>
         </div>
-    </div>
-    <div class="profile-page-container">
         <div class="profile-page-profile-container">
-            <div class="profile-page-profile-image"></div>
-            <span class="profile-page-profile-title">Basic Information</span>
-            <span class="profile-page-profile-subtitle">
-                Embark on your profile journey today and enjoy the experience!
-            </span>
-            <span class="profile-page-profile-description">
-                Welcome to your profile management hub!
-            </span>
-            <div class="profile-page-input-text-container">
-                <span class="profile-page-text">Text</span>
-            </div>
-            <div class="profile-page-input-select-container"></div>
-            <div class="profile-page-input-birthday-container">
-                <span class="profile-page-birthday-title">Text</span>
-                <span class="profile-page-birthday-left">Text</span>
-                <span class="profile-page-birthday-middle">Text</span>
-                <span class="profile-page-birthday-right">Text</span>
-            </div>
+            <form id="change-info-form" method="post" class="profile-form">
+                <span class="profile-page-profile-title">Personal Information</span>
+                <span class="profile-page-profile-subtitle">
+                    Update and maintain essential personal details in the personal information section.
+                </span>
+
+                <div class="profile-page-upload-profile-image" @(string.IsNullOrEmpty(Model.curUser?.imageData) ? "" : $"style='background-image: url(data:image/jpg;base64,{Model.curUser.imageData})'")>
+                    <div class="profile-page-upload-profile-image-upload-icon">
+                        <input hidden id="image-data" asp-for="InfoInput.ImageData" value="@Model.curUser.imageData" class="form-control" />
+                        <svg viewBox="0 0 1024 1024" style="filter:invert(1.0);width: 100%; scale: 0.4; height: 100%; align-self: center;">
+                            <path d="M810 554h-256v256h-84v-256h-256v-84h256v-256h84v256h256v84z"></path>
+                        </svg>
+                    </div>
+                </div>
+                <input hidden type="file" id="upload-photo-input" name="file" accept=".jpg, .jpeg, .png" multiple="false" />
+                <div class="profile-page-input-text-container">
+                    <span class="profile-page-text">First Name</span>
+                    <div class="enter-input-label-container">
+                        <label asp-for="InfoInput.FirstName" class="enter-label">First name</label>
+                        <input value="@Model.curUser.firstName" asp-for="InfoInput.FirstName" id="first-name" type="text" placeholder="First Name" class="input name-input" />
+
+                        <div class="register-user-error-container">
+                            <svg viewBox="0 0 1024 1024" class="register-user-error-icon">
+                                <path d="M512 854q140 0 241-101t101-241-101-241-241-101-241 101-101 241 101 241 241 101zM512 86q176 0 301 125t125 301-125 301-301 125-301-125-125-301 125-301 301-125zM470 298h84v256h-84v-256zM470 640h84v86h-84v-86z"></path>
+                            </svg>
+                            <span class="register-user-error-text">Enter first name</span>
+                        </div>
+                    </div>
+                 </div>
+                <div class="profile-page-input-text-container">
+                    <span class="profile-page-text">Last Name</span>
+                    <div class="enter-input-label-container">
+                        <label asp-for="InfoInput.LastName" class="enter-label">Last name</label>
+                        <input value="@Model.curUser.lastName" asp-for="InfoInput.LastName" id="last-name" type="text" placeholder="Last name (optional)" class="input" />
+                        <div class="register-user-error-container">
+                            <svg viewBox="0 0 1024 1024" class="register-user-error-icon">
+                                <path d="M512 854q140 0 241-101t101-241-101-241-241-101-241 101-101 241 101 241 241 101zM512 86q176 0 301 125t125 301-125 301-301 125-301-125-125-301 125-301 301-125zM470 298h84v256h-84v-256zM470 640h84v86h-84v-86z"></path>
+                            </svg>
+                            <span class="register-user-error-text">Enter last name</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="profile-page-input-select-container">
+                    <span class="profile-page-text">Gender</span>
+                    <div class="enter-input-label-container">
+                        <label asp-for="InfoInput.Gender" class="enter-label"><span>Gender</span></label>
+                        <select value="@Model.curUser.gender" asp-for="InfoInput.Gender" style="color:gray;" id="gender" class="input">
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Other">Other</option>
+                            <option value="N/A">Rather not say</option>
+                        </select>
+                        <div class="register-user-error-container">
+                            <svg viewBox="0 0 1024 1024" class="register-user-error-icon">
+                                <path d="M512 854q140 0 241-101t101-241-101-241-241-101-241 101-101 241 101 241 241 101zM512 86q176 0 301 125t125 301-125 301-301 125-301-125-125-301 125-301 301-125zM470 298h84v256h-84v-256zM470 640h84v86h-84v-86z"></path>
+                            </svg>
+                            <span class="register-user-error-text">Select your gender</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="profile-page-input-birthday-container">
+                    <span class="profile-page-birthday-title profile-page-text">
+                        Birthday Date
+                        <input hidden asp-for="InfoInput.BirthdayDate" type="date" id="birthday-date" />
+                    </span>
+                    <div class="register-form-month-container enter-input-label-container">
+                        <label class="enter-label"><span>Month</span></label>
+                        <select style="color:gray;" id="birthday-month" class="register-form-month-select input_same_line">
+                            <option value="1">January</option>
+                            <option value="2">February</option>
+                            <option value="3">March</option>
+                            <option value="4">April</option>
+                            <option value="5">May</option>
+                            <option value="6">June</option>
+                            <option value="7">July</option>
+                            <option value="8">August</option>
+                            <option value="9">September</option>
+                            <option value="10">October</option>
+                            <option value="11">November</option>
+                            <option value="12">December</option>
+                        </select>
+                        <div style="opacity:0" class="register-user-error-container">
+                            <svg viewBox="0 0 1024 1024" class="register-user-error-icon">
+                                <path d="M512 854q140 0 241-101t101-241-101-241-241-101-241 101-101 241 101 241 241 101zM512 86q176 0 301 125t125 301-125 301-301 125-301-125-125-301 125-301 301-125zM470 298h84v256h-84v-256zM470 640h84v86h-84v-86z"></path>
+                            </svg>
+                            <span class="register-user-error-text">Empty day</span>
+                        </div>
+                    </div>
+                    <div class="register-form-day-container enter-input-label-container">
+                        <label class="enter-label"><span>Day</span></label>
+                        <input id="birthday-day" type="text" placeholder="Day" class="register-form-day-input input_same_line" maxlength="2" />
+                        <div style="opacity:0" class="register-user-error-container">
+                            <svg viewBox="0 0 1024 1024" class="register-user-error-icon">
+                                <path d="M512 854q140 0 241-101t101-241-101-241-241-101-241 101-101 241 101 241 241 101zM512 86q176 0 301 125t125 301-125 301-301 125-301-125-125-301 125-301 301-125zM470 298h84v256h-84v-256zM470 640h84v86h-84v-86z"></path>
+                            </svg>
+                            <span class="register-user-error-text">Empty day</span>
+                        </div>
+                    </div>
+                    <div class="register-form-year-container enter-input-label-container">
+                        <label class="enter-label"><span>Year</span></label>
+                        <input id="birthday-year" type="text" placeholder="Year" class="register-form-year-input input_same_line" maxlength="4" />
+                        <div class="register-user-error-container" style="width:auto;align-self:flex-end">
+                            <svg viewBox="0 0 1024 1024" class="register-user-error-icon">
+                                <path d="M512 854q140 0 241-101t101-241-101-241-241-101-241 101-101 241 101 241 241 101zM512 86q176 0 301 125t125 301-125 301-301 125-301-125-125-301 125-301 301-125zM470 298h84v256h-84v-256zM470 640h84v86h-84v-86z"></path>
+                            </svg>
+                            <span class="register-user-error-text">Empty year</span>
+                        </div>
+                    </div>
+                </div>
+                <button id="info-submit-button" type="button"
+                        class="register-form-right-button enter-button">
+                    <span>Submit</span>
+                </button>
+            </form>
         </div>
-    </div>
-    <div class="profile-page-container">
+
         <div class="profile-page-profile-container">
-            <div class="profile-page-profile-image"></div>
-            <span class="profile-page-profile-title">Welcome @Model.curUser.lastName @Model.curUser.firstName</span>
-            <span class="profile-page-profile-subtitle">
-                Embark on your profile journey today and enjoy the experience!
-            </span>
-            <span class="profile-page-profile-description">
-                Welcome to your profile management hub! Here, you have full control
-                over your personal information, and account security. Update your
-                details and ensure your account remains secure with just a few
-                clicks. Feel empowered as you navigate through this space tailored
-                to your needs, ensuring your online presence reflects exactly who
-                you are.
-            </span>
-            <div class="profile-page-input-text-container">
-                <span class="profile-page-text">Text</span>
-            </div>
-            <div class="profile-page-input-select-container"></div>
-            <div class="profile-page-input-birthday-container">
-                <span class="profile-page-birthday-title">Text</span>
-                <span class="profile-page-birthday-left">Text</span>
-                <span class="profile-page-birthday-middle">Text</span>
-                <span class="profile-page-birthday-right">Text</span>
-            </div>
+            <form asp-route-handler="Password" id="change-password-form" method="get" class="profile-form">
+
+                <span class="profile-page-profile-title">Security Section</span>
+                <span class="profile-page-profile-subtitle">
+                    Manage and strengthen the security of their accounts in security section
+                </span>
+                <div class="profile-page-input-text-container">
+                    <span class="profile-page-text">Email</span>
+                    <input style="background-color:#F6F7F8;color:#525759" disabled value="@Model.curUser.UserName" id="username" type="text" placeholder="email@address.com" class="input" />
+                </div>
+                <div class="profile-page-input-text-container">
+                    <span class="profile-page-text">Old Password</span>
+                    <div class="enter-input-label-container">
+                        <label asp-for="PasswordInput.OldPassword" class="enter-label"><span>Password</span></label>
+                        <input asp-for="PasswordInput.OldPassword" id="old-password" type="password" placeholder="Old Password" class="input" />
+                        <div class="register-user-error-container">
+                            <svg viewBox="0 0 1024 1024" class="register-user-error-icon">
+                                <path d="M512 854q140 0 241-101t101-241-101-241-241-101-241 101-101 241 101 241 241 101zM512 86q176 0 301 125t125 301-125 301-301 125-301-125-125-301 125-301 301-125zM470 298h84v256h-84v-256zM470 640h84v86h-84v-86z"></path>
+                            </svg>
+                            <span class="register-user-error-text">Enter valid password format</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="profile-page-input-text-container">
+                    <span class="profile-page-text">New Password</span>
+                    <div class="enter-input-label-container">
+                        <label asp-for="PasswordInput.NewPassword" class="enter-label"><span>Password</span></label>
+                        <input asp-for="PasswordInput.NewPassword" id="new-password" type="password" placeholder="New Password" class="input" />
+                        <div class="register-user-error-container">
+                            <svg viewBox="0 0 1024 1024" class="register-user-error-icon">
+                                <path d="M512 854q140 0 241-101t101-241-101-241-241-101-241 101-101 241 101 241 241 101zM512 86q176 0 301 125t125 301-125 301-301 125-301-125-125-301 125-301 301-125zM470 298h84v256h-84v-256zM470 640h84v86h-84v-86z"></path>
+                            </svg>
+                            <span class="register-user-error-text">Enter valid password format</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="profile-page-input-text-container">
+                    <span class="profile-page-text">Confirm Password</span>
+                    <div class="enter-input-label-container">
+                        <label asp-for="PasswordInput.ConfirmPassword" class="enter-label"><span>Password</span></label>
+                        <input asp-for="PasswordInput.ConfirmPassword" id="confirm-password" type="password" placeholder="Confirm Password" class="input" />
+                        <div class="register-user-error-container">
+                            <svg viewBox="0 0 1024 1024" class="register-user-error-icon">
+                                <path d="M512 854q140 0 241-101t101-241-101-241-241-101-241 101-101 241 101 241 241 101zM512 86q176 0 301 125t125 301-125 301-301 125-301-125-125-301 125-301 301-125zM470 298h84v256h-84v-256zM470 640h84v86h-84v-86z"></path>
+                            </svg>
+                            <span class="register-user-error-text">Enter valid password format</span>
+                        </div>
+                    </div>
+                </div>
+
+                <button id="password-submit-button" type="button"
+                        class="register-form-right-button enter-button">
+                    <span>Submit</span>
+                </button>
+            </form>
         </div>
+
     </div>
-
-
     @Html.Partial("_FooterGuest")
-</div>
+</div> *@
+
+@* <script>
+    $(document).ready(function () {
+        var token = $('input:hidden[name="__RequestVerificationToken"]').val();
+         $("#gender").val("@Model.curUser.gender");
+        // Load birthday data
+        var birthday = new Date("@Model.curUser.birthday"); // Assuming Model.curUser.birthday is in a valid date format
+        $("#birthday-month").val(birthday.getMonth() + 1); // Month is zero-based, so add 1
+        $("#birthday-day").val(birthday.getDate());
+        $("#birthday-year").val(birthday.getFullYear());
+
+        $(".profile-page-upload-profile-image").click(function(){
+            $("#upload-photo-input").click();
+        })
+
+        $("#password-submit-button").click(function(){
+            $("#change-password-form").submit();
+
+        })
+        $("#info-submit-button").click(function(){
+            var validInfo = true;
+
+            if ($("#first-name").val() === "") {
+                validInfo = false;
+                showError($("#first-name"));
+            }
+            else {
+                hideError($("#first-name"));
+            }
+
+            if ($("#gender").val() === "") {
+                validInfo = false;
+                showError($("#gender"));
+            }
+            else {
+                hideError($("#gender"));
+            }
+
+            var month = parseInt($("#birthday-month").val(), 10);
+            var day = parseInt($("#birthday-day").val(), 10);
+            var year = parseInt($("#birthday-year").val(), 10);
+
+            var emptyError = false;
+            var errorText = "Please complete the birthday date";
+
+            if ($("#birthday-month").val() === null || $("#birthday-day").val() === "" || $("#birthday-year").val() === "") {
+                validInfo = false;
+                emptyError = true;
+                showError($("#birthday-month"));
+                showError($("#birthday-day"));
+                showError($("#birthday-year"));
+                $("#birthday-year").next("div span").text("Empty birthday date")
+            }
+            else{
+                hideError($("#birthday-month"));
+                hideError($("#birthday-day"));
+                hideError($("#birthday-year"));
+            }
+
+            if (!emptyError) {
+                // Check if the day is within the valid range for the selected month
+                var daysInMonth = new Date(year, month, 0).getDate();
+
+                // Create a Date object from the parsed parts
+                var birthday = new Date(year, month - 1, day);
+
+                // Check if the date is too far in the past or future
+                var currentDate = new Date();
+                var maxDate = new Date(currentDate.getFullYear() - 100, currentDate.getMonth(), currentDate.getDate());
+                var minDate = new Date(currentDate.getFullYear() - 18, currentDate.getMonth(), currentDate.getDate());
+
+                if (day < 1 || day > daysInMonth) {
+                    // Day is invalid for the selected month
+                    errorText = "Invalid day for the selected month";
+                    showError($("#birthday-month"));
+                    showError($("#birthday-day"));
+                    showError($("#birthday-year"));
+                    $("#birthday-year").next("div span").text(errorText);
+                }
+                else if (birthday < maxDate || birthday > minDate) {
+                    // Year is invalid
+                    errorText = "Birthday must be between 18 and 100 years ago";
+                    showError($("#birthday-month"));
+                    showError($("#birthday-day"));
+                    showError($("#birthday-year"));
+                    $("#birthday-year").next("div span").text(errorText);
+                }
+
+                else if (isNaN(birthday.getTime())) {
+                    // Invalid birthday date
+                    errorText = "Invalid birthday date";
+                    showError($("#birthday-month"));
+                    showError($("#birthday-day"));
+                    showError($("#birthday-year"));
+                    $("#birthday-year").next("div span").text(errorText);
+                }
+                else{
+                    hideError($("#birthday-month"));
+                    hideError($("#birthday-day"));
+                    hideError($("#birthday-year"));
+                }
+            }
+
+            if (validInfo) {
+                $("#change-info-form").append('<input type="hidden" name="__RequestVerificationToken" value="' + token + '">');
+                console.log("123");
+                $("#change-info-form").submit();
+            }
+
+        })
+        $("form").append('<input type="hidden" name="__RequestVerificationToken" value="' + token + '">');
+
+        $("#upload-photo-input").change(function () {
+            var file = this.files[0]; // Get the selected file
+            var reader = new FileReader(); // Create a FileReader object
+
+            // Event handler for when the file is loaded
+            reader.onload = function (event) {
+                var imageData = event.target.result; // Get the data URL of the loaded file
+                console.log(imageData); // Output the data URL to the console
+
+                // Now you can use the imageData variable as needed, such as setting it as the background of a div
+                $(".profile-page-upload-profile-image").css("background-image", "url(" + imageData + ")");
+                $("#image-data").css("background-image", "url(" + imageData + ")");
+            };
+
+            // Read the selected file as a data URL
+            reader.readAsDataURL(file);
+        })
+        // Focus effect
+        $("input, select").focusin(function () {
+            $(this).prev("label.enter-label").css("color", "#3282E9");
+        })
+        $("input, select").focusout(function () {
+            $(this).prev("label.enter-label").css("color", "var(--dl-color-gray-700)");
+        })
+
+        // Allow letter only in first name
+        $("#first-name").on("keypress", function (event) {
+            var charCode = event.which || event.keyCode;
+            if (!((charCode >= 65 && charCode <= 90) || // Uppercase letters
+                (charCode >= 97 && charCode <= 122) || // Lowercase letters
+                charCode === 32)) { // Space
+                event.preventDefault();
+            }
+        });
+        // Allow letter only in last name
+        $("#last-name").on("keypress", function (event) {
+            var charCode = event.which || event.keyCode;
+            if (!((charCode >= 65 && charCode <= 90) || // Uppercase letters
+                (charCode >= 97 && charCode <= 122) || // Lowercase letters
+                charCode === 32)) { // Space
+                event.preventDefault();
+            }
+        });
+
+        $("select").css('color', 'black');
+
+        // Allow digit only for birthday day
+        $("#birthday-day").on("keypress", function (event) {
+            var charCode = event.which || event.keyCode;
+            if (!(charCode >= 48 && charCode <= 57)) { // Numbers 0-9
+                event.preventDefault();
+            }
+        });
+        // Allow digit only for birthday year
+        $("#birthday-year").on("keypress", function (event) {
+            var charCode = event.which || event.keyCode;
+            if (!(charCode >= 48 && charCode <= 57)) { // Numbers 0-9
+                event.preventDefault();
+            }
+        });
+
+        function showError(elementVariable) {
+            $(elementVariable).prev("label.enter-label").addClass("error-label");
+            $(elementVariable).addClass("error-input");
+            $(elementVariable).next("div").css("display", "flex");
+        }
+        function hideError(elemeentVariable) {
+            $(elemeentVariable).removeClass("error-input");
+            $(elemeentVariable).prev("label").removeClass("error-label");
+            $(elemeentVariable).next("div").css("display", "none");
+
+        }
+
+        async function inputValidation(inputVariable) {
+            var id_name = $(inputVariable).attr("id");
+            var id_val = $(inputVariable).val();
+            var inputValid = 1;
 
 
+            if (id_name === "password") {
+                if (id_val === "") {
+                    inputValid = 0;
+                    $(inputVariable).next("div").find("span").text("Please complete the password section");
+                }
+                else if (id_val.length < 8) {
+                    inputValid = 0;
+                    $(inputVariable).next("div").find("span").text("Use 8 characters or more for your password");
+                }
+                else if (!(/[^a-zA-Z0-9]/.test(id_val) &&
+                    /[a-z]/.test(id_val) &&
+                    /[A-Z]/.test(id_val))) {
+                    inputValid = 0;
+                    $(inputVariable).next("div").find("span").text("Please choose a stronger password.");
+                }
+
+            }
+            else if (id_name === "confirm-password") {
+                var password_val = $("#password").val();
+                if (password_val === "" || password_val.length < 8 ||
+                    !(/[^a-zA-Z0-9]/.test(password_val) &&
+                        /[a-z]/.test(password_val) &&
+                        /[A-Z]/.test(password_val))) {
+
+                }
+                else if (id_val === "") {
+                    inputValid = 0;
+                    $(inputVariable).next("div").find("span").text("Please complete the confirm password section");
+                }
+                else if (id_val !== $("#password").val()) {
+                    inputValid = 0;
+                    $(inputVariable).next("div").find("span").text("Those passwords didn’t match. Try again");
+                }
+            }
+
+
+            if (inputValid === 1) {
+                hideError(inputVariable);
+                return true;
+            }
+            else if (inputValid === 0) {
+                showError(inputVariable);
+                return false;
+            }
+        }
+    });
+</script> *@
 
 
 @* <h3>@ViewData["Title"]</h3> *@
 @* <partial name="_StatusMessage" for="StatusMessage" /> *@
 
-@*
-<div class="row">
+
+@* <div class="row">
     <div class="col-md-6">
         <form id="change-password-form" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-floating">
-                <input asp-for="Input.OldPassword" class="form-control" autocomplete="current-password" aria-required="true" />
-                <label asp-for="Input.OldPassword" class="form-label"></label>
-                <span asp-validation-for="Input.OldPassword" class="text-danger"></span>
+                <input asp-for="PasswordInput.OldPassword" class="form-control" autocomplete="current-password" aria-required="true" />
+                <label asp-for="PasswordInput.OldPassword" class="form-label"></label>
+                <span asp-validation-for="PasswordInput.OldPassword" class="text-danger"></span>
             </div>
             <div class="form-floating">
-                <input asp-for="Input.NewPassword" class="form-control" autocomplete="new-password" aria-required="true" />
-                <label asp-for="Input.NewPassword" class="form-label"></label>
-                <span asp-validation-for="Input.NewPassword" class="text-danger"></span>
+                <input asp-for="PasswordInput.NewPassword" class="form-control" autocomplete="new-password" aria-required="true" />
+                <label asp-for="PasswordInput.NewPassword" class="form-label"></label>
+                <span asp-validation-for="PasswordInput.NewPassword" class="text-danger"></span>
             </div>
             <div class="form-floating">
-                <input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" />
-                <label asp-for="Input.ConfirmPassword" class="form-label"></label>
-                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                <input asp-for="PasswordInput.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" />
+                <label asp-for="PasswordInput.ConfirmPassword" class="form-label"></label>
+                <span asp-validation-for="PasswordInput.ConfirmPassword" class="text-danger"></span>
             </div>
             <button type="submit" class="w-100 btn btn-lg btn-primary">Update password</button>
         </form>
     </div>
-</div>
- *@
+</div> *@
+
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }
