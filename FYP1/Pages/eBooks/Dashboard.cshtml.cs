@@ -44,6 +44,7 @@ namespace FYP1.Pages.eBooks
         public string CurrentTypeFilter { get; set; }
         public int CurrentDateFilter { get; set; }
         public string CurrentSort { get; set; }
+        public string bookDeleted { get; set; }
 
         [BindProperty]
         public eBook eBookAdd { get; set; } = default!;
@@ -125,7 +126,7 @@ namespace FYP1.Pages.eBooks
         public string defaultBookType = BookType.Novel.ToString(); // Set default book type
 
         public async Task OnGetAsync(string? displayTab, string? searchString, string? sortOrder, 
-            string? typeFilter, int? dateFilter, int? pageIndex)
+            string? typeFilter, int? dateFilter, int? pageIndex, string? bookDeleted)
         {
             bookTypes = Enum.GetValues(typeof(BookType))
                         .Cast<BookType>()
@@ -271,11 +272,7 @@ namespace FYP1.Pages.eBooks
             CurrentTypeFilter = typeFilter;
             CurrentSort = sortOrder;
             CurrentDateFilter = dateFilter ?? 0;
-
-
-
-
-
+            this.bookDeleted = bookDeleted;
         }
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD

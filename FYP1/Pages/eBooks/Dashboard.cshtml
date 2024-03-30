@@ -30,6 +30,8 @@
         cursor:pointer;
     }
 </style>
+<div id="loading-screen" class="loading-screen-container"><div class="loader-small"></div><br/>Loading Screen</div>
+<div class="book-delete-notice">The book has been deleted</div>
 <div class="e-book-dashboard-container">
     @Html.Partial("_HeaderLogin")
     <div class="e-book-dashboard-window-size-container">
@@ -280,6 +282,17 @@
                             <span class="design-subtitle">
                                 @Html.DisplayFor(modelItem => item.type)
                             </span>
+                            <a asp-page="./FileSetting" asp-route-id="@item.bookID" class="item-container-feature-card-setting">
+                                <svg fill="#000000" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                     viewBox="0 0 455 455" xml:space="preserve">
+                                <path d="M455,257v-70h-63.174c-4.423-20.802-12.706-40.174-24.066-57.334l42.32-42.32l-49.498-49.498l-42.756,42.756
+	C299.911,69.199,279.682,61.104,258,57.183V0h-70v59.319c-21.306,5.221-41.009,14.515-58.24,27.014L88.346,44.92L38.849,94.417
+	l43.979,43.979C72.59,156.135,65.513,175.926,62.359,197H0v70h66.623c5.396,19.392,14.195,37.364,25.711,53.24L45.92,366.654
+	l49.497,49.498l48.979-48.979c16.329,9.424,34.397,16.171,53.604,19.645V455h70v-70.319c18.91-4.634,36.557-12.476,52.334-22.92
+	l47.32,47.32l49.498-49.498l-47.756-47.756c10.524-16.531,18.223-35.033,22.431-54.827H455z M228,309.5
+	c-48.248,0-87.5-39.252-87.5-87.5s39.252-87.5,87.5-87.5s87.5,39.252,87.5,87.5S276.248,309.5,228,309.5z" />
+        </svg>
+                            </a>
                         </div>
                     }
                 </div>
@@ -357,6 +370,17 @@
                             <span class="design-subtitle">
                                 @Html.DisplayFor(modelItem => item.type)
                             </span>
+                            <a asp-page="./FileSetting" asp-route-id="@item.bookID" class="item-container-feature-card-setting">
+                                <svg fill="#000000" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                     viewBox="0 0 455 455" xml:space="preserve">
+                                <path d="M455,257v-70h-63.174c-4.423-20.802-12.706-40.174-24.066-57.334l42.32-42.32l-49.498-49.498l-42.756,42.756
+	C299.911,69.199,279.682,61.104,258,57.183V0h-70v59.319c-21.306,5.221-41.009,14.515-58.24,27.014L88.346,44.92L38.849,94.417
+	l43.979,43.979C72.59,156.135,65.513,175.926,62.359,197H0v70h66.623c5.396,19.392,14.195,37.364,25.711,53.24L45.92,366.654
+	l49.497,49.498l48.979-48.979c16.329,9.424,34.397,16.171,53.604,19.645V455h70v-70.319c18.91-4.634,36.557-12.476,52.334-22.92
+	l47.32,47.32l49.498-49.498l-47.756-47.756c10.524-16.531,18.223-35.033,22.431-54.827H455z M228,309.5
+	c-48.248,0-87.5-39.252-87.5-87.5s39.252-87.5,87.5-87.5s87.5,39.252,87.5,87.5S276.248,309.5,228,309.5z" />
+        </svg>
+                            </a>
                         </div>
                     }
                 </div>
@@ -507,28 +531,56 @@
 
     }
 
-    $("iframe").on("load", function () {
-        // Get the document inside the iframe
-        var iframeDoc = $(this).contents();
-        
-        // Find the div with the specified class
-        iframeDoc.find(".e-book-design-book-content-container").css("overflow", "hidden");
-        iframeDoc.find(".e-book-design-book-content-container").css("zoom", "25%");
-        iframeDoc.find(".e-book-design-book-content-container").css("width", "100%");
-        iframeDoc.find(".e-book-design-book-content-container").css("height", "100%");
-        iframeDoc.find(".e-book-design-book-content-container").css("position", "fixed");
-
-        iframeDoc.find(".e-book-design-book-content-container").scrollTop(75);
-
-
-        iframeDoc.find(".header-design-container").css("display", "none");
-        iframeDoc.find(".e-book-design-top-tab-container").css("display", "none");
-        iframeDoc.find(".e-book-design-element-list-container").css("display", "none");
-        iframeDoc.find(".e-book-design-bottom-tab-container").css("display", "none");
-        iframeDoc.find(".e-book-design-add-button").css("display", "none");
-    })
-
     $(document).ready(function () {
+        // Count the number of iframes
+        var numIframes = $("iframe").length;
+
+        // Counter for loaded iframes
+        var loadedCount = 0;
+
+        $("iframe").on("load", function () {
+            // Get the document inside the iframe
+            var iframeDoc = $(this).contents();
+
+            // Find the div with the specified class
+            //       iframeDoc.find(".e-book-design-book-content-container").css("overflow", "hidden");
+            //     iframeDoc.find(".e-book-design-book-content-container").css("zoom", "25%");
+            //   iframeDoc.find(".e-book-design-book-content-container").css("width", "100%");
+            // iframeDoc.find(".e-book-design-book-content-container").css("height", "100%");
+            //iframeDoc.find(".e-book-design-book-content-container").css("position", "fixed");
+            // Manipulate the iframe content as needed
+            iframeDoc.find(".e-book-design-book-content-container").css({
+                "overflow": "hidden",
+                "zoom": "25%",
+                "width": "100%",
+                "height": "100%",
+                "position": "fixed"
+            });
+
+            iframeDoc.find(".e-book-design-book-content-container").scrollTop(75);
+
+
+            iframeDoc.find(".header-design-container").css("display", "none");
+            iframeDoc.find(".e-book-design-top-tab-container").css("display", "none");
+            iframeDoc.find(".e-book-design-element-list-container").css("display", "none");
+            iframeDoc.find(".e-book-design-bottom-tab-container").css("display", "none");
+            iframeDoc.find(".e-book-design-add-button").css("display", "none");
+
+            loadedCount = loadedCount + 1;
+
+            // Check if all iframes have loaded
+            checkAllIframesLoaded();
+        })
+
+        // Function to check if all iframes have loaded
+        function checkAllIframesLoaded() {
+            if (loadedCount === numIframes) {
+                // All iframes have loaded, hide the loading screen
+                $("#loading-screen").remove();
+            }
+        }
+        // Function to execute if all iframes have already loaded
+        checkAllIframesLoaded();
         // Focus effect
         $("input, select, textarea").focusin(function () {
             $(this).prev("label.enter-label").css("color", "#3282E9");
@@ -740,3 +792,16 @@
         });
     })
 </script>
+
+@if (!string.IsNullOrEmpty(Model.bookDeleted))
+{
+    <script>
+        $(".book-delete-notice").css("display", "flex");
+        setTimeout(function () {
+            $(".book-delete-notice").addClass("notice-fadeOut");
+        }, 5000);
+        setTimeout(function () {
+            $(".book-delete-notice").css("display", "none");
+        }, 8000);
+    </script>
+}

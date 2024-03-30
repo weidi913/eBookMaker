@@ -9,6 +9,34 @@
         color: black;
     }
 </style>
+<div class="file-setting-caution-box">
+    <form asp-page-handler="BookDelete" method="post" class="file-setting-caution-checkbox">
+        <input hidden  asp-for="@Model.bookID" value="@Model.curBook.bookID"/>
+        <div class="file-setting-caution-icon">
+            <svg fill="red" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                 viewBox="0 0 27.963 27.963" xml:space="preserve">
+<g>
+            <g id="c129_exclamation">
+            <path d="M13.983,0C6.261,0,0.001,6.259,0.001,13.979c0,7.724,6.26,13.984,13.982,13.984s13.98-6.261,13.98-13.984
+			C27.963,6.259,21.705,0,13.983,0z M13.983,26.531c-6.933,0-12.55-5.62-12.55-12.553c0-6.93,5.617-12.548,12.55-12.548
+			c6.931,0,12.549,5.618,12.549,12.548C26.531,20.911,20.913,26.531,13.983,26.531z" />
+            <polygon points="15.579,17.158 16.191,4.579 11.804,4.579 12.414,17.158 		" />
+            <path d="M13.998,18.546c-1.471,0-2.5,1.029-2.5,2.526c0,1.443,0.999,2.528,2.444,2.528h0.056c1.499,0,2.469-1.085,2.469-2.528
+			C16.441,19.575,15.468,18.546,13.998,18.546z" />
+    </g>
+            <g id="Capa_1_207_">
+    </g>
+</g>
+</svg>
+        </div>
+        <div class="file-setting-caution-header">Are you sure?</div>
+        <div class="file-setting-caution-content">You will not able to recover this book, @Model.curBook.title!</div>
+        <div class="file-setting-caution-button">
+            <button id="book-cancel-button" type="button" class="file-setting-caution-cancel-button">Cancel</button>
+            <button id="book-delete-button" type="button" class="file-setting-caution-delete-button">Yes, delete it!</button>
+        </div>
+    </form>
+</div>
 <div style="display:flex;flex-direction:column;min-height:100vh;width:100%;">
     @Html.Partial("_HeaderLogin")
     <div class="profile-page-container">
@@ -24,6 +52,10 @@
                 With our intuitive platform, you can efficiently update documents, engage
                 with comments, and generate precise versions, all in one place.
             </span>
+            <div class="file-setting-item-right-group">
+                <button id="book-publish-button" type="button" class="file-setting-publish-button">Publish</button>
+                <button id="book-delete-caution-button" type="button" class="file-setting-delete-button">Delete</button>
+            </div>
         </div>
         <div class="profile-page-profile-container file-setting">
             <div class="profile-success-info">File Setting has been updated successfully</div>
@@ -327,6 +359,18 @@ else
     var expandSection;
 
     $(document).ready(function () {
+        $("#book-delete-caution-button").click(function () {
+            $(".file-setting-caution-box").css("display", "flex");
+        })
+        $("#book-cancel-button,.file-setting-caution-box").click(function () {
+            $(".file-setting-caution-box").css("display", "none");
+        })
+        $(".file-setting-caution-checkbox").click(function (e) {
+            e.stopPropagation();
+        })
+        $("#book-delete-button").click(function(){
+            $(".file-setting-caution-checkbox").submit();
+        })
         $(".delete-collaboration-button").click(function () {
             var username = $(this).closest("div").prev("div").find(".file-setting-collaboration-item-user-info-username").text();
             $("#collaboration-delete-form-bookID-input").val("@Model.curBook.bookID");

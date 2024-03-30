@@ -318,6 +318,25 @@ textarea:focus{
   text-transform: none;
   text-decoration: none;
 }
+.loader-small{
+  border: 5px solid #f3f3f3;
+  -webkit-animation: spin 1s linear infinite;
+  animation: spin 1s linear infinite;
+  border-top: 5px solid #555;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+}
+/* Safari */
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
 @media(max-width: 1600px) {
   .design-all-container {
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -3084,6 +3103,34 @@ ul.nav-link-dropdown-list {
   border-radius: var(--dl-radius-radius-radius4);
   padding-right: 16px;
 }
+.book-delete-notice{
+  position:fixed;
+  top:60px;
+  align-self:center;
+  display:none;
+  box-shadow: 5px 5px 10px 0px #d4d4d4;
+  border-radius:32px;
+  background-color:white;
+  border:solid 1px #D9DDE1;
+  width:auto;
+  height:auto;
+  padding:16px 32px;
+  color: #155724;
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+  z-index:50;
+  left: 50%;
+  transform: translateX(-50%);
+  max-width: 300px;
+}
+.notice-fadeOut{
+  animation-name: fadeOut;
+  animation-delay: 0s;
+  animation-duration: 3000ms;
+  animation-direction: normal;
+  animation-iteration-count: 1;
+  animation-timing-function: ease;
+}
 @media(max-width: 1600px) {
   .e-book-dashboard-name-input {
     width: 300px;
@@ -5081,14 +5128,23 @@ ul.nav-link-dropdown-list {
   background-color: black;
   border:solid white 1px;
 }
-.file-setting-delete-button{
+.file-setting-delete-button,.file-setting-publish-button{
   padding:8px 16px;
   border-radius:4px;
   color:#dc3545;
   background-color: white;
   border:solid #dc3545 1px;
   font-weight:700;
-  width:84px;
+}
+.file-setting-publish-button{
+  margin-right:16px;
+  color: #007bff;
+  border-color: #007bff;
+}
+.file-setting-publish-button:hover{
+  margin-right:16px;
+  background-color: #007bff;
+  color: white;
 }
 .file-setting-delete-button:hover{
   cursor: pointer;
@@ -5113,5 +5169,109 @@ ul.nav-link-dropdown-list {
 .username-collaborate-row{
   width:100%;
   margin-right:32px;
+}
+.file-setting-item-right-group{
+  display:flex;
+  width:100%;
+  height:auto;
+  align-items: center; /* Vertically center content */
+  justify-content: flex-end; /* Align content to the right */
+  margin-top:32px;
+}
+.file-setting-caution-box{
+  position:fixed;
+  width:100vw;
+  height:100vh;
+  background-color:rgba(0, 0, 0, 0.3);
+  z-index:100;
+  align-content: center;
+  align-items: center;
+  justify-content: center;
+  display:none;
+
+  animation-name: fadeIn;
+  animation-delay: 0s;
+  animation-duration: 300ms;
+  animation-direction: normal;
+  animation-iteration-count: 1;
+  animation-timing-function: linear;
+}
+.loading-screen-container{
+  position:fixed;
+  width:100vw;
+  height:100vh;
+  background-color:white;
+  z-index:100;
+  align-content: center;
+  align-items: center;
+  justify-content: center;
+  display:flex;
+  font-size:30px;
+  font-weight:600;
+  flex-direction: column;
+}
+.file-setting-caution-checkbox{
+  width:auto;
+  height:auto;
+  padding:32px 96px;
+  background-color: white;
+  border-radius: 8px;
+  max-width: calc(100% - 48px);
+
+  /* box-shadow: 5px 5px 10px 0px #d4d4d4; */
+}
+.file-setting-caution-header{
+  font-size:20px;
+  font-weight: bold;
+  justify-content: center;
+  display:flex;
+  margin-bottom: 16px;
+}
+.file-setting-caution-content{
+  justify-content: center;
+  display:flex;
+  margin-bottom: 16px;
+}
+.file-setting-caution-button{
+  display:flex;
+  width:100%;
+  height:auto;
+  align-items: center; /* Vertically center content */
+  justify-content: center;
+}
+.file-setting-caution-delete-button,.file-setting-caution-cancel-button{
+  padding:10px 16px;
+  border-radius:4px;
+  /* color:#dc3545; */
+  background-color: white;
+  border:solid black 1px;
+  font-weight:700;
+  width:auto;
+  margin: 0px 8px;
+  cursor: pointer;
+}
+.file-setting-caution-delete-button{
+  border:solid #dc3545 1px;
+  background-color: white;
+  color:#dc3545;
+}
+.file-setting-caution-delete-button:hover{
+  color:white;
+  border:solid white 1px;
+  background-color: #dc3545;
+}
+
+.file-setting-caution-cancel-button:hover{
+  color:white;
+  border:solid white 1px;
+  background-color: black;
+}
+.file-setting-caution-icon{
+  width:96px;
+  height:96px;
+  justify-content: center;
+  display: flex;
+  width: 100%;
+  margin:24px 0px;
 }
 /* end of profile page and file setting section */

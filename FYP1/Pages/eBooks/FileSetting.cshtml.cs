@@ -48,6 +48,8 @@ namespace FYP1.Pages.eBooks
         public InputCollaborationModel CollaborationInput { get; set; }
         [BindProperty]
         public InputCollaborationModel VersionInput { get; set; }
+        [BindProperty]
+        public int bookID { get; set; }
         public Member curUser { get; set; }
         public Member authorInfo { get; set; }
         public IList<Member> memberList { get; set; }
@@ -65,7 +67,6 @@ namespace FYP1.Pages.eBooks
 
         public class InputCollaborationModel
         {
-            public int collabID { get; set; }
             public int bookID { get; set; }
             public string authorID { get; set; }
         }
@@ -192,9 +193,6 @@ namespace FYP1.Pages.eBooks
             }
 
             // memberList now contains a list of users who have collaborated on the specified book
-
-
-
 
             this.FileMessage = FileMessage;
             this.CollabMessage = CollabMessage;
@@ -375,6 +373,38 @@ namespace FYP1.Pages.eBooks
 
             return RedirectToPage("./FileSetting", new { id = CollaborationInput.bookID, CollabMessage = "1" });
 
+        }
+        public async Task<IActionResult> OnPostBookDeleteAsync()
+        {
+            var currentUserId = UserManager.GetUserName(User);
+
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+            }
+
+            // Admin role can access
+            var isAuthorized = User.IsInRole(Constants.AdminRole);
+
+            var ebookDelete = await _context.eBook.FirstOrDefaultAsync(m => m.bookID == this.bookID);
+           
+
+            if (ebookDelete == null)
+            {
+                return NotFound(); // Book non-existent return error
+            }
+            var bookTitle = ebookDelete.title;
+            // Ensure the user is authorized to watch this document
+            if (currentUserId != ebookDelete.authorID && !isAuthorized)
+            {
+                return Forbid();
+            }
+
+            _context.eBook.Remove(ebookDelete);
+            await _context.SaveChangesAsync();
+
+            return RedirectToPage("./Dashboard", new { bookDeleted = "The book,"+ bookTitle + " has been succesfully deleted"});
         }
     }
 }
