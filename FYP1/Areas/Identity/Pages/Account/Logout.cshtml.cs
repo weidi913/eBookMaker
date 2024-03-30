@@ -10,9 +10,11 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using Tesseract;
 
 namespace FYP1.Areas.Identity.Pages.Account
 {
+    [Authorize]
     public class LogoutModel : PageModel
     {
         private readonly SignInManager<Member> _signInManager;
@@ -22,6 +24,10 @@ namespace FYP1.Areas.Identity.Pages.Account
         {
             _signInManager = signInManager;
             _logger = logger;
+        }
+
+        public void OnGet()
+        {
         }
 
         public async Task<IActionResult> OnPost(string returnUrl = null)
@@ -38,6 +44,14 @@ namespace FYP1.Areas.Identity.Pages.Account
                 // request and the identity for the user gets updated.
                 return RedirectToPage();
             }
+        }
+
+        public async Task<IActionResult> OnPostAccountLogout()
+        {
+            await _signInManager.SignOutAsync();
+            _logger.LogInformation("User logged out.");
+
+            return new JsonResult(new { status = 0, message = "OCR function complete" });
         }
     }
 }

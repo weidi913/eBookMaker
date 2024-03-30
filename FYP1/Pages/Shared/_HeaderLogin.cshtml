@@ -9,12 +9,12 @@
 <div class="header-login-container">
     <header data-role="Header" class="header-login-content">
         <div class="header-login-left-group">
-            <button id="more-option" type="button" style="padding: 0px">
+            <button id="more-option" type="button" class="header-login-sidebar-trigger-button" style="padding:8px">
                 <svg viewBox="0 0 1024 1024" class="header-login-sidebar-icon">
                     <path d="M128 554.667h768c23.552 0 42.667-19.115 42.667-42.667s-19.115-42.667-42.667-42.667h-768c-23.552 0-42.667 19.115-42.667 42.667s19.115 42.667 42.667 42.667zM128 298.667h768c23.552 0 42.667-19.115 42.667-42.667s-19.115-42.667-42.667-42.667h-768c-23.552 0-42.667 19.115-42.667 42.667s19.115 42.667 42.667 42.667zM128 810.667h768c23.552 0 42.667-19.115 42.667-42.667s-19.115-42.667-42.667-42.667h-768c-23.552 0-42.667 19.115-42.667 42.667s19.115 42.667 42.667 42.667z"></path>
                 </svg>
             </button>
-            <img alt="logo" src="~/images/dwei-logo.png" class="header-guest-image" />
+            <a href="~/Home"><img alt="logo" src="~/images/dwei-logo.png" class="header-guest-image" /></a>
             @* navigation link*@
             @Html.Partial("_HeaderNavLink")
         </div>
@@ -25,10 +25,33 @@
                     <br />
                 </span>
             </button>
-            <img id="profile-image" alt="image" src="~/images/default_people_icon.png" class="header-login-profile-pic" />
+            @* <img id="profile-image" alt="image" src="~/images/default_people_icon.png" class="header-login-profile-pic" /> *@
+
+            @* <div id="profile-image" alt="image" class="header-login-profile-pic" style="background-image: url(data:image/jpg;base64,@Model.curUser.imageData)"> *@
+            <div id="profile-image" alt="image" class="header-login-profile-pic" style="background-image: url(data:image/jpg;base64,@(Model.curUser != null && !string.IsNullOrEmpty(Model.curUser.imageData) ? Model.curUser.imageData : ""))">
+                @Html.Partial("_ProfileExpand")
+            </div>
         </div>
     </header>
 </div>
 
+<script>
+    $(document).ready(function () {
+        $(document).click(function (event) {
+            // Check if the clicked element is not the profile image
+            if (!$(event.target).closest('#profile-image').length) {
+                // If not, hide the profile expand container
+                $(".profile-expand-container").addClass("hidden");
+            }
+        });
+
+        $("#profile-image").click(function (event) {
+            // Prevent the click event from bubbling up to the document
+            event.stopPropagation();
+            // Toggle the visibility of the profile expand container
+            $(".profile-expand-container").toggleClass("hidden");
+        });
+    })
+</script>
 
 

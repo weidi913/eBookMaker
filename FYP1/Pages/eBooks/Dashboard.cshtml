@@ -6,6 +6,9 @@
 }
 
 <style>
+    option {
+        color: black;
+    }
     .previewText {
         overflow: hidden;
         text-overflow: ellipsis;
@@ -13,6 +16,18 @@
         -webkit-line-clamp: 1; /* number of lines to show */
         line-clamp: 1;
         -webkit-box-orient: vertical;
+    }
+    iframe{
+        pointer-events:none;
+        overflow:hidden;
+        width:100%;
+        height:100%;
+    }
+    .item-container-preview-container{
+        pointer-events:none;
+    }
+    .design-title{
+        cursor:pointer;
     }
 </style>
 <div class="e-book-dashboard-container">
@@ -26,18 +41,27 @@
                 </h1>
                 <div class="e-book-dashboard-recommend-list-container">
                     <div class="design-recommendation-container">
-                        <div class="design-recommendation-preview-container"></div>
+                        <div class="design-recommendation-preview-container" style="background-image:url('/images/dashboard-image/document-sample.png')">
+                            <div class="design-recommendation-preview-container-hover-container">Create Blank</div>
+                        </div>
                         <span class="design-title">Document</span>
                         <span class="design-subtitle">21.7 x 29.0</span>
                     </div>
                     <div class="design-recommendation-container">
-                        <div class="design-recommendation-preview-container"></div>
+                        <div class="design-recommendation-preview-container" style="background-image:url('/images/dashboard-image/powerpoint-slides-sample.png')">
+                            <div class="design-recommendation-preview-container-hover-container">Create Blank</div>
+                        </div>
                         <span class="design-title">Powerpoint Slides</span>
-                        <span class="design-subtitle">10.5 x 8.5</span>
+                        <span class="design-subtitle">25.4 x 19.1</span>
                     </div>
                     <div class="design-recommendation-container">
                         <div class="design-recommendation-preview-container"></div>
                         <span class="design-title">Instagram Post</span>
+                        <span class="design-subtitle">5.0x5.0</span>
+                    </div>
+                    <div class="design-recommendation-container">
+                        <div class="design-recommendation-preview-container"></div>
+                        <span class="design-title">Flyer</span>
                         <span class="design-subtitle">5.0x5.0</span>
                     </div>
                     <div class="design-recommendation-container">
@@ -49,6 +73,76 @@
                         <div class="design-recommendation-preview-container"></div>
                         <span class="design-title">Logo</span>
                         <span class="design-subtitle">7.0x7.0</span>
+                    </div>
+                    <div class="design-recommendation-container">
+                        <div class="design-recommendation-preview-container" style="background-image:url('/images/dashboard-image/cookbook-sample.png')">
+                            <div class="design-recommendation-preview-container-hover-container">Create Blank</div>
+                        </div>
+                        <span class="design-title">Cookbook</span>
+                        <span class="design-subtitle">8.0x10.0</span>
+                    </div>
+                    <div class="design-recommendation-container">
+                        <div class="design-recommendation-preview-container" style="background-image:url('/images/dashboard-image/travelogue-sample.png')">
+                            <div class="design-recommendation-preview-container-hover-container">Create Blank</div>
+                        </div>
+                        <span class="design-title">Travelogue</span>
+                        <span class="design-subtitle">15.0x23.0</span>
+                    </div>
+                    <div class="design-recommendation-container">
+                        <div class="design-recommendation-preview-container" style="background-image:url('/images/dashboard-image/guidebook-sample.png')">
+                            <div class="design-recommendation-preview-container-hover-container">Create Blank</div>
+                        </div>
+                        <span class="design-title">Guidebook</span>
+                        <span class="design-subtitle">14.0x22.0</span>
+                    </div>
+                    <div class="design-recommendation-container">
+                        <div class="design-recommendation-preview-container" style="background-image:url('/images/dashboard-image/textbook-sample.png')">
+                            <div class="design-recommendation-preview-container-hover-container">Create Blank</div>
+                        </div>
+                        <span class="design-title">Textbook</span>
+                        <span class="design-subtitle">18.0x25.0</span>
+                    </div>
+                    <div class="design-recommendation-container">
+                        <div class="design-recommendation-preview-container" style="background-image:url('/images/dashboard-image/magazine-sample.png')">
+                            <div class="design-recommendation-preview-container-hover-container">Create Blank</div>
+                        </div>
+                        <span class="design-title">Magazine</span>
+                        <span class="design-subtitle">22.0x28.0</span>
+                    </div>
+                    <div class="design-recommendation-container">
+                        <div class="design-recommendation-preview-container" style="background-image:url('/images/dashboard-image/comic-book-sample.png')">
+                            <div class="design-recommendation-preview-container-hover-container">Create Blank</div>
+                        </div>
+                        <span class="design-title">Comic Book</span>
+                        <span class="design-subtitle">17.0x26.0</span>
+                    </div>
+                    <div class="design-recommendation-container">
+                        <div class="design-recommendation-preview-container" style="background-image:url('/images/dashboard-image/storybook-sample.png')">
+                            <div class="design-recommendation-preview-container-hover-container">Create Blank</div>
+                        </div>
+                        <span class="design-title">Storybook</span>
+                        <span class="design-subtitle">20.0x20.0</span>
+                    </div>
+                    <div class="design-recommendation-container">
+                        <div class="design-recommendation-preview-container" style="background-image:url('/images/dashboard-image/novel-sample.png')">
+                            <div class="design-recommendation-preview-container-hover-container">Create Blank</div>
+                        </div>
+                        <span class="design-title">Novel</span>
+                        <span class="design-subtitle">15.0x23.0</span>
+                    </div>
+                    <div class="design-recommendation-container">
+                        <div class="design-recommendation-preview-container" style="background-image:url('/images/dashboard-image/product-manual-sample.png')">
+                            <div class="design-recommendation-preview-container-hover-container">Create Blank</div>
+                        </div>
+                        <span class="design-title">Product Manual</span>
+                        <span class="design-subtitle">21.0x29.7</span>
+                    </div>
+                    <div class="design-recommendation-container">
+                        <div class="design-recommendation-preview-container" style="background-image:url('/images/dashboard-image/annual-report-sample.png')">
+                            <div class="design-recommendation-preview-container-hover-container">Create Blank</div>
+                        </div>
+                        <span class="design-title">Annual Report</span>
+                        <span class="design-subtitle">21.0x29.7</span>
                     </div>
                 </div>
             </div>
@@ -72,6 +166,17 @@
                             <span class="design-subtitle">
                                 @Html.DisplayFor(modelItem => item.type)
                             </span>
+                            <a asp-page="./FileSetting" asp-route-id="@item.bookID" class="item-container-feature-card-setting">
+                                <svg fill="#000000" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                     viewBox="0 0 455 455" xml:space="preserve">
+    <path d="M455,257v-70h-63.174c-4.423-20.802-12.706-40.174-24.066-57.334l42.32-42.32l-49.498-49.498l-42.756,42.756
+	C299.911,69.199,279.682,61.104,258,57.183V0h-70v59.319c-21.306,5.221-41.009,14.515-58.24,27.014L88.346,44.92L38.849,94.417
+	l43.979,43.979C72.59,156.135,65.513,175.926,62.359,197H0v70h66.623c5.396,19.392,14.195,37.364,25.711,53.24L45.92,366.654
+	l49.497,49.498l48.979-48.979c16.329,9.424,34.397,16.171,53.604,19.645V455h70v-70.319c18.91-4.634,36.557-12.476,52.334-22.92
+	l47.32,47.32l49.498-49.498l-47.756-47.756c10.524-16.531,18.223-35.033,22.431-54.827H455z M228,309.5
+	c-48.248,0-87.5-39.252-87.5-87.5s39.252-87.5,87.5-87.5s87.5,39.252,87.5,87.5S276.248,309.5,228,309.5z" />
+    </svg>
+                            </a>
                         </div>
                     }
 @*                     @for (int i = 0; i < 20; i++)
@@ -144,7 +249,7 @@
                 </form>
             </div>
             <div class="e-book-dashboard-item-container">
-                <h1 class="e-book-dashboard-item-heading">Recent</h1>
+                <h1 class="e-book-dashboard-item-heading">Project Lists</h1>
                 <div class="item-list-container-container design-all-container">
 @*                                         @for (int i = 0; i < 20; i++)
                     {
@@ -233,7 +338,7 @@
                 </form>
             </div>
             <div class="e-book-dashboard-item-container">
-                <h1 class="e-book-dashboard-item-heading">Recent</h1>
+                <h1 class="e-book-dashboard-item-heading">Project Lists</h1>
                 <div class="item-list-container-container design-all-container">
                     @foreach (var item in Model.sharedBook)
                     {
@@ -261,7 +366,7 @@
     </div>
 </div>
 
-<div style="display:none" id="create-ebook-container" class="create-book-background-container">
+<div style="visibility:hidden" id="create-ebook-container" class="create-book-background-container">
     <div class="create-book-background-create-book-container">
         <div class="create-book-background-title-container">
             <span class="create-book-background-create-heading-text">
@@ -277,7 +382,7 @@
         <div class="create-book-background-content-container">
             <div class="create-book-background-image-container"> </div>
             <div class="create-book-background-form-container">
-                <form method="post" class="create-book-background-create-book-form">
+                <form asp-page-handler="Book" method="post" class="create-book-background-create-book-form">
                     @* <form class="create-book-background-create-book-form"> *@
                         <div class="create-book-background-input-container">
                         <div class="create-book-background-label-container">
@@ -285,7 +390,16 @@
                         </div>
 
                         <div class="create-book-background-one-input-container">
-                            <input asp-for="eBookAdd.title" type="text" placeholder="Title" class="create-book-background-text-input input" />
+                            <div class="enter-input-label-container">
+                                <label asp-for="eBookAdd.title" class="enter-label">Title</label>
+                                <input asp-for="eBookAdd.title" type="text" placeholder="Title" class="create-book-background-text-input input" />
+                                <div class="register-user-error-container">
+                                    <svg viewBox="0 0 1024 1024" class="register-user-error-icon">
+                                        <path d="M512 854q140 0 241-101t101-241-101-241-241-101-241 101-101 241 101 241 241 101zM512 86q176 0 301 125t125 301-125 301-301 125-301-125-125-301 125-301 301-125zM470 298h84v256h-84v-256zM470 640h84v86h-84v-86z"></path>
+                                    </svg>
+                                    <span class="register-user-error-text">Select the type</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="create-book-background-input-container">
@@ -293,20 +407,23 @@
                             <label asp-for="eBookAdd.type" class=" create-book-background-input-label">Type</label>
                         </div>
                         <div class="create-book-background-one-input-container">
-                            <select asp-for="eBookAdd.type" class=" create-book-background-select-input">
-                                @foreach (var type in Model.bookTypes)
-                                {
-                                    if (type == Model.CurrentTypeFilter)
-                                    {
-                                        <option value="@type" selected>@type</option>
-                                    }
-                                    else
+                            <div class="enter-input-label-container">
+                                <label asp-for="eBookAdd.type" class="enter-label">Type</label>
+                                <select style="color:gray;" asp-for="eBookAdd.type" class=" create-book-background-select-input">
+                                    <option value="" hidden selected disabled>Select the type</option>
+                                    @foreach (var type in Model.bookTypes)
                                     {
                                         <option value="@type">@type</option>
                                     }
+                                </select>                                
+                                <div class="register-user-error-container">
+                                    <svg viewBox="0 0 1024 1024" class="register-user-error-icon">
+                                        <path d="M512 854q140 0 241-101t101-241-101-241-241-101-241 101-101 241 101 241 241 101zM512 86q176 0 301 125t125 301-125 301-301 125-301-125-125-301 125-301 301-125zM470 298h84v256h-84v-256zM470 640h84v86h-84v-86z"></path>
+                                    </svg>
+                                    <span class="register-user-error-text">Enter title (less than 200 characters)</span>
+                                </div>
+                            </div>
 
-                                }
-                            </select>
                         </div>
                     </div>
                     <div class="create-book-background-input-container">
@@ -314,7 +431,16 @@
                             <label asp-for="eBookAdd.description" class="create-book-background-input-label">Description</label>
                         </div>
                         <div class="create-book-background-one-input-container">
-                            <textarea asp-for="eBookAdd.description" placeholder="Description" class="create-book-background-textarea textarea"></textarea>
+                            <div class="enter-input-label-container">
+                                <label asp-for="eBookAdd.description" class="enter-label">Description</label>
+                                <textarea asp-for="eBookAdd.description" placeholder="Description" class="create-book-background-textarea textarea"></textarea>
+                                <div class="register-user-error-container">
+                                    <svg viewBox="0 0 1024 1024" class="register-user-error-icon">
+                                        <path d="M512 854q140 0 241-101t101-241-101-241-241-101-241 101-101 241 101 241 241 101zM512 86q176 0 301 125t125 301-125 301-301 125-301-125-125-301 125-301 301-125zM470 298h84v256h-84v-256zM470 640h84v86h-84v-86z"></path>
+                                    </svg>
+                                    <span class="register-user-error-text">Enter description</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="create-book-background-input-container">
@@ -323,18 +449,36 @@
                         </div>
 
                         <div class="create-book-background-two-input-container">
-                            <input asp-for="eBookAdd.width" type="text" placeholder="placeholder" class="create-book-background-text-input input" />
-                            <input asp-for="eBookAdd.height" type="text" placeholder="placeholder" class="create-book-background-text-input input" />
-                            <label asp-for="eBookAdd.width" class="create-book-background-dimension-label">
+                            <div class="enter-input-label-container">
+                                <label asp-for="eBookAdd.width" class="enter-label">Width (mm)</label>
+                                <input asp-for="eBookAdd.width" type="text" placeholder="Width(mm)" class="create-book-background-text-input input" />
+                                <div class="register-user-error-container">
+                                    <svg viewBox="0 0 1024 1024" class="register-user-error-icon">
+                                        <path d="M512 854q140 0 241-101t101-241-101-241-241-101-241 101-101 241 101 241 241 101zM512 86q176 0 301 125t125 301-125 301-301 125-301-125-125-301 125-301 301-125zM470 298h84v256h-84v-256zM470 640h84v86h-84v-86z"></path>
+                                    </svg>
+                                    <span class="register-user-error-text">Enter width with minimum of 50</span>
+                                </div>
+                            </div>
+                            <div class="enter-input-label-container">
+                                <label asp-for="eBookAdd.height" class="enter-label">Height (mm)</label>
+                                <input asp-for="eBookAdd.height" type="text" placeholder="Height(mm)" class="create-book-background-text-input input" />
+                                <div class="register-user-error-container">
+                                    <svg viewBox="0 0 1024 1024" class="register-user-error-icon">
+                                        <path d="M512 854q140 0 241-101t101-241-101-241-241-101-241 101-101 241 101 241 241 101zM512 86q176 0 301 125t125 301-125 301-301 125-301-125-125-301 125-301 301-125zM470 298h84v256h-84v-256zM470 640h84v86h-84v-86z"></path>
+                                    </svg>
+                                    <span class="register-user-error-text">Enter height with minimum of 50</span>
+                                </div>
+                            </div>
+@*                             <label asp-for="eBookAdd.width" class="create-book-background-dimension-label">
                                 Width (mm)
                             </label>
                             <label asp-for="eBookAdd.height" class="create-book-background-dimension-label">
                                 Height (mm)
-                            </label>
+                            </label> *@
                         </div>
                     </div>
                     <input hidden value="@Model.curUser.UserName" asp-for="eBookAdd.authorID" class="form-control" />
-                    <button type="submit" asp-page-handler="Book" class="create-book-background-create-button button">
+                    <button type="button" asp-page-handler="Book" class="create-book-background-create-button button">
                         Create
                     </button>
                 </form>
@@ -351,20 +495,157 @@
 
 <script type="text/javascript">
 
+    function showError(elementVariable) {
+        $(elementVariable).prev("label.enter-label").addClass("error-label");
+        $(elementVariable).addClass("error-input");
+        $(elementVariable).next("div").css("display", "flex");
+    }
+    function hideError(elemeentVariable) {
+        $(elemeentVariable).removeClass("error-input");
+        $(elemeentVariable).prev("label").removeClass("error-label");
+        $(elemeentVariable).next("div").css("display", "none");
+
+    }
+
     $("iframe").on("load", function () {
+        // Get the document inside the iframe
+        var iframeDoc = $(this).contents();
+        
+        // Find the div with the specified class
+        iframeDoc.find(".e-book-design-book-content-container").css("overflow", "hidden");
+        iframeDoc.find(".e-book-design-book-content-container").css("zoom", "25%");
+        iframeDoc.find(".e-book-design-book-content-container").css("width", "100%");
+        iframeDoc.find(".e-book-design-book-content-container").css("height", "100%");
+        iframeDoc.find(".e-book-design-book-content-container").css("position", "fixed");
 
-        var iframeSrc = $(this).attr("src");
+        iframeDoc.find(".e-book-design-book-content-container").scrollTop(75);
 
-        // Append the ID of the div you want to load to the iframe's src attribute
-        var divClass = "e-book-design-book-content-container";
-        var newSrc = iframeSrc + "." + divClass;
 
-        // Set the new src attribute for the iframe
-       // $(this).attr("src", newSrc);/
-
+        iframeDoc.find(".header-design-container").css("display", "none");
+        iframeDoc.find(".e-book-design-top-tab-container").css("display", "none");
+        iframeDoc.find(".e-book-design-element-list-container").css("display", "none");
+        iframeDoc.find(".e-book-design-bottom-tab-container").css("display", "none");
+        iframeDoc.find(".e-book-design-add-button").css("display", "none");
     })
 
     $(document).ready(function () {
+        // Focus effect
+        $("input, select, textarea").focusin(function () {
+            $(this).prev("label.enter-label").css("color", "#3282E9");
+        })
+        $("input, select, textarea").focusout(function () {
+            $(this).prev("label.enter-label").css("color", "var(--dl-color-gray-700)");
+        })
+        $("select").change(function () {
+            $(this).css('color', 'black'); // Change color when option is selected
+        })
+        $(".design-recommendation-preview-container, .design-title").click(function(){
+            var recommendContainer = $(this).closest(".design-recommendation-container");
+            var type = recommendContainer.find(".design-title").text();
+            var size = recommendContainer.find(".design-subtitle").text();
+            var width = parseFloat(size.split("x")[0]);
+            var height = parseFloat(size.split("x")[1]);
+            $("#eBookAdd_title").val("Untitled Design");
+            $("#eBookAdd_type").val(type);
+            $("#eBookAdd_description").val("eBook related to " + type);
+            $("#eBookAdd_width").val(width*10);
+            $("#eBookAdd_height").val(height*10);
+            $(".create-book-background-create-button").click();
+        })
+        $(".create-book-background-create-button").click(function () {
+            var inputValid = true;
+            if ($("#eBookAdd_title").val() === "" || $("#eBookAdd_title").val().trim().length>200){
+                inputValid = false;
+                showError($("#eBookAdd_title"));
+            }
+            else {
+                hideError($("#eBookAdd_title"));
+            }
+            if ($("#eBookAdd_type").val() === null) {
+                inputValid = false;
+                showError($("#eBookAdd_type"));
+            } 
+            else {
+                hideError($("#eBookAdd_type"));
+            }
+
+            if ($("#eBookAdd_description").val() === "") {
+                inputValid = false;
+                showError($("#eBookAdd_description"));
+            } 
+            else {
+                hideError($("#eBookAdd_description"));
+            }
+
+            var width = $("#eBookAdd_width").val().trim(); // Get width value and trim whitespace
+            var height = $("#eBookAdd_height").val().trim(); // Get height value and trim whitespace
+
+            // Check if width is empty or less than 50
+            if (width === '' || parseFloat(width) < 50) {
+                inputValid = false;
+                showError($("#eBookAdd_width"));
+            } else {
+                hideError($("#eBookAdd_width"));
+            }
+
+            // Check if height is empty or less than 50
+            if (height === '' || parseFloat(height) < 50) {
+                inputValid = false;
+                showError($("#eBookAdd_height"));
+            } else {
+                hideError($("#eBookAdd_height"));
+            }
+
+
+            if (inputValid) {
+               //console.log($(this).closest("form"));
+               $(this).closest("form").submit();
+            }
+        });
+
+        $("#eBookAdd_width, #eBookAdd_height").on("input", function () {
+            var enteredValue = $(this).val();            // Get the entered value
+            var sanitizedValue = enteredValue.replace(/[^0-9.]/g, '');            // Remove any non-numeric characters except dot (.)
+
+            // Ensure there is at most one dot in the value
+            var dotIndex = sanitizedValue.indexOf('.');
+            if (dotIndex !== -1) {
+                var remainingValue = sanitizedValue.substring(dotIndex + 1);
+                sanitizedValue = sanitizedValue.substring(0, dotIndex + 1) + remainingValue.replace(/\./g, '');
+            }
+
+            // Limit the number of decimal places to 4
+            var decimalIndex = sanitizedValue.indexOf('.');
+            if (decimalIndex !== -1) {
+                var integerPart = sanitizedValue.substring(0, decimalIndex);
+                var decimalPart = sanitizedValue.substring(decimalIndex + 1, decimalIndex + 3); // Limit to 2 decimal places
+                sanitizedValue = integerPart + '.' + decimalPart;
+            }
+
+            // Remove leading zeros unless they are followed by a dot
+            sanitizedValue = sanitizedValue.replace(/^0+(?!$|\.)/, '');
+
+            // Add back a single leading zero if the value is zero and not followed by a dot
+            if (sanitizedValue === '' || sanitizedValue === '.') {
+                sanitizedValue = '0';
+            }
+
+            // Ensure the value is between 0 and 100 (exclusive)
+            var numericValue = parseFloat(sanitizedValue);
+            if (isNaN(numericValue)) {
+                // If value is not a number or out of range, revert to the previous value
+                $(this).val(0);
+                //      } else if (numericValue >= 100) {
+                //          $(this).val(100);
+            } else {
+                // Save the current value as the previous value
+                $(this).data('previousValue', sanitizedValue);
+
+                // Update the input value with the sanitized value
+                $(this).val(sanitizedValue);
+            }
+        });
+
 
         $("div.e-book-dashboard-filter-input input, div.e-book-dashboard-filter-input select").change(function () {
             $(this).parents("form").submit();
@@ -426,21 +707,30 @@
             //$(".e-book-dashboard-content-vertical-container").filter(":visible")
         })
         $("#create-button").click(function () {
-            $("#create-ebook-container").show();
+            $("#create-ebook-container").css("visibility","visible");
 @*             $(".create-book-background-image-container").css("background-image", "url(‘http://www.birds.com/wp-content/uploads/home/bird4.jpg’)”;
  *@        })
-        $("#more-option").click(function () {
+
+        $(".sidebar-login-sidebar-vertical-container").click(function (event) {
+            event.stopPropagation();
+        })
+        $(".sidebar-login-container").click(function () {
+            $(this).css("display", "none");
+        })
+
+        $(".header-login-sidebar-trigger-button").click(function () {
             var sidebar = $(".sidebar-login-container");
             if (sidebar.css("display") === "none") {
                 $(".sidebar-login-container").css("display", "flex");
             }
-            else{
+            else {
                 $(".sidebar-login-container").hide();
             }
         })
 
         $(".create-book-background-container, #close-create-book").click(function(){
-            $(".create-book-background-container").hide();
+            //$(".create-book-background-container").hide();
+            $("#create-ebook-container").css("visibility", "hidden");
         })
         $(".create-book-background-create-book-container").click(function (event) {
             // Prevent the click event from bubbling up to the parent container

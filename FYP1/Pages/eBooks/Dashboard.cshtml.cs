@@ -48,15 +48,52 @@ namespace FYP1.Pages.eBooks
         [BindProperty]
         public eBook eBookAdd { get; set; } = default!;
 
-        public Member curUser { get; set; } = default;
+        public Member? curUser { get; set; }
 
         public enum BookType
         {
+            [Description("Novel")]
             Novel,
+            [Description("Lecture Slides")]
             Lecture,
-            Document
+            [Description("Document")]
+            Document,
+            [Description("Powerpoint Slides")]
+            PowerpointSlides,
+            [Description("Cookbook")]
+            Cookbook,
+            [Description("Travelogue")]
+            Travelogue,
+            [Description("Guidebook")]
+            Guidebook,
+            [Description("Textbook")]
+            Textbook,
+            [Description("Magazine")]
+            Magazine,
+            [Description("Comic Book")]
+            Comic,
+            [Description("Storybook")]
+            Storybook,
+            [Description("Annual Report")]
+            AnnualReport,
+            [Description("Product Manual")]
+            ProductManual,
+
+
+
         }
-/*        public enum DateType
+        private string GetEnumDescription(Enum value)
+        {
+            var fieldInfo = value.GetType().GetField(value.ToString());
+            var attribute = (DescriptionAttribute)fieldInfo.GetCustomAttributes(typeof(DescriptionAttribute), false).FirstOrDefault();
+            return attribute != null ? attribute.Description : value.ToString();
+        }
+
+        public string[] bookTypes;
+        public string[] dateTypes;
+        public string[] sortTypes;
+
+        public enum DateType
         {
             [Description("Anytime")]
             Anytime = 0,
@@ -80,17 +117,29 @@ namespace FYP1.Pages.eBooks
             name_asc,
             [Description("Name Z-A")]
             name_des,
-      
-        }*/
 
-        public string[] bookTypes = Enum.GetNames(typeof(BookType)); // Get names of enum values
-/*        public string[] dateTypes = Enum.GetNames(typeof(DateType)); // Get names of enum values
-        public string[] sortTypes = Enum.GetNames(typeof(SortType)); // Get names of enum values*/
+        }
+
+        /*        public string[] dateTypes = Enum.GetNames(typeof(DateType)); // Get names of enum values
+                public string[] sortTypes = Enum.GetNames(typeof(SortType)); // Get names of enum values*/
         public string defaultBookType = BookType.Novel.ToString(); // Set default book type
 
         public async Task OnGetAsync(string? displayTab, string? searchString, string? sortOrder, 
             string? typeFilter, int? dateFilter, int? pageIndex)
         {
+            bookTypes = Enum.GetValues(typeof(BookType))
+                        .Cast<BookType>()
+                        .Select(e => GetEnumDescription(e))
+                        .ToArray();
+            /*            dateTypes = Enum.GetValues(typeof(DateType))
+                        .Cast<DateType>()
+                        .Select(e => GetEnumDescription(e))
+                        .ToArray();
+                        sortTypes = Enum.GetValues(typeof(SortType))
+                        .Cast<SortType>()
+                        .Select(e => GetEnumDescription(e))
+                        .ToArray();*/
+
             curUser = await _userManager.GetUserAsync(User);
             
             if (curUser != null && _context.eBook != null)

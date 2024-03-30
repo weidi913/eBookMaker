@@ -43,12 +43,13 @@
             </nav>
             <div class="sidebar-login-profile-separator"></div>
             <div class="sidebar-login-profile-container">
-                <img id="profile-pic" alt="image"
+@*                 <img id="profile-pic" alt="image"
                      src="https://images.unsplash.com/photo-1562159278-1253a58da141?ixid=Mnw5MTMyMXwwfDF8c2VhcmNofDIyfHxtYW4lMjBwb3J0dHJhaXR8ZW58MHx8fHwxNjI3MjkzNTM1&amp;ixlib=rb-1.2.1&amp;w=200"
-                     class="sidebar-login-profile-image" />
+                     class="sidebar-login-profile-image" /> *@
+                <div id="profile-pic" class="sidebar-login-profile-image" style="background-image: url(data:image/jpg;base64,@(Model.curUser != null && !string.IsNullOrEmpty(Model.curUser.imageData) ? Model.curUser.imageData : ""))"></div>
                 <div class="sidebar-login-profile-text-container">
-                    <span class="sidebar-login-profile-name">John Doe</span>
-                    <span class="sidebar-login-view-profile">View Profile</span>
+                    <span class="sidebar-login-profile-name">@Model.curUser.firstName</span>
+                    <a href="/Identity/Account/Manage/Profile"><span class="sidebar-login-view-profile">View Profile</span></a>
                 </div>
             </div>
         </div>

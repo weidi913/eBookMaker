@@ -14,7 +14,7 @@
         @Html.Partial("_HeaderGuest")
     }
 }
-
+@Html.AntiForgeryToken()
 @* Home Hero Section *@
 <div>
     <div class="home-hero-hero">
@@ -312,7 +312,5 @@
         $("#create-button").click(function(){
             window.location.href = '/eBooks/Dashboard';
         })
-
-        $("#more-option").css("display","none");
     })
 </script>

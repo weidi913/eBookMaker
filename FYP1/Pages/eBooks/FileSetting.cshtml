@@ -1,8 +1,7 @@
 ﻿@page
-@model ProfileModel
+@model FileSettingModel
 @{
-    ViewData["Title"] = "Profile";
-//    ViewData["ActivePage"] = ManageNavPages.ChangePassword;
+    ViewData["Title"] = "File";
 }
 
 <style>
@@ -13,139 +12,195 @@
 <div style="display:flex;flex-direction:column;min-height:100vh;width:100%;">
     @Html.Partial("_HeaderLogin")
     <div class="profile-page-container">
-        <div class="profile-page-profile-container">
-            <div class="profile-page-welcome-background"></div>
-
-            <div class="profile-page-profile-image welcome" style="background-image: url(data:image/jpg;base64,@Model.curUser.imageData)"></div>
-            <span class="profile-page-profile-title welcome">Welcome @Model.curUser.lastName @Model.curUser.firstName</span>
+        <div class="profile-page-profile-container welcome">
+            <div class="profile-page-welcome-background" style="background: rgb(254,253,222);background: linear-gradient(90deg, rgba(254,253,222,1) 33%, rgba(149,242,247,1) 86%);"></div>
+            <span class="profile-page-profile-title welcome">Welcome to File Setting</span>
             <span class="profile-page-profile-subtitle welcome ">
-                Embark on your profile journey today and enjoy the experience!
+                Efficiently update files, view comments, and generate versions seamlessly with file setting
             </span>
             <span class="profile-page-profile-description">
-                Welcome to your profile management hub! Here, you have full control
-                over your personal information, and account security. Update your
-                details and ensure your account remains secure with just a few
-                clicks. Feel empowered as you navigate through this space tailored
-                to your needs, ensuring your online presence reflects exactly who
-                you are.
+                Experience the power of File Setting: effortlessly manage your files, 
+                gain insight from detailed comments, and ensure seamless version control. 
+                With our intuitive platform, you can efficiently update documents, engage
+                with comments, and generate precise versions, all in one place.
             </span>
         </div>
-        <div class="profile-page-profile-container personal-info">
-            <div class="profile-success-info">Personal Information has been updated successfully</div>
-            <div class="profile-fail-info">Personal Information update failed</div>
+        <div class="profile-page-profile-container file-setting">
+            <div class="profile-success-info">File Setting has been updated successfully</div>
+            <div class="profile-fail-info">File Setting update failed</div>
 
-                <span class="profile-page-profile-title">Personal Information</span>
+                <span class="profile-page-profile-title">File Setting</span>
                 <span class="profile-page-profile-subtitle">
-                    Update and maintain essential personal details in the personal information section.
+                    Streamline file details and information management effortlessly with file setting
                 </span>
-            <form asp-page-handler="PersonalInfo" id="change-info-form" method="post" class="profile-form">
-                <div class="profile-page-upload-profile-image" style='background-image: url(data:image/jpg;base64,@Model.curUser.imageData)'>
-                    <div class="profile-page-upload-profile-image-upload-icon">
-                        <input hidden id="image-data" asp-for="InfoInput.ImageData" value="@Model.curUser.imageData" class="form-control" />
-                        <svg viewBox="0 0 1024 1024" style="filter:invert(1.0);width: 100%; scale: 0.4; height: 100%; align-self: center;">
-                            <path d="M810 554h-256v256h-84v-256h-256v-84h256v-256h84v256h256v84z"></path>
-                        </svg>
-                    </div>
-                </div>
-                <input hidden type="file" id="upload-photo-input" name="file" accept=".jpg, .jpeg, .png" multiple="false" />
+            <form asp-page-handler="FileSetting" id="change-file-setting-form" method="post" class="profile-form expandable-form-container">
+                <input type="hidden" asp-for="FileSettingInput.bookID" value="@Model.curBook.bookID" />
                 <div class="profile-page-input-text-container">
-                    <span class="profile-page-text">First Name</span>
+                    <span class="profile-page-text">Title</span>
                     <div class="enter-input-label-container">
-                        <label asp-for="InfoInput.FirstName" class="enter-label">First name</label>
-                        <input value="@Model.curUser.firstName" asp-for="InfoInput.FirstName" id="first-name" type="text" placeholder="First Name" class="input name-input" />
-
+                        <label asp-for="FileSettingInput.title" class="enter-label">Title</label>
+                        <input value="@Model.curBook.title" asp-for="FileSettingInput.title" id="book-title" type="text" placeholder="Title" class="input name-input" />
                         <div class="register-user-error-container">
                             <svg viewBox="0 0 1024 1024" class="register-user-error-icon">
                                 <path d="M512 854q140 0 241-101t101-241-101-241-241-101-241 101-101 241 101 241 241 101zM512 86q176 0 301 125t125 301-125 301-301 125-301-125-125-301 125-301 301-125zM470 298h84v256h-84v-256zM470 640h84v86h-84v-86z"></path>
                             </svg>
-                            <span class="register-user-error-text">Enter first name</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="profile-page-input-text-container">
-                    <span class="profile-page-text">Last Name</span>
-                    <div class="enter-input-label-container">
-                        <label asp-for="InfoInput.LastName" class="enter-label">Last name</label>
-                        <input value="@Model.curUser.lastName" asp-for="InfoInput.LastName" id="last-name" type="text" placeholder="Last name (optional)" class="input" />
-                        <div class="register-user-error-container">
-                            <svg viewBox="0 0 1024 1024" class="register-user-error-icon">
-                                <path d="M512 854q140 0 241-101t101-241-101-241-241-101-241 101-101 241 101 241 241 101zM512 86q176 0 301 125t125 301-125 301-301 125-301-125-125-301 125-301 301-125zM470 298h84v256h-84v-256zM470 640h84v86h-84v-86z"></path>
-                            </svg>
-                            <span class="register-user-error-text">Enter last name</span>
+                            <span class="register-user-error-text">Enter title (less than 200 characters)</span>
                         </div>
                     </div>
                 </div>
                 <div class="profile-page-input-select-container">
-                    <span class="profile-page-text">Gender</span>
+                    <span class="profile-page-text">Type</span>
                     <div class="enter-input-label-container">
-                        <label asp-for="InfoInput.Gender" class="enter-label"><span>Gender</span></label>
-                        <select value="@Model.curUser.gender" asp-for="InfoInput.Gender" style="color:gray;" id="gender" class="input">
-                            <option value="Male">Male</option>
-                            <option value="Female">Female</option>
-                            <option value="Other">Other</option>
-                            <option value="N/A">Rather not say</option>
+                        <label asp-for="FileSettingInput.type" class="enter-label"><span>Type</span></label>
+                        <select asp-for="FileSettingInput.type" id="book-type" class="input">
+                            @foreach (var type in Model.bookTypes)
+                            {
+                                if (type == Model.curBook.type)
+                                {
+                                    <option value="@type" selected>@type</option>
+                                }
+                                else
+                                {
+                                    <option value="@type">@type</option>
+                                }
+
+                            }
                         </select>
                         <div class="register-user-error-container">
                             <svg viewBox="0 0 1024 1024" class="register-user-error-icon">
                                 <path d="M512 854q140 0 241-101t101-241-101-241-241-101-241 101-101 241 101 241 241 101zM512 86q176 0 301 125t125 301-125 301-301 125-301-125-125-301 125-301 301-125zM470 298h84v256h-84v-256zM470 640h84v86h-84v-86z"></path>
                             </svg>
-                            <span class="register-user-error-text">Select your gender</span>
+                            <span class="register-user-error-text">Select your document</span>
                         </div>
                     </div>
                 </div>
-                <div class="profile-page-input-birthday-container">
-                    <span class="profile-page-birthday-title profile-page-text">
-                        Birthday Date
-                        <input hidden asp-for="InfoInput.BirthdayDate" type="date" id="birthday-date"/>
-                    </span>
-                    <div class="register-form-month-container enter-input-label-container">
-                        <label class="enter-label"><span>Month</span></label>
-                        <select style="color:gray;" id="birthday-month" class="register-form-month-select input_same_line">
-                            <option value="1">January</option>
-                            <option value="2">February</option>
-                            <option value="3">March</option>
-                            <option value="4">April</option>
-                            <option value="5">May</option>
-                            <option value="6">June</option>
-                            <option value="7">July</option>
-                            <option value="8">August</option>
-                            <option value="9">September</option>
-                            <option value="10">October</option>
-                            <option value="11">November</option>
-                            <option value="12">December</option>
-                        </select>
-                        <div style="opacity:0" class="register-user-error-container">
+                <div class="profile-page-input-text-container">
+                    <span class="profile-page-text">Description</span>
+                    <div class="enter-input-label-container">
+                        <label asp-for="FileSettingInput.description" class="enter-label">Description</label>
+                        <textarea id="book-description" style="font-size:100%;" asp-for="FileSettingInput.description" placeholder="Description" class="create-book-background-textarea textarea">@Model.curBook.description</textarea>
+
+                        <div class="register-user-error-container">
                             <svg viewBox="0 0 1024 1024" class="register-user-error-icon">
                                 <path d="M512 854q140 0 241-101t101-241-101-241-241-101-241 101-101 241 101 241 241 101zM512 86q176 0 301 125t125 301-125 301-301 125-301-125-125-301 125-301 301-125zM470 298h84v256h-84v-256zM470 640h84v86h-84v-86z"></path>
                             </svg>
-                            <span class="register-user-error-text">Empty day</span>
-                        </div>
-                    </div>
-                    <div class="register-form-day-container enter-input-label-container">
-                        <label class="enter-label"><span>Day</span></label>
-                        <input id="birthday-day" type="text" placeholder="Day" class="register-form-day-input input_same_line" maxlength="2" />
-                        <div style="opacity:0" class="register-user-error-container">
-                            <svg viewBox="0 0 1024 1024" class="register-user-error-icon">
-                                <path d="M512 854q140 0 241-101t101-241-101-241-241-101-241 101-101 241 101 241 241 101zM512 86q176 0 301 125t125 301-125 301-301 125-301-125-125-301 125-301 301-125zM470 298h84v256h-84v-256zM470 640h84v86h-84v-86z"></path>
-                            </svg>
-                            <span class="register-user-error-text">Empty day</span>
-                        </div>
-                    </div>
-                    <div class="register-form-year-container enter-input-label-container">
-                        <label class="enter-label"><span>Year</span></label>
-                        <input id="birthday-year" type="text" placeholder="Year" class="register-form-year-input input_same_line" maxlength="4" />
-                        <div class="register-user-error-container" style="width:auto;align-self:flex-end">
-                            <svg viewBox="0 0 1024 1024" class="register-user-error-icon">
-                                <path d="M512 854q140 0 241-101t101-241-101-241-241-101-241 101-101 241 101 241 241 101zM512 86q176 0 301 125t125 301-125 301-301 125-301-125-125-301 125-301 301-125zM470 298h84v256h-84v-256zM470 640h84v86h-84v-86z"></path>
-                            </svg>
-                            <span class="register-user-error-text">Empty year</span>
+                            <span class="register-user-error-text">Enter description</span>
                         </div>
                     </div>
                 </div>
-                <button id="info-submit-button" type="button"
+                    <div class="profile-page-input-size-container">
+                    <span class="profile-page-text">Size</span>
+                    <div class="enter-input-label-container">
+                        <label class="enter-label"><span>Width</span></label>
+                        <input style="background-color:#F6F7F8;color:#525759" disabled value="@Model.curBook.width" type="text" class="input" />
+                    </div>
+                    <div class="enter-input-label-container">
+                        <label class="enter-label"><span>Height</span></label>
+                        <input style="background-color:#F6F7F8;color:#525759" disabled value="@Model.curBook.height" type="text" class="input" />
+                    </div>
+                </div>
+                <div class="profile-page-input-text-container">
+                    <span class="profile-page-text">Edition</span>
+                    <div class="enter-input-label-container">
+                        <label class="enter-label">Edition</label>
+                        <input style="background-color:#F6F7F8;color:#525759" disabled value="@Model.curBook.edition" type="text" placeholder="email@address.com" class="input" />
+                    </div>
+                </div>
+                <div class="profile-page-input-text-container">
+                    <span class="profile-page-text">Status</span>
+                    <div class="enter-input-label-container">
+                        <label class="enter-label">Status</label>
+                        <input style="background-color:#F6F7F8;color:#525759" disabled value="@Model.curBook.bookStatus" type="text" placeholder="email@address.com" class="input" />
+                    </div>
+                </div>
+                <div class="profile-page-input-text-container">
+                    <span class="profile-page-text">Author</span>
+                    <div class="enter-input-label-container">
+                        <label class="enter-label">Author</label>
+                        <input style="background-color:#F6F7F8;color:#525759" disabled value="@Model.curBook.authorID" type="text" placeholder="email@address.com" class="input" />
+                    </div>
+                </div>
+                <div class="profile-page-input-text-container">
+                    <span class="profile-page-text">Last Modified Time</span>
+                    <div class="enter-input-label-container">
+                        <label class="enter-label">Last Modified Time</label>
+                        <input style="background-color:#F6F7F8;color:#525759" disabled value="@Model.curBook.LastUpdate" type="text" placeholder="email@address.com" class="input" />
+                    </div>
+                </div>
+                <button id="file-setting-submit-button" type="button"
                         class="register-form-right-button enter-button">
                     <span>Submit</span>
                 </button>
+            </form>
+            <div class="profile-toggle-section">
+                <svg style="height:100%;width:100%" viewBox="0 0 1024 1024" class="">
+                    <path d="M225.835 414.165l256 256c16.683 16.683 43.691 16.683 60.331 0l256-256c16.683-16.683 16.683-43.691 0-60.331s-43.691-16.683-60.331 0l-225.835 225.835-225.835-225.835c-16.683-16.683-43.691-16.683-60.331 0s-16.683 43.691 0 60.331z"></path>
+                </svg>
+            </div>
+        </div>
+        <div class="profile-page-profile-container collaboration">
+            <div class="profile-success-info">Collaboration has been updated successfully</div>
+            <div class="profile-fail-info">Collaboration update failed</div>
+            <span class="profile-page-profile-title">Collaboration Section</span>
+            <span class="profile-page-profile-subtitle">
+                Efficiently foster teamwork and synergy with our collaboration solution
+            </span>
+            <form asp-page-handler="Collaboration" method="post" hidden id="collaboration-add-form">
+                <input type="hidden" id="collaboration-add-form-bookID-input" asp-for="CollaborationInput.bookID" value="0" />
+                <input type="hidden" id="collaboration-add-form-authorID-input" asp-for="CollaborationInput.authorID" value="0" />
+            </form>
+            <form asp-page-handler="CollaborationDelete" method="post" hidden id="collaboration-delete-form" >
+                <input type="hidden" id="collaboration-delete-form-bookID-input" asp-for="CollaborationInput.bookID" value="0" />
+                <input type="hidden" id="collaboration-delete-form-authorID-input" asp-for="CollaborationInput.authorID" value="0" />
+            </form>
+            <form class="profile-form expandable-form-container">
+                <span class="profile-page-profile-subtitle" style="margin-bottom:0px;">
+                    <b>People with access</b>
+                </span>
+                <div class="file-setting-collaboration-container">
+                    <div class="file-setting-collaboration-item ">
+                        <div class="file-setting-collaboration-item-left-group username-collaborate-row">
+                            <input id="collaboration-add-username-input" class="file-setting-collaboration-item-input" />
+                        </div>
+                        <div class="file-setting-collaboration-item-right-group">
+                            <button type="button" id="collaboration-add-button" class="file-setting-add-button">Add</button>
+                        </div>
+                    </div>
+                    <div class="file-setting-collaboration-item">
+                        <div class="file-setting-collaboration-item-left-group">
+                            <div class="file-setting-collaboration-item-image" style='background-image: url(data:image/jpg;base64,@Model.authorInfo.imageData)'></div>
+                            <div class="file-setting-collaboration-item-user-info">
+                                <div class="file-setting-collaboration-item-user-info-username">
+                                    @Model.authorInfo.UserName
+                                </div>
+                                <div class="file-setting-collaboration-item-user-info-name">
+                                    @Model.authorInfo.lastName @Model.authorInfo.firstName
+                                </div>
+                            </div>
+                        </div>
+                        <div class="file-setting-collaboration-item-right-group">
+                            <div class="file-setting-collaboration-item-right-group-text">
+                                Owner
+                            </div>
+                        </div>
+                    </div>
+                    @foreach(var userCollab in Model.memberList)
+                    {
+                        <div class="file-setting-collaboration-item">
+                            <div class="file-setting-collaboration-item-left-group">
+                                <div class="file-setting-collaboration-item-image" style='background-image: url(data:image/jpg;base64,@userCollab.imageData)'></div>
+                                <div class="file-setting-collaboration-item-user-info">
+                                    <div class="file-setting-collaboration-item-user-info-username">@userCollab.UserName</div>
+                                    <div class="file-setting-collaboration-item-user-info-name">@userCollab.lastName @userCollab.firstName</div>
+                                </div>
+                            </div>
+                            <div class="file-setting-collaboration-item-right-group" @(userCollab.UserName == Model.curUser.UserName ? "style=cursor:not-allowed;" : "")>
+                                <button type="button" class="file-setting-delete-button delete-collaboration-button" 
+                                @( userCollab.UserName == Model.curUser.UserName  ?"style=pointer-events:none;" :"")>Delete</button>
+                            </div>
+                        </div>
+                    }
+                </div>
             </form>
 
             <div class="profile-toggle-section">
@@ -154,9 +209,7 @@
                 </svg>
             </div>
         </div>
-
-        <div class="profile-page-profile-container password">
-
+@*         <div class="profile-page-profile-container comment">
             <div class="profile-success-info">Password has been updated successfully</div>
             <div class="profile-fail-info">Personal Information update failed</div>
             <span class="profile-page-profile-title">Security Section</span>
@@ -221,63 +274,108 @@
                 </svg>
             </div>
         </div>
-
+ *@
     </div>
     @Html.Partial("_FooterGuest")
 </div>
 
 
-@if (Model.InfoMessage == null)
+@if (Model.FileMessage == null)
 {
 
 }
-else if (Model.InfoMessage == "0")
+else if (Model.FileMessage == "0")
 {
     <script>
-        $(".personal-info .profile-success-info").css("display", "flex");
+        $(".file-setting .profile-success-info").css("display", "flex");
     </script>
 }
 else
 {
     <script>
-        $(".personal-info .profile-fail-info").css("display", "flex");
+        $(".file-setting .profile-fail-info").css("display", "flex");
+        $(".file-setting .profile-fail-info").text(Model.FileMessage);
     </script>
 }
-@if (Model.PasswordMessage == null)
+@if (Model.CollabMessage == null)
 {
 
 }
-else if (Model.PasswordMessage == "0")
+else if (Model.CollabMessage == "0")
 {
     <script>
-        $(".password .profile-success-info").css("display", "flex");
+        $(".collaboration .profile-success-info").css("display", "flex");
+        $(".collaboration .profile-success-info").text('Collaboration has been added successfully');
+    </script>
+}
+else if (Model.CollabMessage == "1")
+{
+    <script>
+        $(".collaboration .profile-success-info").css("display", "flex");
+        $(".collaboration .profile-success-info").text("Collaboration has been deleted successfully");
     </script>
 }
 else
 {
     <script>
-        $(".password .profile-fail-info").css("display", "flex");
-        $(".password .profile-fail-info").text('@Model.PasswordDetailedMessage');
+        $(".collaboration .profile-fail-info").css("display", "flex");
+        $(".collaboration .profile-fail-info").text('@Model.CollabMessage');
     </script>
 }
 
 <script>
     var expandSection;
-    $(document).ready(function () {
 
-        $("#create-button").click(function(){
+    $(document).ready(function () {
+        $(".delete-collaboration-button").click(function () {
+            var username = $(this).closest("div").prev("div").find(".file-setting-collaboration-item-user-info-username").text();
+            $("#collaboration-delete-form-bookID-input").val("@Model.curBook.bookID");
+            $("#collaboration-delete-form-authorID-input").val(username);
+            $("#collaboration-delete-form").submit();
+        })
+        $("#collaboration-add-button").click(function(){
+            var username = $("#collaboration-add-username-input").val();
+            $("#collaboration-add-form-bookID-input").val("@Model.curBook.bookID");
+            $("#collaboration-add-form-authorID-input").val(username);
+            $("#collaboration-add-form").submit();
+
+        })
+        $("#book-description").text("@Model.curBook.description");
+
+        $("#file-setting-submit-button").click(function(){
+            var validFileSetting = true;
+
+            hideError($("#book-title"));
+            hideError($("#book-type"));
+            hideError($("#book-description"));
+            if ($("#book-title").val() === "") {
+                showError($("#book-title"));
+                validFileSetting = false;
+            }
+            if ($("#book-type").val() === "") {
+                showError($("#book-type"));
+                validFileSetting = false;
+            }
+            if ($("#book-description").val() === "") {
+                showError($("#book-description"));
+                validFileSetting = false;
+            }
+
+            if(validFileSetting){
+                $("#change-file-setting-form").submit();
+            }
+        })
+        $("#create-button").click(function () {
             window.location.href = '/eBooks/Dashboard';
         })
-
         $(".profile-toggle-section").click(function () {
             var $this = $(this); // Store reference to $(this)
 
-            $("form").addClass("fadeOut");
+            $("form.expandable-form-container").addClass("fadeOut");
 
             setTimeout(function () {
-                $("form").css("display", "none");
+                $("form.expandable-form-container").css("display", "none");
                 $(".profile-toggle-section").css("transform", "rotate(0deg)");
-
                 $this.css("transform", "rotate(0deg)"); // Use $this instead of $(this)
                 if (expandSection !== $this.prev("form").attr("id")) {
                     $this.prev("form").css("display", "flex");
@@ -486,10 +584,10 @@ else
             reader.readAsDataURL(file);
         })
         // Focus effect
-        $("input, select").focusin(function () {
+        $("input, select, textarea").focusin(function () {
             $(this).prev("label.enter-label").css("color", "#3282E9");
         })
-        $("input, select").focusout(function () {
+        $("input, select, textarea").focusout(function () {
             $(this).prev("label.enter-label").css("color", "var(--dl-color-gray-700)");
         })
 

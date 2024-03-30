@@ -56,25 +56,25 @@
     <div class="sidebar-guest-container">
         <div class="sidebar-guest-sidebar">
             <nav class="sidebar-guest-nav-container">
-                <div class="sidebar-guest-nav">
+                <div class="sidebar-guest-nav sidebar-guest-nav-home">
                     <span class="sidebar-guest-nav-text">Home</span>
                     <svg viewBox="0 0 1024 1024" class="sidebar-guest-arrow-icon">
                         <path d="M366 708l196-196-196-196 60-60 256 256-256 256z"></path>
                     </svg>
                 </div>
-                <div class="sidebar-guest-nav">
+                <div class="sidebar-guest-nav sidebar-guest-nav-about">
                     <span class="sidebar-guest-nav-text">About</span>
                     <svg viewBox="0 0 1024 1024" class="sidebar-guest-arrow-icon">
                         <path d="M366 708l196-196-196-196 60-60 256 256-256 256z"></path>
                     </svg>
                 </div>
-                <div class="sidebar-guest-nav">
+                <div class="sidebar-guest-nav sidebar-guest-nav-features">
                     <span class="sidebar-guest-nav-text">Features</span>
                     <svg viewBox="0 0 1024 1024" class="sidebar-guest-arrow-icon">
                         <path d="M366 708l196-196-196-196 60-60 256 256-256 256z"></path>
                     </svg>
                 </div>
-                <div class="sidebar-guest-nav">
+                <div class="sidebar-guest-nav sidebar-guest-nav-help">
                     <span class="sidebar-guest-nav-text">Help</span>
                     <svg viewBox="0 0 1024 1024" class="sidebar-guest-arrow-icon">
                         <path d="M366 708l196-196-196-196 60-60 256 256-256 256z"></path>
@@ -109,5 +109,19 @@
             $sidebar.css("display", "none");
         });
 
+        $(".sidebar-guest-nav-home").click(function(){
+            window.location.href = "/Home";
+        })
+        $(".sidebar-guest-nav-about").click(function(){
+            window.location.href = "/About";
+        })
+        $(".sidebar-guest-nav-features").click(function(){
+            window.location.href = "/Features";
+        })
+        $(".sidebar-guest-nav-help").click(function () {
+            window.location.href = "/Help";
+        })
     });
+
+   
 </script>

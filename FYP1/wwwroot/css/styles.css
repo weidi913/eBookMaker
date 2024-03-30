@@ -183,7 +183,7 @@ textarea:focus{
   background-color: var(--dl-color-gray-white);
 }
 .error-input{
-  border-color:#DF453A;
+  border-color:#DF453A !important;
 }
 .error-input:focus{
   border-color:#DF453A;
@@ -757,6 +757,9 @@ ul.nav-link-dropdown-list {
   height: 20px;
   display: none;
   margin-right: var(--dl-space-space-twounits);
+  padding:8px;
+  box-sizing: content-box;
+  border-radius:4px;
 }
 .header-guest-image {
   height: 2rem;
@@ -821,7 +824,7 @@ ul.nav-link-dropdown-list {
   width: 100vw;
   height: 100vh;
   display: none;
-  z-index: 100;
+  z-index: 101;
   position: fixed;
   top: 0px;
   background: rgba(0,0,0,0.5);
@@ -862,9 +865,10 @@ ul.nav-link-dropdown-list {
   flex: 0 0 auto;
   width: 100%;
   height: auto;
+  padding:8px;
   display: flex;
   align-items: center;
-  margin-bottom: var(--dl-space-space-twounits);
+  margin-bottom: var(--dl-space-space-unit);
   justify-content: flex-start;
 }
 .sidebar-guest-nav-text {
@@ -935,7 +939,7 @@ ul.nav-link-dropdown-list {
   width: 100%;
   height: 80px;
   display: flex;
-  z-index: 2;
+  z-index: 10;
   position: relative;
   box-shadow: 5px 5px 10px 0px #d4d4d4;
   align-items: flex-start;
@@ -961,10 +965,16 @@ ul.nav-link-dropdown-list {
   align-items: center;
   justify-content: flex-start;
 }
+.header-login-sidebar-icon:hover{
+  background-color: var(--dl-color-hover);
+}
 .header-login-sidebar-icon {
+  padding:8px;
+  box-sizing: content-box;
+  border-radius:4px;
   width: 20px;
   height: 20px;
-  margin-right: var(--dl-space-space-twounits);
+  margin-right: var(--dl-space-space-unit);
 }
 .header-login-logo {
   height: 2rem;
@@ -984,8 +994,16 @@ ul.nav-link-dropdown-list {
 .header-login-profile-pic {
   width: 40px;
   height: 40px;
-  object-fit: cover;
   border-radius: var(--dl-radius-radius-round);
+  border:solid 1px #D9DDE1;
+  position:relative;
+  z-index:50;
+  cursor: pointer;
+  background-size: cover;
+  background-image: url('https://images.unsplash.com/photo-1607746882042-944635dfe10e?ixid=M3w5MTMyMXwwfDF8c2VhcmNofDF8fHByb2ZpbGUlMjBpY29ufGVufDB8fHx8MTcxMTQ3MDgwMnww&ixlib=rb-4.0.3&w=200');
+  background-color: black;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 @media(max-width: 1200px) {
   .header-login-container {
@@ -995,7 +1013,6 @@ ul.nav-link-dropdown-list {
 @media(max-width: 991px) {
   .header-login-container {
     height: 80px;
-    z-index: 1;
   }
   .header-login-left-group {
     position: relative;
@@ -1138,6 +1155,7 @@ ul.nav-link-dropdown-list {
   align-items: center;
   flex-direction: row;
   justify-content: space-between;
+  cursor: pointer;
 }
 .footer-guest-icon {
   width: var(--dl-size-size-xsmall);
@@ -1166,6 +1184,9 @@ ul.nav-link-dropdown-list {
   .footer-guest-claim {
     margin-bottom: var(--dl-space-space-halfunit);
   }
+  .footer-guest-icon-group svg:nth-child(3){
+    margin-right:0px;
+  }
 }
 @media(max-width: 479px) {
   .footer-guest-vertical-container {
@@ -1193,7 +1214,7 @@ ul.nav-link-dropdown-list {
   left: 0;
   width: auto;
   display: flex;
-  z-index: 1;
+  z-index: 10;
   align-items: flex-start;
   flex-direction: column;
 }
@@ -1208,6 +1229,13 @@ ul.nav-link-dropdown-list {
   flex-direction: column;
   justify-content: space-between;
   background-color: var(--dl-color-gray-white);
+
+  animation-name: fadeIn;
+  animation-delay: 0s;
+  animation-duration: 300ms;
+  animation-direction: normal;
+  animation-iteration-count: 1;
+  animation-timing-function: linear;
 }
 .sidebar-login-menu-text {
   display: none;
@@ -1296,6 +1324,12 @@ ul.nav-link-dropdown-list {
   height: var(--dl-size-size-small);
   object-fit: cover;
   border-radius: var(--dl-radius-radius-round);
+
+  background-size: cover;
+  background-image: url('https://images.unsplash.com/photo-1607746882042-944635dfe10e?ixid=M3w5MTMyMXwwfDF8c2VhcmNofDF8fHByb2ZpbGUlMjBpY29ufGVufDB8fHx8MTcxMTQ3MDgwMnww&ixlib=rb-4.0.3&w=200');
+  background-color: black;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 .sidebar-login-profile-text-container {
   display: flex;
@@ -1308,7 +1342,6 @@ ul.nav-link-dropdown-list {
   font-size: 1.15rem;
   font-style: normal;
   font-weight: 600;
-  margin-bottom: 0.25rem;
 }
 .sidebar-login-view-profile {
   color: var(--dl-color-gray-500);
@@ -1320,6 +1353,7 @@ ul.nav-link-dropdown-list {
     width: 100%;
     position: fixed;
     background-color: rgba(0, 0, 0, 0.5);
+    display:none;
   }
   .sidebar-login-sidebar-vertical-container {
     height: 100vh;
@@ -1366,15 +1400,16 @@ ul.nav-link-dropdown-list {
   position: relative;
   background: linear-gradient(     to bottom,   rgba(255, 255, 255, 1) 50%,     rgba(255, 255, 255, 0) 100%   ),   
   url("../images/home-light-blue-paint-background.jpeg");
-  max-height: 750;
+  max-height: 750px;
   min-height: 600px;
   align-items: center;
   flex-direction: column;
   background-size: cover;
   justify-content: center;
+  overflow:hidden;
 }
 .home-hero-text {
-  z-index: 50;
+  z-index: 5;
   font-size: var(--dl-font-size-flexible-section-header);
   align-self: center;
   background: linear-gradient(90deg, #001f3f, #8e44ad, #d35400);
@@ -1398,7 +1433,7 @@ ul.nav-link-dropdown-list {
   margin-bottom: var(--dl-space-space-twounits);
 }
 .home-hero-get-started-button {
-  z-index: 100;
+  z-index: 5;
   font-size: calc((15px + 0.390625vw)/2);
   box-shadow: 5px 5px 10px 0px #d4d4d4;
   transition: 0.3s;
@@ -2826,6 +2861,32 @@ ul.nav-link-dropdown-list {
   align-items: flex-start;
   background-size: cover;
   background-image: url("https://play.teleporthq.io/static/svg/default-img.svg");
+  background-color:#EEF0F2;
+  border-radius: 8px;
+
+  background-size: 100% auto; /* Fit the width, auto height */
+  background-repeat: no-repeat; /* Do not repeat the background image */
+  background-position: top left; /* Start the background image from the top left corner */
+  cursor:pointer;
+  position:relative;
+}
+
+.design-recommendation-preview-container-hover-container{
+  display:none;
+  width:100%;
+  height:100%;
+  color:white;
+  font-size:16px;
+  font-weight: 600;
+  align-items: center;
+  
+  background-color: rgba(0, 0, 0, 0.6);
+  justify-content: center;
+  position:absolute;
+  border-radius: 8px;
+}
+.design-recommendation-preview-container:hover div{
+  display:flex;
 }
 
 .item-container-feature-card {
@@ -2835,6 +2896,27 @@ ul.nav-link-dropdown-list {
   align-items: flex-start;
   flex-direction: column;
   justify-content: flex-start;
+}
+.item-container-feature-card-setting{
+  right:12px;
+  top:12px;
+  position:absolute;
+  width:32px;
+  height:32px;
+  background-color: white;
+  padding:4px;
+  border-radius: 4px;
+  box-shadow: 5px 5px 10px 0px #d4d4d4;
+  border:solid 1px #D9DDE1;
+  display:none;
+}
+.item-container-feature-card-setting:hover{
+  filter:invert(1);
+  cursor: pointer;
+}
+
+.item-container-feature-card:hover .item-container-feature-card-setting{
+  display:flex;
 }
 .item-container-preview-container {
   width: 100%;
@@ -3150,6 +3232,7 @@ ul.nav-link-dropdown-list {
   font-size: calc(0.8*(15px + 0.390625vw));
   border-color: var(--dl-color-gray-900);
   border-width: 1px;
+  width:100%;
 }
 .create-book-background-textarea {
   width: 100%;
@@ -3157,6 +3240,7 @@ ul.nav-link-dropdown-list {
   resize: vertical;
   font-size: calc(0.8*(15px + 0.390625vw));
   border-color: var(--dl-color-gray-900);
+  padding:1rem;
 }
 .create-book-background-two-input-container {
   gap: 8px;
@@ -3224,9 +3308,16 @@ ul.nav-link-dropdown-list {
   justify-content: flex-start;
 }
 .header-design-more-option-icon {
+  padding:8px;
   width: 20px;
   height: 20px;
+  box-sizing: content-box;
   margin-right: var(--dl-space-space-unit);
+  border-radius:4px;
+}
+.header-design-more-option-icon:hover{
+  background-color: var(--dl-color-hover);
+  cursor:pointer;
 }
 .header-design-home-icon {
   width: 24px;
@@ -3423,6 +3514,9 @@ ul.nav-link-dropdown-list {
   padding-right: var(--dl-space-space-unit);
   padding-bottom: var(--dl-space-space-halfunit);
   background-color: transparent;
+}
+.header-design-title-input:hover,.header-design-title-input:focus{
+  border:solid 1px red;
 }
 .header-design-right-group {
   display: flex;
@@ -4586,7 +4680,7 @@ ul.nav-link-dropdown-list {
   
 /* End of ebook design section */
 
-/* profile page section */
+/* profile page and file setting section */
 .profile-page-container {
   flex: 1;
   width: auto;
@@ -4630,6 +4724,50 @@ ul.nav-link-dropdown-list {
   height:40px;
 
 }
+.profile-expand-container{
+  width: auto;
+  position:absolute;
+  height:auto;
+  padding:16px;
+  background-color: white;
+  box-shadow: 5px 5px 10px 0px #d4d4d4;
+  border-radius:4px;
+  top:50px;
+  right:0px;
+
+  animation-name: fadeIn;
+  animation-delay: 0s;
+  animation-duration: 150ms;
+  animation-direction: normal;
+  animation-iteration-count: 1;
+  animation-timing-function: linear;
+}
+.profile-expand-container div:hover{
+  background-color: var(--dl-color-hover);
+}
+.profile-expand-container-logout, .profile-expand-container-tab{
+  display:inline-block;
+  padding-left:12px;
+  padding-right:12px;
+  padding-top:12px;
+  padding-bottom:12px;
+  cursor:pointer;
+  width: auto;
+  white-space: nowrap;
+  min-width: 200px;
+  max-width: 400px;
+}
+.profile-expand-container-seperator{
+  border:solid 1px #E8EBED;
+  height:0px !important;
+  width:100%;
+  margin-top:8px;
+  margin-bottom:8px;
+}
+.profile-expand-container-logout{
+  color:#dc3545;
+}
+
     .fadeOut{
         animation-name: fadeOut !important;
         animation-delay: 0s;
@@ -4759,6 +4897,15 @@ ul.nav-link-dropdown-list {
   grid-template-columns: calc(30% - 4px) calc(20% - 2px) calc(20% - 2px) calc(30% - 4px);
   grid-gap:4px;
 }
+.profile-page-input-size-container {
+  flex: 0 0 auto;
+  width: 100%;
+  display: grid;
+  align-items: center;
+  margin-bottom: var(--dl-space-space-unit);
+  grid-template-columns: calc(30% - 4px) calc(35% - 2px) calc(35% - 4px);
+  grid-gap:4px;
+}
 .profile-form{
   width:100%;
   height:auto;
@@ -4861,6 +5008,110 @@ ul.nav-link-dropdown-list {
     text-align: center;
   }
 }
+.file-setting-collaboration-container{
+  display:flex;
+  flex-direction: column;
+  width:100%;
+  height:auto;
+}
+.file-setting-collaboration-item{
+  width:100%;
+  height:auto;
+  display:flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom:12px;
+}
+.file-setting-collaboration-item-left-group{
+  display:flex;
+  flex-direction: row;
+}
+.file-setting-collaboration-item-right-group{
+  margin-left:auto;
+}
+.file-setting-collaboration-item-image {
+  align-self: center;
+  width: 60px;
+  height: 60px;
+  display: flex;
 
+  align-items: flex-start;
+  aspect-ratio: 1/1;
+  border-color: var(--dl-color-gray-white);
+  border-style: solid;
+  border-width: 4px;
+  border-radius: var(--dl-radius-radius-round);
+  background-size: cover;
+  background-image: url('https://images.unsplash.com/photo-1607746882042-944635dfe10e?ixid=M3w5MTMyMXwwfDF8c2VhcmNofDF8fHByb2ZpbGUlMjBpY29ufGVufDB8fHx8MTcxMTQ3MDgwMnww&ixlib=rb-4.0.3&w=200');
+  background-color: black;
+      /* Ensure background image does not repeat */
+    background-repeat: no-repeat;
+    
+    /* Center the background image */
+    background-position: center;
+    margin-right:8px;
 
-/* end of profile page section */
+}
+.file-setting-collaboration-item-user-info{
+  display:flex;
+  align-self: center;
+  flex-direction: column;
+}
+.file-setting-collaboration-item-user-info-username{
+  font-size:16px;
+  font-weight: 700;
+  margin-bottom:4px;
+}
+.file-setting-collaboration-item-user-info-name{
+  font-size: 14px;
+  color:rgba(13,18,22,.86);
+}
+.file-setting-add-button{
+  padding:8px 16px;
+  border-radius:4px;
+  background-color: white;
+  border:solid black 1px;
+  font-weight:700;
+  width:84px;
+
+}
+.file-setting-add-button:hover{
+  cursor: pointer;
+  color:white;
+  background-color: black;
+  border:solid white 1px;
+}
+.file-setting-delete-button{
+  padding:8px 16px;
+  border-radius:4px;
+  color:#dc3545;
+  background-color: white;
+  border:solid #dc3545 1px;
+  font-weight:700;
+  width:84px;
+}
+.file-setting-delete-button:hover{
+  cursor: pointer;
+  color:white;
+  background-color: #dc3545;
+  border:solid white 1px;
+}
+.file-setting-collaboration-item-right-group-text{
+  margin-right: 16px;
+}
+.file-setting-collaboration-item-input{
+  height: 40px;
+  margin: 10px 0px;
+  padding: 8px;
+  width: 100%;
+  border-radius:4px;
+  border: solid 1px rgba(43,59,74,.3);
+}
+.file-setting-collaboration-item-input:hover{
+  border:solid 1px blue;
+}
+.username-collaborate-row{
+  width:100%;
+  margin-right:32px;
+}
+/* end of profile page and file setting section */

@@ -143,7 +143,7 @@ namespace FYP1.Pages.eBooks
                                     <svg viewBox=""0 0 1024 1024"" class=""design-page-content-icon page-lock-icon"">
                                         <path d=""M768 854v-428h-512v428h512zM380 256v86h264v-86q0-54-39-93t-93-39-93 39-39 93zM768 342q34 0 60 25t26 59v428q0 34-26 59t-60 25h-512q-34 0-60-25t-26-59v-428q0-34 26-59t60-25h42v-86q0-88 63-151t151-63 151 63 63 151v86h42zM512 726q-34 0-60-26t-26-60 26-60 60-26 60 26 26 60-26 60-60 26z""></path>
                                     </svg>
-                                    <svg viewBox=""0 0 1024 1024"" class=""design-page-content-icon page-unlock-icon"">
+                                    <svg viewBox=""0 0 1024 1024"" class=""design-page-content-icon page-unlock-icon hidden"">
                                         <path d=""M768 854v-428h-512v428h512zM768 342q34 0 60 25t26 59v428q0 34-26 59t-60 25h-512q-34 0-60-25t-26-59v-428q0-34 26-59t60-25h388v-86q0-54-39-93t-93-39-93 39-39 93h-82q0-88 63-151t151-63 151 63 63 151v86h42zM512 726q-34 0-60-26t-26-60 26-60 60-26 60 26 26 60-26 60-60 26z""></path>
                                     </svg>
                                 </button>
@@ -161,7 +161,7 @@ namespace FYP1.Pages.eBooks
                                 </button>
                             </div>
                         </div>
-                        <div style='height: {height} mm' class=""design-page-content-page-content"">
+                        <div style='height: {height-20}mm' class=""design-page-content-page-content"">
                             <!-- Additional content goes here -->
                         </div>
                     </div>";
