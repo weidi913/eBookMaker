@@ -3577,6 +3577,10 @@ ul.nav-link-dropdown-list {
   height: 40px;
   object-fit: cover;
   border-radius: var(--dl-radius-radius-round);
+  background-size: cover;
+  background-image: url('https://images.unsplash.com/photo-1607746882042-944635dfe10e?ixid=M3w5MTMyMXwwfDF8c2VhcmNofDF8fHByb2ZpbGUlMjBpY29ufGVufDB8fHx8MTcxMTQ3MDgwMnww&ixlib=rb-4.0.3&w=200');
+  background-repeat: no-repeat;
+  background-position: center;
 }
 .header-design-collaborate-container {
   flex: 0 0 auto;
@@ -3935,7 +3939,7 @@ ul.nav-link-dropdown-list {
   flex-direction: column;
 }
 .e-book-design-scale-input {
-  width: 240px;
+  width: 100px;
   height: 100%;
   padding: 4px;
   font-size: 14px;

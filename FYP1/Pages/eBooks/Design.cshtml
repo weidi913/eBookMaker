@@ -397,9 +397,11 @@
             </div>
             <input id="ebook-title-input" type="text" placeholder="Title" value="@Model.curBook.title" class="header-design-title-input input" />
             <div class="header-design-right-group">
-                <img alt="image"
+@*                 <img alt="image"
                      src="https://play.teleporthq.io/static/svg/default-img.svg"
-                     class="header-design-profile-icon" />
+                     class="header-design-profile-icon" /> *@
+                     <div class="header-design-profile-icon" style="background-image:url(data:image/jpg;base64,@Model.curUser.imageData)"></div>
+
                 <div class="header-design-collaborate-container">
                     <svg viewBox="0 0 1024 1024" class="header-design-add-icon">
                         <path d="M810 554h-256v256h-84v-256h-256v-84h256v-256h84v256h256v84z"></path>
@@ -635,16 +637,22 @@
             <span class="design-add-page-heading-text">
                 <span>Images</span>
             </span>
-            <input id="search-chart" type="text"
-                   placeholder="Search Item...."
-                   class="design-add-page-search-input input" />
-            <img id="brown-ebook-explanation" src="~/images/design-images/brown-ebook-explanation.jpeg" class="design-add-page-gallery" />
-            <img id="brown-ebook-image" src="~/images/design-images/brown-ebook-image.jpg" class="design-add-page-gallery" />
-            <img id="children-in-classroom" src="~/images/design-images/children-in-classroom.jpg" class="design-add-page-gallery" />
-            <img id="children-reading-image" src="~/images/design-images/children-reading-image.jpg" class="design-add-page-gallery" />
-            <img id="green-ebook-image" src="~/images/design-images/green-ebook-image.jpeg" class="design-add-page-gallery" />
-            <img id="view-ebook-action" src="~/images/design-images/view-ebook-action.jpeg" class="design-add-page-gallery" />
-            <img id="book-flying-effects" src="~/images/design-images/book-flying-effects.png" class="design-add-page-gallery" />
+            <div class="design-add-page-search-container">
+                <svg viewBox="0 0 950.8571428571428 1024"
+                     class="design-add-page-search-icon">
+                    <path d="M658.286 475.429c0-141.143-114.857-256-256-256s-256 114.857-256 256 114.857 256 256 256 256-114.857 256-256zM950.857 950.857c0 40-33.143 73.143-73.143 73.143-19.429 0-38.286-8-51.429-21.714l-196-195.429c-66.857 46.286-146.857 70.857-228 70.857-222.286 0-402.286-180-402.286-402.286s180-402.286 402.286-402.286 402.286 180 402.286 402.286c0 81.143-24.571 161.143-70.857 228l196 196c13.143 13.143 21.143 32 21.143 51.429z"></path>
+                </svg>
+                <input id="search-image" type="text"
+                       placeholder="Search Item...."
+                       class="design-add-page-search-input input" />
+            </div>
+            <img id="brown-ebook-explanation" src="~/images/design-images/brown-ebook-explanation.jpeg" class="design-add-page-gallery" data-image-information="ebook explaination poster sample" />
+            <img id="brown-ebook-image" src="~/images/design-images/brown-ebook-image.jpg" class="design-add-page-gallery" data-image-information="brown ebook floating reading devices " />
+            <img id="children-in-classroom" src="~/images/design-images/children-in-classroom.jpg" class="design-add-page-gallery" data-image-information="children classrom education happy student table class school" />
+            <img id="children-reading-image" src="~/images/design-images/children-reading-image.jpg" class="design-add-page-gallery" data-image-information="children reading book on the floor"/>
+            <img id="green-ebook-image" src="~/images/design-images/green-ebook-image.jpeg" class="design-add-page-gallery" data-image-information="green background displaying ebook reader on the table" />
+            <img id="view-ebook-action" src="~/images/design-images/view-ebook-action.jpeg" class="design-add-page-gallery" data-image-information="flipping the ebook reading ebook reader devices ipad"/>
+            <img id="book-flying-effects" src="~/images/design-images/book-flying-effects.png" class="design-add-page-gallery" data-image-information="word flying out from the book blue colour words white book"/>
         </div>
         <div id="add-OCR" class="hidden design-add-page-container">
             <span class="design-add-page-heading-text">
@@ -1083,6 +1091,28 @@
                     <svg viewBox="0 0 1024 1024" class="e-book-design-top-function-icon">
                         <path d="M768 854v-428h-512v428h512zM768 342q34 0 60 25t26 59v428q0 34-26 59t-60 25h-512q-34 0-60-25t-26-59v-428q0-34 26-59t60-25h388v-86q0-54-39-93t-93-39-93 39-39 93h-82q0-88 63-151t151-63 151 63 63 151v86h42zM512 726q-34 0-60-26t-26-60 26-60 60-26 60 26 26 60-26 60-60 26z"></path>
                     </svg>
+                </button>
+                <button type="button"
+                        id="element-copy-button"
+                        class="e-book-design-top-function-icon-button design-page-button hidden">
+                    <svg class="e-book-design-top-function-icon" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 115.77 122.88" style="enable-background:new 0 0 115.77 122.88" xml:space="preserve"><style type="text/css">
+                                                                                                                                                                                                                                                                                               .st0 {
+                                                                                                                                                                                                                                                                                                   fill-rule: evenodd;
+                                                                                                                                                                                                                                                                                                   clip-rule: evenodd;
+                                                                                                                                                                                                                                                                                               }</style><g><path class="st0" d="M89.62,13.96v7.73h12.19h0.01v0.02c3.85,0.01,7.34,1.57,9.86,4.1c2.5,2.51,4.06,5.98,4.07,9.82h0.02v0.02 v73.27v0.01h-0.02c-0.01,3.84-1.57,7.33-4.1,9.86c-2.51,2.5-5.98,4.06-9.82,4.07v0.02h-0.02h-61.7H40.1v-0.02 c-3.84-0.01-7.34-1.57-9.86-4.1c-2.5-2.51-4.06-5.98-4.07-9.82h-0.02v-0.02V92.51H13.96h-0.01v-0.02c-3.84-0.01-7.34-1.57-9.86-4.1 c-2.5-2.51-4.06-5.98-4.07-9.82H0v-0.02V13.96v-0.01h0.02c0.01-3.85,1.58-7.34,4.1-9.86c2.51-2.5,5.98-4.06,9.82-4.07V0h0.02h61.7 h0.01v0.02c3.85,0.01,7.34,1.57,9.86,4.1c2.5,2.51,4.06,5.98,4.07,9.82h0.02V13.96L89.62,13.96z M79.04,21.69v-7.73v-0.02h0.02 c0-0.91-0.39-1.75-1.01-2.37c-0.61-0.61-1.46-1-2.37-1v0.02h-0.01h-61.7h-0.02v-0.02c-0.91,0-1.75,0.39-2.37,1.01 c-0.61,0.61-1,1.46-1,2.37h0.02v0.01v64.59v0.02h-0.02c0,0.91,0.39,1.75,1.01,2.37c0.61,0.61,1.46,1,2.37,1v-0.02h0.01h12.19V35.65 v-0.01h0.02c0.01-3.85,1.58-7.34,4.1-9.86c2.51-2.5,5.98-4.06,9.82-4.07v-0.02h0.02H79.04L79.04,21.69z M105.18,108.92V35.65v-0.02 h0.02c0-0.91-0.39-1.75-1.01-2.37c-0.61-0.61-1.46-1-2.37-1v0.02h-0.01h-61.7h-0.02v-0.02c-0.91,0-1.75,0.39-2.37,1.01 c-0.61,0.61-1,1.46-1,2.37h0.02v0.01v73.27v0.02h-0.02c0,0.91,0.39,1.75,1.01,2.37c0.61,0.61,1.46,1,2.37,1v-0.02h0.01h61.7h0.02 v0.02c0.91,0,1.75-0.39,2.37-1.01c0.61-0.61,1-1.46,1-2.37h-0.02V108.92L105.18,108.92z" /></g></svg>
+                </button>
+                <button type="button"
+                        id="element-paste-button"
+                        class="e-book-design-top-function-icon-button design-page-button hidden">
+                    <svg fill="#000000" class="e-book-design-top-function-icon" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 62.094 62.094" xml:space="preserve" stroke="#000000" stroke-width="2.5">
+
+<g id="SVGRepo_bgCarrier" stroke-width="0" />
+
+<g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" />
+
+<g id="SVGRepo_iconCarrier"> <path d="M58.933,28.698l-5.19-5.996V9.854c0-3.044-2.477-5.521-5.521-5.521h-6.29V1c0-0.552-0.448-1-1-1H15.728 c-0.552,0-1,0.448-1,1v3.333h-6.29c-3.044,0-5.521,2.477-5.521,5.521v41.894c0,3.044,2.477,5.521,5.521,5.521h12.098 c0.917,2.798,3.549,4.826,6.649,4.826h24.993c3.859,0,6.999-3.14,6.999-6.999V29.353C59.177,29.112,59.091,28.88,58.933,28.698z M46.305,17.165l9.684,11.188h-4.685c-2.756,0-4.999-2.242-4.999-4.999V17.165z M16.728,2h23.204v5.572H16.728V2z M8.438,55.268 c-1.941,0-3.521-1.58-3.521-3.521V9.854c0-1.941,1.58-3.521,3.521-3.521h6.29v2.24c0,0.552,0.448,1,1,1h25.204c0.552,0,1-0.448,1-1 v-2.24h6.29c1.941,0,3.521,1.58,3.521,3.521v10.538l-5.682-6.564c-0.19-0.22-0.466-0.346-0.756-0.346h-18.12 c-3.859,0-6.999,3.139-6.999,6.998v34.616c0,0.058,0.007,0.115,0.009,0.172H8.438z M52.178,60.094H27.185 c-2.756,0-4.999-2.242-4.999-4.999V20.479c0-2.756,2.242-4.998,4.999-4.998h17.12v7.873c0,3.859,3.14,6.999,6.999,6.999h5.873 v24.743C57.177,57.852,54.935,60.094,52.178,60.094z" /> </g>
+
+</svg>
                 </button>
                 <div class="e-book-design-button-separator hidden"></div>
                 @* <div id="toolbar"> </div> *@
@@ -1693,6 +1723,26 @@
     }
 
     $(document).ready(function () {
+        $("#element-copy-button").click(function(){
+
+        })
+        $(".element-paste-button").click(function(){
+
+        })
+        $("#search-image").on("input", function () {
+            var optionList = $("#add-image").find("img");
+            var value = $(this).val().toLowerCase();
+            optionList.each(function () {
+                var option = $(this);
+                console.log(option);
+                if (option.attr("data-image-information").toLowerCase().includes(value)) {
+                    option.removeClass("hidden");
+                }
+                else {
+                    option.addClass("hidden");
+                }
+            })
+        })
         $("#search-chart").on("input", function () {
             var value = $(this).val().toLowerCase();
             var optionList = $("#add-chart").find(".design-add-page-chart-container");
@@ -3955,36 +4005,9 @@
                     prevSelectedElement.removeClass("moveable");
                     $(".rotation-handle").remove();
                     $(".pointer").remove();
-                    var content;
-                    if (prevSelectedElement.hasClass("shape")){
-                        content = prevSelectedElement.find("div:first")[0].outerHTML;
-                        content += "<div class='editor' style='border:none'>";
-                        content += prevSelectedElement.find(".ql-editor").html();
-                        content += "</div>";
-                    }
-                    else if (prevSelectedElement.hasClass("image")) {
-                        content = "";
-                    }
-                    else if (prevSelectedElement.hasClass("text")) {
-                        content = "<div class='editor' style='border:none'>";
-                        content += prevSelectedElement.find(".ql-editor").html();
-                        content += "</div>";
-                        console.log(content);
-                    }
-                    else if(prevSelectedElement.hasClass("chart")){
-                        content = "";
 
-                        // Get the canvas element using its ID
-                        var myChart = Chart.getChart(prevSelectedElement.find("canvas")[0].getContext("2d"));
-                        var config = {
-                            type: myChart.config.type,
-                            data: myChart.config.data,
-                            options: myChart.config.options
-                        };
-                        content = JSON.stringify(config);
-                    }
+                    await updateElementFunc(prevSelectedElement);
 
-                    await EditElementFunc(prevSelectedElement.attr("id"), content, prevSelectedElement.attr("style"));
                 }
                 $(".ql-toolbar").addClass("hidden");
 
@@ -4039,6 +4062,31 @@
             }
 
             await EditElementFunc(prevSelectedElement.attr("id"), content, prevSelectedElement.attr("style"));
+        }
+
+        function getContent(prevSelectedElement) {
+            var content = "";
+            if (prevSelectedElement.hasClass("shape")) {
+                content = prevSelectedElement.find("div:first")[0].outerHTML;
+                content += "<div class='editor' style='border:none'>";
+                content += prevSelectedElement.find(".ql-editor").html();
+                content += "</div>";
+            } else if (prevSelectedElement.hasClass("image")) {
+                content = "";
+            } else if (prevSelectedElement.hasClass("text")) {
+                content = "<div class='editor' style='border:none'>";
+                content += prevSelectedElement.find(".ql-editor").html();
+                content += "</div>";
+            } else if (prevSelectedElement.hasClass("chart")) {
+                var myChart = Chart.getChart(prevSelectedElement.find("canvas")[0].getContext("2d"));
+                var config = {
+                    type: myChart.config.type,
+                    data: myChart.config.data,
+                    options: myChart.config.options
+                };
+                content = JSON.stringify(config);
+            }
+            return content;
         }
         function retrieveChartValue(container){
             if(container === null){
