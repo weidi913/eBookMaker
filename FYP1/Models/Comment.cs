@@ -1,13 +1,12 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FYP1.Models
 {
     public class Comment
     {
-        [Key]
-        [Required]
-        public int commentID {get; set;}
+
 
         [Required,StringLength(1000)]
         public int comment { get; set; }
@@ -18,16 +17,16 @@ namespace FYP1.Models
         [Required]//maybe need add default status
         public bool commentStatus { get; set; }
 
-        [Required,StringLength(50)]
+        [Required,StringLength(256)]
         public string authorID { get; set; }
 
         [Required]
-        public string bookPageID { get; set; }
+        public int bookPageID { get; set; }
 
-
+        [ForeignKey("bookPageID")]
         public BookPage? Page { get; set; }
 
-        //public User? User { get; set; }
+        public Member? User { get; set; }
 
         [Timestamp]
         public byte[]? ConcurrencyToken { get; set; }

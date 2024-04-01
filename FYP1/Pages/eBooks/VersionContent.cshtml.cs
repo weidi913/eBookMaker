@@ -22,7 +22,7 @@ using Microsoft.Extensions.Logging;
 namespace FYP1.Pages.eBooks
 {
     [Authorize]
-    public class FileSettingModel : DI_BasePageModel
+    public class VersionContentModel : DI_BasePageModel
     {
         // Store the data
         private readonly ApplicationDbContext _context;
@@ -30,7 +30,7 @@ namespace FYP1.Pages.eBooks
         private readonly UserManager<Member> _userManager;
 
         // Retrieve the data
-        public FileSettingModel(
+        public VersionContentModel(
             ApplicationDbContext context,
             IAuthorizationService authorizationService,
             UserManager<Member> userManager)
@@ -455,7 +455,7 @@ namespace FYP1.Pages.eBooks
             var versionAdd = new Models.Version();
             versionAdd.bookID = VersionInput.bookID;
             versionAdd.verName = VersionInput.verName;
-            versionAdd.verContent = "";//need to generate the content here need to generate the content here here still need to modify remind myself
+            versionAdd.verContent = "";//need to generate the content here here still need to modify remind myself
             versionAdd.versionDate = DateTime.Now;
 
             _context.Version.Add(versionAdd);
@@ -476,7 +476,7 @@ namespace FYP1.Pages.eBooks
             }
 
             // Retrieve the relevant eBook
-            var versionUpdate = await _context.Version.FirstOrDefaultAsync(m => m.versionID == VersionInput.versionID);
+            var versionUpdate = await _context.Version.FirstOrDefaultAsync(m => m.bookID == VersionInput.versionID);
 
             if (versionUpdate == null)
             {
@@ -519,11 +519,11 @@ namespace FYP1.Pages.eBooks
             try
             {
                 await _context.SaveChangesAsync();
-                return RedirectToPage("./FileSetting", new { id = ebook.bookID, VersionMessage = 1 });
+                return RedirectToPage("./FileSetting", new { id = VersionInput.bookID, VersionMessage = 1 });
             }
             catch (DbUpdateConcurrencyException error)
             {
-                return RedirectToPage("./FileSetting", new { id = ebook.bookID, VersionMessage = error.ToString() });
+                return RedirectToPage("./FileSetting", new { id = VersionInput.bookID, VersionMessage = error.ToString() });
             }
         }
         public async Task<IActionResult> OnPostVersionDeleteAsync()

@@ -13,15 +13,16 @@
 <div style="display:flex;flex-direction:column;min-height:100vh;width:100%;">
     @Html.Partial("_HeaderLogin")
     <div class="profile-page-container">
-        <div class="profile-page-profile-container">
-            <div class="profile-page-welcome-background"></div>
+        <div class="profile-page-profile-container profile-page-show-image">
+            <div class="profile-page-welcome-background welcome"></div>
 
             <div class="profile-page-profile-image welcome" style="background-image: url(data:image/jpg;base64,@Model.curUser.imageData)"></div>
+            <div style="height:50px"></div>
             <span class="profile-page-profile-title welcome">Welcome @Model.curUser.lastName @Model.curUser.firstName</span>
             <span class="profile-page-profile-subtitle welcome ">
                 Embark on your profile journey today and enjoy the experience!
             </span>
-            <span class="profile-page-profile-description">
+            <span class="profile-page-profile-description welcome">
                 Welcome to your profile management hub! Here, you have full control
                 over your personal information, and account security. Update your
                 details and ensure your account remains secure with just a few

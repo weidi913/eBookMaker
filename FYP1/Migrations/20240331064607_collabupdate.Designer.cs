@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FYP1.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240225062119_first")]
-    partial class first
+    [Migration("20240331064607_collabupdate")]
+    partial class collabupdate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -86,59 +86,46 @@ namespace FYP1.Migrations
 
             modelBuilder.Entity("FYP1.Models.Collaboration", b =>
                 {
-                    b.Property<int>("collabID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                    b.Property<string>("authorID")
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("collabID"), 1L, 1);
+                    b.Property<int>("bookID")
+                        .HasColumnType("int");
 
                     b.Property<byte[]>("ConcurrencyToken")
                         .IsConcurrencyToken()
                         .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("rowversion");
 
-                    b.Property<string>("authorID")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("bookID")
-                        .HasColumnType("int");
+                    b.HasKey("authorID", "bookID");
 
-                    b.Property<int?>("eBookbookID")
-                        .HasColumnType("int");
+                    b.HasIndex("UserId");
 
-                    b.HasKey("collabID");
-
-                    b.HasIndex("eBookbookID");
+                    b.HasIndex("bookID");
 
                     b.ToTable("Collaboration");
                 });
 
             modelBuilder.Entity("FYP1.Models.Comment", b =>
                 {
-                    b.Property<int>("commentID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                    b.Property<string>("authorID")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("commentID"), 1L, 1);
+                    b.Property<int>("bookPageID")
+                        .HasColumnType("int");
 
                     b.Property<byte[]>("ConcurrencyToken")
                         .IsConcurrencyToken()
                         .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("rowversion");
 
-                    b.Property<int?>("PagebookPageID")
-                        .HasColumnType("int");
-
-                    b.Property<string>("authorID")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("bookPageID")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("comment")
                         .HasMaxLength(1000)
@@ -150,9 +137,11 @@ namespace FYP1.Migrations
                     b.Property<bool>("commentStatus")
                         .HasColumnType("bit");
 
-                    b.HasKey("commentID");
+                    b.HasKey("authorID", "bookPageID");
 
-                    b.HasIndex("PagebookPageID");
+                    b.HasIndex("UserId");
+
+                    b.HasIndex("bookPageID");
 
                     b.ToTable("Comment");
                 });
@@ -248,8 +237,8 @@ namespace FYP1.Migrations
                     b.Property<string>("text")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("z_index")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("z_index")
+                        .HasColumnType("int");
 
                     b.HasKey("elementID");
 
@@ -355,24 +344,21 @@ namespace FYP1.Migrations
                     b.Property<int>("bookID")
                         .HasColumnType("int");
 
-                    b.Property<int?>("eBookbookID")
-                        .HasColumnType("int");
-
                     b.Property<string>("verContent")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("verName")
                         .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<DateTime>("versionDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("versionID");
 
-                    b.HasIndex("eBookbookID");
+                    b.HasIndex("bookID");
 
                     b.ToTable("Version");
                 });
@@ -538,20 +524,36 @@ namespace FYP1.Migrations
 
             modelBuilder.Entity("FYP1.Models.Collaboration", b =>
                 {
+                    b.HasOne("FYP1.Models.Member", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
                     b.HasOne("FYP1.Models.eBook", "eBook")
                         .WithMany("Collaborations")
-                        .HasForeignKey("eBookbookID");
+                        .HasForeignKey("bookID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
 
                     b.Navigation("eBook");
                 });
 
             modelBuilder.Entity("FYP1.Models.Comment", b =>
                 {
+                    b.HasOne("FYP1.Models.Member", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
                     b.HasOne("FYP1.Models.BookPage", "Page")
                         .WithMany("Comments")
-                        .HasForeignKey("PagebookPageID");
+                        .HasForeignKey("bookPageID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Page");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("FYP1.Models.Element", b =>
@@ -569,7 +571,9 @@ namespace FYP1.Migrations
                 {
                     b.HasOne("FYP1.Models.eBook", "eBook")
                         .WithMany("Versions")
-                        .HasForeignKey("eBookbookID");
+                        .HasForeignKey("bookID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("eBook");
                 });

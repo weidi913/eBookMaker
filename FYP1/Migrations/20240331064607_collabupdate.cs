@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace FYP1.Migrations
 {
-    public partial class first : Migration
+    public partial class collabupdate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -208,21 +208,25 @@ namespace FYP1.Migrations
                 name: "Collaboration",
                 columns: table => new
                 {
-                    collabID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    authorID = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    authorID = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
                     bookID = table.Column<int>(type: "int", nullable: false),
-                    eBookbookID = table.Column<int>(type: "int", nullable: true),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     ConcurrencyToken = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Collaboration", x => x.collabID);
+                    table.PrimaryKey("PK_Collaboration", x => new { x.authorID, x.bookID });
                     table.ForeignKey(
-                        name: "FK_Collaboration_eBook_eBookbookID",
-                        column: x => x.eBookbookID,
+                        name: "FK_Collaboration_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Collaboration_eBook_bookID",
+                        column: x => x.bookID,
                         principalTable: "eBook",
-                        principalColumn: "bookID");
+                        principalColumn: "bookID",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -231,21 +235,21 @@ namespace FYP1.Migrations
                 {
                     versionID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    verName = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    verName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     verContent = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     versionDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     bookID = table.Column<int>(type: "int", nullable: false),
-                    eBookbookID = table.Column<int>(type: "int", nullable: true),
                     ConcurrencyToken = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Version", x => x.versionID);
                     table.ForeignKey(
-                        name: "FK_Version_eBook_eBookbookID",
-                        column: x => x.eBookbookID,
+                        name: "FK_Version_eBook_bookID",
+                        column: x => x.bookID,
                         principalTable: "eBook",
-                        principalColumn: "bookID");
+                        principalColumn: "bookID",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -274,24 +278,28 @@ namespace FYP1.Migrations
                 name: "Comment",
                 columns: table => new
                 {
-                    commentID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    authorID = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
+                    bookPageID = table.Column<int>(type: "int", nullable: false),
                     comment = table.Column<int>(type: "int", maxLength: 1000, nullable: false),
                     commentDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     commentStatus = table.Column<bool>(type: "bit", nullable: false),
-                    authorID = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    bookPageID = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PagebookPageID = table.Column<int>(type: "int", nullable: true),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     ConcurrencyToken = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Comment", x => x.commentID);
+                    table.PrimaryKey("PK_Comment", x => new { x.authorID, x.bookPageID });
                     table.ForeignKey(
-                        name: "FK_Comment_BookPage_PagebookPageID",
-                        column: x => x.PagebookPageID,
+                        name: "FK_Comment_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Comment_BookPage_bookPageID",
+                        column: x => x.bookPageID,
                         principalTable: "BookPage",
-                        principalColumn: "bookPageID");
+                        principalColumn: "bookPageID",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -303,7 +311,7 @@ namespace FYP1.Migrations
                     elementType = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     elementLock = table.Column<bool>(type: "bit", nullable: false),
                     elementStyle = table.Column<string>(type: "nvarchar(max)", maxLength: 5000, nullable: true),
-                    z_index = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    z_index = table.Column<int>(type: "int", nullable: false),
                     text = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     bookPageID = table.Column<int>(type: "int", nullable: false),
                     ConcurrencyToken = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: true)
@@ -369,14 +377,24 @@ namespace FYP1.Migrations
                 column: "bookID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Collaboration_eBookbookID",
+                name: "IX_Collaboration_bookID",
                 table: "Collaboration",
-                column: "eBookbookID");
+                column: "bookID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Comment_PagebookPageID",
+                name: "IX_Collaboration_UserId",
+                table: "Collaboration",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Comment_bookPageID",
                 table: "Comment",
-                column: "PagebookPageID");
+                column: "bookPageID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Comment_UserId",
+                table: "Comment",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Element_bookPageID",
@@ -384,9 +402,9 @@ namespace FYP1.Migrations
                 column: "bookPageID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Version_eBookbookID",
+                name: "IX_Version_bookID",
                 table: "Version",
-                column: "eBookbookID");
+                column: "bookID");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

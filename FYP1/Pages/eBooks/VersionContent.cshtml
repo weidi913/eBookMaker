@@ -1,5 +1,5 @@
 ﻿@page
-@model FileSettingModel
+@model VersionContentModel
 @{
     ViewData["Title"] = "File";
 }
@@ -271,7 +271,7 @@
                     <div class="file-setting-collaboration-item ">
                         <div class="file-setting-collaboration-item-left-group username-collaborate-row">
                             <label style="position:absolute" class="enter-label">Version Name</label>
-                            <input maxlength="75" id="version-add-version-input" class="file-setting-collaboration-item-input" />
+                            <input maxlength="100" id="version-add-version-input" class="file-setting-collaboration-item-input" />
                         </div>
                         <div class="file-setting-collaboration-item-right-group">
                             <button type="button" style=""  id="version-add-button" class="file-setting-add-button">Add</button>
@@ -305,7 +305,7 @@
                                 </div>
                             </div>
                             <div class="file-setting-collaboration-item-right-group">
-                                <a asp-page="./VersionContent" asp-route-id="@version.versionID" style="margin-right:8px;text-align:center" class="file-setting-add-button">View</a>
+                                <a asp-page="./Version" asp-route-id="@version.versionID" style="margin-right:8px;text-align:center" class="file-setting-add-button">View</a>
                                 <button data-version-id="@version.versionID" type="button" style="margin-right:8px;" class="version-update-button file-setting-publish-button">Save</button>
                                 <button data-version-id="@version.versionID" type="button" class="version-delete-button file-setting-delete-button">
                                     Delete
@@ -472,18 +472,10 @@ else
 <script>
     var expandSection;
     $(document).ready(function () {
-
-        $("div[contenteditable=true][onChange],input#version-add-version-input").on("input", function () {
-            var maxLength = 75;
-            var text = $(this).text().trim();
-            if (text.length > maxLength) {
-                $(this).text(text.substring(0, maxLength));
-            }
-        })
         $(".version-update-button").click(function () {
             $("#version-update-form-versionID-input").val($(this).attr("data-version-id"));
             $("#version-update-form-name-input").val($(this).closest("div").prev("div").find(".file-setting-collaboration-item-user-info-username").text());
-            $("#version-update-form").submit();
+                                //$("version-update-form").submit();
         })
         $(".version-delete-button").click(function () {
             $("#version-delete-form-versionID-input").val($(this).attr("data-version-id"));

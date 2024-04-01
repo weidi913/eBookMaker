@@ -1,5 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
 namespace FYP1.Models
 {
@@ -9,7 +11,7 @@ namespace FYP1.Models
         [Required, DisplayName("Version ID")]
         public int versionID { get; set; }
 
-        [Required, StringLength(20)]
+        [Required, StringLength(100)]
         public string verName { get; set; }
 
         [Required]
@@ -17,10 +19,9 @@ namespace FYP1.Models
 
         [DataType(DataType.Date), DisplayName("Version Date")]
         public DateTime versionDate { get; set; } = DateTime.Now;
-
         [Required]
         public int bookID { get; set; }
-
+        [ForeignKey("bookID")]
         public eBook? eBook { get; set; }
 
         [Timestamp]

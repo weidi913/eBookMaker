@@ -4908,7 +4908,6 @@ ul.nav-link-dropdown-list {
         -webkit-box-orient: vertical;
 }
 .profile-page-profile-subtitle {
-  text-align: center;
   margin-bottom: var(--dl-space-space-unit);
 }
 .profile-page-profile-description {
@@ -4995,22 +4994,29 @@ ul.nav-link-dropdown-list {
   }
 }
 @media(max-width: 767px) {
+  .profile-page-profile-subtitle{
+    text-align: center;
+    align-self:center;
+  }
   .profile-form{
     align-items: center;
   }
   .profile-page-profile-container {
     max-width: calc(100vw - 32px);
   }
+  .profile-page-show-image{
+    position:relative;
+  }
   .profile-page-profile-container > .profile-page-profile-image.welcome {
-    top: -85px;
+    /* top: -85px; */
     right: unset;
-    position: relative;
+    position: absolute;
     align-self: center;
   }
   .profile-page-profile-title{
-        align-self: center;
+      align-self: center;
   }
-  .profile-page-profile-container > .profile-page-profile-title.welcome {
+  /* .profile-page-profile-container > .profile-page-profile-title.welcome {
     top: -80px;
     position: relative;
     align-self: center;
@@ -5024,7 +5030,7 @@ ul.nav-link-dropdown-list {
   .profile-page-profile-description {
     top: -80px;
     position: relative;
-  }
+  } */
   .profile-page-input-text-container {
     grid-gap: 4px;
     grid-template-columns: 1fr;
@@ -5072,9 +5078,13 @@ ul.nav-link-dropdown-list {
 .file-setting-collaboration-item-left-group{
   display:flex;
   flex-direction: row;
+  position:relative;
+  margin-right:16px;
 }
 .file-setting-collaboration-item-right-group{
   margin-left:auto;
+  flex-direction: row;
+  display:flex;
 }
 .file-setting-collaboration-item-image {
   align-self: center;
@@ -5103,10 +5113,12 @@ ul.nav-link-dropdown-list {
   display:flex;
   align-self: center;
   flex-direction: column;
+  flex:1;
 }
 .file-setting-collaboration-item-user-info-username{
   font-size:16px;
   font-weight: 700;
+  word-break: break-word;
   margin-bottom:4px;
 }
 .file-setting-collaboration-item-user-info-name{
