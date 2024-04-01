@@ -6,25 +6,25 @@ namespace FYP1.Models
 {
     public class Comment
     {
-
-
+        [Key]
+        public int commentID { get; set; }
         [Required,StringLength(1000)]
-        public int comment { get; set; }
+        public string comment { get; set; }
 
         [DataType(DataType.Date), DisplayName("Version Date")]
         public DateTime commentDate { get; set; } = DateTime.Now;
 
         [Required]//maybe need add default status
-        public bool commentStatus { get; set; }
+        public bool commentStatus { get; set; } = false;
 
         [Required,StringLength(256)]
         public string authorID { get; set; }
 
         [Required]
-        public int bookPageID { get; set; }
+        public int bookID { get; set; }
 
-        [ForeignKey("bookPageID")]
-        public BookPage? Page { get; set; }
+        [ForeignKey("bookID")]
+        public eBook? eBook { get; set; }
 
         public Member? User { get; set; }
 

@@ -32,8 +32,6 @@ namespace FYP1.Data
 
             modelBuilder.Entity<Collaboration>()
                 .HasKey(c => new { c.authorID, c.bookID });
-            modelBuilder.Entity<Comment>()
-                .HasKey(c => new { c.authorID, c.bookPageID });
         }
     }
 }

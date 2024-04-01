@@ -3816,6 +3816,7 @@ ul.nav-link-dropdown-list {
   overflow: auto;
   align-items: center;
   background-color: #EBECF0;
+  position:relative;
 }
 .e-book-design-book-container {
   flex: 0 0 auto;
@@ -4006,6 +4007,26 @@ ul.nav-link-dropdown-list {
   border-radius: var(--dl-radius-radius-round);
   flex-direction: row;
   background-color: #8B3DFF;
+}
+.e-book-design-comment-button{
+  right: 2%;
+  width: var(--dl-size-size-small);
+  bottom: 5%;
+  /* display: none; */
+  position: fixed;
+  aspect-ratio: 1/1;
+  border-color: var(--dl-color-gray-white);
+  border-radius: var(--dl-radius-radius-round);
+  flex-direction: row;
+  background-color: var(--dl-color-primary-100);
+  display:flex;
+  padding:13px;
+}
+.e-book-design-comment-icon {
+  width: 100%;
+  filter: invert(1);
+  height: 100%;
+  align-self: center;
 }
 .e-book-design-add-icon {
   width: 24px;
@@ -4430,6 +4451,144 @@ ul.nav-link-dropdown-list {
   width:40px;
   text-align:center;
 }
+.design-edit-page-add-comment-container{
+  height:auto;
+  width:100%;
+  margin:4px 0px;
+  padding:16px;
+  border-radius: 8px;
+  border:solid 1px #E8EBED;
+  box-shadow: 5px 5px 10px 0px #d4d4d4;
+  display:flex;
+  flex-direction: column;
+  margin-bottom:8px;
+}
+.desgin-edit-page-add-comment-title{
+  font-size:16px;
+  font-weight:600;
+  margin-bottom:8px;
+}
+.design-edit-page-comment-input{
+  border:solid 1px var(--dl-color-gray-900);
+  border-radius:8px;
+  margin-bottom:8px;
+}
+.design-edit-page-add-comment-button-group{
+  display:flex;
+  flex-direction: row-reverse;
+
+}
+.design-edit-page-add-comment-add-button{
+  background-color: var(--dl-color-primary-100);
+  padding:8px 16px;
+  border-radius:8px;
+  font-weight: 600;
+  color:white;
+  cursor:pointer;
+}
+.design-edit-page-comment-input{
+  width:100%;
+  height:125px;
+  padding:4px;
+  overflow:auto
+}
+.design-edit-page-existing-comment-container{
+  height:auto;
+  width:100%;
+  margin:4px 0px;
+  padding:16px;
+  border-radius: 8px;
+  border:solid 1px #E8EBED;
+  box-shadow: 5px 5px 10px 0px #d4d4d4;
+  display:flex;
+  flex-direction: column;
+  margin-bottom:8px;
+  position:relative;
+}
+.design-edit-page-existing-comment-header{
+  display:flex;
+  flex-direction:row;
+  width:auto;
+  height:auto;
+  align-items: center;
+}
+.design-edit-page-existing-comment-header-image{
+  background-color:black;
+  border:solid 1px #E8EBED;
+  width:40px;
+  height:40px;
+  border-radius: 50%;
+  margin-right:4px;
+  background-size: cover;
+  background-image: url('https://images.unsplash.com/photo-1607746882042-944635dfe10e?ixid=M3w5MTMyMXwwfDF8c2VhcmNofDF8fHByb2ZpbGUlMjBpY29ufGVufDB8fHx8MTcxMTQ3MDgwMnww&ixlib=rb-4.0.3&w=200');
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.design-edit-page-existing-comment-header-info{
+  display:flex;
+  width:auto;
+  height:auto;
+  flex-direction: column;
+  max-width: calc(100% - 120px);
+
+}
+.design-edit-page-existing-comment-header-author{
+  font-weight: 600;
+  font-size:14px;
+  padding:2px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1; /* number of lines to show */
+  line-clamp: 1;
+  -webkit-box-orient: vertical;;
+}
+.design-edit-page-existing-comment-header-time{
+ font-size:12px;
+ font-weight: 400;
+ color: rgba(13,18,22,.7);
+ padding:2px;
+}
+.desgin-edit-page-existing-comment-content{
+  padding:4px;
+  font-size:14px;
+  text-align:justify;
+}
+.design-edit-page-existing-comment-hover-function{
+  display:none;
+  flex-direction: row;
+  position:absolute;
+  top:16px;
+  right:12px;
+}
+.design-edit-page-existing-comment-container:hover .design-edit-page-existing-comment-hover-function{
+  display:flex;
+}
+.design-edit-page-existing-comment-toggle-resolve-button{
+  width:32px;
+  height:32px;
+  padding:4px;
+  margin-right:4px;
+  border:solid 1px #DCDFE1;
+  border-radius:4px;
+}
+
+.design-edit-page-existing-comment-delete-button{
+  width:32px;
+  height:32px;
+  padding:2px;
+  border:solid 1px #DCDFE1;
+  border-radius:4px;
+}
+.design-edit-page-existing-comment-toggle-resolve-button:hover,
+.design-edit-page-existing-comment-delete-button:hover{
+  background-color:var(--dl-color-hover);
+  cursor: pointer;
+}
+  .design-edit-page-existing-comment-delete-button *, .design-edit-page-existing-comment-toggle-resolve-button *{
+  width:100%;
+  height:100%;
+}
 .design-edit-page-switch-container{
   margin-left:auto;
 }
@@ -4722,6 +4881,89 @@ ul.nav-link-dropdown-list {
 .design-edit-page-word-format-icon {
   width: 24px;
   height: 24px;
+}
+.find-and-replace-dialog-box{
+  display:none;
+  flex-direction: column;
+  position:fixed;
+  top:120px;
+  right:30px;
+  width:auto;
+  height:auto;
+  background-color: white;
+  box-shadow: 5px 5px 10px 0px #d4d4d4;
+  border: solid 1px rgba(43,59,74,.3);
+  padding:16px 16px;
+  z-index:1;
+  font-size:14px;
+  border-radius: 4px;
+}
+.find-and-replace-header{
+  font-size:16px;
+  font-weight:600;
+  margin-bottom:8px;
+  display:flex;
+  flex-direction:row;
+  align-content: center;
+  justify-content: center;
+}
+.find-and-replace-header-text{
+  flex:1;
+  align-self:center;
+}
+.find-and-replace-header-cancel{
+  height:28px;
+  padding:4px;
+  aspect-ratio: 1/1;
+  cursor: pointer;
+}
+.find-and-replace-header-cancel:hover{
+  background-color: var(--dl-color-hover);
+}
+.find-and-replace-content{
+  display:flex;
+  flex-direction: column;
+  margin-bottom:16px;
+}
+.find-and-replace-replace-container,
+.find-and-replace-find-container{
+  display:flex;
+  flex-direction:row;
+}
+.find-and-replace-replace-container span,
+.find-and-replace-find-container span{
+  flex:1;
+  align-self:center;
+  font-weight: 500;
+}
+.find-and-replace-find-container{
+  margin-bottom:4px;
+}
+.find-and-replace-find-input,
+.find-and-replace-replace-input{
+  border:solid 1px rgba(43,59,74,.3);
+  width: 200px;
+  height:40px;
+  padding:4px;
+  border-radius:4px;
+  margin-left:16px;
+  max-width:100%;
+}
+.find-and-replace-button-group{
+  display:flex;
+  width:100%;
+  height:40px;
+
+}
+.find-and-replace-button{
+  width:100%;
+  height:100%;
+  padding:4px;
+  color:white;
+  background-color: var(--dl-color-primary-100);
+  font-weight: 600;
+  border-radius: 4px;
+  cursor: pointer;
 }
     
   

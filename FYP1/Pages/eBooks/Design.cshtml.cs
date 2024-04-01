@@ -14,6 +14,7 @@ using System;
 using System.Net;
 using Microsoft.EntityFrameworkCore.Update.Internal;
 using Tesseract;
+using System.Security.Cryptography.Pkcs;
 
 namespace FYP1.Pages.eBooks
 {
@@ -36,6 +37,38 @@ namespace FYP1.Pages.eBooks
             _context = context;
             _authorizationService = authorizationService;
             _userManager = userManager;
+        }
+        public static string GenerateCommentTemplate(string comment, string commentDate,int commentID)
+        {
+            return $@"
+                <div class=""design-edit-page-existing-comment-container"">
+                    <div class=""design-edit-page-existing-comment-header"">
+                        <div class=""design-edit-page-existing-comment-header-image""></div>
+                        <div class=""design-edit-page-existing-comment-header-info"">
+                            <div class=""design-edit-page-existing-comment-header-author""></div>
+                            <div class=""design-edit-page-existing-comment-header-time"">{commentDate}</div>
+                        </div>
+                    </div>
+                    <div class=""desgin-edit-page-existing-comment-content"">
+                        {comment}
+                    </div>
+                    <div class=""design-edit-page-existing-comment-hover-function"">
+                        <div data-comment-id=""{commentID}"" class=""design-edit-page-existing-comment-toggle-resolve-button comment-toggle-button"">
+                            <svg viewBox=""0 0 24 24"" fill=""none"" xmlns=""http://www.w3.org/2000/svg"">
+                                <path d=""M4.89163 13.2687L9.16582 17.5427L18.7085 8"" stroke=""#000000"" stroke-width=""2.5"" stroke-linecap=""round"" stroke-linejoin=""round"" />
+                            </svg>
+                            <svg class=""hidden"" fill=""#000000"" viewBox=""-7.5 0 32 32"" version=""1.1"" xmlns=""http://www.w3.org/2000/svg"">
+                                <path d=""M15.88 13.84c-1.68-3.48-5.44-5.24-9.040-4.6l0.96-1.8c0.24-0.4 0.080-0.92-0.32-1.12-0.4-0.24-0.92-0.080-1.12 0.32l-1.96 3.64c0 0-0.44 0.72 0.24 1.040l3.64 1.96c0.12 0.080 0.28 0.12 0.4 0.12 0.28 0 0.6-0.16 0.72-0.44 0.24-0.4 0.080-0.92-0.32-1.12l-1.88-1.040c2.84-0.48 5.8 0.96 7.12 3.68 1.6 3.32 0.2 7.32-3.12 8.88-1.6 0.76-3.4 0.88-5.080 0.28s-3.040-1.8-3.8-3.4c-0.76-1.6-0.88-3.4-0.28-5.080 0.16-0.44-0.080-0.92-0.52-1.080-0.4-0.080-0.88 0.16-1.040 0.6-0.72 2.12-0.6 4.36 0.36 6.36s2.64 3.52 4.76 4.28c0.92 0.32 1.84 0.48 2.76 0.48 1.24 0 2.48-0.28 3.6-0.84 4.16-2 5.92-7 3.92-11.12z""></path>
+                            </svg>
+                        </div>
+                        <div data-comment-id=""{commentID}"" class=""design-edit-page-existing-comment-delete-button comment-delete-button"">
+                            <svg xmlns=""http://www.w3.org/2000/svg"" viewBox=""0 0 24 24"" width=""24"" height=""24"">
+                                <path d=""M19 13H5v-2h14v2z"" />
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+                    ";
         }
         public static string GenerateShapeContentTemplate(string type)
         {
@@ -105,7 +138,6 @@ namespace FYP1.Pages.eBooks
             content += "\">  </div> <div class=\"editor\" style='border:none'> </div>";
             return content;
         }
-
         public static string GenerateElementTemplate(int elementID, string elementStyle, string type, string text)
         {
             // Construct the HTML string using C# string interpolation
@@ -116,7 +148,6 @@ namespace FYP1.Pages.eBooks
                             {text}
                         </div>";
         }
-
         public static string GeneratePageTemplate(int bookPageId, int bookPageNo, float height)
         {
             return $@"
@@ -166,7 +197,6 @@ namespace FYP1.Pages.eBooks
                         </div>
                     </div>";
         }
-
         public static string GenerateChapterTemplate(Chapter chapter, int bookPageId, float height)
         {
             string chapterTemplate = $@"
@@ -180,11 +210,6 @@ namespace FYP1.Pages.eBooks
                                    data-chapter-itemid=""{chapter.chapterID}""
                                    placeholder=""Chapter Name""
                                    class=""chapter-name-input e-book-design-chapter-title-input input"" />
-                            <button type=""button"" class=""chapter-toggle-button design-page-button"">
-                                <svg viewBox=""0 0 1024 1024"" class=""e-book-design-chapter-icon"">
-                                    <path d=""M448 576v416l-160-160-192 192-96-96 192-192-160-160zM1024 96l-192 192 160 160h-416v-416l160 160 192-192z""></path>
-                                </svg>
-                            </button>
                         </div>
                     </div>";
 
@@ -194,14 +219,36 @@ namespace FYP1.Pages.eBooks
 
                     return chapterTemplate;
         }
+        public async Task<int> AuthorizedUser(int bookID)
+        {
+            var currentUserId = UserManager.GetUserName(User);
+            var user = await _userManager.GetUserAsync(User);
 
+            if (user == null) return 1; // Unable to load user
+
+            var collaboration = await _context.Collaboration
+                .FirstOrDefaultAsync(c => c.bookID == bookID && c.authorID == currentUserId);
+
+            var isAuthorized = User.IsInRole(Constants.AdminRole);
+
+            var ebook = await _context.eBook.FirstOrDefaultAsync(e => e.bookID == bookID);
+
+            if (ebook == null) return 2; // Book does not exist
+
+            if (collaboration == null && currentUserId != ebook.authorID && !isAuthorized)
+                return 3; // User not authorized
+
+            return 0; // User authorized
+        }
 
         [BindProperty] //really need it?
         public eBook curBook { get; set; } = default!; // Store the ebook record
         public IList<Chapter> ChapterList { get; set; } = default!; // Store the chapter list for this ebook
         public IList<BookPage> BookPageList { get; set; } = default!; // Store the bookpage list for this ebook
         public IList<Element> ElementList { get; set; } = default!; // Store the element list for this ebook
+        public List<CommentDisplayModel> CommentList { get; set; } = default!;
         public Collaboration Collaboration { get; set; } = default!; // Store the collaboration
+        public Member curUser { get; set; }
 
         [BindProperty]
         public Chapter ChapterAdd { get; set; } = default!; // Chapter intended to add to the database
@@ -209,7 +256,110 @@ namespace FYP1.Pages.eBooks
         public BookPage BookPageAdd { get; set; } = default!; // Bookpage intended to add to the database
         [BindProperty]
         public Element ElementAdd { get; set; } = default!; // Element intended to add to the database
+        [BindProperty]
+        public Comment CommentAdd { get; set; } = default!;
+        public class CommentDisplayModel
+        {
+            public Comment comment;
+            public string imageData;
+            public string name;
+        }
+        public async Task<IActionResult> OnPostCommentToggleStatus(int commentID)
+        {
+            if (_context.Comment == null)
+            {
+                return new JsonResult(new { status = 4, message = "comment database is empty" });
+                //Should add in something
+                //to show the error
+            }
 
+            /*            switch (AuthorizedUser(bookID))
+                        {
+                            case 0:
+                                break;
+                            case 1:
+                                return new JsonResult(new { status = 1, message = "unable to load user");
+                            case 2:
+                                return new JsonResult(new { status = 2, message = "book has been deleted");
+                            case 3:
+                                return new JsonResult(new { status = 3, message = "unauthorized user");
+                        }*/
+
+            var commentUpdate = await _context.Comment.FirstOrDefaultAsync(c => c.commentID == commentID);
+            if (commentUpdate == null)
+            {
+                return new JsonResult(new { status = 1, message = "comment not found" });
+            }
+            commentUpdate.commentStatus = !commentUpdate.commentStatus;
+
+            _context.Comment.Update(commentUpdate);
+            await _context.SaveChangesAsync();
+
+            return new JsonResult(new { status = 0, message = "comment update successfully", result = "hooray" });
+        }
+        public async Task<IActionResult> OnPostCommentDelete(int commentID)
+        {
+            if (_context.Comment == null)
+            {
+                return new JsonResult(new { status = 4, message = "comment database is empty" });
+            }
+
+/*            switch (AuthorizedUser(bookID))
+            {
+                case 0:
+                    break;
+                case 1:
+                    return new JsonResult(new { status = 1, message = "unable to load user");
+                case 2:
+                    return new JsonResult(new { status = 2, message = "book has been deleted");
+                case 3:
+                    return new JsonResult(new { status = 3, message = "unauthorized user");
+            }*/
+
+            var commentDelete = await _context.Comment.FirstOrDefaultAsync(c => c.commentID == commentID);
+            if (commentDelete == null)
+            {
+                return new JsonResult(new { status = 1, message = "comment not found" });
+            }
+
+            _context.Comment.Remove(commentDelete);
+            await _context.SaveChangesAsync();
+
+            return new JsonResult(new { status = 0, message = "comment delete successfully", result = "hooray" });
+        }
+        public async Task<IActionResult> OnPostComment(string commentContent, string authorID, int bookID)
+        {
+            if (_context.Comment == null)
+            {
+                return new JsonResult(new { status = 4, message = "comment database is empty"});
+                //Should add in something
+                //to show the error
+            }
+
+            switch (await AuthorizedUser(bookID))
+            {
+                case 0:
+                    break;
+                case 1:
+                    return new JsonResult(new { status = 1, message = "unable to load user" });
+                case 2:
+                    return new JsonResult(new { status = 2, message = "book has been deleted" });
+                case 3:
+                    return new JsonResult(new { status = 3, message = "unauthorized user" });
+            }
+
+            var commentAdd = new Comment();
+            commentAdd.commentDate = DateTime.Now;
+            commentAdd.authorID = authorID;
+            commentAdd.bookID = bookID;
+            commentAdd.comment = commentContent;
+            commentAdd.commentStatus = false;
+
+            _context.Comment.Add(commentAdd);
+            await _context.SaveChangesAsync();
+
+            return new JsonResult(new { status = 0, htmlContent = GenerateCommentTemplate(commentAdd.comment, commentAdd.commentDate.ToString(), commentAdd.commentID), message = "comment added successfully", result = "hooray" });
+        }
         public async Task<IActionResult> OnPostOCR(IFormFile postedFile)
         {
             if (postedFile != null && postedFile.Length > 0)
@@ -232,8 +382,7 @@ namespace FYP1.Pages.eBooks
                     }
                 }
             }
-
-            return new JsonResult(new { status = 0, message = "OCR function complete", result="hooray" });
+            return new JsonResult(new { status = 0, message = "OCR function complete", result = "hooray" });
         }
         public async Task<IActionResult> OnPostElementToggleLock(int elementID)
         {
@@ -486,7 +635,6 @@ namespace FYP1.Pages.eBooks
             return new JsonResult(new { status = 0,chapterID = chapterAdd.chapterID, pageID = bookPageAdd.bookPageID, 
                 htmlContent = GenerateChapterTemplate(chapterAdd,bookPageAdd.bookPageID, eBook.height) });
         }
-
         public async Task<IActionResult> OnPostBookPage(int bookPageID)
         {
             var bookPageAdd = new BookPage();
@@ -620,13 +768,8 @@ namespace FYP1.Pages.eBooks
             
 
         }
-
-        // Retrieve all the data related to this book
         public async Task<IActionResult> OnPostBookTitle(string newTitleName, int bookID)
         {
-
-            /*            var updateBook = await _context.eBook.FirstOrDefaultAsync(m => m.bookID == eBook.bookID);
-            */
             var updateBook = await _context.eBook.FirstOrDefaultAsync(m => m.bookID == bookID);
             if (updateBook == null)
             {
@@ -661,8 +804,14 @@ namespace FYP1.Pages.eBooks
                 return NotFound(); // Invalid data return error
             }
 
+            curUser = await _userManager.GetUserAsync(User);
+            if (curUser == null)
+            {
+                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+            }
+
             // Retrieve the relevant eBook
-           // var ebook = await _context.eBook.FirstOrDefaultAsync(m => m.bookID == id);
+            // var ebook = await _context.eBook.FirstOrDefaultAsync(m => m.bookID == id);
 
             var ebook = await _context.eBook
                         .Include(e => e.Chapters.OrderBy(c=>c.chapterNo)) // Eager load chapters
@@ -700,29 +849,67 @@ namespace FYP1.Pages.eBooks
             {
                 return Forbid();
             }
-            
 
-            if (_context.Chapter != null)
+
+            /*            if (_context.Chapter != null)
+                        {
+                            // Retrieve all chapter related to this book
+                            ChapterList = await _context.Chapter
+                            .Include(chapter => chapter.book)
+                            .Where(chapter => chapter.book.bookID == curBook.bookID).ToListAsync();
+                        }
+
+                        if (_context.BookPage != null)
+                        {
+                            // Retrieve all book page related to this book
+                            BookPageList = await _context.BookPage
+                            .Include(bookpage => bookpage.Chapter).ToListAsync();
+                        }
+
+                        if (_context.Element != null)
+                        {
+                            // Retrieve all elements related to this book
+                            ElementList = await _context.Element
+                            .Include(element => element.BookPage).ToListAsync();
+                        }*/
+
+            var memberList = new List<Member>();
+            CommentList = new List<CommentDisplayModel>();
+            if (_context.Comment != null)
             {
-                // Retrieve all chapter related to this book
-                ChapterList = await _context.Chapter
-                .Include(chapter => chapter.book)
-                .Where(chapter => chapter.book.bookID == curBook.bookID).ToListAsync();
+                var commentList = await _context.Comment.Where(c => c.bookID == id)
+                    .OrderByDescending(c=>c.commentDate)
+                    .ToListAsync();
+                foreach (var comment in commentList)
+                {
+                    var commentInfo = new CommentDisplayModel();
+                    commentInfo.comment = comment;
+
+                    var newAuthor = true;
+                    foreach (var member in memberList)
+                    {
+                        if (member.UserName == comment.authorID)
+                        {
+                            newAuthor = false;
+                            commentInfo.name = member.lastName + " " + member.firstName;
+                            commentInfo.imageData = member.imageData;
+                            break;
+                        }
+                    }
+                    if (newAuthor)
+                    {
+                        var member = await _userManager.FindByNameAsync(comment.authorID);
+                        if (member != null)
+                        {
+                            memberList.Add(member);
+                            commentInfo.name = member.lastName + " " + member.firstName;
+                            commentInfo.imageData = member.imageData;
+                        }
+                    }
+                    CommentList.Add(commentInfo);
+                }
             }
 
-            if (_context.BookPage != null)
-            {
-                // Retrieve all book page related to this book
-                BookPageList = await _context.BookPage
-                .Include(bookpage => bookpage.Chapter).ToListAsync();
-            }
-
-            if (_context.Element != null)
-            {
-                // Retrieve all elements related to this book
-                ElementList = await _context.Element
-                .Include(element => element.BookPage).ToListAsync();
-            }
 
             //no need to filter???? i think need to filter to avoid excessive loadinf time
             // not sure what is this maybe can delete at the finalizing stage

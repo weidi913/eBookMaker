@@ -4,6 +4,7 @@ using FYP1.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FYP1.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240331150026_first")]
+    partial class first
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -110,11 +112,12 @@ namespace FYP1.Migrations
 
             modelBuilder.Entity("FYP1.Models.Comment", b =>
                 {
-                    b.Property<int>("commentID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                    b.Property<string>("authorID")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("commentID"), 1L, 1);
+                    b.Property<int>("bookID")
+                        .HasColumnType("int");
 
                     b.Property<byte[]>("ConcurrencyToken")
                         .IsConcurrencyToken()
@@ -124,21 +127,12 @@ namespace FYP1.Migrations
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("authorID")
-                        .IsRequired()
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<int>("bookID")
-                        .HasColumnType("int");
-
                     b.Property<int?>("bookPageID")
                         .HasColumnType("int");
 
-                    b.Property<string>("comment")
-                        .IsRequired()
+                    b.Property<int>("comment")
                         .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)");
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("commentDate")
                         .HasColumnType("datetime2");
@@ -146,7 +140,7 @@ namespace FYP1.Migrations
                     b.Property<bool>("commentStatus")
                         .HasColumnType("bit");
 
-                    b.HasKey("commentID");
+                    b.HasKey("authorID", "bookID");
 
                     b.HasIndex("UserId");
 
