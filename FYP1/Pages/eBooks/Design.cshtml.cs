@@ -15,6 +15,7 @@ using System.Net;
 using Microsoft.EntityFrameworkCore.Update.Internal;
 using Tesseract;
 using System.Security.Cryptography.Pkcs;
+using Newtonsoft.Json;
 
 namespace FYP1.Pages.eBooks
 {
@@ -583,6 +584,30 @@ namespace FYP1.Pages.eBooks
 
             return new JsonResult(new { status = 0, message="successful", elementID = elementAdd.elementID, bookPageID = elementAdd.bookPageID,
                 htmlContent = GenerateElementTemplate(elementAdd.elementID,elementAdd.elementStyle, "shape", elementAdd.text)});
+        }
+        public async Task<IActionResult> OnPostPasteElement(int bookPageID, string elementType, string elementStyle,string elementContent)
+        {
+            var elementPaste = new Element();
+            int elementCount = _context.Element.Count(e => e.bookPageID == bookPageID);
+            elementPaste.bookPageID = bookPageID;
+            elementPaste.z_index = elementCount;
+            elementPaste.text = elementContent;
+            elementPaste.elementStyle = elementStyle;
+            elementPaste.elementType = elementType;
+
+            _context.Element.Add(elementPaste);
+            await _context.SaveChangesAsync();
+
+            string jsonElementStyle = JsonConvert.SerializeObject(elementStyle); // Serialize the elementStyle
+            string htmlContent = GenerateElementTemplate(elementPaste.elementID, jsonElementStyle, elementPaste.elementType, elementPaste.text);
+            return new JsonResult(new
+            {
+                status = 0,
+                message = "successful",
+                elementID = elementPaste.elementID,
+                bookPageID = elementPaste.bookPageID,
+                htmlContent = GenerateElementTemplate(elementPaste.elementID, elementPaste.elementStyle, elementPaste.elementType, elementPaste.text)
+            });
         }
         public async Task<IActionResult> OnPostChapterTitle(string chapterName, int chapterID)
         {

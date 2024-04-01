@@ -4,6 +4,86 @@
     ViewData["Title"] = "Resend email confirmation";
 }
 
+
+<style>
+    li {
+        list-style-type: none;
+    }
+    .success-text{
+        color: #3c763d;
+        font-size:12px;
+        margin-top: 8px;
+    }
+</style>
+
+<div class="login-container">
+    <div class="login-user-container">
+        <div class="enter-container">
+            <a style="align-self:center" href="~/Home">
+                <img alt="logo"
+                     src="~/images/dwei-logo.png"
+                     class="login-user-logo" />
+            </a>
+            <h1 class="login-user-text"><span>Resend Confirm Email</span></h1>
+            <span class="login-user-description"><span>Enter your eemail</span></span>
+            <form method="post" class="enter-form">
+                <div class="enter-input-label-container">
+                    <label asp-for="Input.Email" class="enter-label"><span>Email</span></label>
+                    <input asp-for="Input.Email" id="username" autocomplete="username" aria-required="true" type="text" placeholder="Email" class="input" />
+                </div>
+                <div id="error-text-div-container" asp-validation-summary="All" class="login-user-invalid-text"></div>
+                
+                <div class="login-user-submit-container">
+                    <a href="./Login"
+                       class="register-form-left-button enter-button">
+                        <span>Login Page</span>
+                    </a>
+                    <button type="submit" class="enter-button">
+                        <span>Resend</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    @Html.Partial("_FooterGuest")
+</div>
+<script>
+    $("input").focusin(function () {
+        $(this).prev("label.enter-label").css("color", "#3282E9");
+    })
+    $("input").focusout(function () {
+        $(this).prev("label.enter-label").css("color", "var(--dl-color-gray-700)");
+    })
+
+    var errorTextContainer = $("#error-text-div-container");
+    var usernameInput = $("#username");
+
+    if (errorTextContainer.text().trim() !== "") {
+        usernameInput.prev("label.enter-label").addClass("error-label");
+        usernameInput.addClass("error-input");
+        errorTextContainer.removeClass("success-text");
+    }
+    if ("@Model.validInput" === "True") {
+        usernameInput.prev("label.enter-label").removeClass("error-label");
+        usernameInput.removeClass("error-input");
+        errorTextContainer.addClass("success-text");
+    }
+
+    $("button").click(function(){
+
+        if ("@Model.validInput" === "True") {
+            usernameInput.prev("label.enter-label").removeClass("error-label");
+            usernameInput.removeClass("error-input");
+            errorTextContainer.addClass("success-text");
+        }
+        else {
+            usernameInput.prev("label.enter-label").addClass("error-label");
+            usernameInput.addClass("error-input");
+            errorTextContainer.removeClass("success-text");
+        }
+    })
+</script>
+
 <h1>@ViewData["Title"]</h1>
 <h2>Enter your email.</h2>
 <hr />

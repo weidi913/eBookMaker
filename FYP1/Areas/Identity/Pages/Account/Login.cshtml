@@ -10,6 +10,11 @@
 {
   Response.Redirect("/eBooks/eBookHome");
 }
+<style>
+    li{
+        list-style-type: none;
+    }
+</style>
 
 <div class="login-container">
     <div class="login-user-container">
@@ -55,7 +60,7 @@
                 </div>
                 @if (Model.InvalidLogin)
                 {
-                    <span class="login-user-invalid-text">Invalid login attempt</span>
+                    <div asp-validation-summary="ModelOnly" class="login-user-invalid-text" style="list-style-type:none !important"></div>
                 }
                 <div class="login-user-redirect-container enter-checkbox-container">
                     <a asp-area="Identity" asp-page="/Account/ForgotPassword">

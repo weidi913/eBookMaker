@@ -21,11 +21,13 @@ namespace FYP1.Areas.Identity.Pages.Account
     public class LoginModel : PageModel
     {
         private readonly SignInManager<Member> _signInManager;
+        private readonly UserManager<Member> _userManager;
         private readonly ILogger<LoginModel> _logger;
 
-        public LoginModel(SignInManager<Member> signInManager, ILogger<LoginModel> logger)
+        public LoginModel(SignInManager<Member> signInManager, UserManager<Member> userManager, ILogger<LoginModel> logger)
         {
             _signInManager = signInManager;
+            _userManager = userManager;
             _logger = logger;
         }
 
@@ -132,6 +134,17 @@ namespace FYP1.Areas.Identity.Pages.Account
                 else
                 {
                     InvalidLogin = true;
+                    var user = await _userManager.FindByNameAsync(Input.Email);
+                    if(user == null)
+                    {
+                        ModelState.AddModelError(string.Empty, "Account has not registered.");
+                        return Page();
+                    }
+                    else if(!user.EmailConfirmed)
+                    {
+                        ModelState.AddModelError(string.Empty, "Email has not activated.");
+                        return Page();
+                    } 
                     ModelState.AddModelError(string.Empty, "Invalid login attempt.");
                     return Page();
                 }

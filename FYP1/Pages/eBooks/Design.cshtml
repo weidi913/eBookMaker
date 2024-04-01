@@ -1214,10 +1214,10 @@
             <div class="e-book-design-bottom-tab-container">
                 <div class="bottom-bar">
                     <span class="e-book-design-page-text">Chapter</span>
-                    <input id="scroll-chapter-number-input" type="text" value="1"
+                    <input id="scroll-chapter-number-input" type="text" value="1" maxlength="2"
                            class="e-book-design-page-input input" />
                     <span class="e-book-design-page-text">Page</span>
-                    <input id="scroll-page-number-input" type="text" value="1"
+                    <input id="scroll-page-number-input" type="text" value="1" maxlength="3"
                            class="e-book-design-page-input input" />
                 </div>
                 <div class="e-book-design-page-separator"></div>
@@ -1723,11 +1723,155 @@
     }
 
     $(document).ready(function () {
-        $("#element-copy-button").click(function(){
+        $("#scroll-chapter-number-input, #scroll-page-number-input").on("input", function () {
+            // Get the input value and sanitize it
+            var inputValue = $(this).val().replace(/\D/g, ''); // Remove non-numeric character
 
+            // Update the input value with the sanitized value
+            $(this).val(inputValue);
+        });
+        $("#scroll-chapter-number-input").change(function () {
+            var inputValueChapter = $(this).val().replace(/\D/g, ''); // Sanitize chapter number
+            var minChapter = 1; // Minimum chapter number
+            var maxChapter = $(".e-book-design-chapter-container").length; // Maximum chapter number
+
+            // Check if inputValueChapter is NaN, if so, default to 1
+            if (inputValueChapter==="") {
+                inputValueChapter = 1;
+            }
+
+            // Ensure the input value is within the range of existing chapter numbers
+            var chapterNumber = Math.min(Math.max(parseInt(inputValueChapter), minChapter), maxChapter);
+
+            // Update the input value with the sanitized chapter number
+            $(this).val(chapterNumber);
+
+            // Fetch corresponding page details and update page number input accordingly
+            updatePageNumber(chapterNumber);
+        });
+
+        function updatePageNumber(chapterNumber) {
+            var chapterContainer = $(".e-book-design-chapter-container").eq(chapterNumber - 1);
+            var maxPage = chapterContainer.find(".design-page-content-container").length;
+            var minPage = 1; // Minimum page number
+
+            var inputValuePage = $("#scroll-page-number-input").val().replace(/\D/g, ''); // Sanitize page number
+            console.log(inputValuePage);
+
+            // Check if inputValueChapter is NaN, if so, default to 1
+            if (inputValuePage==="") {
+                inputValuePage = 1;
+            }
+            // Ensure the input value is within the range of existing page numbers
+            var pageNumber = Math.min(Math.max(parseInt(inputValuePage), minPage), maxPage);
+
+            // Update the input value with the sanitized page number
+            $("#scroll-page-number-input").val(pageNumber);
+
+            var pageContent = chapterContainer.find(".design-page-content-container").eq(pageNumber - 1);
+            var pageContainer = pageContent.find(".design-page-content-page-content");
+
+            // Get the offset of the page container relative to the zoom container
+            var containerOffset = pageContainer.offset().top - $('#zoom-container').offset().top;
+
+            // Get the current scroll position of the zoom container
+            var currentScroll = $('#zoom-container').scrollTop();
+
+            // Calculate the final scroll position by adding the container offset and subtracting any additional offset
+            var finalScroll = currentScroll + containerOffset - 160;
+            $('#zoom-container').animate({
+                scrollTop: finalScroll
+            }, 'fast');
+        }
+        $("#scroll-page-number-input").change(function () {
+
+            var chapter = parseInt($("#scroll-chapter-number-input").val());
+            updatePageNumber(chapter);
         })
-        $(".element-paste-button").click(function(){
 
+
+        var copyStyle = "";
+        var copyContent = "";
+        var copyType = "";
+        $("#element-copy-button").click(function(){
+            var selectedElement = $(".selected");
+
+            copyStyle = selectedElement.attr("style");
+            copyContent = getContent(selectedElement);
+
+            if (selectedElement.hasClass("shape")) {
+                copyType = "shape";
+            } 
+            else if (selectedElement.hasClass("image")) {
+                copyType = "image";
+            } else if (selectedElement.hasClass("text")) {
+                copyType = "text";
+            } else if (selectedElement.hasClass("chart")) {
+                copyType = "chart";
+            }
+            else{
+                copyType = "";
+            }
+        })
+        $("#element-paste-button").click(async function(){
+            if(copyType ===""){
+                alert("no content is copied");
+                return;
+            }
+            var chapter = parseInt($("#scroll-chapter-number-input").val());
+            var page = parseInt($("#scroll-page-number-input").val());
+            var chapterContainer = $(".e-book-design-chapter-container").eq(chapter - 1);
+            var pageContent = chapterContainer.find(".design-page-content-container").eq(page - 1);
+            var pageID = pageContent.attr("data-page-id");
+            var pageContainer = pageContent.find(".design-page-content-page-content");
+
+            await $.ajax({
+                url: '/eBooks/Design?handler=PasteElement', // Endpoint URL for updating the title
+                method: 'POST',
+                data: { bookPageID: pageID, elementType: copyType, elementStyle: copyStyle, elementContent: copyContent },
+                dataType: 'json',
+                headers: {
+                    RequestVerificationToken: $('input:hidden[name="__RequestVerificationToken"]').val()
+                },
+                success: function (response) {
+                    if (response.status === 0) {
+
+                        var regex = /background-image: url\("([^"]+)"\)/g;
+
+                        // Replace double quotes with single quotes
+                        var updatedHtmlContent = response.htmlContent.replace(regex, 'background-image: url(\'$1\')');
+
+                        pageContainer.append(updatedHtmlContent);
+                        console.log(updatedHtmlContent);
+                        if (copyType === "shape") {
+                            var newTextElement = pageContainer.find("div.element").last().find(".editor");
+                            initQuill(newTextElement[0], document.querySelector('#toolbar'))              
+                        } 
+                        else if (copyType ==="image") {
+                            copyType = "image";
+                        } 
+                        else if (copyType==="text") {
+                            var newTextElement = pageContainer.find("div.element").last().find(".editor");
+                            initQuill(newTextElement[0], document.querySelector('#toolbar'))
+                        }
+                        else if (copyType==="chart") {
+                            initChart(pageContainer.find("div:last")[0]);
+                        }
+                        pageContainer.find("div.element").last().click();
+                    }
+                    else {
+                        alert("fail to paste content. " + response.message);
+                        location.reload();
+                    }
+
+                },
+                error: function (xhr, status, error) {
+                    alert("Error occurred:", error.toString());
+                    location.reload();
+                    // Handle error
+                }
+
+            });
         })
         $("#search-image").on("input", function () {
             var optionList = $("#add-image").find("img");
@@ -2669,8 +2813,6 @@
 
                     if (response.status === 0) {
                         pageContainer.append(response.htmlContent);
-                        console.log(response.htmlContent);
-
                         initChart(pageContainer.find("div:last")[0]);
                     }
                     else {
@@ -3942,6 +4084,7 @@
 
             if(isAncestorOrSelf){
                 console.log('Clicked element or ancestor meets the condition isAncestorOrSelf');
+
             }
             else if ($(event.target).hasClass("element")) {
                 var prevSelectedElement = $(".selected");
@@ -4032,34 +4175,7 @@
         });
         async function updateElementFunc(selectedContainer){
             var prevSelectedElement = selectedContainer;
-            var content;
-            if (prevSelectedElement.hasClass("shape")) {
-                content = prevSelectedElement.find("div:first")[0].outerHTML;
-                content += "<div class='editor' style='border:none'>";
-                content += prevSelectedElement.find(".ql-editor").html();
-                content += "</div>";
-            }
-            else if (prevSelectedElement.hasClass("image")) {
-                content = "";
-            }
-            else if (prevSelectedElement.hasClass("text")) {
-                content = "<div class='editor' style='border:none'>";
-                content += prevSelectedElement.find(".ql-editor").html();
-                content += "</div>";
-                console.log(content);
-            }
-            else if (prevSelectedElement.hasClass("chart")) {
-                content = "";
-
-                // Get the canvas element using its ID
-                var myChart = Chart.getChart(prevSelectedElement.find("canvas")[0].getContext("2d"));
-                var config = {
-                    type: myChart.config.type,
-                    data: myChart.config.data,
-                    options: myChart.config.options
-                };
-                content = JSON.stringify(config);
-            }
+            var content = getContent(prevSelectedElement);
 
             await EditElementFunc(prevSelectedElement.attr("id"), content, prevSelectedElement.attr("style"));
         }
@@ -4342,6 +4458,9 @@
 ;
                 $("#style-button").next("div").removeClass("hidden");
                 $("#style-button").removeClass("hidden");
+
+                $("#element-copy-button").removeClass("hidden");
+                $("#element-paste-button").removeClass("hidden");
             }
             else if (container.hasClass("image")) {
                 $("#position-button").removeClass("hidden");
@@ -4358,6 +4477,10 @@
                 $("#style-button").next("div").addClass("hidden");
                 $("#style-button").removeClass("tab-selected");
                 $("#style-button").addClass("hidden");
+
+                $("#element-copy-button").removeClass("hidden");
+                $("#element-paste-button").removeClass("hidden");
+
             }
             else if (container.hasClass("shape")) {
                 $("#position-button").removeClass("hidden");
@@ -4375,6 +4498,10 @@
 
                 $("#style-button").next("div").removeClass("hidden");
                 $("#style-button").removeClass("hidden");
+
+                $("#element-copy-button").removeClass("hidden");
+                $("#element-paste-button").removeClass("hidden");
+
             }
             else if (container.hasClass("chart") || container.prop("tagName").toUpperCase() === "CANVAS") {
                 $("#position-button").removeClass("hidden");
@@ -4393,6 +4520,10 @@
                 $("#style-button").next("div").addClass("hidden");
                 $("#style-button").removeClass("tab-selected");
                 $("#style-button").addClass("hidden");
+
+                $("#element-copy-button").removeClass("hidden");
+                $("#element-paste-button").removeClass("hidden");
+
             }
             else {
                 $("#position-button").addClass("hidden");
@@ -4419,6 +4550,9 @@
                 $("#chart-button").removeClass("tab-selected");
                 $("#edit-chart").addClass("hidden");
       
+                $("#element-copy-button").addClass("hidden");
+                $("#element-paste-button").addClass("hidden");
+
             }
         }
 
