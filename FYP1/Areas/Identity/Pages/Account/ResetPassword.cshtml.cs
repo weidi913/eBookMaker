@@ -49,9 +49,10 @@ namespace FYP1.Areas.Identity.Pages.Account
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
-            [Required]
-            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+            [Required(ErrorMessage = "Password should not be empty.")]
+            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 8)]
             [DataType(DataType.Password)]
+            [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).*$", ErrorMessage = "Password should contain at least one lowercase letter, one uppercase letter, and one digit.")]
             public string Password { get; set; }
 
             /// <summary>
@@ -92,10 +93,11 @@ namespace FYP1.Areas.Identity.Pages.Account
         {
             if (!ModelState.IsValid)
             {
+                ModelState.AddModelError(string.Empty, "Incomplete information");
                 return Page();
             }
 
-            var user = await _userManager.FindByEmailAsync(Input.Email);
+            var user = await _userManager.FindByNameAsync(Input.Email);
             if (user == null)
             {
                 // Don't reveal that the user does not exist

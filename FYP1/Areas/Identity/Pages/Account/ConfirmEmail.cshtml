@@ -4,5 +4,86 @@
     ViewData["Title"] = "Confirm email";
 }
 
-<h1>@ViewData["Title"]</h1>
-<partial name="_StatusMessage" model="Model.StatusMessage" />
+@* <h1>@ViewData["Title"]</h1>
+<partial name="_StatusMessage" model="Model.StatusMessage" /> *@
+
+<style>
+    a:hover{
+        color:white;
+    }
+</style>
+
+<div class="register-container">
+    <div class="register-form-container">
+        <div class="enter-container">
+            <a style="align-self:center" asp-page="Home">
+                <img alt="logo"
+                     src="~/images/dwei-logo.png"
+                     class="register-form-logo" />
+            </a>
+            <div class="register-form-instruction-container">
+                <div class="register-form-input-container input-container">
+                    @* <h1 class="register-form-text"><span>Confirmation Link</span></h1> *@
+                    
+                    <h1 class="register-form-text"><partial name="_StatusMessage" model="Model.StatusMessage" /></h1>
+                    <span class="register-form-description  success-text">
+                        <span>Congratulations on activating your account!</span>
+                    </span>
+                    <span class="register-form-confirm-no-margin-text success-text">
+                        <span>
+                            You’ve successfully verified your email address, granting you unrestricted access to all 
+                            the features and services our platform offers. From creating personalized profiles to 
+                            accessing exclusive content, you’re now ready to make the most of your experience with us.
+                        </span>
+                    </span>
+                    <span class="register-form-confirm-margin-text success-text">
+                        <span>
+                            Head over to our login page, enter your credentials, and begin your journey with us. 
+                            Feel free to reach out to our support team if you encounter any issues or have questions.
+                        </span>
+                    </span>
+
+                    <span class="register-form-description  fail-text">
+                        <span>Verification Failed</span>
+                    </span>
+                    <span class="register-form-confirm-no-margin-text fail-text">
+                        <span>
+                            We're sorry, but we were unable to verify your email address.
+                            Please ensure that you have clicked the verification link correctly or try resending the verification email.
+                            If you continue to experience issues, please contact our support team for further assistance.
+                        </span>
+                    </span>
+                    <span class="register-form-confirm-margin-text fail-text">
+                        <span>
+                            If you believe this is an error, you can also attempt to log in and verify your email address again.
+                            Alternatively, if the verification link has expired, you can request a new verification email to be sent to you.
+                            Our support team is available to help resolve any issues you may encounter.
+                        </span>
+                    </span>
+
+                </div>
+            </div>
+            <div class="register-form-button-container">
+                <button class="register-form-right-button enter-button">
+                    <span>Login Page</span>
+                </button>
+            </div>
+        </div>
+    </div>
+    @Html.Partial("_FooterGuest")
+</div>
+
+<script>
+    $(".enter-button").click(function () {
+        window.location.href = '/Identity/Account/Login';
+    })
+    if ($("h1.register-form-text").text().includes("Email Confirmation Fail")) {
+        $(".success-text").css("display", "none");
+        $(".fail-text").css("display", "flex");
+    }
+    else {
+        $(".success-text").css("display", "flex");
+        $(".fail-text").css("display", "none");
+
+    }
+</script>

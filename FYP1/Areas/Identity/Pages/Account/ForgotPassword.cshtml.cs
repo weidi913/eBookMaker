@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
+using System.Net.Mail;
 
 namespace FYP1.Areas.Identity.Pages.Account
 {
@@ -76,7 +77,36 @@ namespace FYP1.Areas.Identity.Pages.Account
                     "Reset Password",
                     $"Please reset your password by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
+                try
+                {
+                    using (MailMessage message = new MailMessage(
+                        "corjackchin@1utar.my", //Sender
+                        user.Email, //Receiver
+                        "Reset Password", // Title
+                        $"Please reset your password by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.")) //Content
+                    {
+                        message.IsBodyHtml = true; // Set IsBodyHtml to true to indicate that the message body contains HTML
+
+                        using (SmtpClient client = new SmtpClient("smtp.gmail.com", 587))
+                        {
+                            client.EnableSsl = true;
+                            client.Credentials = new System.Net.NetworkCredential("corjackchin@1utar.my", "spmf ywrk xehj fyjo");
+                            await client.SendMailAsync(message);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"An error occurred: {ex.Message}");
+                    ModelState.AddModelError(string.Empty, ex.Message);
+
+                    return Page(); // or return error view
+                }
+
                 return RedirectToPage("./ForgotPasswordConfirmation");
+
+
+
             }
 
             return Page();

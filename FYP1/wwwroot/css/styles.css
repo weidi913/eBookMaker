@@ -2756,6 +2756,7 @@ ul.nav-link-dropdown-list {
   align-self: center;
   text-align: center;
   padding-top: var(--dl-space-space-unit);
+  font-size:32px;
 }
 .register-form-description {
   align-self: center;

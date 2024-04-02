@@ -14,6 +14,9 @@
         font-size:12px;
         margin-top: 8px;
     }
+    a:hover {
+        color: white;
+    }
 </style>
 
 <div class="login-container">
@@ -25,7 +28,7 @@
                      class="login-user-logo" />
             </a>
             <h1 class="login-user-text"><span>Resend Confirm Email</span></h1>
-            <span class="login-user-description"><span>Enter your eemail</span></span>
+            <span class="login-user-description"><span>Enter your email</span></span>
             <form method="post" class="enter-form">
                 <div class="enter-input-label-container">
                     <label asp-for="Input.Email" class="enter-label"><span>Email</span></label>
@@ -69,22 +72,23 @@
         errorTextContainer.addClass("success-text");
     }
 
-    $("button").click(function(){
-
-        if ("@Model.validInput" === "True") {
-            usernameInput.prev("label.enter-label").removeClass("error-label");
-            usernameInput.removeClass("error-input");
-            errorTextContainer.addClass("success-text");
-        }
-        else {
+    $("button").click(function () {
+        // Get the input value
+        var emailValue = usernameInput.val().trim();
+        // Check if the input is not empty and matches the email format
+        var emailRegex = /^[^\s@@]+@@[^\s@@]+\.[^\s@@]+$/;
+        if (emailValue === "" || !emailRegex.test(emailValue)) {
             usernameInput.prev("label.enter-label").addClass("error-label");
             usernameInput.addClass("error-input");
-            errorTextContainer.removeClass("success-text");
+        }
+        else {
+            usernameInput.prev("label.enter-label").removeClass("error-label");
+            usernameInput.removeClass("error-input");
         }
     })
 </script>
 
-<h1>@ViewData["Title"]</h1>
+@* <h1>@ViewData["Title"]</h1>
 <h2>Enter your email.</h2>
 <hr />
 <div class="row">
@@ -99,7 +103,7 @@
             <button type="submit" class="w-100 btn btn-lg btn-primary">Resend</button>
         </form>
     </div>
-</div>
+</div> *@
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
