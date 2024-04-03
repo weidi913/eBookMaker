@@ -5,6 +5,39 @@
     ViewData["Title"] = "Design";
 }
 <style>
+    .design-page-content-page-content-header{
+        color:black;
+        background-color:white;
+        overflow:hidden;
+        page-break-after: always; 
+        position:relative;
+        width:100%;
+        height:20mm;
+        align-items: center;
+        display:flex;
+        font-size:10px;
+        padding:16px;
+        padding-left:96px;
+        box-sizing:border-box
+        pointer-events:none;
+    }
+    .design-page-content-page-content-footer{
+        font-size:10px;
+        color:black;
+        background-color:white;
+        overflow:hidden;
+        page-break-after: always; 
+        display: flex; 
+        justify-content: center;
+        align-items: center;
+        position:relative;
+        width:100%;
+        height:20mm;
+        text-align:center;
+        margin-bottom:16px;
+        pointer-events:none;
+    }
+
     .design-page-content-page-content .element:hover {
         box-shadow: 0 0 0 1px white, 0 0 0 4px #8532FF;
     }
@@ -265,7 +298,7 @@
         <header data-role="Header"
                 class="header-design-header-horizontal-container">
             <div class="header-design-left-group">
-                <svg viewBox="0 0 1024 1024" class="header-design-more-option-icon">
+                <svg id="more-option" viewBox="0 0 1024 1024" class="header-design-more-option-icon">
                     <path d="M128 554.667h768c23.552 0 42.667-19.115 42.667-42.667s-19.115-42.667-42.667-42.667h-768c-23.552 0-42.667 19.115-42.667 42.667s19.115 42.667 42.667 42.667zM128 298.667h768c23.552 0 42.667-19.115 42.667-42.667s-19.115-42.667-42.667-42.667h-768c-23.552 0-42.667 19.115-42.667 42.667s19.115 42.667 42.667 42.667zM128 810.667h768c23.552 0 42.667-19.115 42.667-42.667s-19.115-42.667-42.667-42.667h-768c-23.552 0-42.667 19.115-42.667 42.667s19.115 42.667 42.667 42.667z"></path>
                 </svg><svg viewBox="0 0 1024 1024" class="header-design-home-icon">
                     <path d="M949.845 446.635c-144.64-121.771-407.296-348.629-409.899-350.933l-27.947-24.021-27.819 24.021c-2.645 2.261-265.429 229.035-412.16 351.915-18.688 16.811-29.355 40.32-29.355 64.384 0 47.104 38.229 85.333 85.333 85.333h42.667v256c0 47.104 38.229 85.333 85.333 85.333h128 384c47.104 0 85.333-38.229 85.333-85.333v-256h42.667c47.104 0 85.333-38.229 85.333-85.333 0-25.515-11.733-49.536-31.488-65.365zM597.333 853.333h-170.667v-213.333h170.667v213.333zM768 512l0.085 341.333c-0.085 0-128.085 0-128.085 0v-256h-256v256h-128v-341.333h-128.043c117.973-98.645 312.107-265.685 384.043-327.68 71.936 61.995 265.984 228.992 384 327.723 0-0-128-0-128-0.043z"></path>
@@ -737,9 +770,59 @@
                        class="design-add-page-search-input input" />
             </div>
             <span class="design-add-page-heading-text">
-                <span>Bar Graph</span>
+                <span>Solid Color Background</span>
             </span>
-            <div class="design-add-page-grid-container">
+            <div class="design-add-page-solid-color-grid-container">
+                <div class="design-add-page-color-container-color-picker">
+                    <input id="add-background-color-picker" type="color">
+                    <div class="design-edit-page-color-container-plus-icon">
+                        <svg viewBox="0 0 1024 1024" style="width: 100%; scale: 0.6; height: 100%; align-self: center;">
+                            <path d="M810 554h-256v256h-84v-256h-256v-84h256v-256h84v256h256v84z"></path>
+                        </svg>
+                    </div>
+                </div>
+                <div class="design-add-page-solid-color-content" style="background-image: url('../images/transparent.jpg'); background-color: #00000000;" data-background-info="transparent"></div>
+                <div class="design-add-page-solid-color-content" style="background-color: #545454;" data-background-info="dark gray  "></div>
+                <div class="design-add-page-solid-color-content" style="background-color: #737373;" data-background-info="gray  "></div>
+                <div class="design-add-page-solid-color-content" style="background-color: #a6a6a6;" data-background-info=" gray "></div>
+                <div class="design-add-page-solid-color-content" style="background-color: #d9d9d9;" data-background-info=" light gray "></div>
+                <div class="design-add-page-solid-color-content" style="background-color: #ff3131;" data-background-info=" bright red "></div>
+                <div class="design-add-page-solid-color-content" style="background-color: #ff5757;" data-background-info="coral red  "></div>
+                <div class="design-add-page-solid-color-content" style="background-color: #ff66c4;" data-background-info=" pink "></div>
+                <div class="design-add-page-solid-color-content" style="background-color: #cb6ce6;" data-background-info=" magneta "></div>
+                <div class="design-add-page-solid-color-content" style="background-color: #8c52ff;" data-background-info=" purple "></div>
+                <div class="design-add-page-solid-color-content" style="background-color: #5e17eb;" data-background-info=" violet "></div>
+                <div class="design-add-page-solid-color-content" style="background-color: #0097b2;" data-background-info=" dark turquoise "></div>
+                <div class="design-add-page-solid-color-content" style="background-color: #0cc0df;" data-background-info=" aqua blue "></div>
+                <div class="design-add-page-solid-color-content" style="background-color: #5ce1e6;" data-background-info=" turquoise blue "></div>
+                <div class="design-add-page-solid-color-content" style="background-color: #38b6ff;" data-background-info="  light blue "></div>
+                <div class="design-add-page-solid-color-content" style="background-color: #5271ff;" data-background-info=" royal blue "></div>
+                <div class="design-add-page-solid-color-content" style="background-color: #004aad;" data-background-info=" cobalt blue "></div>
+                <div class="design-add-page-solid-color-content" style="background-color: #00bf63;" data-background-info=" green "></div>
+                <div class="design-add-page-solid-color-content" style="background-color: #7ed957;" data-background-info=" grass green "></div>
+                <div class="design-add-page-solid-color-content" style="background-color: #c1ff72;" data-background-info=" lime "></div>
+                <div class="design-add-page-solid-color-content" style="background-color: #ffde59;" data-background-info=" yellow "></div>
+                <div class="design-add-page-solid-color-content" style="background-color: #ffbd59;" data-background-info=" peach "></div>
+                <div class="design-add-page-solid-color-content" style="background-color: #ff914d;" data-background-info=" orange "></div>
+            </div>
+            <span class="design-add-page-heading-text">
+                <span>Images Background</span>
+            </span>
+            <div style="height:48px !important; width:100%">
+                <button id="upload-background-button" type="button" class="design-add-page-black-element-button button">
+                    <span>Upload photo</span>
+                </button>
+                <input hidden type="file" id="upload-background-input" name="file" accept=".jpg, .jpeg, .png" multiple="false" />
+            </div>
+            <div class="design-add-page-background-grid-container">
+                <div class="design-add-page-background-content" style="background-image:url(../images/design-bg-images/bg1.jpg)" data-background-info="3d texture three dimensoinal space"></div>
+                <div class="design-add-page-background-content" style="background-image:url(../images/design-bg-images/bg2.jpg)" data-background-info="Hand painted watercolor background with sky and clouds shape"></div>
+                <div class="design-add-page-background-content" style="background-image:url(../images/design-bg-images/bg3.jpg)" data-background-info="Beige comb painting texture background"></div>
+                <div class="design-add-page-background-content" style="background-image:url(../images/design-bg-images/bg4.jpg)" data-background-info="White and gray geometric pattern background vector"></div>
+                <div class="design-add-page-background-content" style="background-image:url(../images/design-bg-images/bg5.jpg)" data-background-info="White wooden texture flooring background"></div>
+                <div class="design-add-page-background-content" style="background-image:url(../images/design-bg-images/bg6.jpg)" data-background-info="Hand painted watercolor background with sky and clouds shape"></div>
+            </div>
+@*             <div class="design-add-page-grid-container">
                 <div class="design-add-page-grid-content">
                     <button type="button" class="design-add-page-grid-button">
                         <div style="width:100%;height:100%;border:solid 1px"></div>
@@ -761,7 +844,7 @@
                         <div style="width:100%;height:100%;border:solid 1px;border-radius:50%"></div>
                     </button>
                 </div>
-            </div>
+            </div> *@
         </div>
         <div id="edit-position" class=" hidden design-edit-page-container">
             <div class="design-edit-page-heading-container">
@@ -846,7 +929,7 @@
                 <span>Open Color Palette</span>
             </button>
         </div>
-        <div id="edit-color" class="hidden design-edit-page-container">
+@*         <div id="edit-color" class="hidden design-edit-page-container">
             <div class="design-edit-page-heading-container">
                 <span class="design-edit-page-heading-text">
                     <span>Edit Color</span>
@@ -901,7 +984,7 @@
                 </button>
             </div>
         </div>
-        <div id="edit-style" class="hidden design-edit-page-container">
+ *@        <div id="edit-style" class="hidden design-edit-page-container">
             <div class="design-edit-page-heading-container">
                 <span class="design-edit-page-heading-text">
                     <span>Edit Text</span>
@@ -1095,11 +1178,7 @@
                 <button type="button"
                         id="element-copy-button"
                         class="e-book-design-top-function-icon-button design-page-button hidden">
-                    <svg class="e-book-design-top-function-icon" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 115.77 122.88" style="enable-background:new 0 0 115.77 122.88" xml:space="preserve"><style type="text/css">
-                                                                                                                                                                                                                                                                                               .st0 {
-                                                                                                                                                                                                                                                                                                   fill-rule: evenodd;
-                                                                                                                                                                                                                                                                                                   clip-rule: evenodd;
-                                                                                                                                                                                                                                                                                               }</style><g><path class="st0" d="M89.62,13.96v7.73h12.19h0.01v0.02c3.85,0.01,7.34,1.57,9.86,4.1c2.5,2.51,4.06,5.98,4.07,9.82h0.02v0.02 v73.27v0.01h-0.02c-0.01,3.84-1.57,7.33-4.1,9.86c-2.51,2.5-5.98,4.06-9.82,4.07v0.02h-0.02h-61.7H40.1v-0.02 c-3.84-0.01-7.34-1.57-9.86-4.1c-2.5-2.51-4.06-5.98-4.07-9.82h-0.02v-0.02V92.51H13.96h-0.01v-0.02c-3.84-0.01-7.34-1.57-9.86-4.1 c-2.5-2.51-4.06-5.98-4.07-9.82H0v-0.02V13.96v-0.01h0.02c0.01-3.85,1.58-7.34,4.1-9.86c2.51-2.5,5.98-4.06,9.82-4.07V0h0.02h61.7 h0.01v0.02c3.85,0.01,7.34,1.57,9.86,4.1c2.5,2.51,4.06,5.98,4.07,9.82h0.02V13.96L89.62,13.96z M79.04,21.69v-7.73v-0.02h0.02 c0-0.91-0.39-1.75-1.01-2.37c-0.61-0.61-1.46-1-2.37-1v0.02h-0.01h-61.7h-0.02v-0.02c-0.91,0-1.75,0.39-2.37,1.01 c-0.61,0.61-1,1.46-1,2.37h0.02v0.01v64.59v0.02h-0.02c0,0.91,0.39,1.75,1.01,2.37c0.61,0.61,1.46,1,2.37,1v-0.02h0.01h12.19V35.65 v-0.01h0.02c0.01-3.85,1.58-7.34,4.1-9.86c2.51-2.5,5.98-4.06,9.82-4.07v-0.02h0.02H79.04L79.04,21.69z M105.18,108.92V35.65v-0.02 h0.02c0-0.91-0.39-1.75-1.01-2.37c-0.61-0.61-1.46-1-2.37-1v0.02h-0.01h-61.7h-0.02v-0.02c-0.91,0-1.75,0.39-2.37,1.01 c-0.61,0.61-1,1.46-1,2.37h0.02v0.01v73.27v0.02h-0.02c0,0.91,0.39,1.75,1.01,2.37c0.61,0.61,1.46,1,2.37,1v-0.02h0.01h61.7h0.02 v0.02c0.91,0,1.75-0.39,2.37-1.01c0.61-0.61,1-1.46,1-2.37h-0.02V108.92L105.18,108.92z" /></g></svg>
+                    <svg class="e-book-design-top-function-icon" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 115.77 122.88" style="enable-background:new 0 0 115.77 122.88" xml:space="preserve"><style type="text/css">                                                                                                                                                                                                                                                                }</style><g><path class="st0" d="M89.62,13.96v7.73h12.19h0.01v0.02c3.85,0.01,7.34,1.57,9.86,4.1c2.5,2.51,4.06,5.98,4.07,9.82h0.02v0.02 v73.27v0.01h-0.02c-0.01,3.84-1.57,7.33-4.1,9.86c-2.51,2.5-5.98,4.06-9.82,4.07v0.02h-0.02h-61.7H40.1v-0.02 c-3.84-0.01-7.34-1.57-9.86-4.1c-2.5-2.51-4.06-5.98-4.07-9.82h-0.02v-0.02V92.51H13.96h-0.01v-0.02c-3.84-0.01-7.34-1.57-9.86-4.1 c-2.5-2.51-4.06-5.98-4.07-9.82H0v-0.02V13.96v-0.01h0.02c0.01-3.85,1.58-7.34,4.1-9.86c2.51-2.5,5.98-4.06,9.82-4.07V0h0.02h61.7 h0.01v0.02c3.85,0.01,7.34,1.57,9.86,4.1c2.5,2.51,4.06,5.98,4.07,9.82h0.02V13.96L89.62,13.96z M79.04,21.69v-7.73v-0.02h0.02 c0-0.91-0.39-1.75-1.01-2.37c-0.61-0.61-1.46-1-2.37-1v0.02h-0.01h-61.7h-0.02v-0.02c-0.91,0-1.75,0.39-2.37,1.01 c-0.61,0.61-1,1.46-1,2.37h0.02v0.01v64.59v0.02h-0.02c0,0.91,0.39,1.75,1.01,2.37c0.61,0.61,1.46,1,2.37,1v-0.02h0.01h12.19V35.65 v-0.01h0.02c0.01-3.85,1.58-7.34,4.1-9.86c2.51-2.5,5.98-4.06,9.82-4.07v-0.02h0.02H79.04L79.04,21.69z M105.18,108.92V35.65v-0.02 h0.02c0-0.91-0.39-1.75-1.01-2.37c-0.61-0.61-1.46-1-2.37-1v0.02h-0.01h-61.7h-0.02v-0.02c-0.91,0-1.75,0.39-2.37,1.01 c-0.61,0.61-1,1.46-1,2.37h0.02v0.01v73.27v0.02h-0.02c0,0.91,0.39,1.75,1.01,2.37c0.61,0.61,1.46,1,2.37,1v-0.02h0.01h61.7h0.02 v0.02c0.91,0,1.75-0.39,2.37-1.01c0.61-0.61,1-1.46,1-2.37h-0.02V108.92L105.18,108.92z" /></g></svg>
                 </button>
                 <button type="button"
                         id="element-paste-button"
@@ -1140,7 +1219,6 @@
                             </div>
                             @foreach (var bookPage in chapter.BookPages)
                             {
-
                                 <div data-page-id="@bookPage.bookPageID" class="design-page-content-container">
                                     <div class="design-page-content-page-tab-list">
                                         <div class="design-page-content-left-container">
@@ -1187,7 +1265,8 @@
                                             </button>
                                         </div>
                                     </div>
-                                    <div style="height:@(Model.curBook.height - 20)mm" class="@(bookPage.pageLock ? "design-page-content-page-content  page-lock" : "design-page-content-page-content")">
+                                    <div class="design-page-content-page-content-header">CHAPTER XXX Title (Uneditable)</div>
+                                    <div style="height:@(Model.curBook.height - 40)mm;@bookPage.backgroundStyle" class="@(bookPage.pageLock ? "design-page-content-page-content  page-lock" : "design-page-content-page-content")">
                                     @* <div style="height:@(Model.curBook.height)mm" class="design-page-content-page-content"> *@
                                         @foreach (var element in bookPage.Elements)
                                         {
@@ -1199,6 +1278,7 @@
                                             </div>
                                         }
                                     </div>
+                                    <div class="design-page-content-page-content-footer">PAGE NUMBER (Uneditable)</div>
                                 </div>
                             }
                         </div>
@@ -1285,38 +1365,85 @@
         </div>
     </div>
 </div>
+
+<div>
+    <div class="sidebar-guest-container">
+        <div class="sidebar-guest-sidebar">
+            <nav class="sidebar-guest-nav-container">
+                <div class="sidebar-guest-nav sidebar-guest-nav-home">
+                    <span class="sidebar-guest-nav-text">Home</span>
+                    <svg viewBox="0 0 1024 1024" class="sidebar-guest-arrow-icon">
+                        <path d="M366 708l196-196-196-196 60-60 256 256-256 256z"></path>
+                    </svg>
+                </div>
+                <div class="sidebar-guest-nav sidebar-guest-nav-about">
+                    <span class="sidebar-guest-nav-text">About</span>
+                    <svg viewBox="0 0 1024 1024" class="sidebar-guest-arrow-icon">
+                        <path d="M366 708l196-196-196-196 60-60 256 256-256 256z"></path>
+                    </svg>
+                </div>
+                <div class="sidebar-guest-nav sidebar-guest-nav-features">
+                    <span class="sidebar-guest-nav-text">Features</span>
+                    <svg viewBox="0 0 1024 1024" class="sidebar-guest-arrow-icon">
+                        <path d="M366 708l196-196-196-196 60-60 256 256-256 256z"></path>
+                    </svg>
+                </div>
+                <div class="sidebar-guest-nav sidebar-guest-nav-help">
+                    <span class="sidebar-guest-nav-text">Help</span>
+                    <svg viewBox="0 0 1024 1024" class="sidebar-guest-arrow-icon">
+                        <path d="M366 708l196-196-196-196 60-60 256 256-256 256z"></path>
+                    </svg>
+                </div>
+            </nav>
+            <div class="sidebar-guest-sidebar-separator"></div>
+            <a href="~/Identity/Account/Manage/Profile" style="width:100%;">
+                <button class="sidebar-guest-login button">Profile Setting</button>
+            </a>
+            <button class="sidebar-login-logout button">Logout</button>
+        </div>
+    </div>
+</div>
+
+
  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> 
 <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
 <script>
-   
-    // Get references to the color box and the color picker input
-    const colorBox = document.getElementById('color-box');
-    const colorPicker = document.getElementById('color-picker');
-
-    // Add click event listener to the color box
-    colorBox.addEventListener('click', function () {
-        // Show the color picker input
-        console.log("123");
-        colorPicker.click();
-    });
-
-    // Add change event listener to the color picker input
-    colorPicker.addEventListener('change', function () {
-        // Set the background color of the color box to the selected color
-        colorBox.style.backgroundColor = colorPicker.value;
-    });
 
     $("#more-option").click(function () {
-        var sidebar = $(".sidebar-login-container");
+        var sidebar = $(".sidebar-guest-container");
         if (sidebar.css("display") === "none") {
-            $(".sidebar-login-container").css("display", "flex");
+            sidebar.css("display", "flex");
         }
         else {
-            $(".sidebar-login-container").hide();
+            sidebar.hide();
         }
     })
 
+    $(".sidebar-guest-container").click(function(){
+        $(".sidebar-guest-container").hide();
+    })
+    $(".sidebar-guest-sidebar").click(function(e){
+        e.stopPropagation();
+    })
+
+    $(".sidebar-guest-container").click(function () {
+        var $sidebar = $(".sidebar-guest-container");
+        $sidebar.css("display", "none");
+    });
+
+    $(".sidebar-guest-nav-home").click(function () {
+        window.location.href = "/Home";
+    })
+    $(".sidebar-guest-nav-about").click(function () {
+        window.location.href = "/About";
+    })
+    $(".sidebar-guest-nav-features").click(function () {
+        window.location.href = "/Features";
+    })
+    $(".sidebar-guest-nav-help").click(function () {
+        window.location.href = "/Help";
+    })
     function hideAddEditContainer() {
         $(".design-add-page-container").filter(":visible").hide();
         $(".design-edit-page-container").filter(":visible").hide();
@@ -1782,6 +1909,19 @@
             $('#zoom-container').animate({
                 scrollTop: finalScroll
             }, 'fast');
+
+            var chapter = parseInt($("#scroll-chapter-number-input").val());
+            var page = parseInt($("#scroll-page-number-input").val());
+            var chapterContainer = $(".e-book-design-chapter-container").eq(chapter - 1);
+            var pageContent = chapterContainer.find(".design-page-content-container").eq(page - 1);
+            var pageContainer = pageContent.find(".design-page-content-page-content");
+
+            if(pageContainer.hasClass("page-lock")){
+                lockAddTabList();
+            }
+            else{
+                unlockAddTabList();
+            }
         }
         $("#scroll-page-number-input").change(function () {
 
@@ -1789,7 +1929,20 @@
             updatePageNumber(chapter);
         })
 
-
+        function lockAddTabList(){
+            $("#add-text").addClass("tab-lock");
+            $("#add-shape").addClass("tab-lock");
+            $("#add-image").addClass("tab-lock");
+            $("#add-chart").addClass("tab-lock");
+            $("#add-background").addClass("tab-lock");
+        }
+        function unlockAddTabList(){
+            $("#add-text").removeClass("tab-lock");
+            $("#add-shape").removeClass("tab-lock");
+            $("#add-image").removeClass("tab-lock");
+            $("#add-chart").removeClass("tab-lock");
+            $("#add-background").removeClass("tab-lock");   
+        }
         var copyStyle = "";
         var copyContent = "";
         var copyType = "";
@@ -1887,6 +2040,30 @@
                 }
             })
         })
+        $("#search-background").on("input", function () {
+            var optionList = $(".design-add-page-solid-color-content");
+            var value = $(this).val().toLowerCase();
+            optionList.each(function () {
+                var option = $(this);
+                if (option.attr("data-background-info").toLowerCase().includes(value)) {
+                    option.removeClass("hidden");
+                }
+                else {
+                    option.addClass("hidden");
+                }
+            })
+
+            optionList = $(".design-add-page-background-content");
+            optionList.each(function () {
+                var option = $(this);
+                if (option.attr("data-background-info").toLowerCase().includes(value)) {
+                    option.removeClass("hidden");
+                }
+                else {
+                    option.addClass("hidden");
+                }
+            })
+        })
         $("#search-chart").on("input", function () {
             var value = $(this).val().toLowerCase();
             var optionList = $("#add-chart").find(".design-add-page-chart-container");
@@ -1914,6 +2091,70 @@
 
             })
         })
+        $("#add-background-color-picker").on("input", async function(){
+            var chapter = parseInt($("#scroll-chapter-number-input").val());
+            var page = parseInt($("#scroll-page-number-input").val());
+            var chapterContainer = $(".e-book-design-chapter-container").eq(chapter - 1);
+            var pageContent = chapterContainer.find(".design-page-content-container").eq(page - 1);
+            var pageID = pageContent.attr("data-page-id");
+            var pageContainer = pageContent.find(".design-page-content-page-content");
+
+            var backgroundStyle = "background-color: " + $(this).val() + ";";
+            backgroundStyle += "height:" + (@Model.curBook.height - 40) + "mm";
+            pageContainer[0].setAttribute("style", backgroundStyle);
+        })
+        $("#add-background-color-picker").on("change", async function(){
+            var backgroundStyle = "background-color: " + $(this).val() + ";";
+
+            await updatePageBackgroundFunc(backgroundStyle);
+        })
+        $("#add-background .design-add-page-solid-color-content").click(async function(){
+            var backgroundStyle = "background-color: " + $(this).css("background-color") + ";";
+
+            await updatePageBackgroundFunc(backgroundStyle);
+        })
+        $("#add-background .design-add-page-background-content").click(async function () {
+            var backgroundStyle = "background-image: " + $(this).css("background-image") + ";";
+            backgroundStyle += "background-size: cover;";
+            backgroundStyle += "background-repeat: no-repeat;";
+            backgroundStyle += "background-position: center;";
+            
+            await updatePageBackgroundFunc(backgroundStyle);
+        })
+        async function updatePageBackgroundFunc( backgroundContent) {
+            var chapter = parseInt($("#scroll-chapter-number-input").val());
+            var page = parseInt($("#scroll-page-number-input").val());
+            var chapterContainer = $(".e-book-design-chapter-container").eq(chapter - 1);
+            var pageContent = chapterContainer.find(".design-page-content-container").eq(page - 1);
+            var pageID = pageContent.attr("data-page-id");
+            var pageContainer = pageContent.find(".design-page-content-page-content");
+
+            await $.ajax({
+                url: '/eBooks/Design?handler=BackgroundPage', // Endpoint URL for updating the title
+                method: 'POST',
+                data: { bookPageID: pageID, bgStyle: backgroundContent },
+                dataType: 'json',
+                headers: {
+                    RequestVerificationToken: $('input:hidden[name="__RequestVerificationToken"]').val()
+                },
+                success: function (response) {
+                    if (response.status === 0) {
+                        backgroundContent += "height:"+ (@Model.curBook.height - 40) +"mm";
+                        pageContainer[0].setAttribute("style", backgroundContent);
+                    }
+                    else {
+                        alert(response.status);
+                        location.reload();
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error occurred:", error.toString());
+                    // Handle error
+                }
+
+            });
+
+        }
         $("#search-shape").on("input",function(){
             var optionList = $("#add-shape").find("div.design-add-page-grid-content button");
             var value = $(this).val().toLowerCase();
@@ -1946,8 +2187,8 @@
         $(document).on({
             mouseover: function (event) {
                    // Check if mouse is not over .element directly
-                  
-                if (!$(event.target).hasClass('element')) {
+                console.log($(event.target));
+                if (!$(event.target).hasClass('element') && event.target.tagName.toLowerCase() !== "canvas") {
                     $(this).css('box-shadow', '0 0 0 3px #EBECF0, 0 0 0 6px #8532FF');
                 }
                 else{
@@ -2489,8 +2730,6 @@
             [{ 'font': [] }, { 'size': fontSizeArr }],
             [{ 'color': [] }, { 'background': [] }, 'bold', 'italic', 'underline', 'strike', { 'script': 'sub' }, { 'script': 'super' }, { 'direction': 'rtl' }, 'clean'],        // toggled buttons
             [{ 'align': [] }, { 'indent': '-1' }, { 'indent': '+1' }, { 'list': 'ordered' }, { 'list': 'bullet' }, { 'list': 'check' }, 'blockquote', 'code-block', 'link', 'formula'],
-            // Custom color picker button
-            // [{ 'custom-color': '#000000' }]
         ];
 
         var quillOptions = {
@@ -2530,11 +2769,6 @@
             );
 
             var toolbar = quill.getModule('toolbar');
-            console.log(toolbar);
-            console.log($(toolbar.container));
-            console.log($(toolbar.container).find(".ql-picker.ql-color-picker .ql-picker-options"));
-
-
 
             $(toolbar.container).find("span.ql-formats").each(function (index) {
                 // Create a new heading element
@@ -2551,8 +2785,6 @@
                     $(this).before(heading);
 
                 }
-                // Insert the heading before the current <span> element
-
             })
             //$(toolbar.container).find(".ql-picker.ql-color-picker .ql-picker-options").append("<span class='ql-picker-item'></span>");
             $(toolbar.container).find(".ql-picker.ql-color-picker .ql-picker-options").append(
@@ -2576,9 +2808,6 @@
             }
         }
         function selectionChange(selection, quill) {
-            console.log("selection change", selection, quill)
-            console.log(quill.root.parentElement);
-
             const toolbar = quill.getModule('toolbar')
             if (selection == null) {
                 hideToolbar(toolbar.container)
@@ -2626,57 +2855,7 @@
             }
 
         }
-        /*
-        function updateCurrentPage() {
-            // Get the scrollable container and its scroll position
-            var container = $('#zoom-container');
-            var scrollPosition = container.scrollTop();
 
-            // Get all the sections within the container
-            var sections = container.find('.design-page-content-page-content');
-
-            // Loop through each section to find which one is currently visible
-            var currentPage = 1;
-            var currentChapter = 1;
-
-            for (var index = 0; index < sections.length; index++) {
-                var section = sections[index];
-                var sectionTop = $(section).offset().top;
-
-                console.log(scrollPosition, sectionTop,$(section).height(), scrollPosition >= sectionTop + $(section).height() / 2 )
-
-                // Check if the scroll position is beyond halfway through the current section
-                if (scrollPosition - sectionTop >= $(section).height() / 2) {
-                    currentPage = $(section).prev(".design-page-content-page-tab-list").find(".design-page-content-page-text").text().trim().split(" ")[1];
-
-                    // Find parentSections if available
-                    var parentSections = $(section).closest(".e-book-design-chapter-container");
-                    if (parentSections.length > 0) {
-                        currentChapter = parentSections.find(".e-book-design-chapter-number-text").text().trim().split(" ")[1];
-                    } else {
-                        // Handle the case where parentSections is null
-                        // You can set currentChapter to a default value or handle it as needed
-                        currentChapter = 0; // Example: Set to 0 if parentSections is null
-                    }
-                }
-            }
-
-            // Get the last page's top position
-            var lastPageTop = $(sections[sections.length - 1]).offset().top;
-
-            // Check if the user scrolled to the bottom
-            if (scrollPosition >= lastPageTop) {
-                // Get the last chapter and last page
-                currentChapter = $('.e-book-design-chapter-container').last().find(".e-book-design-chapter-number-text").text().trim().split(" ")[1];
-                currentPage = $('.e-book-design-chapter-container').last().find('.design-page-content-page-content').length;
-            }
-
-            // Update the page indicator
-            $('#scroll-page-number-input').val(currentPage);
-            $('#scroll-chapter-number-input').val(currentChapter);
-        }*/
-
-        
         // Function to update the displayed page number based on scroll position
         function updateCurrentPage() {
             // Get the scrollable container and its scroll position
@@ -2699,7 +2878,8 @@
 
                 // Check if the scroll position is within the current section
                 if (scrollPosition - sectionTop <= $(section).height() / 2) {
-                    currentPage = $(section).prev(".design-page-content-page-tab-list").find(".design-page-content-page-text").text().trim().split(" ")[1];
+                    //currentPage = $(section).prev(".design-page-content-page-tab-list").find(".design-page-content-page-text").text().trim().split(" ")[1];
+                    currentPage = $(section).prevAll(".design-page-content-page-tab-list").first().find(".design-page-content-page-text").text().trim().split(" ")[1];
 
                     // Find parentSections if available
                     var parentSections = $(section).closest(".e-book-design-chapter-container");
@@ -2728,6 +2908,17 @@
             // Update the page indicator
             $('#scroll-page-number-input').val(currentPage);
             $('#scroll-chapter-number-input').val(currentChapter);
+
+            var chapterContainer = $(".e-book-design-chapter-container").eq(currentChapter - 1);
+            var pageContent = chapterContainer.find(".design-page-content-container").eq(currentPage - 1);
+            var pageContainer = pageContent.find(".design-page-content-page-content");
+
+            if (pageContainer.hasClass("page-lock")) {
+                lockAddTabList();
+            }
+            else {
+                unlockAddTabList();
+            }
         }
 
         // Listen for scroll event on the container and update the displayed page number
@@ -2759,7 +2950,7 @@
 
         }
         async function addTextElementFunc(bookPageID, textContent, pageContainer) {
-            $.ajax({
+            await $.ajax({
                 url: '/eBooks/Design?handler=TextElement', // Endpoint URL for updating the title
                 method: 'POST',
                 data: { bookPageID: bookPageID, textContent: textContent },
@@ -2801,7 +2992,7 @@
             await addTextElementFunc(pageID, textContent, pageContainer);
         })
         async function addChartElementFunc(bookPageID, chartContent, pageContainer) {
-            $.ajax({
+            await $.ajax({
                 url: '/eBooks/Design?handler=ChartElement', // Endpoint URL for updating the title
                 method: 'POST',
                 data: { bookPageID: bookPageID, chartContent: chartContent },
@@ -2894,7 +3085,7 @@
             await addChartElementFunc(pageID, chartContent, pageContainer);
         })
         async function addImageElementFunc(bookPageID, imageContent, pageContainer) {
-            $.ajax({
+            await $.ajax({
                 url: '/eBooks/Design?handler=ImageElement', // Endpoint URL for updating the title
                 method: 'POST',
                 data: { bookPageID: bookPageID, imageContent: imageContent },
@@ -2965,12 +3156,44 @@
             };
             reader.readAsDataURL(file);
         });
+        $("#upload-background-input").change(async function (event) {
+            var file = event.target.files[0];
+            var reader = new FileReader();
+            reader.onload = async function (e) {
+                var img = new Image();
+                img.src = e.target.result;
+
+                img.onload = async function () {
+
+                    var base64Data = e.target.result.split(",")[1]; // Extract base64 data from the result
+
+                    var chapter = parseInt($("#scroll-chapter-number-input").val());
+                    var page = parseInt($("#scroll-page-number-input").val());
+                    var chapterContainer = $(".e-book-design-chapter-container").eq(chapter - 1);
+                    var pageContent = chapterContainer.find(".design-page-content-container").eq(page - 1);
+                    var pageID = pageContent.attr("data-page-id");
+                    var pageContainer = pageContent.find(".design-page-content-page-content");
+
+                    var backgroundStyle = "background-image: url('data:image/jpg;base64," + base64Data + "');";
+                    backgroundStyle += "background-size: cover;";
+                    backgroundStyle += "background-repeat: no-repeat;";
+                    backgroundStyle += "background-position: center;";
+                    
+                    await updatePageBackgroundFunc(backgroundStyle);
+
+                };
+
+            };
+            reader.readAsDataURL(file);
+        
+        
+        })
         $("#upload-OCR-input").change(async function (event) {
             var file = this.files[0];
             var formData = new FormData();
             formData.append('postedFile', file);
 
-            $.ajax({
+            await $.ajax({
                 url: '/eBooks/Design?handler=OCR',
                 method: 'POST',
                 data: formData,
@@ -2998,7 +3221,7 @@
             });
         });
         async function addShapeElementFunc(bookPageID, elementType, pageContainer) {
-            $.ajax({
+            await $.ajax({
                 url: '/eBooks/Design?handler=ShapeElement', // Endpoint URL for updating the title
                 method: 'POST',
                 data: { bookPageID: bookPageID, elementType: elementType },
@@ -3070,6 +3293,9 @@
         })
         $("#upload-photo-button").click(function () {
             $("#upload-photo-input").click();
+        });
+        $("#upload-background-button").click(function () {
+            $("#upload-background-input").click();
         });
         $("#upload-OCR-button").click(function () {
             $("#upload-OCR-input").click();
@@ -3315,6 +3541,8 @@
                     console.log("Bookpage toggle lock successfully!");
                     targetPage.toggleClass("page-lock");
                     $(this).find("svg").toggleClass("hidden");
+
+                    updateCurrentPage();
                 } else {
                     alert("Error delete bookpage:", response.message);
                     location.reload();
@@ -3547,9 +3775,9 @@
             printWindow.document.write('p { margin:0}'); // CSS rule to force page break after each page
             printWindow.document.write('body { margin:0px;background-color:#EBECF0;display:flex;flex-direction:column;align-items:center}'); // CSS rule to force page break after each page
             printWindow.document.write('.page {background-color:white;overflow:hidden;page-break-after: always; position:relative;width:' + pageWidth + 'mm;height:' + pageHeight + 'mm}'); // CSS rule to force page break after each page
-            printWindow.document.write('.header {color:#B1B1B1;background-color:white;overflow:hidden;page-break-after: always; position:relative;width:100%;height:10mm;align-items: center;display:flex;font-size:10px;padding:10px;box-sizing:border-box}'); // CSS rule to force page break after each page
-            printWindow.document.write('.content {background-color:white;overflow:hidden;page-break-after: always; position:relative;width:100%;height:' + (pageHeight - 20) + 'mm}'); // CSS rule to force page break after each page
-            printWindow.document.write('.footer {font-size:10px;color:#B1B1B1;background-color:white;overflow:hidden;page-break-after: always; display: flex; justify-content: center; align-items: center;position:relative;width:100%;height:10mm;text-align:center}'); // CSS rule to force page break after each page
+            printWindow.document.write('.header {color:black;background-color:white;overflow:hidden;page-break-after: always; position:relative;width:100%;height:20mm;align-items: center;display:flex;font-size:10px;padding:16px;padding-left:96px;box-sizing:border-box}'); // CSS rule to force page break after each page
+            printWindow.document.write('.content {background-color:white;overflow:hidden;page-break-after: always; position:relative;width:100%;height:' + (pageHeight - 40) + 'mm}'); // CSS rule to force page break after each page
+            printWindow.document.write('.footer {font-size:10px;color:black;background-color:white;overflow:hidden;page-break-after: always; display: flex; justify-content: center; align-items: center;position:relative;width:100%;height:20mm;text-align:center}'); // CSS rule to force page break after each page
             printWindow.document.write('.ql-editor {position:relative;box-sizing:border-box;line-height: 1.42;height: 100%;outline: none;padding: 12px 15px;tab-size: 4;-moz-tab-size: 4;text-align: left;white-space: pre-wrap;word-wrap: break-word;font-family: Helvetica, Arial, sans-serif; font-size: 13px;}'); // CSS rule to force page break after each page
 
             printWindow.document.write('</style>');
@@ -3565,12 +3793,25 @@
               //  printWindow.document.write(chapterContent);
                 for (var j = 0; j < pageList.length; j++) {
                     printWindow.document.write('<div class="page">');
+                    var pageStyles = pageList[j].style;
+                    var backgroundStyle = '';
 
-                    printWindow.document.write('<div class="header">' + chapterNumber +" "+ chapterName + '</div>'); // Add chapter name and number
-                    printWindow.document.write('<div class="content">');
+                    // Iterate over each style property in pageStyles
+                    for (var a = 0; a < pageStyles.length; a++) {
+                        var property = pageStyles[a];
+                        var value = pageStyles[property];
+
+                        // Build the backgroundStyle string with property-value pairs
+                        backgroundStyle += property + ': ' + value + '; ';
+                    }
+                    var regex = /background-image: url\("([^"]+)"\)/g;
+
+                    backgroundStyle = backgroundStyle.replace(regex, 'background-image: url(\'$1\')');
+
+                    printWindow.document.write('<div class="header">' + chapterNumber + " " + chapterName + '</div>'); // Add chapter name and number
+                    printWindow.document.write('<div class="content" style="' + backgroundStyle + '">');
                     var elementList = $(pageList[j]).find(".element");
                     for (var k = 0; k < elementList.length; k++){
-                        console.log(elementList[k].style);
                         if (elementList[k].classList.contains("text")) {
                             printWindow.document.write('<div style="' + $(elementList[k]).attr("style") + '">');
                             printWindow.document.write('<div class="ql-editor">')
@@ -4163,7 +4404,8 @@
 
                 if($(event.target).hasClass("design-page-content-page-content")){
 
-                    var currentPage = $(event.target).prev(".design-page-content-page-tab-list").find(".design-page-content-page-text").text().trim().split(" ")[1];
+                    //var currentPage = $(event.target).prev(".design-page-content-page-tab-list").find(".design-page-content-page-text").text().trim().split(" ")[1];
+                    var currentPage = $(event.target).prevAll(".design-page-content-page-tab-list").first().find(".design-page-content-page-text").text().trim().split(" ")[1];
                     var currentChapter =  $(event.target).closest(".e-book-design-chapter-container").find(".e-book-design-chapter-number-text").text().trim().split(" ")[1];
 
                     $("#scroll-chapter-number-input").val(currentChapter);

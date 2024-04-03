@@ -21,7 +21,7 @@
         <div class="header-login-right-group">
             <button id="create-button" class="header-login-create">
                 <span class="button">
-                    <span class="header-login-text">Create</span>
+                    <span class="header-login-text">Dashboard</span>
                     <br />
                 </span>
             </button>
@@ -33,6 +33,44 @@
             </div>
         </div>
     </header>
+</div>
+
+<div>
+    <div class="sidebar-guest-container">
+        <div class="sidebar-guest-sidebar">
+            <nav class="sidebar-guest-nav-container">
+                <div class="sidebar-guest-nav sidebar-guest-nav-home">
+                    <span class="sidebar-guest-nav-text">Home</span>
+                    <svg viewBox="0 0 1024 1024" class="sidebar-guest-arrow-icon">
+                        <path d="M366 708l196-196-196-196 60-60 256 256-256 256z"></path>
+                    </svg>
+                </div>
+                <div class="sidebar-guest-nav sidebar-guest-nav-about">
+                    <span class="sidebar-guest-nav-text">About</span>
+                    <svg viewBox="0 0 1024 1024" class="sidebar-guest-arrow-icon">
+                        <path d="M366 708l196-196-196-196 60-60 256 256-256 256z"></path>
+                    </svg>
+                </div>
+                <div class="sidebar-guest-nav sidebar-guest-nav-features">
+                    <span class="sidebar-guest-nav-text">Features</span>
+                    <svg viewBox="0 0 1024 1024" class="sidebar-guest-arrow-icon">
+                        <path d="M366 708l196-196-196-196 60-60 256 256-256 256z"></path>
+                    </svg>
+                </div>
+                <div class="sidebar-guest-nav sidebar-guest-nav-help">
+                    <span class="sidebar-guest-nav-text">Help</span>
+                    <svg viewBox="0 0 1024 1024" class="sidebar-guest-arrow-icon">
+                        <path d="M366 708l196-196-196-196 60-60 256 256-256 256z"></path>
+                    </svg>
+                </div>
+            </nav>
+            <div class="sidebar-guest-sidebar-separator"></div>
+            <a href="~/Identity/Account/Manage/Profile" style="width:100%;">
+                <button class="sidebar-guest-login button">Profile Setting</button>
+            </a>
+            <button class="sidebar-login-logout button">Logout</button>
+        </div>
+    </div>
 </div>
 
 <script>
@@ -51,7 +89,30 @@
             // Toggle the visibility of the profile expand container
             $(".profile-expand-container").toggleClass("hidden");
         });
-    })
+
+        $("#more-option").click(function () {
+            var $sidebar = $(".sidebar-guest-container");
+            $sidebar.css("display", "flex");
+        });
+
+        $(".sidebar-guest-container").click(function () {
+            var $sidebar = $(".sidebar-guest-container");
+            $sidebar.css("display", "none");
+        });
+
+        $(".sidebar-guest-nav-home").click(function () {
+            window.location.href = "/Home";
+        })
+        $(".sidebar-guest-nav-about").click(function () {
+            window.location.href = "/About";
+        })
+        $(".sidebar-guest-nav-features").click(function () {
+            window.location.href = "/Features";
+        })
+        $(".sidebar-guest-nav-help").click(function () {
+            window.location.href = "/Help";
+        })
+    });
 </script>
 
 

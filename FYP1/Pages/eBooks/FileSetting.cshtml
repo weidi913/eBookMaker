@@ -277,24 +277,6 @@
                             <button type="button" style=""  id="version-add-button" class="file-setting-add-button">Add</button>
                         </div>
                     </div>
-                    <div class="file-setting-collaboration-item">
-                        <div class="file-setting-collaboration-item-left-group">
-                            <div class="file-setting-collaboration-item-image" style='background-image: url(data:image/jpg;base64,@Model.authorInfo.imageData)'></div>
-                            <div class="file-setting-collaboration-item-user-info">
-                                <div class="file-setting-collaboration-item-user-info-username">
-                                    @Model.authorInfo.UserName
-                                </div>
-                                <div class="file-setting-collaboration-item-user-info-name">
-                                    @Model.authorInfo.lastName @Model.authorInfo.firstName
-                                </div>
-                            </div>
-                        </div>
-                        <div class="file-setting-collaboration-item-right-group">
-                            <div class="file-setting-collaboration-item-right-group-text">
-                                Owner
-                            </div>
-                        </div>
-                    </div>
                     @foreach (var version in Model.versionList)
                     {
                         <div class="file-setting-collaboration-item version-item">

@@ -530,7 +530,9 @@
         $(elemeentVariable).next("div").css("display", "none");
 
     }
-
+    $(".sidebar-guest-container").parents("div").first().remove();
+    $(".header-login-sidebar-trigger-button").css("display","flex");
+    $("#create-button").find(".header-login-text").text("Create");
     $(document).ready(function () {
         // Count the number of iframes
         var numIframes = $("iframe").length;

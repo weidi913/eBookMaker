@@ -193,7 +193,7 @@ namespace FYP1.Pages.eBooks
                                 </button>
                             </div>
                         </div>
-                        <div style='height: {height-20}mm' class=""design-page-content-page-content"">
+                        <div style='height: {height-40}mm' class=""design-page-content-page-content"">
                             <!-- Additional content goes here -->
                         </div>
                     </div>";
@@ -496,6 +496,28 @@ namespace FYP1.Pages.eBooks
             else
             {
                 return new JsonResult(new { status = 1, message = "Already deleted nowhere" });
+            }
+        }
+        public async Task<IActionResult> OnPostBackgroundPage(int bookPageID, string bgStyle)
+        {
+            var bookPageUpdate = await _context.BookPage.FirstOrDefaultAsync(p=>p.bookPageID == bookPageID);
+            if(bookPageUpdate == null)
+            {
+                return new JsonResult(new { status = 1, message = "Bookpage is deleted" });
+            }
+
+            bookPageUpdate.backgroundStyle = bgStyle;
+
+            _context.Attach(bookPageUpdate).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+                return new JsonResult(new { status = 0, message = "Successfully updated" });
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                return new JsonResult(new { status = 2, message = "Unable to update. Please try again" });
             }
         }
         public async Task<IActionResult> OnPostChartElement(int bookPageID, string chartContent)

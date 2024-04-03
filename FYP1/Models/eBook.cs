@@ -24,8 +24,6 @@ namespace FYP1.Models
         [Required]
         public float width { get; set; }
 
-        public string? background { get; set; }
-
         [Required, StringLength(50)]
         public string edition { get; set; } = "1.0";
 

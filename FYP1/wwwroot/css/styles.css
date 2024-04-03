@@ -889,6 +889,7 @@ ul.nav-link-dropdown-list {
   align-items: center;
   margin-bottom: var(--dl-space-space-unit);
   justify-content: flex-start;
+  cursor: pointer;
 }
 .sidebar-guest-nav-text {
   color: var(--dl-color-gray-black);
@@ -922,6 +923,23 @@ ul.nav-link-dropdown-list {
   font-weight: 700;
   border-width: 0px;
   margin-bottom: var(--dl-space-space-unit);
+  height:40px;
+}
+.sidebar-login-logout{
+  width:100%;
+  height:40px;
+  padding:8px 16px;
+  border-radius:4px;
+  color:#dc3545;
+  background-color: white;
+  border:solid #dc3545 1px;
+  font-weight:700;
+
+}
+.sidebar-login-logout:hover{
+  cursor: pointer;
+  background-color: #dc3545;
+  color: white;
 }
 .sidebar-guest-register {
   width: 100%;
@@ -1010,6 +1028,9 @@ ul.nav-link-dropdown-list {
 .header-login-text {
   font-weight: 700;
 }
+.header-login-sidebar-trigger-button{
+  display:none;
+}
 .header-login-profile-pic {
   width: 40px;
   height: 40px;
@@ -1043,6 +1064,9 @@ ul.nav-link-dropdown-list {
 @media(max-width: 767px) {
   .header-login-container {
     height: 80px;
+  }
+  .header-login-sidebar-trigger-button{
+    display:flex;
   }
   .header-login-content {
     padding-left: var(--dl-space-space-twounits);
@@ -4109,7 +4133,8 @@ ul.nav-link-dropdown-list {
   background-color: var(--dl-color-gray-white);
   position:relative;
   overflow:hidden;
-  margin-bottom: var(--dl-space-space-unit);
+  /* margin-bottom: var(--dl-space-space-unit); */
+  z-index:1;
 }
 .design-add-page-container {
   flex: 0 0 auto;
@@ -4198,6 +4223,42 @@ ul.nav-link-dropdown-list {
 }
 .design-add-page-white-element-button:hover {
   background-color: #E1E4E7;
+}
+.design-add-page-solid-color-grid-container{
+  display:grid;
+  width:100%;
+  height:auto;
+  grid-template-columns: repeat(6, 1fr); 
+  grid-gap: 8px; 
+}
+.design-add-page-solid-color-content{
+  height:auto;
+  width:100%;
+  aspect-ratio:1/1;
+  border-radius:4px;
+  background-color:#000000;
+  cursor:pointer;
+  border:solid 1px #D9DDE1;
+}
+.design-add-page-background-grid-container{
+  margin-top:8px;
+  display:grid;
+  width:100%;
+  height:auto;
+  grid-template-columns: repeat(3, 1fr); 
+  grid-gap: 12px; 
+}
+.design-add-page-background-content{
+  height:auto;
+  width:100%;
+  aspect-ratio:1/1;
+  border-radius:4px;
+  background-color:#000000;
+  cursor:pointer;
+  border:solid 1px #D9DDE1;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 .design-add-page-grid-container {
   flex: 0 0 auto;
@@ -4365,6 +4426,7 @@ ul.nav-link-dropdown-list {
   grid-template-columns: repeat(6, 1fr); 
   grid-gap: 12px; 
 }
+.design-add-page-color-container-color-picker,
 .design-edit-page-color-container-color-picker{
   position:relative;
   display:flex;
