@@ -14,7 +14,7 @@
 </div>
 
 <script>
-    $(".profile-expand-container-logout,.sidebar-login-logout button").click(function () {
+    $(".profile-expand-container-logout,.sidebar-login-logout").click(function () {
         $.ajax({
             url: '/Identity/Account/Logout?handler=AccountLogout', // URL to your logout action method
             type: 'POST',

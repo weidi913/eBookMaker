@@ -250,6 +250,7 @@ namespace FYP1.Pages.eBooks
         public List<CommentDisplayModel> CommentList { get; set; } = default!;
         public Collaboration Collaboration { get; set; } = default!; // Store the collaboration
         public Member curUser { get; set; }
+        public bool CRUDAccess { get; set; } = false;
 
         [BindProperty]
         public Chapter ChapterAdd { get; set; } = default!; // Chapter intended to add to the database
@@ -360,6 +361,37 @@ namespace FYP1.Pages.eBooks
             await _context.SaveChangesAsync();
 
             return new JsonResult(new { status = 0, htmlContent = GenerateCommentTemplate(commentAdd.comment, commentAdd.commentDate.ToString(), commentAdd.commentID), message = "comment added successfully", result = "hooray" });
+        }
+        public async Task<IActionResult> OnPostCollaboration(int bookID, string authorID)
+        {
+            if (_context.Collaboration == null)
+            {
+                return new JsonResult(new { status = 4, message = "Collaboration database is empty" });
+                //Should add in something
+                //to show the error
+            }
+
+            var collaboration = await _context.Collaboration.FirstOrDefaultAsync(c => c.bookID == bookID && c.authorID == authorID);
+
+            if(collaboration != null)
+            {
+                return new JsonResult(new { status = 1, message = "User has already been added." });
+            }
+            var user = await _userManager.FindByNameAsync(authorID);
+            if(user == null)
+            {
+                return new JsonResult(new { status = 2, message = "User has not existed." });
+            }
+
+            collaboration = new Collaboration();
+
+            collaboration.authorID = authorID;
+            collaboration.bookID = bookID;
+
+            _context.Collaboration.Add(collaboration);
+            await _context.SaveChangesAsync();
+
+            return new JsonResult(new { status = 0, message = "User has been added successfully"});
         }
         public async Task<IActionResult> OnPostOCR(IFormFile postedFile)
         {
@@ -892,7 +924,11 @@ namespace FYP1.Pages.eBooks
             {
                 Collaboration = collaboration; 
             }
-            else if(currentUserId != ebook.authorID && !isAuthorized)
+            else if(currentUserId == ebook.authorID)
+            {
+                CRUDAccess = true;
+            }
+            else if(!isAuthorized)
             {
                 return Forbid();
             }

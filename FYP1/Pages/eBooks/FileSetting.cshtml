@@ -53,11 +53,47 @@
                 with comments, and generate precise versions, all in one place.
             </span>
             <div class="file-setting-item-right-group">
-                <button id="book-publish-button" type="button" class="file-setting-publish-button">Publish</button>
+                @{
+                    switch (Model.curBook.bookStatus)
+                    {
+                        case "REVIEWED":
+                        case "REJECTED":
+                        case "PUBLISHED":
+                            <a href="./PublishedContent" class="file-setting-add-button" style="margin-right:8px;text-align:center">View</a>
+                            break;
+                        default:
+                            // Handle other cases if needed
+                            break;
+                    }
+                }
+                <form id="publish-form" method="post" asp-page-handler="BookPublish" asp-route-id="@Model.curBook.bookID">
+                </form>
+
+
+                @{
+                    switch (Model.curBook.bookStatus)
+                    {
+                        case "DRAFT":
+                            <button id="book-publish-button" type="button" class="file-setting-publish-button">Publish</button>
+                            break;
+                        case "REVIEWED":
+                            <button style="cursor:not-allowed" type="button" class="file-setting-publish-button">Reviewing</button>
+                            break;
+                        case "REJECTED":
+                            <button id="book-publish-button" type="submit" class="file-setting-publish-button">Republish</button>
+                            break;
+                        case "PUBLISHED":
+                            <button id="book-publish-button" type="submit" class="file-setting-publish-button">Unpublish</button>
+                            break;
+                        default:
+                            // Handle other cases if needed
+                            break;
+                    }
+                }
                 <button id="book-delete-caution-button" type="button" class="file-setting-delete-button">Delete</button>
             </div>
         </div>
-        <div class="profile-page-profile-container file-setting">
+        <div id="FileSetting" class="profile-page-profile-container file-setting">
             <div class="profile-success-info">File Setting has been updated successfully</div>
             <div class="profile-fail-info">File Setting update failed</div>
 
@@ -170,7 +206,7 @@
                 </svg>
             </div>
         </div>
-        <div class="profile-page-profile-container collaboration">
+        <div id="Collaboration" class="profile-page-profile-container collaboration">
             <div class="profile-success-info">Collaboration has been updated successfully</div>
             <div class="profile-fail-info">Collaboration update failed</div>
             <span class="profile-page-profile-title">Collaboration Section</span>
@@ -245,7 +281,7 @@
                 </svg>
             </div>
         </div>
-        <div class="profile-page-profile-container version">
+        <div id="VersionHistory" class="profile-page-profile-container version">
             <div class="profile-success-info">Version has been updated successfully</div>
             <div class="profile-fail-info">Version update failed</div>
             <span class="profile-page-profile-title">Version Section</span>
@@ -454,6 +490,9 @@ else
 <script>
     var expandSection;
     $(document).ready(function () {
+        $("#book-publish-button").click(function(){
+            $("#publish-form").submit();
+        })
 
         $("div[contenteditable=true][onChange],input#version-add-version-input").on("input", function () {
             var maxLength = 75;

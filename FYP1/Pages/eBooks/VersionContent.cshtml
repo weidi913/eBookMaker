@@ -1,851 +1,119 @@
 ﻿@page
 @model VersionContentModel
 @{
-    ViewData["Title"] = "File";
+    ViewData["Title"] = "Version History";
 }
-
 <style>
-    option {
-        color: black;
-    }
 </style>
-<div class="file-setting-caution-box">
-    <form asp-page-handler="BookDelete" method="post" class="file-setting-caution-checkbox">
-        <input hidden  asp-for="@Model.bookID" value="@Model.curBook.bookID"/>
-        <div class="file-setting-caution-icon">
-            <svg fill="red" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-                 viewBox="0 0 27.963 27.963" xml:space="preserve">
-<g>
-            <g id="c129_exclamation">
-            <path d="M13.983,0C6.261,0,0.001,6.259,0.001,13.979c0,7.724,6.26,13.984,13.982,13.984s13.98-6.261,13.98-13.984
-			C27.963,6.259,21.705,0,13.983,0z M13.983,26.531c-6.933,0-12.55-5.62-12.55-12.553c0-6.93,5.617-12.548,12.55-12.548
-			c6.931,0,12.549,5.618,12.549,12.548C26.531,20.911,20.913,26.531,13.983,26.531z" />
-            <polygon points="15.579,17.158 16.191,4.579 11.804,4.579 12.414,17.158 		" />
-            <path d="M13.998,18.546c-1.471,0-2.5,1.029-2.5,2.526c0,1.443,0.999,2.528,2.444,2.528h0.056c1.499,0,2.469-1.085,2.469-2.528
-			C16.441,19.575,15.468,18.546,13.998,18.546z" />
-    </g>
-            <g id="Capa_1_207_">
-    </g>
-</g>
-</svg>
-        </div>
-        <div class="file-setting-caution-header">Are you sure?</div>
-        <div class="file-setting-caution-content">You will not able to recover this book, @Model.curBook.title!</div>
-        <div class="file-setting-caution-button">
-            <button id="book-cancel-button" type="button" class="file-setting-caution-cancel-button">Cancel</button>
-            <button id="book-delete-button" type="button" class="file-setting-caution-delete-button">Yes, delete it!</button>
-        </div>
-    </form>
-</div>
-<div style="display:flex;flex-direction:column;min-height:100vh;width:100%;">
-    @Html.Partial("_HeaderLogin")
-    <div class="profile-page-container">
-        <div class="profile-page-profile-container file-welcome">
-            <div class="profile-page-welcome-background" style="background: rgb(254,253,222);background: linear-gradient(90deg, rgba(254,253,222,1) 33%, rgba(149,242,247,1) 86%);"></div>
-            <span class="profile-page-profile-title file-welcome">Welcome to File Setting</span>
-            <span class="profile-page-profile-subtitle file-welcome ">
-                Efficiently update files, view comments, and generate versions seamlessly with file setting
-            </span>
-            <span class="profile-page-profile-description">
-                Experience the power of File Setting: effortlessly manage your files, 
-                gain insight from detailed comments, and ensure seamless version control. 
-                With our intuitive platform, you can efficiently update documents, engage
-                with comments, and generate precise versions, all in one place.
-            </span>
-            <div class="file-setting-item-right-group">
-                <button id="book-publish-button" type="button" class="file-setting-publish-button">Publish</button>
-                <button id="book-delete-caution-button" type="button" class="file-setting-delete-button">Delete</button>
-            </div>
-        </div>
-        <div class="profile-page-profile-container file-setting">
-            <div class="profile-success-info">File Setting has been updated successfully</div>
-            <div class="profile-fail-info">File Setting update failed</div>
 
-                <span class="profile-page-profile-title">File Setting</span>
-                <span class="profile-page-profile-subtitle">
-                    Streamline file details and information management effortlessly with file setting
-                </span>
-            <form asp-page-handler="FileSetting" id="change-file-setting-form" method="post" class="profile-form expandable-form-container">
-                <input type="hidden" asp-for="FileSettingInput.bookID" value="@Model.curBook.bookID" />
-                <div class="profile-page-input-text-container">
-                    <span class="profile-page-text">Title</span>
-                    <div class="enter-input-label-container">
-                        <label asp-for="FileSettingInput.title" class="enter-label">Title</label>
-                        <input value="@Model.curBook.title" asp-for="FileSettingInput.title" id="book-title" type="text" placeholder="Title" class="input name-input" />
-                        <div class="register-user-error-container">
-                            <svg viewBox="0 0 1024 1024" class="register-user-error-icon">
-                                <path d="M512 854q140 0 241-101t101-241-101-241-241-101-241 101-101 241 101 241 241 101zM512 86q176 0 301 125t125 301-125 301-301 125-301-125-125-301 125-301 301-125zM470 298h84v256h-84v-256zM470 640h84v86h-84v-86z"></path>
-                            </svg>
-                            <span class="register-user-error-text">Enter title (less than 200 characters)</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="profile-page-input-select-container">
-                    <span class="profile-page-text">Type</span>
-                    <div class="enter-input-label-container">
-                        <label asp-for="FileSettingInput.type" class="enter-label"><span>Type</span></label>
-                        <select asp-for="FileSettingInput.type" id="book-type" class="input">
-                            @foreach (var type in Model.bookTypes)
-                            {
-                                if (type == Model.curBook.type)
-                                {
-                                    <option value="@type" selected>@type</option>
-                                }
-                                else
-                                {
-                                    <option value="@type">@type</option>
-                                }
 
-                            }
-                        </select>
-                        <div class="register-user-error-container">
-                            <svg viewBox="0 0 1024 1024" class="register-user-error-icon">
-                                <path d="M512 854q140 0 241-101t101-241-101-241-241-101-241 101-101 241 101 241 241 101zM512 86q176 0 301 125t125 301-125 301-301 125-301-125-125-301 125-301 301-125zM470 298h84v256h-84v-256zM470 640h84v86h-84v-86z"></path>
-                            </svg>
-                            <span class="register-user-error-text">Select your document</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="profile-page-input-text-container">
-                    <span class="profile-page-text">Description</span>
-                    <div class="enter-input-label-container">
-                        <label asp-for="FileSettingInput.description" class="enter-label">Description</label>
-                        <textarea id="book-description" style="font-size:100%;" asp-for="FileSettingInput.description" placeholder="Description" class="create-book-background-textarea textarea">@Model.curBook.description</textarea>
+<div class="version-history-header">
+    <a class="version-history-back" asp-page="./FileSetting" asp-route-id="@Model.bookID">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-chevron-left" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0" />
+        </svg>
+    </a>
+    <div class="version-history-name">@Model.version.verName</div>
+    <div class="version-history-zoom-input-container">
+        <button class="version-history-zoom-minus-button">
+            <svg style="color:#F0F0F0"  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20">
+                <path d="M19 13H5v-2h14v2z" fill="#F0F0F0" />
+            </svg>
+        </button>
+        <input class="version-history-zoom-input" type="text" value="100%"/>
+        <button class="version-history-zoom-plus-button">
+            <svg style="color:#F0F0F0" viewBox="0 0 1024 1024" width="20" height="20">
+                <path d="M810 554h-256v256h-84v-256h-256v-84h256v-256h84v256h256v84z" fill="#F0F0F0"></path>
+            </svg>
+        </button>
 
-                        <div class="register-user-error-container">
-                            <svg viewBox="0 0 1024 1024" class="register-user-error-icon">
-                                <path d="M512 854q140 0 241-101t101-241-101-241-241-101-241 101-101 241 101 241 241 101zM512 86q176 0 301 125t125 301-125 301-301 125-301-125-125-301 125-301 301-125zM470 298h84v256h-84v-256zM470 640h84v86h-84v-86z"></path>
-                            </svg>
-                            <span class="register-user-error-text">Enter description</span>
-                        </div>
-                    </div>
-                </div>
-                    <div class="profile-page-input-size-container">
-                    <span class="profile-page-text">Size</span>
-                    <div class="enter-input-label-container">
-                        <label class="enter-label"><span>Width</span></label>
-                        <input style="background-color:#F6F7F8;color:#525759" disabled value="@Model.curBook.width" type="text" class="input" />
-                    </div>
-                    <div class="enter-input-label-container">
-                        <label class="enter-label"><span>Height</span></label>
-                        <input style="background-color:#F6F7F8;color:#525759" disabled value="@Model.curBook.height" type="text" class="input" />
-                    </div>
-                </div>
-                <div class="profile-page-input-text-container">
-                    <span class="profile-page-text">Edition</span>
-                    <div class="enter-input-label-container">
-                        <label class="enter-label">Edition</label>
-                        <input style="background-color:#F6F7F8;color:#525759" disabled value="@Model.curBook.edition" type="text" placeholder="email@address.com" class="input" />
-                    </div>
-                </div>
-                <div class="profile-page-input-text-container">
-                    <span class="profile-page-text">Status</span>
-                    <div class="enter-input-label-container">
-                        <label class="enter-label">Status</label>
-                        <input style="background-color:#F6F7F8;color:#525759" disabled value="@Model.curBook.bookStatus" type="text" placeholder="email@address.com" class="input" />
-                    </div>
-                </div>
-                <div class="profile-page-input-text-container">
-                    <span class="profile-page-text">Author</span>
-                    <div class="enter-input-label-container">
-                        <label class="enter-label">Author</label>
-                        <input style="background-color:#F6F7F8;color:#525759" disabled value="@Model.curBook.authorID" type="text" placeholder="email@address.com" class="input" />
-                    </div>
-                </div>
-                <div class="profile-page-input-text-container">
-                    <span class="profile-page-text">Last Modified Time</span>
-                    <div class="enter-input-label-container">
-                        <label class="enter-label">Last Modified Time</label>
-                        <input style="background-color:#F6F7F8;color:#525759" disabled value="@Model.curBook.LastUpdate" type="text" placeholder="email@address.com" class="input" />
-                    </div>
-                </div>
-                <button id="file-setting-submit-button" type="button"
-                        class="register-form-right-button enter-button">
-                    <span>Submit</span>
-                </button>
-            </form>
-            <div class="profile-toggle-section">
-                <svg style="height:100%;width:100%" viewBox="0 0 1024 1024" class="">
-                    <path d="M225.835 414.165l256 256c16.683 16.683 43.691 16.683 60.331 0l256-256c16.683-16.683 16.683-43.691 0-60.331s-43.691-16.683-60.331 0l-225.835 225.835-225.835-225.835c-16.683-16.683-43.691-16.683-60.331 0s-16.683 43.691 0 60.331z"></path>
-                </svg>
-            </div>
-        </div>
-        <div class="profile-page-profile-container collaboration">
-            <div class="profile-success-info">Collaboration has been updated successfully</div>
-            <div class="profile-fail-info">Collaboration update failed</div>
-            <span class="profile-page-profile-title">Collaboration Section</span>
-            <span class="profile-page-profile-subtitle">
-                Efficiently foster teamwork and synergy with our collaboration solution
-            </span>
-            <form asp-page-handler="Collaboration" method="post" hidden id="collaboration-add-form">
-                <input type="hidden" id="collaboration-add-form-bookID-input" asp-for="CollaborationInput.bookID" value="0" />
-                <input type="hidden" id="collaboration-add-form-authorID-input" asp-for="CollaborationInput.authorID" value="0" />
-            </form>
-            <form asp-page-handler="CollaborationDelete" method="post" hidden id="collaboration-delete-form" >
-                <input type="hidden" id="collaboration-delete-form-bookID-input" asp-for="CollaborationInput.bookID" value="0" />
-                <input type="hidden" id="collaboration-delete-form-authorID-input" asp-for="CollaborationInput.authorID" value="0" />
-            </form>
-            <form id="collaboration-content-form" class="profile-form expandable-form-container">
-                <span class="profile-page-profile-subtitle" style="margin-bottom:0px;">
-                    <b>People with access</b>
-                </span>
-                <div class="file-setting-collaboration-container">
-                    <div class="file-setting-collaboration-item ">
-@*                         <div class="file-setting-collaboration-item-left-group username-collaborate-row">
-                            <input id="collaboration-add-username-input" class="file-setting-collaboration-item-input" />
-                        </div> *@
-                        <div class="file-setting-collaboration-item-left-group username-collaborate-row">
-                            <label style="position:absolute" class="enter-label">User email</label>
-                            <input id="collaboration-add-username-input" class="file-setting-collaboration-item-input" />
-                        </div>
-                        <div class="file-setting-collaboration-item-right-group">
-                            <button style="" type="button" id="collaboration-add-button" class="file-setting-add-button">Add</button>
-                        </div>
-                    </div>
-                    <div class="file-setting-collaboration-item">
-                        <div class="file-setting-collaboration-item-left-group">
-                            <div class="file-setting-collaboration-item-image" style='background-image: url(data:image/jpg;base64,@Model.authorInfo.imageData)'></div>
-                            <div class="file-setting-collaboration-item-user-info">
-                                <div class="file-setting-collaboration-item-user-info-username">
-                                    @Model.authorInfo.UserName
-                                </div>
-                                <div class="file-setting-collaboration-item-user-info-name">
-                                    @Model.authorInfo.lastName @Model.authorInfo.firstName
-                                </div>
-                            </div>
-                        </div>
-                        <div class="file-setting-collaboration-item-right-group">
-                            <div class="file-setting-collaboration-item-right-group-text">
-                                Owner
-                            </div>
-                        </div>
-                    </div>
-                    @foreach(var userCollab in Model.memberList)
-                    {
-                        <div class="file-setting-collaboration-item">
-                            <div class="file-setting-collaboration-item-left-group">
-                                <div class="file-setting-collaboration-item-image" style='background-image: url(data:image/jpg;base64,@userCollab.imageData)'></div>
-                                <div class="file-setting-collaboration-item-user-info">
-                                    <div class="file-setting-collaboration-item-user-info-username">@userCollab.UserName</div>
-                                    <div class="file-setting-collaboration-item-user-info-name">@userCollab.lastName @userCollab.firstName</div>
-                                </div>
-                            </div>
-                            <div class="file-setting-collaboration-item-right-group" @(userCollab.UserName == Model.curUser.UserName ? "style=cursor:not-allowed;" : "")>
-                                <button type="button" class="file-setting-delete-button delete-collaboration-button" 
-                                @( userCollab.UserName == Model.curUser.UserName  ?"style=pointer-events:none;" :"")>Delete</button>
-                            </div>
-                        </div>
-                    }
-                </div>
-            </form>
-
-            <div class="profile-toggle-section">
-                <svg style="height:100%;width:100%" viewBox="0 0 1024 1024" class="">
-                    <path d="M225.835 414.165l256 256c16.683 16.683 43.691 16.683 60.331 0l256-256c16.683-16.683 16.683-43.691 0-60.331s-43.691-16.683-60.331 0l-225.835 225.835-225.835-225.835c-16.683-16.683-43.691-16.683-60.331 0s-16.683 43.691 0 60.331z"></path>
-                </svg>
-            </div>
-        </div>
-        <div class="profile-page-profile-container version">
-            <div class="profile-success-info">Version has been updated successfully</div>
-            <div class="profile-fail-info">Version update failed</div>
-            <span class="profile-page-profile-title">Version Section</span>
-            <span class="profile-page-profile-subtitle">
-                Enhanced version offering streamlined ebook management with backup functionality for improved efficiency.
-            </span>
-            <form asp-page-handler="Version" method="post" hidden id="version-add-form">
-                <input type="hidden" id="version-add-form-name-input" asp-for="VersionInput.verName" value="0" />
-                <input type="hidden" id="version-add-form-bookID-input" asp-for="VersionInput.bookID" value="0" />
-            </form>
-            <form asp-page-handler="VersionDelete" method="post" hidden id="version-delete-form">
-                <input type="hidden" id="version-delete-form-versionID-input" asp-for="VersionInput.versionID" value="0" />
-            </form>
-            <form asp-page-handler="VersionUpdate" method="post" hidden id="version-update-form">
-                <input type="hidden" id="version-update-form-versionID-input" asp-for="VersionInput.versionID" value="0" />
-                <input type="hidden" id="version-update-form-name-input" asp-for="VersionInput.verName" value="0" />
-            </form>
-            <form id="version-content-form" class="profile-form expandable-form-container">
-                <span class="profile-page-profile-subtitle" style="margin-bottom:0px;">
-                    <b>Version list</b>
-                </span>
-                <div class="file-setting-collaboration-container">
-                    <div class="file-setting-collaboration-item ">
-                        <div class="file-setting-collaboration-item-left-group username-collaborate-row">
-                            <label style="position:absolute" class="enter-label">Version Name</label>
-                            <input maxlength="100" id="version-add-version-input" class="file-setting-collaboration-item-input" />
-                        </div>
-                        <div class="file-setting-collaboration-item-right-group">
-                            <button type="button" style=""  id="version-add-button" class="file-setting-add-button">Add</button>
-                        </div>
-                    </div>
-                    <div class="file-setting-collaboration-item">
-                        <div class="file-setting-collaboration-item-left-group">
-                            <div class="file-setting-collaboration-item-image" style='background-image: url(data:image/jpg;base64,@Model.authorInfo.imageData)'></div>
-                            <div class="file-setting-collaboration-item-user-info">
-                                <div class="file-setting-collaboration-item-user-info-username">
-                                    @Model.authorInfo.UserName
-                                </div>
-                                <div class="file-setting-collaboration-item-user-info-name">
-                                    @Model.authorInfo.lastName @Model.authorInfo.firstName
-                                </div>
-                            </div>
-                        </div>
-                        <div class="file-setting-collaboration-item-right-group">
-                            <div class="file-setting-collaboration-item-right-group-text">
-                                Owner
-                            </div>
-                        </div>
-                    </div>
-                    @foreach (var version in Model.versionList)
-                    {
-                        <div class="file-setting-collaboration-item version-item">
-                            <div class="file-setting-collaboration-item-left-group">
-                                <div class="file-setting-collaboration-item-user-info">
-                                    <div contenteditable class="file-setting-collaboration-item-user-info-username">@version.verName</div>
-                                    <div class="file-setting-collaboration-item-user-info-name">@version.versionDate</div>
-                                </div>
-                            </div>
-                            <div class="file-setting-collaboration-item-right-group">
-                                <a asp-page="./Version" asp-route-id="@version.versionID" style="margin-right:8px;text-align:center" class="file-setting-add-button">View</a>
-                                <button data-version-id="@version.versionID" type="button" style="margin-right:8px;" class="version-update-button file-setting-publish-button">Save</button>
-                                <button data-version-id="@version.versionID" type="button" class="version-delete-button file-setting-delete-button">
-                                    Delete
-                                </button>
-                            </div>
-                        </div>
-                    }
-                </div>
-            </form>
-
-            <div class="profile-toggle-section">
-                <svg style="height:100%;width:100%" viewBox="0 0 1024 1024" class="">
-                    <path d="M225.835 414.165l256 256c16.683 16.683 43.691 16.683 60.331 0l256-256c16.683-16.683 16.683-43.691 0-60.331s-43.691-16.683-60.331 0l-225.835 225.835-225.835-225.835c-16.683-16.683-43.691-16.683-60.331 0s-16.683 43.691 0 60.331z"></path>
-                </svg>
-            </div>
-        </div>
-@*         <div class="profile-page-profile-container comment">
-            <div class="profile-success-info">Password has been updated successfully</div>
-            <div class="profile-fail-info">Personal Information update failed</div>
-            <span class="profile-page-profile-title">Security Section</span>
-            <span class="profile-page-profile-subtitle">
-                Manage and strengthen the security of their accounts in security section
-            </span>
-            <form asp-route-handler="Password" id="change-password-form" method="post" class="profile-form">
-                <div class="profile-page-input-text-container">
-                    <span class="profile-page-text">Email</span>
-                    <input style="background-color:#F6F7F8;color:#525759" disabled value="@Model.curUser.UserName" id="username" type="text" placeholder="email@address.com" class="input" />
-                </div>
-                <div class="profile-page-input-text-container">
-                    <span class="profile-page-text">Old Password</span>
-                    <div class="enter-input-label-container">
-                        <label asp-for="PasswordInput.OldPassword" class="enter-label"><span>Old Password</span></label>
-                        <input asp-for="PasswordInput.OldPassword" id="old-password" type="password" placeholder="Old Password" class="input" />
-                        <div class="register-user-error-container">
-                            <svg viewBox="0 0 1024 1024" class="register-user-error-icon">
-                                <path d="M512 854q140 0 241-101t101-241-101-241-241-101-241 101-101 241 101 241 241 101zM512 86q176 0 301 125t125 301-125 301-301 125-301-125-125-301 125-301 301-125zM470 298h84v256h-84v-256zM470 640h84v86h-84v-86z"></path>
-                            </svg>
-                            <span class="register-user-error-text">Enter valid password format</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="profile-page-input-text-container">
-                    <span class="profile-page-text">New Password</span>
-                    <div class="enter-input-label-container">
-                        <label asp-for="PasswordInput.NewPassword" class="enter-label"><span>New Password</span></label>
-                        <input asp-for="PasswordInput.NewPassword" id="new-password" type="password" placeholder="New Password" class="input" />
-                        <div class="register-user-error-container">
-                            <svg viewBox="0 0 1024 1024" class="register-user-error-icon">
-                                <path d="M512 854q140 0 241-101t101-241-101-241-241-101-241 101-101 241 101 241 241 101zM512 86q176 0 301 125t125 301-125 301-301 125-301-125-125-301 125-301 301-125zM470 298h84v256h-84v-256zM470 640h84v86h-84v-86z"></path>
-                            </svg>
-                            <span class="register-user-error-text">Enter valid password format</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="profile-page-input-text-container">
-                    <span class="profile-page-text">Confirm Password</span>
-                    <div class="enter-input-label-container">
-                        <label asp-for="PasswordInput.ConfirmPassword" class="enter-label"><span>Confirm Password</span></label>
-                        <input asp-for="PasswordInput.ConfirmPassword" id="confirm-password" type="password" placeholder="Confirm Password" class="input" />
-                        <div class="register-user-error-container">
-                            <svg viewBox="0 0 1024 1024" class="register-user-error-icon">
-                                <path d="M512 854q140 0 241-101t101-241-101-241-241-101-241 101-101 241 101 241 241 101zM512 86q176 0 301 125t125 301-125 301-301 125-301-125-125-301 125-301 301-125zM470 298h84v256h-84v-256zM470 640h84v86h-84v-86z"></path>
-                            </svg>
-                            <span class="register-user-error-text">Enter valid password format</span>
-                        </div>
-                    </div>
-                </div>
-
-                <button id="password-submit-button" type="button"
-                        class="register-form-right-button enter-button">
-                    <span>Submit</span>
-                </button>
-            </form>
-
-            <div class="profile-toggle-section">
-                <svg style="height:100%;width:100%" viewBox="0 0 1024 1024" class="">
-                    <path d="M225.835 414.165l256 256c16.683 16.683 43.691 16.683 60.331 0l256-256c16.683-16.683 16.683-43.691 0-60.331s-43.691-16.683-60.331 0l-225.835 225.835-225.835-225.835c-16.683-16.683-43.691-16.683-60.331 0s-16.683 43.691 0 60.331z"></path>
-                </svg>
-            </div>
-        </div>
- *@
     </div>
-    @Html.Partial("_FooterGuest")
 </div>
-
-
-@if (Model.FileMessage == null)
-{
-
-}
-else if (Model.FileMessage == "0")
-{
-    <script>
-        $(".file-setting .profile-success-info").css("display", "flex");
-    </script>
-}
-else
-{
-    <script>
-        $(".file-setting .profile-fail-info").css("display", "flex");
-        $(".file-setting .profile-fail-info").text(Model.FileMessage);
-    </script>
-}
-@if (Model.CollabMessage == null)
-{
-
-}
-else if (Model.CollabMessage == "0")
-{
-    <script>
-        $(".collaboration .profile-success-info").css("display", "flex");
-        $(".collaboration .profile-success-info").text('Collaboration has been added successfully');
-    </script>
-}
-else if (Model.CollabMessage == "1")
-{
-    <script>
-        $(".collaboration .profile-success-info").css("display", "flex");
-        $(".collaboration .profile-success-info").text("Collaboration has been deleted successfully");
-    </script>
-}
-else
-{
-    <script>
-        $(".collaboration .profile-fail-info").css("display", "flex");
-        $(".collaboration .profile-fail-info").text('@Model.CollabMessage');
-    </script>
-}
-
-@if (Model.VersionMessage == null)
-{
-
-}
-else if (Model.VersionMessage == "0")
-{
-    <script>
-        $(".version .profile-success-info").css("display", "flex");
-        $(".version .profile-success-info").text('Version has been added successfully');
-    </script>
-}
-else if (Model.VersionMessage == "1")
-{
-    <script>
-        $(".version .profile-success-info").css("display", "flex");
-        $(".version .profile-success-info").text("Version has been updated successfully");
-    </script>
-}
-else if (Model.VersionMessage == "2")
-{
-    <script>
-        $(".version .profile-success-info").css("display", "flex");
-        $(".version .profile-success-info").text("Version has been deleted successfully");
-    </script>
-}
-else
-{
-    <script>
-        $(".version .profile-fail-info").css("display", "flex");
-        $(".version .profile-fail-info").text('@Model.VersionMessage');
-    </script>
-}
-
+<div style="margin-top:60px"></div>
+@Html.Raw(Model.version.verContent)
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-    var expandSection;
-    $(document).ready(function () {
-        $(".version-update-button").click(function () {
-            $("#version-update-form-versionID-input").val($(this).attr("data-version-id"));
-            $("#version-update-form-name-input").val($(this).closest("div").prev("div").find(".file-setting-collaboration-item-user-info-username").text());
-                                //$("version-update-form").submit();
-        })
-        $(".version-delete-button").click(function () {
-            $("#version-delete-form-versionID-input").val($(this).attr("data-version-id"));
-            $("#version-delete-form").submit();
-        })
-        $("#book-delete-caution-button").click(function () {
-            $(".file-setting-caution-box").css("display", "flex");
-        })
-        $("#book-cancel-button,.file-setting-caution-box").click(function () {
-            $(".file-setting-caution-box").css("display", "none");
-        })
-        $(".file-setting-caution-checkbox").click(function (e) {
-            e.stopPropagation();
-        })
-        $("#book-delete-button").click(function(){
-            $(".file-setting-caution-checkbox").submit();
-        })
-        $(".delete-collaboration-button").click(function () {
-            var username = $(this).closest("div").prev("div").find(".file-setting-collaboration-item-user-info-username").text();
-            $("#collaboration-delete-form-bookID-input").val("@Model.curBook.bookID");
-            $("#collaboration-delete-form-authorID-input").val(username);
-            $("#collaboration-delete-form").submit();
-        })
-        $("#collaboration-add-button").click(function(){
-            if ($(this).css("cursor") == "not-allowed") {
+    function initChart(element) {
+        var configStr = element.innerHTML;
+        var configJSON = JSON.parse(configStr);
+        // Clear the innerHTML of the element
+        element.innerHTML = '';
 
-            }
-            else {
-                var username = $("#collaboration-add-username-input").val();
-                $("#collaboration-add-form-bookID-input").val("@Model.curBook.bookID");
-                $("#collaboration-add-form-authorID-input").val(username);
-                $("#collaboration-add-form").submit();
-            }
-        })
-        $("#version-add-button").click(function () {
-            if ($(this).css("cursor") == "not-allowed") {
+        // Create a new canvas element and append it to the element
+        var canvas = document.createElement('canvas');
+        canvas.classList.add('design-edit-page-canvas-content');
+        element.appendChild(canvas);
 
-            }
-            else {
-                var versionName = $("#version-add-version-input").val();
-                $("#version-add-form-bookID-input").val("@Model.curBook.bookID");
-                $("#version-add-form-name-input").val(versionName);
-                $("#version-add-form").submit();
-            }
-        })
-        if($("#collaboration-add-username-input").val() === ""){
-            $("#collaboration-add-button").css("cursor", "not-allowed");
-        }
-        if ($("#version-add-version-input").val() === "") {
-            $("#version-add-button").css("cursor", "not-allowed");
-        }
-        $("#collaboration-add-username-input, #version-add-version-input").on("input", function () {
-            if ($(this).val() === "") {
-                $("#collaboration-add-button").css("cursor", "not-allowed");
-            }
-            else {
-                $("#collaboration-add-button").css("cursor", "pointer");
-            }
-        })
-        $("#version-add-version-input").on("input", function () {
-            if ($(this).val() === "") {
-                $("#version-add-button").css("cursor", "not-allowed");
-            }
-            else {
-                $("#version-add-button").css("cursor", "pointer");
-            }
-        })
-        $("#book-description").text("@Model.curBook.description");
+        // Get the canvas context and initialize the Chart.js chart
+        var ctx = canvas.getContext('2d');
+        new Chart(ctx, configJSON);
+    }
 
-        $("#file-setting-submit-button").click(function(){
-            var validFileSetting = true;
+    var chartList = $(".chart");
+    chartList.each(function () {
+        initChart(this);
+    })
 
-            hideError($("#book-title"));
-            hideError($("#book-type"));
-            hideError($("#book-description"));
-            if ($("#book-title").val() === "") {
-                showError($("#book-title"));
-                validFileSetting = false;
+    var originalHeight = $(".version-history-zoom-container").height();
+    var originalWidth = $(".version-history-zoom-container").width();
+
+    $(document).ready(function(){
+        $("input").on("input",function(){
+            var inputValue = $(this).val();
+            // Use regular expression to check if the input contains only digits
+            if (!/^\d*$/.test(inputValue)) {
+                // If input contains non-digit characters, remove them
+                $(this).val(inputValue.replace(/[^\d]/g, ''));
             }
-            if ($("#book-type").val() === "") {
-                showError($("#book-type"));
-                validFileSetting = false;
-            }
-            if ($("#book-description").val() === "") {
-                showError($("#book-description"));
-                validFileSetting = false;
+        })
+
+        $("input").change(function () {
+            var inputValue = parseInt($(this).val()); // Parse the input value as an integer
+            if (inputValue > 500) {
+                $(this).val(500);
+            } else if (inputValue < 25) {
+                $(this).val(25); // Corrected to set the value to 25 if it's less than 25
             }
 
-            if(validFileSetting){
-                $("#change-file-setting-form").submit();
-            }
-        })
-        $("#create-button").click(function () {
-            window.location.href = '/eBooks/Dashboard';
-        })
-        $(".profile-toggle-section").click(function () {
-            var $this = $(this); // Store reference to $(this)
+            inputValue = parseInt($(this).val()); // Parse the input value as an integer
 
-            $("form.expandable-form-container").addClass("fadeOut");
+            // Apply the scale transformation and scaled height
+            $(".version-history-zoom-container div").css("zoom", inputValue+"%");
 
-            setTimeout(function () {
-                $("form.expandable-form-container").css("display", "none");
-                $(".profile-toggle-section").css("transform", "rotate(0deg)");
-                $this.css("transform", "rotate(0deg)"); // Use $this instead of $(this)
-                if (expandSection !== $this.prev("form").attr("id")) {
-                    $this.prev("form").css("display", "flex");
-                    $this.prev("form").removeClass("fadeOut");
+            $(this).val($(this).val() + "%");
 
-                    $this.css("transform", "rotate(180deg)");
-                    expandSection = $this.prev("form").attr("id");
-                }
-                else {
-                    expandSection = null;
-                }
-            }, 150); // Adjust the timeout value as needed
-            
         });
 
-        $("#gender").val("@Model.curUser.gender");
-        // Load birthday data
-        var databaseBirthday = "@Model.curUser.birthday"; // Assuming Model.curUser.birthday is in a valid date format
-        // Split the date string into its components
-        var parts = databaseBirthday.split(/[\/\s:]/); // Split by '/', ' ', and ':'
+        $(".version-history-zoom-minus-button").click(function () {
+            var inputValue = parseInt($(".version-history-zoom-input").val().split("%")[0]); // Parse the input value as an integer
+            inputValue -= 25;
+            if (inputValue > 500) {
+                inputValue = 500;
+            } else if (inputValue < 25) {
+                inputValue+= 25;
+            }
 
-        // Extract day, month, year, and time components
-        var day = parseInt(parts[0], 10); // Day
-        var month = parseInt(parts[1], 10); // Month is zero-based, so subtract 1
-        var year = parseInt(parts[2], 10); // Year
-        $("#birthday-month").val(month); // Month is zero-based, so add 1
-        $("#birthday-day").val(day);
-        $("#birthday-year").val(year);
+            // Apply the scale transformation and scaled height
+            $(".version-history-zoom-container div").css("zoom", inputValue + "%");
 
-        $(".profile-page-upload-profile-image").click(function () {
-            $("#upload-photo-input").click();
+            $(".version-history-zoom-input").val(inputValue + "%");
         })
-
-        $("#password-submit-button").click(function () {
-            var validPassword = false;
-            var emptyError = false;
-            hideError($("#old-password"));
-            hideError($("#new-password"));
-            hideError($("#confirm-password"));
-            if($("#old-password").val() === ""){
-                emptyError = true;
-                showError($("#old-password"));
-                $("#old-password").next("div").find("span").text("Old password is empty");
+        $(".version-history-zoom-plus-button").click(function () {
+            var inputValue = parseInt($(".version-history-zoom-input").val().split("%")[0]); // Parse the input value as an integer
+            inputValue += 25;
+            if (inputValue > 500) {
+                inputValue = 500;
+            } else if (inputValue < 25) {
+                inputValue += 25;
             }
 
-            if ($("#new-password").val() === "") {
-                emptyError = true;
-                showError($("#new-password"));
-                $("#new-password").next("div").find("span").text("New password is empty");
-            } 
+            // Apply the scale transformation and scaled height
+            $(".version-history-zoom-container div").css("zoom", inputValue + "%");
 
-            if ($("#confirm-password").val() === "") {
-                emptyError = true;
-                showError($("#confirm-password"));
-                $("#confirm-password").next("div").find("span").text("Confirm password is empty");
-            }
-            
-            if(!emptyError){
-                var id_val = $("#new-password").val();
-                if (id_val.length < 8) {
-                    showError($("#new-password"));
-                    $("#new-password").next("div").find("span").text("Use 8 characters or more for your password");
-                }
-                else if (!(/[^a-zA-Z0-9]/.test(id_val) &&
-                    /[a-z]/.test(id_val) &&
-                    /[A-Z]/.test(id_val))) {
-                    showError($("#new-password"));
-                    $("#new-password").next("div").find("span").text("Please choose a stronger password");
-                }
-                else if (id_val !== $("#confirm-password").val()){
-                    showError($("#confirm-password"));
-                    $("#confirm-password").next("div").find("span").text("Those passwords didn’t match. Try again");
-                }
-                else{
-                    validPassword = true;
-                }
-            }
-
-            if (validPassword) {
-                $("#change-password-form").submit();
-            }
+            $(".version-history-zoom-input").val(inputValue + "%");
         })
-        $("#info-submit-button").click(function () {
-            var validInfo = true;
-
-            if ($("#first-name").val() === "") {
-                validInfo = false;
-                showError($("#first-name"));
-            }
-            else {
-                hideError($("#first-name"));
-            }
-
-            if ($("#gender").val() === "") {
-                validInfo = false;
-                showError($("#gender"));
-            }
-            else {
-                hideError($("#gender"));
-            }
-
-            var month = parseInt($("#birthday-month").val(), 10);
-            var day = parseInt($("#birthday-day").val(), 10);
-            var year = parseInt($("#birthday-year").val(), 10);
-
-            var emptyError = false;
-            var errorText = "Please complete the birthday date";
-
-            if ($("#birthday-month").val() === null || $("#birthday-day").val() === "" || $("#birthday-year").val() === "") {
-                validInfo = false;
-                emptyError = true;
-                showError($("#birthday-month"));
-                showError($("#birthday-day"));
-                showError($("#birthday-year"));
-                $("#birthday-year").next("div").find("span").text("Empty birthday date")
-            }
-            else {
-                hideError($("#birthday-month"));
-                hideError($("#birthday-day"));
-                hideError($("#birthday-year"));
-            }
-
-            if (!emptyError) {
-                // Check if the day is within the valid range for the selected month
-                var daysInMonth = new Date(year, month, 0).getDate();
-
-                // Create a Date object from the parsed parts
-                var birthday = new Date(year, month - 1, day);
-
-                // Check if the date is too far in the past or future
-                var currentDate = new Date();
-                var maxDate = new Date(currentDate.getFullYear() - 100, currentDate.getMonth(), currentDate.getDate());
-                var minDate = new Date(currentDate.getFullYear() - 18, currentDate.getMonth(), currentDate.getDate());
-
-                if (day < 1 || day > daysInMonth) {
-                    // Day is invalid for the selected month
-                    errorText = "Invalid day for the selected month";
-                    showError($("#birthday-month"));
-                    showError($("#birthday-day"));
-                    showError($("#birthday-year"));
-                    $("#birthday-year").next("div").find("span").text(errorText);
-                    validInfo = false;
-                }
-                else if (birthday < maxDate || birthday > minDate) {
-                    // Year is invalid
-                    errorText = "Birthday must be between 18 and 100 years ago";
-                    showError($("#birthday-month"));
-                    showError($("#birthday-day"));
-                    showError($("#birthday-year"));
-                    $("#birthday-year").next("div").find("span").text(errorText);
-                    validInfo = false;
-                }
-
-                else if (isNaN(birthday.getTime())) {
-                    // Invalid birthday date
-                    errorText = "Invalid birthday date";
-                    showError($("#birthday-month"));
-                    showError($("#birthday-day"));
-                    showError($("#birthday-year"));
-                    $("#birthday-year").next("div").find("span").text(errorText);
-                    validInfo = false;
-                }
-                else {
-                    hideError($("#birthday-month"));
-                    hideError($("#birthday-day"));
-                    hideError($("#birthday-year"));
-
-
-                    // Format the date as "YYYY-MM-DD"
-                    var formattedDate = year + '-' + month + '-' + day;
-
-                    // Set the formatted date to the hidden input field
-                    $("#birthday-date").val(birthday);
-                 //   $("#birthday-date").val(birthday.toISOString().slice(0, 10));
-               //     $("#birthday-date").val(birthday.toISOString().split('T')[0]);
-
-                    $("#birthday-date").val(birthday.getFullYear() + '-' +
-                        ('0' + (birthday.getMonth() + 1)).slice(-2) + '-' +
-                        ('0' + birthday.getDate()).slice(-2));
-                  //  $("#birthday-date").val(('0' + birthday.getDate()).slice(-2) + '/' +
-                    //    ('0' + (birthday.getMonth() + 1)).slice(-2) + '/' +
-                      //  birthday.getFullYear());
-                }
-            }
-
-            if (validInfo) {
-                console.log("123");
-                $("#change-info-form").submit();
-            }
-
-        })
-
-        $("#upload-photo-input").change(function () {
-            var file = this.files[0]; // Get the selected file
-            var reader = new FileReader(); // Create a FileReader object
-
-            // Event handler for when the file is loaded
-            reader.onload = function (event) {
-                var imageData = event.target.result; // Get the data URL of the loaded file
-                // Now you can use the imageData variable as needed, such as setting it as the background of a div
-                $(".profile-page-upload-profile-image").css("background-image", "url(" + imageData + ")");
-                $("#image-data").val(imageData.replace(/^data:image\/\w+;base64,/, ''));
-            };
-
-            // Read the selected file as a data URL
-            reader.readAsDataURL(file);
-        })
-        // Focus effect
-        $("input, select, textarea").focusin(function () {
-            $(this).prev("label.enter-label").css("color", "#3282E9");
-            $(this).prev("")
-        })
-        $("input, select, textarea").focusout(function () {
-            $(this).prev("label.enter-label").css("color", "var(--dl-color-gray-700)");
-        })
-
-        // Allow letter only in first name
-        $("#first-name").on("keypress", function (event) {
-            var charCode = event.which || event.keyCode;
-            if (!((charCode >= 65 && charCode <= 90) || // Uppercase letters
-                (charCode >= 97 && charCode <= 122) || // Lowercase letters
-                charCode === 32)) { // Space
-                event.preventDefault();
-            }
-        });
-        // Allow letter only in last name
-        $("#last-name").on("keypress", function (event) {
-            var charCode = event.which || event.keyCode;
-            if (!((charCode >= 65 && charCode <= 90) || // Uppercase letters
-                (charCode >= 97 && charCode <= 122) || // Lowercase letters
-                charCode === 32)) { // Space
-                event.preventDefault();
-            }
-        });
-
-        $("select").css('color', 'black');
-
-        // Allow digit only for birthday day
-        $("#birthday-day").on("keypress", function (event) {
-            var charCode = event.which || event.keyCode;
-            if (!(charCode >= 48 && charCode <= 57)) { // Numbers 0-9
-                event.preventDefault();
-            }
-        });
-        // Allow digit only for birthday year
-        $("#birthday-year").on("keypress", function (event) {
-            var charCode = event.which || event.keyCode;
-            if (!(charCode >= 48 && charCode <= 57)) { // Numbers 0-9
-                event.preventDefault();
-            }
-        });
-
-        function showError(elementVariable) {
-            $(elementVariable).prev("label.enter-label").addClass("error-label");
-            $(elementVariable).addClass("error-input");
-            $(elementVariable).next("div").css("display", "flex");
-        }
-        function hideError(elemeentVariable) {
-            $(elemeentVariable).removeClass("error-input");
-            $(elemeentVariable).prev("label").removeClass("error-label");
-            $(elemeentVariable).next("div").css("display", "none");
-
-        }
-
-    });
+    })
 </script>
-
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

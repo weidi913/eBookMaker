@@ -13,15 +13,19 @@
                         <path d="M366 708l196-196-196-196 60-60 256 256-256 256z"></path>
                     </svg>
                 </div>
-                <div class="sidebar-login-nav-container">
-                    <svg viewBox="0 0 1024 1024" class="sidebar-login-nav-icon">
-                        <path d="M1002.934 817.876l-460.552-394.76c21.448-40.298 33.618-86.282 33.618-135.116 0-159.058-128.942-288-288-288-29.094 0-57.172 4.332-83.646 12.354l166.39 166.39c24.89 24.89 24.89 65.62 0 90.51l-101.49 101.49c-24.89 24.89-65.62 24.89-90.51 0l-166.39-166.39c-8.022 26.474-12.354 54.552-12.354 83.646 0 159.058 128.942 288 288 288 48.834 0 94.818-12.17 135.116-33.62l394.76 460.552c22.908 26.724 62.016 28.226 86.904 3.338l101.492-101.492c24.888-24.888 23.386-63.994-3.338-86.902z"></path>
-                    </svg>
-                    <span class="sidebar-login-nav-text">Management</span>
-                    <svg viewBox="0 0 1024 1024" class="sidebar-login-nav-right-arrow">
-                        <path d="M366 708l196-196-196-196 60-60 256 256-256 256z"></path>
-                    </svg>
-                </div>
+                @if (User.IsInRole(Constants.AdminRole) || User.IsInRole(Constants.ReviewerRole) || User.IsInRole(Constants.ModeratorRole))
+                {
+
+                    <div class="sidebar-login-nav-container">
+                        <svg viewBox="0 0 1024 1024" class="sidebar-login-nav-icon">
+                            <path d="M1002.934 817.876l-460.552-394.76c21.448-40.298 33.618-86.282 33.618-135.116 0-159.058-128.942-288-288-288-29.094 0-57.172 4.332-83.646 12.354l166.39 166.39c24.89 24.89 24.89 65.62 0 90.51l-101.49 101.49c-24.89 24.89-65.62 24.89-90.51 0l-166.39-166.39c-8.022 26.474-12.354 54.552-12.354 83.646 0 159.058 128.942 288 288 288 48.834 0 94.818-12.17 135.116-33.62l394.76 460.552c22.908 26.724 62.016 28.226 86.904 3.338l101.492-101.492c24.888-24.888 23.386-63.994-3.338-86.902z"></path>
+                        </svg>
+                        <span class="sidebar-login-nav-text">Management</span>
+                        <svg viewBox="0 0 1024 1024" class="sidebar-login-nav-right-arrow">
+                            <path d="M366 708l196-196-196-196 60-60 256 256-256 256z"></path>
+                        </svg>
+                    </div>
+                }
                 <div class="sidebar-login-nav-container">
                     <svg viewBox="0 0 1024 1024" class="sidebar-login-nav-icon">
                         <path d="M832 960l192-512h-832l-192 512zM128 384l-128 576v-832h288l128 128h416v128z"></path>
@@ -40,6 +44,27 @@
                         <path d="M366 708l196-196-196-196 60-60 256 256-256 256z"></path>
                     </svg>
                 </div>
+                <div class="sidebar-login-nav-container">
+                    <svg class="sidebar-login-nav-icon" version="1.1" id="Uploaded to svgrepo.com" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" xml:space="preserve" fill="#000000" stroke="#000000" stroke-width="1.5">
+
+                    <g id="SVGRepo_bgCarrier" stroke-width="0" />
+
+                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" />
+
+                    <g id="SVGRepo_iconCarrier"> <style type="text/css">
+                                                     .feather_een {
+                                                         fill: #0B1719;
+                                                     }
+                    </style> <path class="feather_een" d="M11.5,9.5C11.5,9.224,11.724,9,12,9h5c0.276,0,0.5,0.224,0.5,0.5S17.276,10,17,10h-5 C11.724,10,11.5,9.776,11.5,9.5z M17,13h-5c-0.276,0-0.5,0.224-0.5,0.5S11.724,14,12,14h5c0.276,0,0.5-0.224,0.5-0.5 S17.276,13,17,13z M18,11h-7c-0.276,0-0.5,0.224-0.5,0.5S10.724,12,11,12h7c0.276,0,0.5-0.224,0.5-0.5S18.276,11,18,11z M28,4v24 c0,1.657-1.343,3-3,3H7c-1.657,0-3-1.343-3-3V4c0-1.657,1.343-3,3-3h18C26.657,1,28,2.343,28,4z M22,30c1.103,0,2-0.897,2-2V4 c0-1.103-0.897-2-2-2H7C5.897,2,5,2.897,5,4v24c0,1.103,0.897,2,2,2H22z M27,4c0-1.103-0.897-2-2-2h-0.779C24.7,2.532,25,3.228,25,4 v24c0,0.772-0.3,1.468-0.779,2H25c1.103,0,2-0.897,2-2V4z" /> </g>
+
+                    </svg>
+
+                    <span class="sidebar-login-nav-text">Published</span>
+                    <svg viewBox="0 0 1024 1024" class="sidebar-login-nav-right-arrow">
+                        <path d="M366 708l196-196-196-196 60-60 256 256-256 256z"></path>
+                    </svg>
+                </div>
+
             </nav>
             <div class="sidebar-login-profile-separator"></div>
             <div class="sidebar-login-profile-container">

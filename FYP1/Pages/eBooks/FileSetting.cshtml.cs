@@ -7,6 +7,8 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Drawing;
+using System.Security.Policy;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using FYP1.Authorization;
 using FYP1.Data;
@@ -18,6 +20,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace FYP1.Pages.eBooks
 {
@@ -65,6 +68,7 @@ namespace FYP1.Pages.eBooks
         public string FileMessage { get; set; }
         public string CollabMessage { get; set; }
         public string VersionMessage { get; set; }
+        public string PublishMessage { get; set; }
         public eBook curBook { get; set; }
         public class InputVersionModel
         {
@@ -210,6 +214,132 @@ namespace FYP1.Pages.eBooks
 
 
             return Page();
+        }
+        public async Task<IActionResult> OnPostBookPublish(int id)
+        {
+            var currentUserId = UserManager.GetUserName(User);
+
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+            }
+
+            // Retrieve the relevant eBook
+            var ebook = await _context.eBook
+            .Include(e => e.Chapters.OrderBy(c => c.chapterNo)) // Eager load chapters
+                .ThenInclude(c => c.BookPages.OrderBy(c => c.pageNo)) // Eager load pages within each chapter
+                    .ThenInclude(p => p.Elements.OrderBy(c => c.z_index)) // Eager load elements within each page
+            .FirstOrDefaultAsync(m => m.bookID == id);
+            if (ebook == null)
+            {
+                return NotFound(); // Book non-existent return error
+            }
+
+            // Retrieve the collaboration if any
+            var collaboration = await _context.Collaboration
+                .Where(collaboration => collaboration.bookID == VersionInput.bookID)
+                .Where(collaboration => collaboration.authorID == currentUserId)
+                .FirstOrDefaultAsync();
+
+            // Admin role can access
+            var isAuthorized = User.IsInRole(Constants.AdminRole);
+
+            // Ensure the user is authorized to watch this document
+            if (collaboration != null)
+            {
+            }
+            else if (currentUserId != ebook.authorID && !isAuthorized)
+            {
+                return Forbid();
+            }
+
+            switch (ebook.bookStatus)
+            {
+                // published, draft, rejected, reviewed
+                case "DRAFT":
+                    ebook.bookStatus = "REVIEWED";
+                    break;
+                case "REJECTED":
+                    ebook.bookStatus = "REVIEWED";
+                    break;
+                case "PUBLISHED":
+                    ebook.bookStatus = "DRAFT";
+                    break;
+                default:
+                    break;
+            }
+
+            if (ebook.bookStatus == "REVIEWED")
+            {
+                ebook.bookContent = "";
+
+                ebook.bookContent += "<head>";
+                ebook.bookContent += "<style>";
+                ebook.bookContent += "p { margin:0; margin-top:60px}";
+                ebook.bookContent += "body { margin:0px; background-color:#EBECF0; display:flex; flex-direction:column; align-items:center; }";
+                ebook.bookContent += ".page {margin:auto;margin-bottom:20px; background-color:white; overflow:hidden; page-break-after: always; position:relative; width:" + ebook.width + "mm; height:" + ebook.height + "mm; }";
+                ebook.bookContent += ".header { color:black; background-color:white; overflow:hidden; page-break-after: always; position:relative; width:100%; height:20mm; align-items:center; display:flex; font-size:10px; padding:16px; padding-left:96px; box-sizing:border-box; }";
+                ebook.bookContent += ".content { background-color:white; overflow:hidden; page-break-after: always; position:relative; width:100%; height:" + (ebook.height - 40) + "mm; }";
+                ebook.bookContent += ".footer { font-size:10px; color:black; background-color:white; overflow:hidden; page-break-after: always; display:flex; justify-content:center; align-items:center; position:relative; width:100%; height:20mm; text-align:center; }";
+                ebook.bookContent += ".ql-editor { position:relative; box-sizing:border-box; line-height: 1.42; height: 100%; outline: none; padding: 12px 15px; tab-size: 4; -moz-tab-size: 4; text-align: left; white-space: pre-wrap; word-wrap: break-word; font-family: Helvetica, Arial, sans-serif; font-size: 13px; }";
+
+                ebook.bookContent += "</style>";
+                ebook.bookContent += "</head>";
+
+                ebook.bookContent += "<div class='version-history-zoom-container'>";
+                ebook.bookContent += "<div style='width:100%;height:100%'>";
+
+                var chapterNumber = 0;
+                var pageNumber = 0;
+                foreach (var chapter in ebook.Chapters)
+                {
+                    chapterNumber++;
+                    foreach (var page in chapter.BookPages)
+                    {
+                        pageNumber++;
+
+                        ebook.bookContent += "<div class=\"page\">";
+                        ebook.bookContent += "<div class=\"header\">Chapter " + chapterNumber + " " + chapter.chapterName + "</div>";
+
+                        // Define a regular expression to match background-image URLs
+                        Regex regex = new Regex(@"background-image: url\(""([^""]+)""\)");
+                        // Replace double quotes with single quotes in background-image URLs
+                        string formattedHtmlContent = regex.Replace(page.backgroundStyle, "background-image: url('$1')");
+
+                        ebook.bookContent += "<div class=\"content\" style=\"" + formattedHtmlContent + "\">";
+
+                        foreach (var element in page.Elements)
+                        {
+                            ebook.bookContent += "<div class='" + element.elementType + "' style='" + element.elementStyle + "'>";
+                            ebook.bookContent += element.text;
+                            ebook.bookContent += "</div>";
+                        }
+
+                        ebook.bookContent += "</div>";
+                        ebook.bookContent += "<div class=\"footer\">" + pageNumber + "</div>";
+                        ebook.bookContent += "</div>";
+
+
+                    }
+                }
+                ebook.bookContent += "</div>";
+                ebook.bookContent += "</div>";
+            }
+
+            ebook.LastUpdate = DateTime.Now;
+
+            _context.Attach(ebook).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+                return RedirectToPage("./FileSetting", new { id = ebook.bookID, PublishMessage = 1 });
+            }
+            catch (DbUpdateConcurrencyException error)
+            {
+                return RedirectToPage("./FileSetting", new { id = ebook.bookID, PublishMessage = error.ToString() });
+            }
         }
         public async Task<IActionResult> OnPostFileSettingAsync()
         {
@@ -427,8 +557,11 @@ namespace FYP1.Pages.eBooks
             }
 
             // Retrieve the relevant eBook
-            var ebook = await _context.eBook.FirstOrDefaultAsync(m => m.bookID == VersionInput.bookID);
-
+            var ebook = await _context.eBook
+            .Include(e => e.Chapters.OrderBy(c => c.chapterNo)) // Eager load chapters
+                .ThenInclude(c => c.BookPages.OrderBy(c => c.pageNo)) // Eager load pages within each chapter
+                    .ThenInclude(p => p.Elements.OrderBy(c => c.z_index)) // Eager load elements within each page
+            .FirstOrDefaultAsync(m => m.bookID == VersionInput.bookID);
             if (ebook == null)
             {
                 return NotFound(); // Book non-existent return error
@@ -455,8 +588,65 @@ namespace FYP1.Pages.eBooks
             var versionAdd = new Models.Version();
             versionAdd.bookID = VersionInput.bookID;
             versionAdd.verName = VersionInput.verName;
-            versionAdd.verContent = "";//need to generate the content here need to generate the content here here still need to modify remind myself
+            versionAdd.verContent = "";
             versionAdd.versionDate = DateTime.Now;
+
+            versionAdd.verContent += "<head>";
+            versionAdd.verContent += "<style>";
+           // versionAdd.verContent += $"@page {{ size: {ebook.width}mm {ebook.height}mm; }}";
+            versionAdd.verContent += "p { margin:0; margin-top:60px}";
+            versionAdd.verContent += "body { margin:0px; background-color:#EBECF0; display:flex; flex-direction:column; align-items:center; }";
+            versionAdd.verContent += ".page {margin:auto;margin-bottom:20px; background-color:white; overflow:hidden; page-break-after: always; position:relative; width:" +ebook.width+"mm; height:"+ebook.height+"mm; }";
+            versionAdd.verContent += ".header { color:black; background-color:white; overflow:hidden; page-break-after: always; position:relative; width:100%; height:20mm; align-items:center; display:flex; font-size:10px; padding:16px; padding-left:96px; box-sizing:border-box; }";
+            versionAdd.verContent += ".content { background-color:white; overflow:hidden; page-break-after: always; position:relative; width:100%; height:"+(ebook.height - 40)+"mm; }";
+            versionAdd.verContent += ".footer { font-size:10px; color:black; background-color:white; overflow:hidden; page-break-after: always; display:flex; justify-content:center; align-items:center; position:relative; width:100%; height:20mm; text-align:center; }";
+            versionAdd.verContent += ".ql-editor { position:relative; box-sizing:border-box; line-height: 1.42; height: 100%; outline: none; padding: 12px 15px; tab-size: 4; -moz-tab-size: 4; text-align: left; white-space: pre-wrap; word-wrap: break-word; font-family: Helvetica, Arial, sans-serif; font-size: 13px; }";
+
+            versionAdd.verContent += "</style>";
+            versionAdd.verContent += "</head>";
+
+            versionAdd.verContent += "<div class='version-history-zoom-container'>";
+            versionAdd.verContent += "<div style='width:100%;height:100%'>";
+
+            /*            versionAdd.verContent += "<div class='version-content-header'>" +
+                            "<div class=''version-content-name>"+ versionAdd.verName+ "</div>"+
+                            "<input type='text'/>"+
+                            "<div>";*/
+            var chapterNumber = 0;
+            var pageNumber = 0;
+            foreach (var chapter in ebook.Chapters)
+            {
+                chapterNumber++;
+                foreach(var page in chapter.BookPages)
+                {
+                    pageNumber++;
+
+                    versionAdd.verContent += "<div class=\"page\">";
+                    versionAdd.verContent += "<div class=\"header\">Chapter " + chapterNumber + " " + chapter.chapterName + "</div>";
+
+                    // Define a regular expression to match background-image URLs
+                    Regex regex = new Regex(@"background-image: url\(""([^""]+)""\)");
+                    // Replace double quotes with single quotes in background-image URLs
+                    string formattedHtmlContent = regex.Replace(page.backgroundStyle, "background-image: url('$1')");
+
+                    versionAdd.verContent += "<div class=\"content\" style=\"" + formattedHtmlContent + "\">";
+
+                    foreach (var element in page.Elements)
+                    {
+                        versionAdd.verContent += "<div class='" + element.elementType + "' style='"+ element.elementStyle+"'>";
+                        versionAdd.verContent += element.text;
+                        versionAdd.verContent += "</div>";
+                    }
+
+                    versionAdd.verContent += "</div>";
+                    versionAdd.verContent += "<div class=\"footer\">"+ pageNumber +"</div>";
+                    versionAdd.verContent += "</div>";
+
+
+                }
+            }
+            versionAdd.verContent += "</div>";
+            versionAdd.verContent += "</div>";
 
             _context.Version.Add(versionAdd);
             await _context.SaveChangesAsync();

@@ -29,6 +29,7 @@ namespace FYP1.Models
 
         [Required, StringLength(20), DisplayName("Status")]
         public string bookStatus { get; set; } = "DRAFT";
+        public string bookContent { get; set; } = "";
 
         [DataType(DataType.Date), DisplayName("Last Modified")]
         public DateTime LastUpdate { get; set; } = DateTime.Now;

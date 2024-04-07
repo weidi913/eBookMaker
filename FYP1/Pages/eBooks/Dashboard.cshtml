@@ -195,9 +195,81 @@
                 </div>
             </div>
         </div>
-        <div id="Management" style="display:none" class="e-book-dashboard-content-vertical-container">
-            <h1 class="e-book-dashboard-tab-title-heading">Management</h1>
-        </div>
+        @if (User.IsInRole(Constants.AdminRole) || User.IsInRole(Constants.ReviewerRole) || User.IsInRole(Constants.ModeratorRole))
+        {
+            <div id="Management" style="display:none" class="e-book-dashboard-content-vertical-container">
+                <h1 class="e-book-dashboard-tab-title-heading">Management</h1>
+                <div class="e-book-dashboard-filter-container">
+                    <form method="get" class="e-book-dashboard-filter-form">
+                        <div class="e-book-dashboard-filter-input">
+                            <input hidden name="displayTab" type="text" value="Projects" />
+
+                            <input name="searchString" type="text" placeholder="Title" value="@Model.CurrentSearch" class="e-book-dashboard-name-input input" />
+                            <select name="typeFilter" class="e-book-dashboard-type-select">
+                                <option value="All">All</option>
+                                @foreach (var type in Model.bookTypes)
+                                {
+                                    if (type == Model.CurrentTypeFilter)
+                                    {
+                                        <option value="@type" selected>@type</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@type">@type</option>
+                                    }
+
+                                }
+                            </select>
+
+                            <select name="dateFilter" class="e-book-dashboard-time-select">
+                                <option value="0">Anytime</option>
+                                <option value="1">Today</option>
+                                <option value="7">Last 7 days</option>
+                                <option value="30">Last 30 days</option>
+                                <option value="90">Last 90 days</option>
+
+                            </select>
+                        </div>
+                        <div class="e-book-dashboard-sorting-input">
+                            <svg fill="none" viewBox="0 0 48 48" class="e-book-dashboard-sequence-icon" xmlns="http://www.w3.org/2000/svg">
+                                <path d="m0 0h48v48h-48z" fill="#fff" fill-opacity=".01" />
+                                <g stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="4">
+                                    <path d="m19 6v36" /><path d="m7 17.8995 12-12.00001" />
+                                    <path d="m29 42.1005v-35.99999" /><path d="m29 42.1005 12-12" />
+                                </g>
+                            </svg>
+
+                            <select name="sortOrder" class="e-book-dashboard-sequence-select">
+                                <option value="name_asc">Name A-Z</option>
+                                <option value="name_des">Name Z-A</option>
+                                <option value="date_asc">Oldest Edited</option>
+                                <option value="date_dsc">Newest Edited</option>
+
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <form id="ebook-submit-status" method="post" asp-page-handler="BookPublish">
+                    <input id="ebook-submit-status-bookID" hidden asp-for="@Model.eBookAdd.bookID" />
+                    <input id="ebook-submit-status-bookStatus" hidden asp-for="@Model.eBookAdd.bookStatus" />
+                </form>
+                @foreach(var reviewedBook in Model.reviewedBook)
+                {
+                    <div class="e-book-dashboard-management-container">
+                        <div class="e-book-dashboard-management-content-row">
+                            <div class="e-book-dashboard-management-content-title">@reviewedBook.title</div>
+                            <div class="e-book-dashboard-management-content-author">@reviewedBook.authorID</div>
+                            <div class="e-book-dashboard-management-content-date">@reviewedBook.LastUpdate</div>
+                            <div class="e-book-dashboard-management-content-button-group">
+                                <button class="e-book-dashboard-management-approve-button" data-bookID="@reviewedBook.bookID" type="button">Approve</button>
+                                <button class="e-book-dashboard-management-reject-button" data-bookID="@reviewedBook.bookID" type="button">Reject</button>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+            </div>
+        }
         <div id="Projects" style="display:none" class="e-book-dashboard-content-vertical-container">
             <h1 class="e-book-dashboard-tab-title-heading">Your Projects</h1>
             <div class="e-book-dashboard-filter-container">
@@ -386,6 +458,81 @@
                 </div>
             </div>
         </div>
+        <div id="Published" style="display:none" class="e-book-dashboard-content-vertical-container">
+            <h1 class="e-book-dashboard-tab-title-heading">Management</h1>
+            <div class="e-book-dashboard-filter-container">
+                <form method="get" class="e-book-dashboard-filter-form">
+                    <div class="e-book-dashboard-filter-input">
+                        <input hidden name="displayTab" type="text" value="Projects" />
+
+                        <input name="searchString" type="text" placeholder="Title" value="@Model.CurrentSearch" class="e-book-dashboard-name-input input" />
+                        <select name="typeFilter" class="e-book-dashboard-type-select">
+                            <option value="All">All</option>
+                            @foreach (var type in Model.bookTypes)
+                            {
+                                if (type == Model.CurrentTypeFilter)
+                                {
+                                    <option value="@type" selected>@type</option>
+                                }
+                                else
+                                {
+                                    <option value="@type">@type</option>
+                                }
+
+                            }
+                        </select>
+
+                        <select name="dateFilter" class="e-book-dashboard-time-select">
+                            <option value="0">Anytime</option>
+                            <option value="1">Today</option>
+                            <option value="7">Last 7 days</option>
+                            <option value="30">Last 30 days</option>
+                            <option value="90">Last 90 days</option>
+
+                        </select>
+                    </div>
+                    <div class="e-book-dashboard-sorting-input">
+                        <svg fill="none" viewBox="0 0 48 48" class="e-book-dashboard-sequence-icon" xmlns="http://www.w3.org/2000/svg">
+                            <path d="m0 0h48v48h-48z" fill="#fff" fill-opacity=".01" />
+                            <g stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="4">
+                                <path d="m19 6v36" /><path d="m7 17.8995 12-12.00001" />
+                                <path d="m29 42.1005v-35.99999" /><path d="m29 42.1005 12-12" />
+                            </g>
+                        </svg>
+
+                        <select name="sortOrder" class="e-book-dashboard-sequence-select">
+                            <option value="name_asc">Name A-Z</option>
+                            <option value="name_des">Name Z-A</option>
+                            <option value="date_asc">Oldest Edited</option>
+                            <option value="date_dsc">Newest Edited</option>
+
+                        </select>
+                    </div>
+                </form>
+            </div>
+            @foreach (var publishedBook in Model.publishedBook)
+            {
+                <div class="e-book-dashboard-published-container">
+                    <div class="e-book-dashboard-published-content-row">
+                        <div class="e-book-dashboard-published-content-title">@publishedBook.title</div>
+                        <div class="e-book-dashboard-published-content-header">
+                            <div class="e-book-dashboard-published-content-type">@publishedBook.type</div>
+                            <div class="e-book-dashboard-published-content-date">@publishedBook.LastUpdate</div>
+
+                        </div>
+
+                        <div class="e-book-dashboard-published-content-description">@publishedBook.description</div>
+@*                         <div class="e-book-dashboard-published-content-button-group">
+                            <div class="e-book-dashboard-published-content-author">Written by @publishedBook.authorID</div>
+                            <a href="./PublishedContent" class="e-book-dashboard-published-content-view-link">View</a>
+
+                        </div>
+ *@                    </div>
+                </div>
+            }
+
+        </div>
+
 
     </div>
 </div>
@@ -534,6 +681,17 @@
     $(".header-login-sidebar-trigger-button").css("display","flex");
     $("#create-button").find(".header-login-text").text("Create");
     $(document).ready(function () {
+
+        $(".e-book-dashboard-management-approve-button").click(function(){
+            $("#ebook-submit-status-bookID").val($(this).attr("data-bookID"));
+            $("#ebook-submit-status-bookStatus").val("PUBLISHED");
+            $("#ebook-submit-status").submit();
+        })
+        $(".e-book-dashboard-management-reject-button").click(function () {
+            $("#ebook-submit-status-bookID").val($(this).attr("data-bookID"));
+            $("#ebook-submit-status-bookStatus").val("REJECTED");
+            $("#ebook-submit-status").submit();
+        })
         // Count the number of iframes
         var numIframes = $("iframe").length;
 
