@@ -16,6 +16,7 @@ using Microsoft.EntityFrameworkCore.Update.Internal;
 using Tesseract;
 using System.Security.Cryptography.Pkcs;
 using Newtonsoft.Json;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace FYP1.Pages.eBooks
 {
@@ -265,6 +266,31 @@ namespace FYP1.Pages.eBooks
             public Comment comment;
             public string imageData;
             public string name;
+        }
+        public async Task<IActionResult> OnPostRevertAction(string action, int elementID, string elementStyle, string elementText)
+        {
+            var elementUpdate = await _context.Element.FindAsync(elementID);
+            if (elementUpdate == null)
+            {
+                return new JsonResult(new { status = 1, message = "Element Deleted" });
+            }
+
+            elementUpdate.text = elementText;
+            elementUpdate.elementStyle = elementStyle;
+
+            _context.Attach(elementUpdate).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+                return new JsonResult(new { status = 0, 
+                    message = "Successfully updated", 
+                    htmlContent = GenerateElementTemplate(elementUpdate.elementID, elementUpdate.elementStyle,elementUpdate.elementType,elementUpdate.text) });
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                return new JsonResult(new { status = 3, message = "Unable to revert action. Please try again" });
+            }
         }
         public async Task<IActionResult> OnPostCommentToggleStatus(int commentID)
         {

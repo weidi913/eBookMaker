@@ -1836,7 +1836,7 @@
                         $(".header-design-collaboration-add-success-text").css("display", "flex").text(response.message);
                     }
                     else if(response.status === 4){
-                        alert("fail to paste content. " + response.message);
+                        alert("fail to add collaborate content. " + response.message);
                         location.reload();
                     }
                     else{
@@ -2059,7 +2059,7 @@
                 $(this).css('box-shadow', '');
             }
         }, ".design-page-content-page-content");
-        $(".header-design-file-toggle-find-and-replace").click(function () {
+        $("#header-design-file-toggle-find-and-replace").click(function () {
             if ($(".find-and-replace-dialog-box").css("display") === "none") {
                 $(".find-and-replace-dialog-box").css("display", "flex");
             }
@@ -2473,10 +2473,26 @@
         $('#zoom-container').on('scroll', updateCurrentPage);
 
         var action = "";
-        var elementID = "";
-        var elementStyle="";
-        var elementText = "";
+        var replace = 0;
+        var UndoElementID = "";
+        var UndoElementStyle="";
+        var UndoElementType = "";
+        var UndoElementText = "";
+        var UndoBookPageID = "";
+        var UndoFind = "";
+        var UndoReplace = "";
+        var RedoElementID = "";
+        var RedoElementStyle = "";
+        var RedoElementType = "";
+        var RedoElementText = "";
+        var RedoFind = "";
+        var RedoReplace = "";
+        var RedoBookPageID = "";
 
+
+        var tempID ="";
+        var tempStyle ="";
+        var tempText = "";
         if (CRUDAccess) {
             $("#element-copy-button").click(function () {
                 var selectedElement = $(".selected");
@@ -2543,6 +2559,7 @@
                                 initChart(pageContainer.find("div:last")[0]);
                             }
                             pageContainer.find("div.element").last().click();
+
                         }
                         else {
                             alert("fail to paste content. " + response.message);
@@ -2924,32 +2941,6 @@
 
                 myChart.update();
             })
-            async function EditElementFunc(elementID, text, style) {
-                await $.ajax({
-                    url: '/eBooks/Design?handler=ElementUpdate', // Endpoint URL for updating the title
-                    method: 'POST',
-                    data: { elementID: elementID, text: text, style: style },
-                    dataType: 'json',
-                    headers: {
-                        RequestVerificationToken: $('input:hidden[name="__RequestVerificationToken"]').val()
-                    },
-                    success: function (response) {
-                        if (response.status === 0) {
-                        }
-                        else {
-                            alert("fail update. the element is deleted");
-                            location.reload();
-                        }
-                    },
-                    error: function (xhr, status, error) {
-                        alert("Error occurred:", error);
-                        location.reload();
-                        // Handle error
-                    }
-
-                });
-
-            }
             async function addTextElementFunc(bookPageID, textContent, pageContainer) {
                 await $.ajax({
                     url: '/eBooks/Design?handler=TextElement', // Endpoint URL for updating the title
@@ -2964,7 +2955,7 @@
                             pageContainer.append(response.htmlContent);
 
                             var newTextElement = pageContainer.find("div.element").last().find(".editor");
-                            initQuill(newTextElement[0], document.querySelector('#toolbar'))
+                            initQuill(newTextElement[0], document.querySelector('#toolbar'));
                         }
                         else {
                             alert(response.status);
@@ -3020,18 +3011,43 @@
                 });
 
             }
-            $(".find-and-replace-button").click(function () {
+            $(".find-and-replace-button").click(async function () {
                 var findValue = $(".find-and-replace-find-input").val();
                 var replaceValue = $(".find-and-replace-replace-input").val();
+                
                 if (findValue === "") {
                     return
                 }
+
+
                 var textList = $(".ql-editor");
-                textList.each(function () {
+
+                // Use for loop instead of each to iterate synchronously
+                for (let i = 0; i < textList.length; i++) {
+                    var $this = $(textList[i]);
+                    var htmlContent = $this.html();
+
+                    $this.closest(".element").addClass("selected");
+
+                    console.log("trigger addClass selected");
+
+                    console.log("trigger click");
+                    // Replace 'Text' with 'ReplacedText' in the HTML content
+                    var replacedHtmlContent = htmlContent.replace(new RegExp(findValue, 'g'), replaceValue);
+
+                    // Update the HTML content of the .ql-editor element
+                    $this.html(replacedHtmlContent);
+
+                    $("#zoom-container").trigger("click");
+                }
+
+   /*             textList.each(async function () {
                     var $this = $(this);
                     var htmlContent = $this.html();
 
                     $this.closest(".element").addClass("selected");
+
+
                     console.log("trigger addClass selected");
 
 
@@ -3045,6 +3061,12 @@
                     $("#zoom-container").trigger("click");
 
                 });
+                */
+
+                action = "Replace";
+                replace = 1;
+                UndoFind = replaceValue;
+                UndoReplace = findValue;
 
             })
             $(".design-add-page-chart-container .design-add-page-grid-content").click(async function () {
@@ -3270,7 +3292,7 @@
                         console.log("element toggle lock successfully!");
                         $(this).find("svg").toggleClass("hidden");
                         $(".selected").toggleClass("element-lock");
-                        toggleLockTabListContainer($(".selected"));
+                        toggleLockTabListContainer($(".selected")); 
 
                     } else {
                         console.log(response);
@@ -3302,6 +3324,7 @@
                     console.log("Response:", response); // Log the entire response for debugging
                     if (response && response.status === 0) {
                         console.log("element delete successfully!");
+                        
                         // Append the HTML content to the specified container
                         elementSelected.remove();
 
@@ -3806,22 +3829,170 @@
 
                 },
             });
-            async function updateElementFunc(selectedContainer) {
-                var prevSelectedElement = selectedContainer;
-                var content = getContent(prevSelectedElement);
-
-                await EditElementFunc(prevSelectedElement.attr("id"), content, prevSelectedElement.attr("style"));
-            }
 
 
-            $(".header-design-undo-icon").click(function(){
+
+            $(".header-design-undo-icon").click(async function () {
+                
+                if(replace){
+                    $(".find-and-replace-find-input").val(UndoFind);
+                    $(".find-and-replace-replace-input").val(UndoReplace);
+                    $(".find-and-replace-button").click();
+
+                    RedoFind = UndoFind;
+                    RedoReplace = UndoReplace;
+                }
+                else if(action === "Update"){
+                    if(UndoElementID === ""){
+                        return;
+                    }
+                    RedoElementStyle = $("div.element#" + UndoElementID).attr("style");
+                    RedoElementText = getContent($("div.element#" + UndoElementID));
+                    await revertFuncAsync(action, UndoElementID, UndoElementStyle, UndoElementText, UndoElementType, UndoBookPageID);
+                }
+
+
+                RedoElementID = UndoElementID;
+
+                RedoElementType = UndoElementType;
+
+
+                RedoBookPageID = UndoBookPageID;
+
+                UndoElementID = "";
+                UndoElementStyle = "";
+                UndoElementType = "";
+                UndoElementText = "";
+                UndoBookPageID = "";
 
             })
+            $(".header-design-redo-icon").click(async function () {
+                alert("find and replace", replace)
+
+                if(replace){
+                    $(".find-and-replace-find-input").val(RedoFind);
+                    $(".find-and-replace-replace-input").val(RedoReplace);
+                    $(".find-and-replace-button").click();
+                }
+                else if(action === "Update"){
+                    if (RedoElementID === "") {
+                        return;
+                    }
+                    UndoElementStyle = $("div.element#" + RedoElementID).attr("style");
+                    UndoElementText = getContent($("div.element#" + RedoElementID));
+
+                    await revertFuncAsync(action, RedoElementID, RedoElementStyle, RedoElementText, RedoElementType, RedoBookPageID);
+                }
+
+                UndoElementID = RedoElementID;
+                UndoElementType = RedoElementType;
+
+                UndoBookPageID = RedoBookPageID;
+
+                RedoElementID = "";
+                RedoElementStyle = "";
+                RedoElementType = "";
+                RedoElementText = "";
+                RedoBookPageID = "";
+            })
+
+            async function revertFuncAsync(action, elementID, elementStyle, elementText, elementType, bookPageID) {
+                await $.ajax({
+                    url: '/eBooks/Design?handler=RevertAction', // Endpoint URL for updating the title
+                    method: 'POST',
+                    data: { action: action, elementID: elementID, elementStyle: elementStyle, elementText: elementText, elementType: elementType, bookPageID: bookPageID },
+                    dataType: 'json',
+                    headers: {
+                        RequestVerificationToken: $('input:hidden[name="__RequestVerificationToken"]').val()
+                    },
+                    success: function (response) {
+                        if (response.status === 0) {
+
+                            var removeElement = $("div.element#" + elementID);;
+
+                            var regex = /background-image: url\("([^"]+)"\)/g;
+
+                            // Replace double quotes with single quotes
+                            var updatedHtmlContent = response.htmlContent.replace(regex, 'background-image: url(\'$1\')');
+                            removeElement.after(updatedHtmlContent);
+                            removeElement.remove();
+                            var elementRevert = $("div.element#" + elementID);
+                            if (elementRevert.hasClass("shape")) {
+                                var newTextElement = $("div.element#" + elementID).find(".editor");
+                                initQuill(newTextElement[0], document.querySelector('#toolbar'))
+                            }
+                            else if (elementRevert.hasClass("image")) {
+                            }
+                            else if (elementRevert.hasClass("text")) {
+                                var newTextElement = $("div.element#" + elementID).find(".editor");
+                                initQuill(newTextElement[0], document.querySelector('#toolbar'))
+                            }
+                            else if (elementRevert.hasClass("chart")) {
+                                initChart($("div.element#" + elementID));
+                            }
+                        }
+                        else {
+                            alert("fail to paste content. " + response.message);
+                            location.reload();
+                        }
+
+                    },
+                    error: function (xhr, status, error) {
+                        alert("Error occurred:", error.toString());
+                        location.reload();
+                        // Handle error
+                    }
+
+                });
+            }
         }
         else{
             $("#add-shape,#add-text,#add-image,#add-chart,#add-background").addClass("tab-lock");
             $().css("cursor", "not-allowed");
         }
+
+        async function updateElementFunc(selectedContainer) {
+            var prevSelectedElement = selectedContainer;
+            var content = getContent(prevSelectedElement);
+
+            await EditElementFunc(prevSelectedElement.attr("id"), content, prevSelectedElement.attr("style"));
+        }
+        async function EditElementFunc(elementID, text, style) {
+            await $.ajax({
+                url: '/eBooks/Design?handler=ElementUpdate', // Endpoint URL for updating the title
+                method: 'POST',
+                data: { elementID: elementID, text: text, style: style },
+                dataType: 'json',
+                headers: {
+                    RequestVerificationToken: $('input:hidden[name="__RequestVerificationToken"]').val()
+                },
+                success: function (response) {
+                    if (response.status === 0) {
+
+                        action = "Update";
+                        UndoElementID = tempID;
+                        UndoElementStyle = tempStyle;
+                        UndoElementText = tempText;
+                        RedoElementID = "";
+                        tempID = "";
+                        tempStyle = "";
+                        tempText = "";
+                    }
+                    else {
+                        alert("fail update. the element is deleted");
+                        location.reload();
+                    }
+                },
+                error: function (xhr, status, error) {
+                    alert("Error occurred:", error);
+                    location.reload();
+                    // Handle error
+                }
+
+            });
+
+        }
+
 
         $(document).on("click", "canvas", function (event) {
             $(this).closest("div.element").click();
@@ -4496,6 +4667,9 @@
 
             }
             else if ($(event.target).hasClass("element")) {
+                replace = 0;
+                RedoFind = "";
+                RedoReplace = "";
                 var prevSelectedElement = $(".selected");
                 if (prevSelectedElement.length > 0) {
                     prevSelectedElement.removeClass("selected");
@@ -4523,6 +4697,11 @@
                 
                 $(event.target).css('--border-width', $(event.target).css("border-width"));
                 $(event.target).addClass("selected");
+                UndoBookPageID = $(event.target).closest("design-page-content-container").attr("data-page-id");
+
+                tempID = $(event.target).attr("id");
+                tempText = getContent($(event.target));
+                tempStyle = $(event.target).attr("style");
 
                 toggleTabListContainer($(event.target));
                 toggleLockTabListContainer($(".selected"));
@@ -4818,7 +4997,6 @@
             return parseFloat(value.replace(/[^\d.]/g, ''));
         }
         function toggleLockTabListContainer(container){
-            console.log(container);
             if(container.hasClass("element-lock") || !CRUDAccess){
                 $("#edit-position").addClass("tab-lock");
                 $("#edit-border").addClass("tab-lock");
@@ -4840,8 +5018,8 @@
                 $("#edit-chart").removeClass("tab-lock");
 
                 container.addClass("moveable");
-
                 if(CRUDAccess){
+                    
                     container.append('<div class="rotation-handle">&circlearrowright;</div>'
                         + "<div class='top left pointer'></div>"
                         + "<div class='top right pointer'></div>"
