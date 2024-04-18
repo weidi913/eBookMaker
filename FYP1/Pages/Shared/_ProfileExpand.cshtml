@@ -14,7 +14,7 @@
 </div>
 
 <script>
-    $(".profile-expand-container-logout,.sidebar-login-logout").click(function () {
+    $(".profile-expand-container-logout").click(function () {
         $.ajax({
             url: '/Identity/Account/Logout?handler=AccountLogout', // URL to your logout action method
             type: 'POST',
@@ -29,7 +29,8 @@
             },
             error: function (xhr, status, error) {
                 // Handle error
-                alert('Logout failed:', error.toString()," .Please try again.");
+                alert('Logout failed:'+ error.toString()+" .Please try again.");
+                location.reload();
                 console.log(error);
             }
         });

@@ -46,6 +46,7 @@ namespace FYP1.Pages.eBooks
         public string CurrentSearch { get; set; }
         public string CurrentTypeFilter { get; set; }
         public int CurrentDateFilter { get; set; }
+        public int CurrentPageIndex { get; set; }
         public string CurrentSort { get; set; }
         public string bookDeleted { get; set; }
 
@@ -315,6 +316,7 @@ namespace FYP1.Pages.eBooks
             CurrentTypeFilter = typeFilter;
             CurrentSort = sortOrder;
             CurrentDateFilter = dateFilter ?? 0;
+            CurrentPageIndex = pageIndex ?? 0;
             this.bookDeleted = bookDeleted;
         }
 

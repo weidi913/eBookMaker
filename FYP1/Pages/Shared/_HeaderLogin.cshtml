@@ -52,7 +52,7 @@
                     </svg>
                 </div>
                 <div class="sidebar-guest-nav sidebar-guest-nav-features">
-                    <span class="sidebar-guest-nav-text">Features</span>
+                    <span class="sidebar-guest-nav-text">Feature</span>
                     <svg viewBox="0 0 1024 1024" class="sidebar-guest-arrow-icon">
                         <path d="M366 708l196-196-196-196 60-60 256 256-256 256z"></path>
                     </svg>
@@ -75,6 +75,28 @@
 
 <script>
     $(document).ready(function () {
+
+        $(".sidebar-login-logout").click(function () {
+            $.ajax({
+                url: '/Identity/Account/Logout?handler=AccountLogout', // URL to your logout action method
+                type: 'POST',
+                headers: {
+                    // 'X-CSRF-TOKEN': $('input[name="__RequestVerificationToken"]').val() // Include CSRF token for security
+                    RequestVerificationToken: $('input:hidden[name="__RequestVerificationToken"]').val()
+                },
+                success: function (data) {
+                    // Handle successful logout
+                    console.log('Logout successful');
+                    window.location.href = '/Identity/Account/Login'; // Redirect to home page or any other page after logout
+                },
+                error: function (xhr, status, error) {
+                    // Handle error
+                    alert('Logout failed:', error.toString(), " .Please try again.");
+                    console.log(error);
+                }
+            });
+        })
+
         $(document).click(function (event) {
             // Check if the clicked element is not the profile image
             if (!$(event.target).closest('#profile-image').length) {
@@ -107,7 +129,7 @@
             window.location.href = "/About";
         })
         $(".sidebar-guest-nav-features").click(function () {
-            window.location.href = "/Features";
+            window.location.href = "/Feature";
         })
         $(".sidebar-guest-nav-help").click(function () {
             window.location.href = "/Help";

@@ -57,26 +57,6 @@
                         <span class="design-subtitle">25.4 x 19.1</span>
                     </div>
                     <div class="design-recommendation-container">
-                        <div class="design-recommendation-preview-container"></div>
-                        <span class="design-title">Instagram Post</span>
-                        <span class="design-subtitle">5.0x5.0</span>
-                    </div>
-                    <div class="design-recommendation-container">
-                        <div class="design-recommendation-preview-container"></div>
-                        <span class="design-title">Flyer</span>
-                        <span class="design-subtitle">5.0x5.0</span>
-                    </div>
-                    <div class="design-recommendation-container">
-                        <div class="design-recommendation-preview-container"></div>
-                        <span class="design-title">Resume</span>
-                        <span class="design-subtitle">16.0x19.0</span>
-                    </div>
-                    <div class="design-recommendation-container">
-                        <div class="design-recommendation-preview-container"></div>
-                        <span class="design-title">Logo</span>
-                        <span class="design-subtitle">7.0x7.0</span>
-                    </div>
-                    <div class="design-recommendation-container">
                         <div class="design-recommendation-preview-container" style="background-image:url('/images/dashboard-image/cookbook-sample.png')">
                             <div class="design-recommendation-preview-container-hover-container">Create Blank</div>
                         </div>
@@ -203,7 +183,7 @@
                     <form method="get" class="e-book-dashboard-filter-form">
                         <div class="e-book-dashboard-filter-input">
                             <input hidden name="displayTab" type="text" value="Projects" />
-
+                            <input hidden name="pageIndex" type="text" value="1" class="e-book-dashboard-page-index-input" />
                             <input name="searchString" type="text" placeholder="Title" value="@Model.CurrentSearch" class="e-book-dashboard-name-input input" />
                             <select name="typeFilter" class="e-book-dashboard-type-select">
                                 <option value="All">All</option>
@@ -257,7 +237,7 @@
                 {
                     <div class="e-book-dashboard-management-container">
                         <div class="e-book-dashboard-management-content-row">
-                            <div class="e-book-dashboard-management-content-title">@reviewedBook.title</div>
+                            <a href="./PublishedContent?id=@reviewedBook.bookID" class="e-book-dashboard-management-content-title">@reviewedBook.title</a>
                             <div class="e-book-dashboard-management-content-author">@reviewedBook.authorID</div>
                             <div class="e-book-dashboard-management-content-date">@reviewedBook.LastUpdate</div>
                             <div class="e-book-dashboard-management-content-button-group">
@@ -267,6 +247,16 @@
                         </div>
                     </div>
                 }
+                <div class="paginated-list-container">
+                    <button style="@(Model.reviewedBook.PageIndex <= 1 ? "pointer-events:none;color:#999999;cursor:not-allowed":"")" class=" paginated-previous-page">
+                        <svg class="svg-icon" style="vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"><path d="M613.92 817.51c42.1 31.72 76.53 9.6 76.52-49.14V255.64c0-58.75-34.44-80.87-76.52-49.14l-328.8 247.83C243 486.05 243 538 285.12 569.69l328.8 247.82z" fill="" /></svg>
+                    </button>
+                    <input class="paginated-current-page" value="@(Model.reviewedBook.TotalPages == 0 ? 0 : Model.reviewedBook.PageIndex)" @(Model.reviewedBook.TotalPages == 0 ? "disabled":"") />
+                    <div class="paginated-total-page">of @Model.reviewedBook.TotalPages</div>
+                    <button style="@(Model.reviewedBook.PageIndex >= Model.reviewedBook.TotalPages ? "pointer-events:none;color:#999999;cursor:not-allowed":"")" class=" paginated-next-page">
+                        <svg class="svg-icon" style="vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"><path d="M410.08 817.51l328.8-247.82c42.12-31.69 42.12-83.64 0-115.36L410.08 206.5c-42.08-31.73-76.52-9.61-76.52 49.14v512.73c0 58.74 34.42 80.86 76.52 49.14z" fill="" /></svg>
+                    </button>
+                </div>
 
             </div>
         }
@@ -276,7 +266,7 @@
                 <form method="get" class="e-book-dashboard-filter-form">
                     <div class="e-book-dashboard-filter-input">
                         <input hidden name="displayTab" type="text" value="Projects" />
-
+                        <input hidden name="pageIndex" type="text" value="1" class="e-book-dashboard-page-index-input" />
                         <input name="searchString" type="text" placeholder="Title" value="@Model.CurrentSearch" class="e-book-dashboard-name-input input" />
                         <select name="typeFilter" class="e-book-dashboard-type-select">
                             <option value="All">All</option>
@@ -325,18 +315,6 @@
             <div class="e-book-dashboard-item-container">
                 <h1 class="e-book-dashboard-item-heading">Project Lists</h1>
                 <div class="item-list-container-container design-all-container">
-@*                                         @for (int i = 0; i < 20; i++)
-                    {
-                        <div class="item-container-feature-card">
-                            <div class="item-container-preview-container"></div>
-                            <h2 class="design-title"><span>Name of the project</span></h2>
-                            <span class="design-subtitle">
-                                <span>Type</span>
-                                <br />
-                            </span>
-                        </div>
-                    } *@
-
                     @foreach (var item in Model.myBook)
                     {
                         <div class="item-container-feature-card">
@@ -369,6 +347,16 @@
                     }
                 </div>
             </div>
+            <div class="paginated-list-container">
+                <button style="@(Model.myBook.PageIndex <= 1 ? "pointer-events:none;color:#999999;cursor:not-allowed":"")" class="paginated-previous-page">
+                    <svg class="svg-icon" style="vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"><path d="M613.92 817.51c42.1 31.72 76.53 9.6 76.52-49.14V255.64c0-58.75-34.44-80.87-76.52-49.14l-328.8 247.83C243 486.05 243 538 285.12 569.69l328.8 247.82z" fill="" /></svg>
+                </button>
+                <input class="paginated-current-page" value="@(Model.myBook.TotalPages == 0 ? 0 : Model.myBook.PageIndex)" @(Model.myBook.TotalPages == 0 ? "disabled":"") />
+                <div class="paginated-total-page">of @Model.myBook.TotalPages</div>
+                <button style="@(Model.myBook.TotalPages <= Model.myBook.PageIndex ? "pointer-events:none;color:#999999;cursor:not-allowed":"")" class="paginated-next-page">
+                    <svg class="svg-icon" style="vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"><path d="M410.08 817.51l328.8-247.82c42.12-31.69 42.12-83.64 0-115.36L410.08 206.5c-42.08-31.73-76.52-9.61-76.52 49.14v512.73c0 58.74 34.42 80.86 76.52 49.14z" fill="" /></svg>
+                </button>
+            </div>
         </div>
         <div id="Shared" style="display:none" class="e-book-dashboard-content-vertical-container">
             <h1 class="e-book-dashboard-tab-title-heading">Shared with You</h1>
@@ -376,7 +364,7 @@
                 <form method="get" class="e-book-dashboard-filter-form">
                     <div class="e-book-dashboard-filter-input">
                         <input hidden name="displayTab" type="text" value="Shared" />
-
+                        <input hidden name="pageIndex" type="text" value="1" class="e-book-dashboard-page-index-input" />
                         <input name="searchString" type="text" placeholder="Title" value="@Model.CurrentSearch" class="e-book-dashboard-name-input input" />
                         <select name="typeFilter" class="e-book-dashboard-type-select">
                             <option value="All">All</option>
@@ -456,14 +444,27 @@
                         </div>
                     }
                 </div>
+
             </div>
+            <div class="paginated-list-container">
+                <button style="@(Model.sharedBook.PageIndex <= 1 ? "pointer-events:none;color:#999999;cursor:not-allowed":"")" class="paginated-previous-page">
+                    <svg class="svg-icon" style="vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"><path d="M613.92 817.51c42.1 31.72 76.53 9.6 76.52-49.14V255.64c0-58.75-34.44-80.87-76.52-49.14l-328.8 247.83C243 486.05 243 538 285.12 569.69l328.8 247.82z" fill="" /></svg>
+                </button>
+                <input class="paginated-current-page" value="@(Model.sharedBook.TotalPages == 0 ? 0 : Model.sharedBook.PageIndex)" @(Model.sharedBook.TotalPages == 0 ? "disabled":"") />
+                <div class="paginated-total-page">of @Model.sharedBook.TotalPages</div>
+                <button style="@(Model.sharedBook.TotalPages <= Model.sharedBook.PageIndex  ? "pointer-events:none;color:#999999;cursor:not-allowed":"")" class="paginated-next-page">
+                    <svg class="svg-icon" style="vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"><path d="M410.08 817.51l328.8-247.82c42.12-31.69 42.12-83.64 0-115.36L410.08 206.5c-42.08-31.73-76.52-9.61-76.52 49.14v512.73c0 58.74 34.42 80.86 76.52 49.14z" fill="" /></svg>
+                </button>
+            </div>
+
         </div>
         <div id="Published" style="display:none" class="e-book-dashboard-content-vertical-container">
-            <h1 class="e-book-dashboard-tab-title-heading">Management</h1>
+            <h1 class="e-book-dashboard-tab-title-heading">Published Projects</h1>
             <div class="e-book-dashboard-filter-container">
                 <form method="get" class="e-book-dashboard-filter-form">
                     <div class="e-book-dashboard-filter-input">
-                        <input hidden name="displayTab" type="text" value="Projects" />
+                        <input hidden name="displayTab" type="text" value="Published" />
+                        <input hidden name="pageIndex" type="text" value="1" class="e-book-dashboard-page-index-input" />
 
                         <input name="searchString" type="text" placeholder="Title" value="@Model.CurrentSearch" class="e-book-dashboard-name-input input" />
                         <select name="typeFilter" class="e-book-dashboard-type-select">
@@ -512,7 +513,7 @@
             </div>
             @foreach (var publishedBook in Model.publishedBook)
             {
-                <div class="e-book-dashboard-published-container">
+                <a href="./PublishedContent?id=@publishedBook.bookID" class="e-book-dashboard-published-container">
                     <div class="e-book-dashboard-published-content-row">
                         <div class="e-book-dashboard-published-content-title">@publishedBook.title</div>
                         <div class="e-book-dashboard-published-content-header">
@@ -528,8 +529,18 @@
 
                         </div>
  *@                    </div>
-                </div>
+                </a>
             }
+            <div class="paginated-list-container">
+                <button style="@(Model.publishedBook.PageIndex <= 1 ? "pointer-events:none;color:#999999;cursor:not-allowed":"")" class="paginated-previous-page">
+                    <svg class="svg-icon" style="vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"><path d="M613.92 817.51c42.1 31.72 76.53 9.6 76.52-49.14V255.64c0-58.75-34.44-80.87-76.52-49.14l-328.8 247.83C243 486.05 243 538 285.12 569.69l328.8 247.82z" fill="" /></svg>
+                </button>
+                <input class="paginated-current-page" value="@(Model.publishedBook.TotalPages == 0 ? 0 : Model.publishedBook.PageIndex)" @(Model.publishedBook.TotalPages == 0 ? "disabled":"") />
+                <div class="paginated-total-page">of @Model.publishedBook.TotalPages</div>
+                <button style="@(Model.publishedBook.TotalPages <= Model.publishedBook.PageIndex  ? "pointer-events:none;color:#999999;cursor:not-allowed":"")" class="paginated-next-page">
+                    <svg class="svg-icon" style="vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"><path d="M410.08 817.51l328.8-247.82c42.12-31.69 42.12-83.64 0-115.36L410.08 206.5c-42.08-31.73-76.52-9.61-76.52 49.14v512.73c0 58.74 34.42 80.86 76.52 49.14z" fill="" /></svg>
+                </button>
+            </div>
 
         </div>
 
@@ -682,6 +693,45 @@
     $("#create-button").find(".header-login-text").text("Create");
     $(document).ready(function () {
 
+        $(".paginated-list-container .paginated-previous-page").click(function(){
+            var pageIndex = parseInt(@Model.CurrentPageIndex) - 1;
+            var form = $(this).closest(".paginated-list-container").prevAll(".e-book-dashboard-filter-container").find("form");
+            form.find(".e-book-dashboard-page-index-input").val(pageIndex);
+            form.submit();
+        })
+
+        $(".paginated-list-container .paginated-next-page").click(function () {
+            var pageIndex = parseInt(@Model.CurrentPageIndex) + 1;
+            var form = $(this).closest(".paginated-list-container").prevAll(".e-book-dashboard-filter-container").find("form");
+            form.find(".e-book-dashboard-page-index-input").val(pageIndex);
+            form.submit();
+        })
+
+        $(".paginated-list-container .paginated-current-page").on("input", function () {
+            var currentPage = parseInt($(this).val());
+            var maxPage = parseInt($(this).next(".paginated-total-page").text().split(" ")[1]);
+
+            // Check if the current page is smaller than 0
+            if (currentPage < 1) {
+                $(this).val(1); // Set the value to 0
+            }
+            // Check if the current page is larger than maxPage
+            else if (currentPage > maxPage) {
+                $(this).val(maxPage); // Set the value to maxPage
+            }
+        })
+        $(".paginated-list-container .paginated-current-page").change(function () {
+            var pageIndex = $(this).val();
+            if (pageIndex == 0) {
+                $(this).val(@Model.CurrentPageIndex);
+                return;
+            }
+            var form = $(this).closest(".paginated-list-container").prevAll(".e-book-dashboard-filter-container").first().find("form");
+            form.find(".e-book-dashboard-page-index-input").val(pageIndex);
+            form.submit();
+
+        })
+
         $(".e-book-dashboard-management-approve-button").click(function(){
             $("#ebook-submit-status-bookID").val($(this).attr("data-bookID"));
             $("#ebook-submit-status-bookStatus").val("PUBLISHED");
@@ -815,7 +865,6 @@
                $(this).closest("form").submit();
             }
         });
-
         $("#eBookAdd_width, #eBookAdd_height").on("input", function () {
             var enteredValue = $(this).val();            // Get the entered value
             var sanitizedValue = enteredValue.replace(/[^0-9.]/g, '');            // Remove any non-numeric characters except dot (.)
@@ -858,37 +907,53 @@
                 $(this).val(sanitizedValue);
             }
         });
-
-
-        $("div.e-book-dashboard-filter-input input, div.e-book-dashboard-filter-input select").change(function () {
+        $("div.e-book-dashboard-filter-input input, div.e-book-dashboard-filter-input select,.e-book-dashboard-sorting-input select").change(function () {
             $(this).parents("form").submit();
         })
-
         var firstSelectedOption = 'select[name="dateFilter"] option[value="@Model.CurrentDateFilter"]';
         // Find the option element with value === 0 and add the selected attribute
         //$('select[name="dateFilter"] option[value="90"]').prop('selected', true);
         $(firstSelectedOption).prop('selected', true);
         var secondSelectedOption = 'select[name="sortOrder"] option[value="@Model.CurrentSort"]';
         $(secondSelectedOption).prop('selected', true);
-
+        //background-color: rgb(225, 228, 231);
         var curDisplayTab = '@Model.CurrentDisplay';
         switch (curDisplayTab) {
             case "Home":
                 console.log(curDisplayTab);
                 $("#Home").css("display", "flex");
+                $("#Home .e-book-dashboard-filter-container .e-book-dashboard-filter-form .e-book-dashboard-page-index-input").val("@Model.CurrentPageIndex");
+                $(".home-nav-tab").css("background-color", "rgb(225, 228, 231)");
                 break;
             case "Management":
                 $("#Management").css("display", "flex");
+                $("#Management .e-book-dashboard-filter-container .e-book-dashboard-filter-form .e-book-dashboard-page-index-input").val("@Model.CurrentPageIndex");
+                $(".management-nav-tab").css("background-color", "rgb(225, 228, 231)");
                 break;
             case "Projects":
                 $("#Projects").css("display", "flex");
+                $("#Projects .e-book-dashboard-filter-container .e-book-dashboard-filter-form .e-book-dashboard-page-index-input").val("@Model.CurrentPageIndex");
+                $(".sidebar-login-menu-nav-list .sidebar-login-nav-container").eq(1).css("background-color", "rgb(225, 228, 231)");
+                $(".project-nav-tab").css("background-color", "rgb(225, 228, 231)");
+                break;
+            case "Published":
+                $("#Published").css("display", "flex");
+                $("#Published .e-book-dashboard-filter-container .e-book-dashboard-filter-form .e-book-dashboard-page-index-input").val("@Model.CurrentPageIndex");
+                $(".published-nav-tab").css("background-color", "rgb(225, 228, 231)");
+
                 break;
             case "Shared":
                 $("#Shared").css("display", "flex");
+                $("#Shared .e-book-dashboard-filter-container .e-book-dashboard-filter-form .e-book-dashboard-page-index-input").val("@Model.CurrentPageIndex");
+                $(".shared-nav-tab").css("background-color", "rgb(225, 228, 231)");
                 break;
             default:
                 //$("#Home").css("display", "flex");
+                $(".home-nav-tab").css("background-color", "rgb(225, 228, 231)");
+
                 break;
+
+
 
         }
 

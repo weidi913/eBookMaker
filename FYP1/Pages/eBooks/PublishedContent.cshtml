@@ -1,0 +1,120 @@
+﻿@page
+@model PublishedContentModel
+@{
+    ViewData["Title"] = "Version History";
+}
+<style>
+</style>
+
+
+<div class="version-history-header">
+    <a class="version-history-back" asp-page="./Dashboard" asp-route-displayTab="@(Model.publishedBook.bookStatus == "PUBLISHED" ? "Published" : "Management")" asp-route-searchString="@Model.publishedBook.title">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-chevron-left" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0" />
+        </svg>
+    </a>
+    <div class="version-history-name">@Model.publishedBook.title</div>
+    <div class="version-history-zoom-input-container">
+        <button class="version-history-zoom-minus-button">
+            <svg style="color:#F0F0F0"  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20">
+                <path d="M19 13H5v-2h14v2z" fill="#F0F0F0" />
+            </svg>
+        </button>
+        <input class="version-history-zoom-input" type="text" value="100%"/>
+        <button class="version-history-zoom-plus-button">
+            <svg style="color:#F0F0F0" viewBox="0 0 1024 1024" width="20" height="20">
+                <path d="M810 554h-256v256h-84v-256h-256v-84h256v-256h84v256h256v84z" fill="#F0F0F0"></path>
+            </svg>
+        </button>
+
+    </div>
+</div>
+<div style="margin-top:60px"></div>
+@Html.Raw(Model.publishedBook.bookContent)
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    function initChart(element) {
+        var configStr = element.innerHTML;
+        var configJSON = JSON.parse(configStr);
+        // Clear the innerHTML of the element
+        element.innerHTML = '';
+
+        // Create a new canvas element and append it to the element
+        var canvas = document.createElement('canvas');
+        canvas.classList.add('design-edit-page-canvas-content');
+        element.appendChild(canvas);
+
+        // Get the canvas context and initialize the Chart.js chart
+        var ctx = canvas.getContext('2d');
+        new Chart(ctx, configJSON);
+    }
+
+    var chartList = $(".chart");
+    chartList.each(function () {
+        initChart(this);
+    })
+
+    var originalHeight = $(".version-history-zoom-container").height();
+    var originalWidth = $(".version-history-zoom-container").width();
+
+    $(document).ready(function(){
+        $("input").on("input",function(){
+            var inputValue = $(this).val();
+            // Use regular expression to check if the input contains only digits
+            if (!/^\d*$/.test(inputValue)) {
+                // If input contains non-digit characters, remove them
+                $(this).val(inputValue.replace(/[^\d]/g, ''));
+            }
+        })
+
+        $("input").change(function () {
+            var inputValue = parseInt($(this).val()); // Parse the input value as an integer
+            if (inputValue > 500) {
+                $(this).val(500);
+            } else if (inputValue < 25) {
+                $(this).val(25); // Corrected to set the value to 25 if it's less than 25
+            }
+
+            inputValue = parseInt($(this).val()); // Parse the input value as an integer
+
+            // Apply the scale transformation and scaled height
+            $(".version-history-zoom-container div").css("zoom", inputValue+"%");
+
+            $(this).val($(this).val() + "%");
+
+        });
+
+        $(".version-history-zoom-minus-button").click(function () {
+            var inputValue = parseInt($(".version-history-zoom-input").val().split("%")[0]); // Parse the input value as an integer
+            inputValue -= 25;
+            if (inputValue > 500) {
+                inputValue = 500;
+            } else if (inputValue < 25) {
+                inputValue+= 25;
+            }
+
+            // Apply the scale transformation and scaled height
+            $(".version-history-zoom-container div").css("zoom", inputValue + "%");
+
+            $(".version-history-zoom-input").val(inputValue + "%");
+        })
+        $(".version-history-zoom-plus-button").click(function () {
+            var inputValue = parseInt($(".version-history-zoom-input").val().split("%")[0]); // Parse the input value as an integer
+            inputValue += 25;
+            if (inputValue > 500) {
+                inputValue = 500;
+            } else if (inputValue < 25) {
+                inputValue += 25;
+            }
+
+            // Apply the scale transformation and scaled height
+            $(".version-history-zoom-container div").css("zoom", inputValue + "%");
+
+            $(".version-history-zoom-input").val(inputValue + "%");
+        })
+    })
+</script>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

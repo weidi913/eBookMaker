@@ -168,13 +168,6 @@
                     </div>
                 </div>
                 <div class="profile-page-input-text-container">
-                    <span class="profile-page-text">Edition</span>
-                    <div class="enter-input-label-container">
-                        <label class="enter-label">Edition</label>
-                        <input style="background-color:#F6F7F8;color:#525759" disabled value="@Model.curBook.edition" type="text" placeholder="email@address.com" class="input" />
-                    </div>
-                </div>
-                <div class="profile-page-input-text-container">
                     <span class="profile-page-text">Status</span>
                     <div class="enter-input-label-container">
                         <label class="enter-label">Status</label>
@@ -316,13 +309,13 @@
                     @foreach (var version in Model.versionList)
                     {
                         <div class="file-setting-collaboration-item version-item">
-                            <div class="file-setting-collaboration-item-left-group">
+                            <div class="file-setting-collaboration-item-left-group version-left-group">
                                 <div class="file-setting-collaboration-item-user-info">
                                     <div contenteditable class="file-setting-collaboration-item-user-info-username">@version.verName</div>
                                     <div class="file-setting-collaboration-item-user-info-name">@version.versionDate</div>
                                 </div>
                             </div>
-                            <div class="file-setting-collaboration-item-right-group">
+                            <div class="file-setting-collaboration-item-right-group version-right-group">
                                 <a asp-page="./VersionContent" asp-route-id="@version.versionID" style="margin-right:8px;text-align:center" class="file-setting-add-button">View</a>
                                 <button data-version-id="@version.versionID" type="button" style="margin-right:8px;" class="version-update-button file-setting-publish-button">Save</button>
                                 <button data-version-id="@version.versionID" type="button" class="version-delete-button file-setting-delete-button">

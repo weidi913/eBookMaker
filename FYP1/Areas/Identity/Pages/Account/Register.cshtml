@@ -6,7 +6,7 @@
 
 @if (User.Identity.IsAuthenticated)
 {
-    Response.Redirect("/eBooks/eBookHome");
+    Response.Redirect("/eBooks/Dashboard");
 }
 
 <style>
@@ -128,7 +128,7 @@
                                 </svg>
                                 <span class="register-user-error-text">Enter valid email address format</span>
                             </div>
-                            <label class="enter-label">
+                            <label style="left:0px" class="enter-label">
                                 <span>You can use letters, numbers and symbols</span>
                             </label>
 

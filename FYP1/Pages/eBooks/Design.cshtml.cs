@@ -159,19 +159,19 @@ namespace FYP1.Pages.eBooks
                                 <span class=""design-page-content-page-text""><span>Page {bookPageNo}</span></span>
                             </div>
                             <div class=""design-page-content-right-container"">
-                                <button type=""button""
+                                <button type=""button"" title=""Move Page Upward""
                                         class=""design-page-content-middle-button design-page-button page-up-button"">
                                     <svg viewBox=""0 0 1024 1024"" class=""design-page-content-icon"">
                                         <path d=""M798.165 609.835l-256-256c-16.683-16.683-43.691-16.683-60.331 0l-256 256c-16.683 16.683-16.683 43.691 0 60.331s43.691 16.683 60.331 0l225.835-225.835 225.835 225.835c16.683 16.683 43.691 16.683 60.331 0s16.683-43.691 0-60.331z""></path>
                                     </svg>
                                 </button>
-                                <button type=""button""
+                                <button type=""button"" title=""Move Page Downward""
                                         class=""design-page-content-middle-button design-page-button page-down-button"">
                                     <svg viewBox=""0 0 1024 1024"" class=""design-page-content-icon"">
                                         <path d=""M225.835 414.165l256 256c16.683 16.683 43.691 16.683 60.331 0l256-256c16.683-16.683 16.683-43.691 0-60.331s-43.691-16.683-60.331 0l-225.835 225.835-225.835-225.835c-16.683-16.683-43.691-16.683-60.331 0s-16.683 43.691 0 60.331z""></path>
                                     </svg>
                                 </button>
-                                <button type=""button""
+                                <button type=""button"" title=""Toggle Page Lock""
                                         class=""design-page-content-middle-button design-page-button page-lock-toggle-button"">
                                     <svg viewBox=""0 0 1024 1024"" class=""design-page-content-icon page-lock-icon"">
                                         <path d=""M768 854v-428h-512v428h512zM380 256v86h264v-86q0-54-39-93t-93-39-93 39-39 93zM768 342q34 0 60 25t26 59v428q0 34-26 59t-60 25h-512q-34 0-60-25t-26-59v-428q0-34 26-59t60-25h42v-86q0-88 63-151t151-63 151 63 63 151v86h42zM512 726q-34 0-60-26t-26-60 26-60 60-26 60 26 26 60-26 60-60 26z""></path>
@@ -180,14 +180,14 @@ namespace FYP1.Pages.eBooks
                                         <path d=""M768 854v-428h-512v428h512zM768 342q34 0 60 25t26 59v428q0 34-26 59t-60 25h-512q-34 0-60-25t-26-59v-428q0-34 26-59t60-25h388v-86q0-54-39-93t-93-39-93 39-39 93h-82q0-88 63-151t151-63 151 63 63 151v86h42zM512 726q-34 0-60-26t-26-60 26-60 60-26 60 26 26 60-26 60-60 26z""></path>
                                     </svg>
                                 </button>
-                                <button type=""button""
+                                <button type=""button"" title=""Delete Page""
                                         class=""design-page-content-middle-button design-page-button page-delete-button"">
                                     <svg viewBox=""0 0 1024 1024"" class=""design-page-content-icon"">
                                         <path d=""M128 320v640c0 35.2 28.8 64 64 64h576c35.2 0 64-28.8 64-64v-640h-704zM320 896h-64v-448h64v448zM448 896h-64v-448h64v448zM576 896h-64v-448h64v448zM704 896h-64v-448h64v448z""></path>
                                         <path d=""M848 128h-208v-80c0-26.4-21.6-48-48-48h-224c-26.4 0-48 21.6-48 48v80h-208c-26.4 0-48 21.6-48 48v80h832v-80c0-26.4-21.6-48-48-48zM576 128h-192v-63.198h192v63.198z""></path>
                                     </svg>
                                 </button>
-                                <button type=""button"" class=""design-page-button page-add-button"">
+                                <button title=""Add Page"" type=""button"" class=""design-page-button page-add-button"">
                                     <svg viewBox=""0 0 1024 1024"" class=""design-page-content-icon"">
                                         <path d=""M810 470v-86h-170v-170h-86v170h-170v86h170v170h86v-170h170zM854 86q34 0 59 25t25 59v512q0 34-25 60t-59 26h-512q-34 0-60-26t-26-60v-512q0-34 26-59t60-25h512zM170 256v598h598v84h-598q-34 0-59-25t-25-59v-598h84z""></path>
                                     </svg>
@@ -208,7 +208,7 @@ namespace FYP1.Pages.eBooks
                             <span class=""e-book-design-chapter-number-text"">
                                 Chapter {chapter.chapterNo}
                             </span>
-                            <input value=""{chapter.chapterName}"" type=""text""
+                            <input title=""Change Chapter Title"" value=""{chapter.chapterName}"" type=""text""
                                    data-chapter-itemid=""{chapter.chapterID}""
                                    placeholder=""Chapter Name""
                                    class=""chapter-name-input e-book-design-chapter-title-input input"" />

@@ -8,13 +8,35 @@
 @{
     if (User.Identity.IsAuthenticated)
     {
-        @Html.Partial("_HeaderLogin")
+    @Html.Partial("_HeaderLogin")
     }
     else
     {
-        @Html.Partial("_HeaderGuest")
+    @Html.Partial("_HeaderGuest")
     }
 }
+
+<style>
+    b{
+        cursor:pointer;
+    }
+    .hidden{
+        display:none;
+
+    }
+    p{
+        text-align:justify;
+        font-size: calc(10px + 0.273438vw)
+    }
+    .unhidden{
+        animation-name: fadeIn;
+        animation-delay: 0s;
+        animation-duration: 300ms;
+        animation-direction: normal;
+        animation-iteration-count: 1;
+        animation-timing-function: ease;
+    }
+</style>
 
 <div id="Guidances">
     <div class="help-banner-banner">
@@ -46,29 +68,68 @@
             </svg>
             <div class="help-faq-text-container">
                 <div class="help-faq-clarity-container">
-                    <h1 class="help-faq-text"><span>Heading</span></h1>
+                    <h1 class="help-faq-text"><span>Design Help</span></h1>
                     <span class="help-faq-text1">
                         <span>
-                            Description Here you can insert whatever you want here just test
-                            make it longer to test the limit
+                            Resolve your issues with design related question.
                         </span>
                     </span>
                 </div>
                 <div class="help-faq-faq-grid-container">
                     <span class="help-faq-question-text">
-                        <span>Emquiry Enquiry Emquiry Enquiry Emquiry</span>
+                        <b>How to edit the file?</b>
+                        <p>To edit the settings of your file, first, access the file management section of the platform. Within the settings menu, you'll find various options for customizing your file's settings. These options may include file name, description, privacy settings, sharing permissions, and more. Simply select the setting you wish to modify, make your changes, and save your updates.</p>
+
                     </span>
                     <span class="help-faq-question-text">
-                        <span>Emquiry Enquiry Emquiry Enquiry Emquiry</span>
+                        <b>How to edit the chart element?</b>
+                        <p>To edit a chart element in your design, begin by selecting the chart you wish to modify. Once selected, you'll notice various editing options appear, allowing you to customize the chart to your specifications. These options may include adjusting data values, changing chart type, modifying colors and styles, or adding annotations. Simply click on the specific element or aspect you'd like to edit, then use the provided tools and menus to make your desired changes. For more advanced customization, explore additional settings and options available within the chart editing interface. </p>
+
                     </span>
                     <span class="help-faq-question-text">
-                        <span>Emquiry Enquiry Emquiry Enquiry Emquiry</span>
+                        <b>How to export the file to pdf?</b>
+                        <p>Once you've completed your design or document, navigate to the export options menu. Select the "Print" option from the dropdown menu. </p>
                     </span>
                     <span class="help-faq-question-text">
-                        <span>Emquiry Enquiry Emquiry Enquiry Emquiry</span>
+                        <b>How to save the progress?</b>
+                        <p>Utilizing the autosave function, your progress is automatically preserved without any manual intervention required. As you work, the platform continuously captures and updates your changes in real-time, ensuring that your latest edits are securely stored. This seamless process allows you to focus solely on your creative endeavors without the worry of losing your work.</p>
                     </span>
                     <span class="help-faq-question-text">
-                        <span>Emquiry Enquiry Emquiry Enquiry Emquiry</span>
+                        <b>How to add element?</b>
+                        <p>To add elements to your design ebook, simply navigate to the desired location within your design and click or tap to select it. Next, choose the element you want to add from the available options, customizing its properties if necessary. Some tools may allow you to drag and drop elements directly onto your canvas for added convenience. Once added, preview how the element fits within your overall layout, making any adjustments as needed before saving your work. </p>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div> 
+    <div class="help-faq-container">
+        <div class="help-faq-type-container">
+            <svg viewBox="0 0 877.7142857142857 1024" class="help-faq-icon">
+                <path d="M502.857 685.714v91.429c0 10.286-8 18.286-18.286 18.286h-91.429c-10.286 0-18.286-8-18.286-18.286v-91.429c0-10.286 8-18.286 18.286-18.286h91.429c10.286 0 18.286 8 18.286 18.286zM649.143 402.286c0 81.143-56.571 113.143-98.286 136.571-29.714 17.143-48 28-48 46.286v18.286c0 10.286-8 18.286-18.286 18.286h-91.429c-10.286 0-18.286-8-18.286-18.286v-38.857c0-70.286 50.286-92.571 90.857-110.857 34.286-16 55.429-26.857 55.429-52.571 0-33.143-41.714-57.714-79.429-57.714-20 0-41.143 6.286-54.286 15.429-12.571 8.571-24.571 21.143-45.714 47.429-3.429 4.571-8.571 6.857-14.286 6.857-4 0-8-1.143-10.857-3.429l-61.714-46.857c-7.429-5.714-9.143-16.571-4-24.571 46.857-73.714 112.571-109.714 199.429-109.714v0c93.714 0 198.857 74.286 198.857 173.714zM438.857 146.286c-201.714 0-365.714 164-365.714 365.714s164 365.714 365.714 365.714 365.714-164 365.714-365.714-164-365.714-365.714-365.714zM877.714 512c0 242.286-196.571 438.857-438.857 438.857s-438.857-196.571-438.857-438.857 196.571-438.857 438.857-438.857v0c242.286 0 438.857 196.571 438.857 438.857z"></path>
+            </svg>
+            <div class="help-faq-text-container">
+                <div class="help-faq-clarity-container">
+                    <h1 class="help-faq-text"><span>Account Help</span></h1>
+                    <span class="help-faq-text1">
+                        <span>
+                            Resolve account-related queries and issues swiftly
+                        </span>
+                    </span>
+                </div>
+                <div class="help-faq-faq-grid-container">
+                    <span class="help-faq-question-text">
+                        <b>How to recover account?</b>
+                        <p>To register for an account, begin by navigating to the login page on our platform. Once there, locate the "Forget Password" option and click on it. This will prompt you to enter your email address. After submitting your email, check your inbox for a verification email from us. Click on the link provided in the email to verify your email address and proceed with setting up your account. You will be directed to a page where you can create a new password for your account. Enter a strong and secure password, confirm it, and then click "Submit" to complete the registration process. Once your password is successfully set, you can log in to your account using your email address and the newly created password.</p>
+                    </span>
+                    <span class="help-faq-question-text">
+                        <b>How to register account?</b>
+                        <p>
+                            To register for an account, visit our platform's login page and select the "Register" or "Sign Up" option. Fill out the registration form with your name, email address, and a secure password. After submitting the form, check your email for a verification message and follow the instructions to confirm your email address. Once verified, your account registration will be complete, and you can log in using your email and password. If you need any assistance during the registration process, feel free to reach out to our support team for help.
+                        </p>
+                    </span>
+                    <span class="help-faq-question-text">
+                        <b>How to deactivate account?</b>
+                        <p>No, you can't do it</p>
                     </span>
                 </div>
             </div>
@@ -155,9 +216,30 @@
 @Html.Partial("_FooterGuest")
 <script>
     $(document).ready(function(){
+        $(".help-faq-question-text p").addClass("hidden");
         $("#create-button").click(function(){
             window.location.href = '/eBooks/Dashboard';
         })
+
+        $(".help-faq-question-text b").click(function(){
+            $(this).next("p").toggleClass("hidden");
+        })
+
+        $(".help-banner-textinput").on("input", function () {
+            var text = $(this).val().toLowerCase().trim(); // Get the entered text and convert it to lowercase
+            $(".help-faq-question-text b").each(function () { // Loop through each FAQ question
+                var filter = $(this).text().toLowerCase();
+                if (!filter.includes(text)) { // Check if the question text contains the entered text
+                    $(this).closest("span").addClass("hidden"); // Hide the parent div if the text doesn't match
+                    $(this).closest("span").removeClass("unhidden"); // Hide the parent div if the text doesn't match
+
+                } else {
+                    $(this).closest("span").removeClass("hidden"); // Otherwise, show the parent div
+                    $(this).closest("span").addClass("unhidden"); // Hide the parent div if the text doesn't match
+
+                }
+            });
+        });
 
     })
 </script>

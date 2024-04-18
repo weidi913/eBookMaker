@@ -299,14 +299,15 @@
                 class="header-design-header-horizontal-container">
             <div class="header-design-left-group">
                 <svg id="more-option" viewBox="0 0 1024 1024" class="header-design-more-option-icon">
+                    <title>Toggle Home Sidebar</title>
                     <path d="M128 554.667h768c23.552 0 42.667-19.115 42.667-42.667s-19.115-42.667-42.667-42.667h-768c-23.552 0-42.667 19.115-42.667 42.667s19.115 42.667 42.667 42.667zM128 298.667h768c23.552 0 42.667-19.115 42.667-42.667s-19.115-42.667-42.667-42.667h-768c-23.552 0-42.667 19.115-42.667 42.667s19.115 42.667 42.667 42.667zM128 810.667h768c23.552 0 42.667-19.115 42.667-42.667s-19.115-42.667-42.667-42.667h-768c-23.552 0-42.667 19.115-42.667 42.667s19.115 42.667 42.667 42.667z"></path>
                 </svg>
-                <a href="../Home">
+                <a title="Back to Home" href="../Home">
                 <svg viewBox="0 0 1024 1024" class="header-design-home-icon">
                     <path d="M949.845 446.635c-144.64-121.771-407.296-348.629-409.899-350.933l-27.947-24.021-27.819 24.021c-2.645 2.261-265.429 229.035-412.16 351.915-18.688 16.811-29.355 40.32-29.355 64.384 0 47.104 38.229 85.333 85.333 85.333h42.667v256c0 47.104 38.229 85.333 85.333 85.333h128 384c47.104 0 85.333-38.229 85.333-85.333v-256h42.667c47.104 0 85.333-38.229 85.333-85.333 0-25.515-11.733-49.536-31.488-65.365zM597.333 853.333h-170.667v-213.333h170.667v213.333zM768 512l0.085 341.333c-0.085 0-128.085 0-128.085 0v-256h-256v256h-128v-341.333h-128.043c117.973-98.645 312.107-265.685 384.043-327.68 71.936 61.995 265.984 228.992 384 327.723 0-0-128-0-128-0.043z"></path>
                 </svg>
                 </a>
-                <a href="~/Home"><img alt="logo" src="~/images//dwei-logo.png" class="header-design-home-image" /></a>
+                <a title="Back to Home" href="~/Home"><img alt="logo" src="~/images//dwei-logo.png" class="header-design-home-image" /></a>
                 <div data-thq="thq-dropdown"
                      class="header-design-file-drop-down list-item">
                     <div data-thq="thq-dropdown-toggle"
@@ -381,35 +382,40 @@
                 </div>
                 <div class="header-design-file-vertical-separator"></div>
                 <svg viewBox="0 0 1024 1024" class="header-design-undo-icon">
+                    <title>Undo</title>
                     <path d="M534 342q146 0 262 86t162 222l-100 32q-34-104-123-169t-201-65q-124 0-220 80l156 154h-384v-384l152 154q126-110 296-110z"></path>
-                </svg><svg viewBox="0 0 1024 1024" class="header-design-redo-icon">
+                </svg>
+                <svg viewBox="0 0 1024 1024" class="header-design-redo-icon">
+                    <title>Redo</title>
                     <path d="M786 452l152-154v384h-384l156-154q-96-80-220-80-102 0-197 68t-127 166l-100-32q44-136 161-222t263-86q170 0 296 110z"></path>
                 </svg>
                 <div class="header-design-title-verticial-separator"></div>
             </div>
-            <input id="ebook-title-input" type="text" placeholder="Title" value="@Model.curBook.title" class="header-design-title-input input" />
+            <input title="Change Book Title" id="ebook-title-input" type="text" placeholder="Title" value="@Model.curBook.title" class="header-design-title-input input" />
             <div class="header-design-right-group">
 @*                 <img alt="image"
                      src="https://play.teleporthq.io/static/svg/default-img.svg"
                      class="header-design-profile-icon" /> *@
-                     <div class="header-design-profile-icon" style="background-image:url(data:image/jpg;base64,@Model.curUser.imageData)"></div>
+                <div title="@Model.curUser.lastName @Model.curUser.firstName" class="header-design-profile-icon" style="background-image:url(data:image/jpg;base64,@Model.curUser.imageData)"></div>
 
-                <div class="header-design-collaborate-container">
+                <div title="Add Collaboration" class="header-design-collaborate-container">
                     <svg viewBox="0 0 1024 1024" class="header-design-add-icon">
                         <path d="M810 554h-256v256h-84v-256h-256v-84h256v-256h84v256h256v84z"></path>
                     </svg>
                 </div>
                 <svg viewBox="0 0 1152 1024" class="header-design-collaborate-icon">
+                    <title>Add Collaboration</title>
                     <path d="M768 770.612v-52.78c70.498-39.728 128-138.772 128-237.832 0-159.058 0-288-192-288s-192 128.942-192 288c0 99.060 57.502 198.104 128 237.832v52.78c-217.102 17.748-384 124.42-384 253.388h896c0-128.968-166.898-235.64-384-253.388z"></path>
                     <path d="M327.196 795.328c55.31-36.15 124.080-63.636 199.788-80.414-15.054-17.784-28.708-37.622-40.492-59.020-30.414-55.234-46.492-116.058-46.492-175.894 0-86.042 0-167.31 30.6-233.762 29.706-64.504 83.128-104.496 159.222-119.488-16.914-76.48-61.94-126.75-181.822-126.75-192 0-192 128.942-192 288 0 99.060 57.502 198.104 128 237.832v52.78c-217.102 17.748-384 124.42-384 253.388h279.006c14.518-12.91 30.596-25.172 48.19-36.672z"></path>
                 </svg>
-                <button id="print-button">
+                <button title="Print Document" class="header-design-print-button" id="print-button">
                     <span class="button header-design-print-text">
                         <span class="header-design-text">Print</span>
                         <br />
                     </span>
                 </button>
                 <svg viewBox="0 0 1024 1024" class="header-design-print-icon">
+                    <title>Print Document</title>
                     <path d="M853.333 640v170.667c0 11.776-4.736 22.4-12.501 30.165s-18.389 12.501-30.165 12.501h-597.333c-11.776 0-22.4-4.736-30.165-12.501s-12.501-18.389-12.501-30.165v-170.667c0-23.552-19.115-42.667-42.667-42.667s-42.667 19.115-42.667 42.667v170.667c0 35.328 14.379 67.413 37.504 90.496s55.168 37.504 90.496 37.504h597.333c35.328 0 67.413-14.379 90.496-37.504s37.504-55.168 37.504-90.496v-170.667c0-23.552-19.115-42.667-42.667-42.667s-42.667 19.115-42.667 42.667zM554.667 537.003v-409.003c0-23.552-19.115-42.667-42.667-42.667s-42.667 19.115-42.667 42.667v409.003l-140.501-140.501c-16.683-16.683-43.691-16.683-60.331 0s-16.683 43.691 0 60.331l213.333 213.333c3.925 3.925 8.619 7.083 13.824 9.259s10.795 3.243 16.341 3.243c10.923 0 21.845-4.181 30.165-12.501l213.333-213.333c16.683-16.683 16.683-43.691 0-60.331s-43.691-16.683-60.331 0z"></path>
                 </svg>
             </div>
@@ -418,14 +424,29 @@
 
     <div class="e-book-design-design-container">
         <div class="e-book-design-element-list-container">
-            <div id="add-text-tab-button" class="e-book-design-element-container">
+            <div id="add-text-tab-button" class="e-book-design-element-container" title="Add Text Element">
                 <svg viewBox="0 0 878.2994285714285 1024"
                      class="e-book-design-element-icon">
                     <path d="M46.286 73.714l30.857 15.429c4 1.714 108.571 2.857 120.571 2.857 50.286 0 100.571-2.286 150.857-2.286 151.429 0 304.571-3.429 456 1.714 12.571 0.571 24.571-7.429 32-17.714l24-0.571c5.143 0 10.857 0.571 16 0.571 1.143 64 1.143 128 1.143 192 0 20.571 0.571 42.286-2.857 62.286-12.571 4.571-25.714 8.571-38.857 10.286-13.143-22.857-22.286-48-30.857-73.143-4-11.429-18.286-88.571-18.857-89.714-4-5.143-9.143-8.571-15.429-10.857-4.571-1.714-32-1.143-37.714-1.143-70.286 0-151.429-4-220.571 4-2.857 25.143-5.143 52-4.571 77.714l0.571 86.857v-29.714c0.571 93.143 1.714 185.714 1.714 278.286 0 44-6.857 90.286 5.714 132.571 43.429 22.286 94.857 25.714 139.429 45.714 1.143 9.143 2.857 18.857 2.857 28.571 0 5.143-0.571 10.857-1.714 16.571l-19.429 0.571c-81.143 2.286-161.143-10.286-242.857-10.286-57.714 0-115.429 10.286-173.143 10.286-0.571-9.714-1.714-20-1.714-29.714v-5.143c21.714-34.857 100-35.429 136-56.571 14.286-32 10.286-302.286 10.286-352.571 0-8-2.857-16.571-2.857-25.143 0-23.429 4-157.714-4.571-167.429-8-8.571-82.857-6.857-92.571-6.857-24 0-158.286 12.571-172 21.714-26.857 17.714-27.429 132.571-61.714 135.429-10.286-6.286-24.571-15.429-32-25.143v-218.857zM748.571 806.286c20 0 96 68 111.429 80 8.571 6.857 14.857 16.571 14.857 28s-6.286 21.143-14.857 28c-15.429 12-91.429 80-111.429 80-26.286 0-17.143-61.143-17.143-71.429h-585.143c0 10.286 9.143 71.429-17.143 71.429-20 0-96-68-111.429-80-8.571-6.857-14.857-16.571-14.857-28s6.286-21.143 14.857-28c15.429-12 91.429-80 111.429-80 26.286 0 17.143 61.143 17.143 71.429h585.143c0-10.286-9.143-71.429 17.143-71.429z"></path>
                 </svg>
                 <span class="e-book-design-element-text">Text</span>
             </div>
-            <div id="add-shape-tab-button" class="e-book-design-element-container">
+            <div id="add-shape-tab-button" class="e-book-design-element-container"  title="Add Shape Element">
+@*                 <svg class="e-book-design-element-icon"
+                     viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                    <g id="Free-Icons" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round">
+                        <g transform="translate(-525.000000, -600.000000)" id="Group" stroke="#9D9E9F" stroke-width="2">
+                            <g transform="translate(523.000000, 598.000000)" id="Shape">
+                                <path d="M11,8 L18,8 C19.6568542,8 21,9.34314575 21,11 L21,18 C21,19.6568542 19.6568542,21 18,21 L11,21 C9.34314575,21 8,19.6568542 8,18 L8,11 C8,9.34314575 9.34314575,8 11,8 Z">
+
+                                </path>
+                                <path d="M14.8977454,7.89115917 C14.3775792,5.10718156 11.9348689,3 9,3 C5.6862915,3 3,5.6862915 3,9 C3,11.9667237 5.15317212,14.4305472 7.98204766,14.9140016">
+
+                                </path>
+                            </g>
+                        </g>
+                    </g>
+                </svg> *@
                 <svg class="e-book-design-element-icon"
                      viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                     <g id="Free-Icons" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round">
@@ -443,31 +464,31 @@
                 </svg>
                 <span class="e-book-design-element-text">Shape</span>
             </div>
-            <div id="add-image-tab-button" class="e-book-design-element-container">
+            <div id="add-image-tab-button" class="e-book-design-element-container"  title="Add Image Element">
                 <svg viewBox="0 0 1024 1024" class="e-book-design-element-icon">
                     <path d="M213.333 85.333c-35.328 0-67.413 14.379-90.496 37.504s-37.504 55.168-37.504 90.496v597.333c0 35.328 14.379 67.413 37.504 90.496s55.168 37.504 90.496 37.504h597.333c35.328 0 67.413-14.379 90.496-37.504s37.504-55.168 37.504-90.496v-597.333c0-35.328-14.379-67.413-37.504-90.496s-55.168-37.504-90.496-37.504zM469.333 362.667c0-29.44-11.989-56.149-31.232-75.435s-45.995-31.232-75.435-31.232-56.149 11.989-75.435 31.232-31.232 45.995-31.232 75.435 11.989 56.149 31.232 75.435 45.995 31.232 75.435 31.232 56.149-11.989 75.435-31.232 31.232-45.995 31.232-75.435zM384 362.667c0 5.888-2.347 11.179-6.229 15.104s-9.216 6.229-15.104 6.229-11.179-2.347-15.104-6.229-6.229-9.216-6.229-15.104 2.347-11.179 6.229-15.104 9.216-6.229 15.104-6.229 11.179 2.347 15.104 6.229 6.229 9.216 6.229 15.104zM316.331 853.333l366.336-366.336 170.667 170.667v153.003c0 11.776-4.736 22.4-12.501 30.165s-18.389 12.501-30.165 12.501zM853.333 537.003l-140.501-140.501c-16.683-16.683-43.691-16.683-60.331 0l-454.144 454.144c-5.76-2.133-10.88-5.504-15.189-9.813-7.765-7.765-12.501-18.389-12.501-30.165v-597.333c0-11.776 4.736-22.4 12.501-30.165s18.389-12.501 30.165-12.501h597.333c11.776 0 22.4 4.736 30.165 12.501s12.501 18.389 12.501 30.165z"></path>
                 </svg>
                 <span class="e-book-design-element-text">Image</span>
             </div>
-            <div id="add-chart-tab-button" class="e-book-design-element-container">
+            <div id="add-chart-tab-button" class="e-book-design-element-container"  title="Add Chart Element">
                 <svg viewBox="0 0 1024 1024" class="e-book-design-element-icon">
                     <path d="M365.714 512v292.571h-146.286v-292.571h146.286zM585.143 219.429v585.143h-146.286v-585.143h146.286zM1170.286 877.714v73.143h-1170.286v-877.714h73.143v804.571h1097.143zM804.571 365.714v438.857h-146.286v-438.857h146.286zM1024 146.286v658.286h-146.286v-658.286h146.286z"></path>
                 </svg>
                 <span class="e-book-design-element-text">Chart</span>
             </div>
-            <div id="add-OCR-tab-button" class="e-book-design-element-container">
-                <svg style="vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" class="e-book-design-element-icon">
+            <div id="add-OCR-tab-button" class="e-book-design-element-container"  title="Optical Character Recognition">
+                <svg style="vertical-align: middle;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" class="e-book-design-element-icon">
                     <path d="M1022.54 731.84v182.08c0 60.23-49.01 109.25-109.25 109.25H694.81c-20.14 0-36.42-16.28-36.42-36.42s16.28-36.42 36.42-36.42H913.3c20.1 0 36.42-16.31 36.42-36.41V731.84c0-20.14 16.27-36.42 36.42-36.42 20.13 0 36.4 16.28 36.4 36.42zM294.07 950.33H111.99c-20.06 0-36.41-16.31-36.41-36.41V731.84c0-20.14-16.31-36.42-36.42-36.42-20.1 0-36.41 16.28-36.41 36.42v182.08c0 60.23 49.01 109.25 109.24 109.25h182.08c20.1 0 36.42-16.28 36.42-36.42s-16.32-36.42-36.42-36.42zM38.16 328.1c20.1 0 36.42-16.31 36.42-36.41V109.61c0-20.07 16.35-36.42 36.41-36.42h182.08c20.1 0 36.42-16.31 36.42-36.41 0-20.1-16.31-36.42-36.42-36.42H110.99C50.76 0.36 1.75 49.38 1.75 109.61v182.08c0 20.1 16.31 36.41 36.41 36.41zM914.3 0.36H695.81c-20.14 0-36.42 16.31-36.42 36.42 0 20.1 16.28 36.41 36.42 36.41H914.3c20.1 0 36.42 16.35 36.42 36.42v182.08c0 20.1 16.27 36.41 36.42 36.41 20.14 0 36.41-16.31 36.41-36.41V109.61C1023.54 49.38 974.53 0.36 914.3 0.36zM383.4 509.78c0 97.6-55.2 156-136.4 156s-136.4-58.4-136.4-156 55.2-152.8 136.4-152.8 136.4 55.6 136.4 152.8z m-72.8 0c0-57.6-24.4-91.6-63.6-91.6s-63.2 34-63.2 91.6c0 58 24 94.4 63.2 94.4s63.6-36.4 63.6-94.4z m246.8 94.4c-42 0-69.2-34.4-69.2-93.6 0-58 31.6-92.4 70-92.4 21.2 0 36.8 9.6 51.6 23.2l37.6-45.6c-20.4-20.8-51.6-38.8-90.4-38.8-75.6 0-142 56.8-142 156 0 100.8 64 152.8 139.6 152.8 38.8 0 72-14.8 97.2-44l-37.6-44.8c-14 15.2-33.2 27.2-56.8 27.2z m302.4-62l66.4 118h-80l-54.8-104.8H757v104.8h-71.6v-297.6h109.2c63.6 0 116.4 21.6 116.4 93.6 0 43.6-20.4 71.6-51.2 86z m-18.8-86c0-28-18-37.2-52-37.2h-32v80h32c34 0 52-14.8 52-42.8z" />
                 </svg>
                 <span class="e-book-design-element-text">OCR</span>
             </div>
-            <div id="add-background-tab-button" class="e-book-design-element-container">
+            <div id="add-background-tab-button" class="e-book-design-element-container"  title="Edit Page Background">
                 <svg viewBox="0 0 121.17 122.88" style="enable-background:new 0 0 121.17 122.88" class="e-book-design-element-icon">
                     <path d="M7.23,0h106.7c1.98,0,3.78,0.81,5.1,2.12l0.02,0.02c0.2,0.2,0.39,0.42,0.57,0.64c0.17,0.2,0.32,0.41,0.45,0.64 c0.7,1.11,1.1,2.42,1.1,3.81v108.41c0,1.98-0.81,3.78-2.12,5.1l-0.02,0.02c-1.32,1.31-3.12,2.11-5.09,2.11H7.23 c-1.98,0-3.78-0.81-5.1-2.12l-0.02-0.02c-0.2-0.2-0.39-0.42-0.57-0.64c-0.17-0.2-0.33-0.42-0.45-0.64c-0.69-1.11-1.1-2.42-1.1-3.81 V7.24c0-1.98,0.81-3.78,2.12-5.1l0.02-0.02C3.46,0.81,5.26,0,7.23,0L7.23,0z M86.29,115.24L113.53,88V70.5l-44.74,44.74H86.29 L86.29,115.24z M113.53,98.8l-16.44,16.44h16.44V98.8L113.53,98.8z M57.99,115.24l55.54-55.54V42.2l-73.04,73.04H57.99 L57.99,115.24z M29.68,115.24l83.85-83.85V13.9L12.19,115.24H29.68L29.68,115.24z M7.64,108.98L108.98,7.64h-17.5L7.64,91.48 V108.98L7.64,108.98z M7.64,80.68L80.68,7.64h-17.5L7.64,63.18V80.68L7.64,80.68z M7.64,52.38L52.38,7.64h-17.5L7.64,34.88V52.38 L7.64,52.38z M7.64,24.08L24.08,7.64H7.64V24.08L7.64,24.08z" />
                 </svg>
                 <span class="e-book-design-element-text">Background</span>
             </div>
-            <div class="e-book-design-back-container">
+            <div class="e-book-design-back-container"  title="Back to Dashboard">
                 <svg viewBox="0 0 1024 1024" class="e-book-design-back-icon">
                     <path d="M512 386.517v-109.184c0-10.923-4.181-21.845-12.501-30.208-8.32-8.32-19.243-12.459-30.165-12.459s-21.845 4.139-30.165 12.459l-268.501 264.875 268.501 264.832c8.32 8.32 19.243 12.501 30.165 12.501s21.845-4.181 30.165-12.501 12.501-19.285 12.501-30.165v-106.197c117.333 2.901 245.547 24.149 341.333 170.197v-42.667c0-197.675-149.333-360.235-341.333-381.483z"></path>
                 </svg>
@@ -475,6 +496,8 @@
             </div>
         </div>
         <div id="add-text" class="hidden design-add-page-container">
+            <div class="black-background-add-edit-container"></div>
+
             <div class="design-add-page-search-container">
                 <svg viewBox="0 0 950.8571428571428 1024"
                      class="design-add-page-search-icon">
@@ -510,6 +533,8 @@
             </button>
         </div>
         <div id="add-shape" class="hidden design-add-page-container">
+            <div class="black-background-add-edit-container"></div>
+
             <div class="design-add-page-search-container">
                 <svg viewBox="0 0 950.8571428571428 1024"
                      class="design-add-page-search-icon">
@@ -617,6 +642,8 @@
             </div>
         </div>
         <div id="add-image" class="hidden design-add-page-container">
+            <div class="black-background-add-edit-container"></div>
+
             <span class="design-add-page-heading-text">
                 <span>Upload your own photo</span>
             </span>
@@ -647,6 +674,8 @@
             <img id="book-flying-effects" src="~/images/design-images/book-flying-effects.png" class="design-add-page-gallery" data-image-information="word flying out from the book blue colour words white book"/>
         </div>
         <div id="add-OCR" class="hidden design-add-page-container">
+            <div class="black-background-add-edit-container"></div>
+
             <span class="design-add-page-heading-text">
                 <span>Optical Character Recognition</span>
             </span>
@@ -662,6 +691,8 @@
             <div id="OCR-result" style="width:100%; overflow:auto; line-height:1.5;white-space:pre-wrap"> No photo has been uploaded</div>
         </div>
         <div id="add-chart" class="design-add-page-container hidden">
+            <div class="black-background-add-edit-container"></div>
+
             <div class="design-add-page-search-container">
                 <svg viewBox="0 0 950.8571428571428 1024"
                      class="design-add-page-search-icon">
@@ -719,6 +750,8 @@
             </div>
         </div>       
         <div id="add-background" class="design-add-page-container hidden">
+            <div class="black-background-add-edit-container"></div>
+
             <div class="design-add-page-search-container">
                 <svg viewBox="0 0 950.8571428571428 1024"
                      class="design-add-page-search-icon">
@@ -806,6 +839,7 @@
             </div> *@
         </div>
         <div id="edit-position" class=" hidden design-edit-page-container">
+            <div class="black-background-add-edit-container"></div>
             <div class="design-edit-page-heading-container">
                 <span class="design-edit-page-heading-text">
                     <span>Edit Position</span>
@@ -851,6 +885,8 @@
             </div>
         </div>
         <div id="edit-border" class="hidden design-edit-page-container">
+            <div class="black-background-add-edit-container"></div>
+
             <div class="design-edit-page-heading-container">
                 <span class="design-edit-page-heading-text">
                     <span>Edit Border</span>
@@ -884,9 +920,42 @@
             </div>
             <div class="design-edit-page-section-separator"></div>
             <span class="design-edit-page-section-header"><span>Border Color</span></span>
-            <button type="button" class="design-edit-page-colour-picker-button button">
-                <span>Open Color Palette</span>
+            <button style="padding:20px" id="edit-border-color-background" type="button" class="design-edit-page-colour-picker-button button">
             </button>
+            <div class="design-edit-border-solid-color-grid-container">
+                <div class="design-edit-border-color-container-color-picker">
+                    <input id="edit-border-color-picker" type="color">
+                    <div class="design-edit-page-color-container-plus-icon">
+                        <svg viewBox="0 0 1024 1024" style="width: 100%; scale: 0.6; height: 100%; align-self: center;">
+                            <path d="M810 554h-256v256h-84v-256h-256v-84h256v-256h84v256h256v84z"></path>
+                        </svg>
+                    </div>
+                </div>
+                <div class="design-edit-border-solid-color-content" style="background-image: url('../images/transparent.jpg'); background-color: #00000000;" data-background-info="transparent"></div>
+                <div class="design-edit-border-solid-color-content" style="background-color: #545454;" data-background-info="dark gray  "></div>
+                <div class="design-edit-border-solid-color-content" style="background-color: #737373;" data-background-info="gray  "></div>
+                <div class="design-edit-border-solid-color-content" style="background-color: #a6a6a6;" data-background-info=" gray "></div>
+                <div class="design-edit-border-solid-color-content" style="background-color: #d9d9d9;" data-background-info=" light gray "></div>
+                <div class="design-edit-border-solid-color-content" style="background-color: #ff3131;" data-background-info=" bright red "></div>
+                <div class="design-edit-border-solid-color-content" style="background-color: #ff5757;" data-background-info="coral red  "></div>
+                <div class="design-edit-border-solid-color-content" style="background-color: #ff66c4;" data-background-info=" pink "></div>
+                <div class="design-edit-border-solid-color-content" style="background-color: #cb6ce6;" data-background-info=" magneta "></div>
+                <div class="design-edit-border-solid-color-content" style="background-color: #8c52ff;" data-background-info=" purple "></div>
+                <div class="design-edit-border-solid-color-content" style="background-color: #5e17eb;" data-background-info=" violet "></div>
+                <div class="design-edit-border-solid-color-content" style="background-color: #0097b2;" data-background-info=" dark turquoise "></div>
+                <div class="design-edit-border-solid-color-content" style="background-color: #0cc0df;" data-background-info=" aqua blue "></div>
+                <div class="design-edit-border-solid-color-content" style="background-color: #5ce1e6;" data-background-info=" turquoise blue "></div>
+                <div class="design-edit-border-solid-color-content" style="background-color: #38b6ff;" data-background-info="  light blue "></div>
+                <div class="design-edit-border-solid-color-content" style="background-color: #5271ff;" data-background-info=" royal blue "></div>
+                <div class="design-edit-border-solid-color-content" style="background-color: #004aad;" data-background-info=" cobalt blue "></div>
+                <div class="design-edit-border-solid-color-content" style="background-color: #00bf63;" data-background-info=" green "></div>
+                <div class="design-edit-border-solid-color-content" style="background-color: #7ed957;" data-background-info=" grass green "></div>
+                <div class="design-edit-border-solid-color-content" style="background-color: #c1ff72;" data-background-info=" lime "></div>
+                <div class="design-edit-border-solid-color-content" style="background-color: #ffde59;" data-background-info=" yellow "></div>
+                <div class="design-edit-border-solid-color-content" style="background-color: #ffbd59;" data-background-info=" peach "></div>
+                <div class="design-edit-border-solid-color-content" style="background-color: #ff914d;" data-background-info=" orange "></div>
+            </div>
+
         </div>
 @*         <div id="edit-color" class="hidden design-edit-page-container">
             <div class="design-edit-page-heading-container">
@@ -944,6 +1013,8 @@
             </div>
         </div>
  *@        <div id="edit-style" class="hidden design-edit-page-container">
+            <div class="black-background-add-edit-container"></div>
+
             <div class="design-edit-page-heading-container">
                 <span class="design-edit-page-heading-text">
                     <span>Edit Text</span>
@@ -952,6 +1023,8 @@
             <div id="toolbar" class="quil-editor-toolbar-container"></div>
         </div>
         <div id="edit-chart" class="hidden design-edit-page-container">
+            <div class="black-background-add-edit-container"></div>
+
             <div class="design-edit-page-heading-container">
                 <span class="design-edit-page-heading-text">
                     <span>Edit Chart</span>
@@ -1048,13 +1121,20 @@
                     </div>
                 </div>
             </div>
-             <div id="see-config"></div> 
+             @* <div id="see-config"></div>  *@
         </div>
         <div id="edit-comment" class="hidden design-edit-page-container">
-            <div class="design-edit-page-heading-container">
+            <div class="black-background-add-edit-container"></div>
+
+            <div style="position:relative" class="design-edit-page-heading-container">
                 <span class="design-edit-page-heading-text">
                     <span>Edit Comment</span>
                 </span>
+                <button class="edit-comment-close-button" style="position:absolute;height: 28px; padding: 4px; aspect-ratio: 1 / 1; right:16px; cursor: pointer;margin-left:auto;margin-top:autp;margin-bottom:auto;font-weight:600;">
+                    <svg viewBox="0 0 1024 1024">
+                        <path d="M810 274l-238 238 238 238-60 60-238-238-238 238-60-60 238-238-238-238 60-60 238 238 238-238z"></path>
+                    </svg>
+                </button>
             </div>
             <form class="design-edit-page-add-comment-container">
                 <div class="desgin-edit-page-add-comment-title">Add Comment</div>
@@ -1099,23 +1179,23 @@
         </div>
         <div class="e-book-design-content-container">
             <div class="e-book-design-top-tab-container">
-                <button id="position-button" type="button" class="e-book-design-edit-button button hidden">
+                <button title="Edit Position" id="position-button" type="button" class="e-book-design-edit-button button hidden">
                     <span class="e-book-design-text">Position</span>
                 </button>
                 <div class="e-book-design-button-separator hidden"></div>
-                <button id="border-button" type="button" class="e-book-design-edit-button button hidden">
+                <button title="Edit Border" id="border-button" type="button" class="e-book-design-edit-button button hidden">
                     <span class="e-book-design-text">Border</span>
                 </button>
                 <div class="e-book-design-button-separator hidden"></div>
-                <button id="style-button" type="button" class="e-book-design-edit-button button hidden">
-                    <span class="e-book-design-text">Style</span>
+                <button title="Edit Text" id="style-button" type="button" class="e-book-design-edit-button button hidden">
+                    <span class="e-book-design-text">Text</span>
                 </button>
                 <div class="e-book-design-button-separator hidden"></div>
-                <button id="chart-button" type="button" class="e-book-design-edit-button button hidden">
+                <button title="Edit Chart" id="chart-button" type="button" class="e-book-design-edit-button button hidden">
                     <span class="e-book-design-text">Chart</span>
                 </button>
                 <div class="e-book-design-button-separator hidden"></div>
-                <button type="button"
+                <button title="Delete Element" type="button"
                         id="element-delete-button"
                         class="e-book-design-top-function-icon-button design-page-button hidden">
                     <svg viewBox="0 0 1024 1024"
@@ -1123,7 +1203,7 @@
                         <path d="M662 170h148v86h-596v-86h148l44-42h212zM342 384v426h340v-426h-340zM256 810v-512h512v512q0 34-26 60t-60 26h-340q-34 0-60-26t-26-60z"></path>
                     </svg>
                 </button>
-                <button type="button"
+                <button title="Toggle Element Lock" type="button"
                     id="element-lock-button"
                         class="e-book-design-top-function-icon-button design-page-button hidden">
                     <svg viewBox="0 0 1024 1024"
@@ -1134,15 +1214,15 @@
                         <path d="M768 854v-428h-512v428h512zM768 342q34 0 60 25t26 59v428q0 34-26 59t-60 25h-512q-34 0-60-25t-26-59v-428q0-34 26-59t60-25h388v-86q0-54-39-93t-93-39-93 39-39 93h-82q0-88 63-151t151-63 151 63 63 151v86h42zM512 726q-34 0-60-26t-26-60 26-60 60-26 60 26 26 60-26 60-60 26z"></path>
                     </svg>
                 </button>
-                <button type="button"
+                <button title="Copy" type="button"
                         id="element-copy-button"
                         class="e-book-design-top-function-icon-button design-page-button hidden">
-                    <svg class="e-book-design-top-function-icon" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 115.77 122.88" style="enable-background:new 0 0 115.77 122.88" xml:space="preserve"><style type="text/css">                                                                                                                                                                                                                                                                }</style><g><path class="st0" d="M89.62,13.96v7.73h12.19h0.01v0.02c3.85,0.01,7.34,1.57,9.86,4.1c2.5,2.51,4.06,5.98,4.07,9.82h0.02v0.02 v73.27v0.01h-0.02c-0.01,3.84-1.57,7.33-4.1,9.86c-2.51,2.5-5.98,4.06-9.82,4.07v0.02h-0.02h-61.7H40.1v-0.02 c-3.84-0.01-7.34-1.57-9.86-4.1c-2.5-2.51-4.06-5.98-4.07-9.82h-0.02v-0.02V92.51H13.96h-0.01v-0.02c-3.84-0.01-7.34-1.57-9.86-4.1 c-2.5-2.51-4.06-5.98-4.07-9.82H0v-0.02V13.96v-0.01h0.02c0.01-3.85,1.58-7.34,4.1-9.86c2.51-2.5,5.98-4.06,9.82-4.07V0h0.02h61.7 h0.01v0.02c3.85,0.01,7.34,1.57,9.86,4.1c2.5,2.51,4.06,5.98,4.07,9.82h0.02V13.96L89.62,13.96z M79.04,21.69v-7.73v-0.02h0.02 c0-0.91-0.39-1.75-1.01-2.37c-0.61-0.61-1.46-1-2.37-1v0.02h-0.01h-61.7h-0.02v-0.02c-0.91,0-1.75,0.39-2.37,1.01 c-0.61,0.61-1,1.46-1,2.37h0.02v0.01v64.59v0.02h-0.02c0,0.91,0.39,1.75,1.01,2.37c0.61,0.61,1.46,1,2.37,1v-0.02h0.01h12.19V35.65 v-0.01h0.02c0.01-3.85,1.58-7.34,4.1-9.86c2.51-2.5,5.98-4.06,9.82-4.07v-0.02h0.02H79.04L79.04,21.69z M105.18,108.92V35.65v-0.02 h0.02c0-0.91-0.39-1.75-1.01-2.37c-0.61-0.61-1.46-1-2.37-1v0.02h-0.01h-61.7h-0.02v-0.02c-0.91,0-1.75,0.39-2.37,1.01 c-0.61,0.61-1,1.46-1,2.37h0.02v0.01v73.27v0.02h-0.02c0,0.91,0.39,1.75,1.01,2.37c0.61,0.61,1.46,1,2.37,1v-0.02h0.01h61.7h0.02 v0.02c0.91,0,1.75-0.39,2.37-1.01c0.61-0.61,1-1.46,1-2.37h-0.02V108.92L105.18,108.92z" /></g></svg>
+                    <svg class="e-book-design-top-function-icon" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 115.77 122.88" style="enable-background:new 0 0 115.77 122.88;width:20px;height:20px" xml:space="preserve"><style type="text/css">                                                                                                                                                                                                                                                                }</style><g><path class="st0" d="M89.62,13.96v7.73h12.19h0.01v0.02c3.85,0.01,7.34,1.57,9.86,4.1c2.5,2.51,4.06,5.98,4.07,9.82h0.02v0.02 v73.27v0.01h-0.02c-0.01,3.84-1.57,7.33-4.1,9.86c-2.51,2.5-5.98,4.06-9.82,4.07v0.02h-0.02h-61.7H40.1v-0.02 c-3.84-0.01-7.34-1.57-9.86-4.1c-2.5-2.51-4.06-5.98-4.07-9.82h-0.02v-0.02V92.51H13.96h-0.01v-0.02c-3.84-0.01-7.34-1.57-9.86-4.1 c-2.5-2.51-4.06-5.98-4.07-9.82H0v-0.02V13.96v-0.01h0.02c0.01-3.85,1.58-7.34,4.1-9.86c2.51-2.5,5.98-4.06,9.82-4.07V0h0.02h61.7 h0.01v0.02c3.85,0.01,7.34,1.57,9.86,4.1c2.5,2.51,4.06,5.98,4.07,9.82h0.02V13.96L89.62,13.96z M79.04,21.69v-7.73v-0.02h0.02 c0-0.91-0.39-1.75-1.01-2.37c-0.61-0.61-1.46-1-2.37-1v0.02h-0.01h-61.7h-0.02v-0.02c-0.91,0-1.75,0.39-2.37,1.01 c-0.61,0.61-1,1.46-1,2.37h0.02v0.01v64.59v0.02h-0.02c0,0.91,0.39,1.75,1.01,2.37c0.61,0.61,1.46,1,2.37,1v-0.02h0.01h12.19V35.65 v-0.01h0.02c0.01-3.85,1.58-7.34,4.1-9.86c2.51-2.5,5.98-4.06,9.82-4.07v-0.02h0.02H79.04L79.04,21.69z M105.18,108.92V35.65v-0.02 h0.02c0-0.91-0.39-1.75-1.01-2.37c-0.61-0.61-1.46-1-2.37-1v0.02h-0.01h-61.7h-0.02v-0.02c-0.91,0-1.75,0.39-2.37,1.01 c-0.61,0.61-1,1.46-1,2.37h0.02v0.01v73.27v0.02h-0.02c0,0.91,0.39,1.75,1.01,2.37c0.61,0.61,1.46,1,2.37,1v-0.02h0.01h61.7h0.02 v0.02c0.91,0,1.75-0.39,2.37-1.01c0.61-0.61,1-1.46,1-2.37h-0.02V108.92L105.18,108.92z" /></g></svg>
                 </button>
-                <button type="button"
+                <button title="Paste" type="button"
                         id="element-paste-button"
                         class="e-book-design-top-function-icon-button design-page-button hidden">
-                    <svg fill="#000000" class="e-book-design-top-function-icon" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 62.094 62.094" xml:space="preserve" stroke="#000000" stroke-width="2.5">
+                    <svg style="height:20px;width:20px;" fill="#000000" class="e-book-design-top-function-icon" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 62.094 62.094" xml:space="preserve" stroke="#000000" stroke-width="2.7">
 
 <g id="SVGRepo_bgCarrier" stroke-width="0" />
 
@@ -1165,7 +1245,7 @@
                                     <span class="e-book-design-chapter-number-text">
                                         Chapter @chapter.chapterNo
                                     </span>
-                                    <input value="@chapter.chapterName" type="text"
+                                    <input title="Change Chapter Title" value="@chapter.chapterName" type="text"
                                            data-chapter-itemid="@chapter.chapterID"
                                            placeholder="Chapter Name"
                                            class="chapter-name-input e-book-design-chapter-title-input input" />
@@ -1185,21 +1265,21 @@
                                         </div>
                                         <div class="design-page-content-right-container">
                                             @* up button *@
-                                            <button type="button"
+                                            <button type="button" title="Move Page Upward"
                                                     class="design-page-content-middle-button design-page-button page-up-button">
                                                 <svg viewBox="0 0 1024 1024" class="design-page-content-icon">
                                                     <path d="M798.165 609.835l-256-256c-16.683-16.683-43.691-16.683-60.331 0l-256 256c-16.683 16.683-16.683 43.691 0 60.331s43.691 16.683 60.331 0l225.835-225.835 225.835 225.835c16.683 16.683 43.691 16.683 60.331 0s16.683-43.691 0-60.331z"></path>
                                                 </svg>
                                             </button>
                                             @* down button *@
-                                            <button type="button"
+                                            <button type="button" title="Move Page Downward"
                                                     class="design-page-content-middle-button design-page-button page-down-button">
                                                 <svg viewBox="0 0 1024 1024" class="design-page-content-icon">
                                                     <path d="M225.835 414.165l256 256c16.683 16.683 43.691 16.683 60.331 0l256-256c16.683-16.683 16.683-43.691 0-60.331s-43.691-16.683-60.331 0l-225.835 225.835-225.835-225.835c-16.683-16.683-43.691-16.683-60.331 0s-16.683 43.691 0 60.331z"></path>
                                                 </svg>
                                             </button>
                                             @* lock button *@
-                                            <button type="button"
+                                            <button type="button"  title="Toggle Page Lock"
                                                     class="design-page-content-middle-button design-page-button page-lock-toggle-button">
                                                 <svg viewBox="0 0 1024 1024" class="design-page-content-icon page-lock-icon @(bookPage.pageLock ? "hidden" : "") ">
                                                     <path d="M768 854v-428h-512v428h512zM380 256v86h264v-86q0-54-39-93t-93-39-93 39-39 93zM768 342q34 0 60 25t26 59v428q0 34-26 59t-60 25h-512q-34 0-60-25t-26-59v-428q0-34 26-59t60-25h42v-86q0-88 63-151t151-63 151 63 63 151v86h42zM512 726q-34 0-60-26t-26-60 26-60 60-26 60 26 26 60-26 60-60 26z"></path>
@@ -1209,7 +1289,7 @@
                                                 </svg>
                                             </button>
                                             @* delete button *@
-                                            <button type="button"
+                                            <button type="button" title="Delete Page"
                                                     class="design-page-content-middle-button design-page-button page-delete-button">
                                                 <svg viewBox="0 0 1024 1024" class="design-page-content-icon">
                                                     <path d="M128 320v640c0 35.2 28.8 64 64 64h576c35.2 0 64-28.8 64-64v-640h-704zM320 896h-64v-448h64v448zM448 896h-64v-448h64v448zM576 896h-64v-448h64v448zM704 896h-64v-448h64v448z"></path>
@@ -1217,7 +1297,7 @@
                                                 </svg>
                                             </button>
                                             @* add button *@
-                                            <button type="button" class="design-page-button page-add-button">
+                                            <button title="Add Page" type="button" class="design-page-button page-add-button">
                                                 <svg viewBox="0 0 1024 1024" class="design-page-content-icon">
                                                     <path d="M810 470v-86h-170v-170h-86v170h-170v86h170v170h86v-170h170zM854 86q34 0 59 25t25 59v512q0 34-25 60t-59 26h-512q-34 0-60-26t-26-60v-512q0-34 26-59t60-25h512zM170 256v598h598v84h-598q-34 0-59-25t-25-59v-598h84z"></path>
                                                 </svg>
@@ -1253,16 +1333,16 @@
             <div class="e-book-design-bottom-tab-container">
                 <div class="bottom-bar">
                     <span class="e-book-design-page-text">Chapter</span>
-                    <input id="scroll-chapter-number-input" type="text" value="1" maxlength="2"
+                    <input id="scroll-chapter-number-input" type="text" value="1" maxlength="2" title="Chapter Index"
                            class="e-book-design-page-input input" />
                     <span class="e-book-design-page-text">Page</span>
-                    <input id="scroll-page-number-input" type="text" value="1" maxlength="3"
+                    <input id="scroll-page-number-input" type="text" value="1" maxlength="3" title="Page Index"
                            class="e-book-design-page-input input" />
                 </div>
                 <div class="e-book-design-page-separator"></div>
                 <div class="bottom-bar">
-                    <input id="zoom-scale-input" type="range" min="10" max="400" value="100" class="e-book-design-scale-input input" />
-                    <button id="zoom-expandable-button" type="button" class="e-book-design-scale-button button" data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top">
+                    <input titl="Zoom Scale" id="zoom-scale-input" type="range" min="10" max="400" value="100" class="e-book-design-scale-input input" />
+                    <button id="zoom-expandable-button" type="button" class="e-book-design-scale-button button" data-bs-toggle="tooltip" data-bs-placement="top" title="Zoom Option">
                         <span id="zoom-value" class="e-book-design-percentage-text">
                             100%
                         </span>
@@ -1282,12 +1362,12 @@
             </div>
         </div>
     </div>
-    <button type="button" class="e-book-design-add-button button">
+@*     <button type="button" class="e-book-design-add-button button">
         <svg viewBox="0 0 1024 1024" class="e-book-design-add-icon">
             <path d="M810 554h-256v256h-84v-256h-256v-84h256v-256h84v256h256v84z"></path>
         </svg>
-    </button>
-    <button id="comment-fix-float-button" type="button" class="e-book-design-comment-button button comment-button">
+    </button> *@
+    <button title="Toggle Comment List" id="comment-fix-float-button" type="button" class="e-book-design-comment-button button comment-button">
 @*         <svg viewBox="0 0 1024 1024" class="e-book-design-add-icon">
             <path d="M810 554h-256v256h-84v-256h-256v-84h256v-256h84v256h256v84z"></path>
         </svg> *@
@@ -2043,7 +2123,9 @@
                 }
             })
         })
-
+        $(".black-background-add-edit-container").click(function(){
+            $(this).closest(".design-edit-page-container,.design-add-page-container").addClass("hidden");
+        })
         // Add hover effect only to .design-page-content-page-content when not hovering over .element
         $(document).on({
             mouseover: function (event) {
@@ -2575,6 +2657,15 @@
 
                 });
             })
+            $("#edit-border-color-picker").on("input", async function () {
+                $(".selected").css("border-color", $(this).val());
+                $("#edit-border-color-background").css("background-color", $(this).val());
+            })
+            $("#edit-border .design-edit-border-solid-color-content").click(function(){
+                $(".selected").css("border-color", $(this).css("background-color"));
+                $("#edit-border-color-background").css("background-color", $(this).css("background-color"));
+            })
+
             $("#add-background-color-picker").on("input", async function () {
                 var chapter = parseInt($("#scroll-chapter-number-input").val());
                 var page = parseInt($("#scroll-page-number-input").val());
@@ -4104,7 +4195,7 @@
         });
         var pageWidth = @Model.curBook.width;
         var pageHeight = @Model.curBook.height;
-        $("#print-button, .header-design-file-toggle-print").click(function () {
+        $("#print-button, .header-design-print-icon, .header-design-file-toggle-print").click(function () {
             // Get the content of the specified div
             var chapterList = $(".e-book-design-chapter-container");
             var pageWidth = '@Model.curBook.width';
@@ -4417,6 +4508,11 @@
                 $(this).val(sanitizedValue);
             }
         });
+        $(".edit-comment-close-button").click(function(){
+            $("#edit-comment").addClass("hidden");
+            $("#header-design-file-toggle-comment").removeClass("tab-selected");
+            $("#comment-fix-float-button").removeClass("tab-selected");
+        })
         $("#x-position").focus(function () {
             $(this).on("change", function () {
                  $(".selected").css("left",$(this).val() +"px");
@@ -4989,6 +5085,9 @@
                     break;
 
             }
+
+            var borderColor = container.css("border-color");
+            $("#edit-border-color-background").css("background-color", borderColor);
         }
 
         // Function to extract numeric value from a CSS property value
@@ -5020,11 +5119,11 @@
                 container.addClass("moveable");
                 if(CRUDAccess){
                     
-                    container.append('<div class="rotation-handle">&circlearrowright;</div>'
-                        + "<div class='top left pointer'></div>"
-                        + "<div class='top right pointer'></div>"
-                        + "<div class='bottom left pointer'></div>"
-                        + "<div class='bottom right pointer'></div>");
+                    container.append('<div title="Rotate Element" class="rotation-handle">&circlearrowright;</div>'
+                        + "<div title='Resize Element' class='top left pointer'></div>"
+                        + "<div title='Resize Element' class='top right pointer'></div>"
+                        + "<div title='Resize Element' class='bottom left pointer'></div>"
+                        + "<div title='Resize Element' class='bottom right pointer'></div>");
                 }
                 $("#element-lock-button").find("svg:first-child").addClass("hidden");
                 $("#element-lock-button").find("svg:nth-child(2)").removeClass("hidden");
@@ -5121,7 +5220,7 @@
                                 $("#add-collaboration").addClass("hidden");
 
             }
-            else if(container.hasClass("header-design-collaborate-container")){
+            else if (container.hasClass("header-design-collaborate-container") || container.hasClass("header-design-collaborate-icon")) {
                                 $("#position-button").addClass("hidden");
                 $("#position-button").next("div").addClass("hidden");
                 $("#position-button").removeClass("tab-selected");
