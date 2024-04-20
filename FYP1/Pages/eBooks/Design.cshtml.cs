@@ -194,9 +194,11 @@ namespace FYP1.Pages.eBooks
                                 </button>
                             </div>
                         </div>
+                        <div class=""design-page-content-page-content-header"">CHAPTER XXX Title (Uneditable)</div>
                         <div style='height: {height-40}mm' class=""design-page-content-page-content"">
                             <!-- Additional content goes here -->
                         </div>
+                        <div class=""design-page-content-page-content-footer"">PAGE NUMBER (Uneditable)</div>
                     </div>";
         }
         public static string GenerateChapterTemplate(Chapter chapter, int bookPageId, float height)
@@ -441,7 +443,7 @@ namespace FYP1.Pages.eBooks
                     }
                 }
             }
-            return new JsonResult(new { status = 0, message = "OCR function complete", result = "hooray" });
+            return new JsonResult(new { status = 0, message = "OCR function complete", result = "No photo has been uploaded" });
         }
         public async Task<IActionResult> OnPostElementToggleLock(int elementID)
         {

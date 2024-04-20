@@ -10,6 +10,7 @@
         color: black;
     }
 </style>
+@Html.AntiForgeryToken()
 <div style="display:flex;flex-direction:column;min-height:100vh;width:100%;">
     @Html.Partial("_HeaderLogin")
     <div class="profile-page-container">
@@ -420,15 +421,20 @@ else
                     showError($("#birthday-day"));
                     showError($("#birthday-year"));
                     $("#birthday-year").next("div").find("span").text(errorText);
+                    $("#birthday-day").next("div").find("span").text(errorText);
+                    $("#birthday-month").next("div").find("span").text(errorText);
                     validInfo = false;
                 }
                 else if (birthday < maxDate || birthday > minDate) {
                     // Year is invalid
-                    errorText = "Birthday must be between 18 and 100 years ago";
+                    errorText = "Birthday Between 18 and 100 years old";
                     showError($("#birthday-month"));
                     showError($("#birthday-day"));
                     showError($("#birthday-year"));
                     $("#birthday-year").next("div").find("span").text(errorText);
+                    $("#birthday-day").next("div").find("span").text(errorText);
+                    $("#birthday-month").next("div").find("span").text(errorText);
+
                     validInfo = false;
                 }
 
@@ -439,6 +445,9 @@ else
                     showError($("#birthday-day"));
                     showError($("#birthday-year"));
                     $("#birthday-year").next("div").find("span").text(errorText);
+                    $("#birthday-day").next("div").find("span").text(errorText);
+                    $("#birthday-month").next("div").find("span").text(errorText);
+
                     validInfo = false;
                 }
                 else {

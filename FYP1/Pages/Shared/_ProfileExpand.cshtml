@@ -30,8 +30,8 @@
             error: function (xhr, status, error) {
                 // Handle error
                 alert('Logout failed:'+ error.toString()+" .Please try again.");
-                location.reload();
-                console.log(error);
+                //location.reload();
+                console.log(xhr, status, error);
             }
         });
     })

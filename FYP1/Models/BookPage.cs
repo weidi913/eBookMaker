@@ -15,7 +15,7 @@ namespace FYP1.Models
 
         [Required]
         public int chapterID { get; set; }
-        public string backgroundStyle { get; set; }
+        public string backgroundStyle { get; set; } = "";
 
         public Chapter? Chapter { get; set; }
 

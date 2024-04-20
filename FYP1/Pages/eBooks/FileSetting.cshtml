@@ -9,6 +9,8 @@
         color: black;
     }
 </style>
+@Html.AntiForgeryToken()
+
 <div class="file-setting-caution-box">
     <form asp-page-handler="BookDelete" method="post" class="file-setting-caution-checkbox">
         <input hidden  asp-for="@Model.bookID" value="@Model.curBook.bookID"/>

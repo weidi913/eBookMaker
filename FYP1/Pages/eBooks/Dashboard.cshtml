@@ -30,6 +30,7 @@
         cursor:pointer;
     }
 </style>
+@Html.AntiForgeryToken()
 <div id="loading-screen" class="loading-screen-container"><div class="loader-small"></div><br/>Loading Screen</div>
 <div class="book-delete-notice">The book has been deleted</div>
 <div class="e-book-dashboard-container">
@@ -579,7 +580,7 @@
                                     <svg viewBox="0 0 1024 1024" class="register-user-error-icon">
                                         <path d="M512 854q140 0 241-101t101-241-101-241-241-101-241 101-101 241 101 241 241 101zM512 86q176 0 301 125t125 301-125 301-301 125-301-125-125-301 125-301 301-125zM470 298h84v256h-84v-256zM470 640h84v86h-84v-86z"></path>
                                     </svg>
-                                    <span class="register-user-error-text">Select the type</span>
+                                    <span class="register-user-error-text">Enter title (less than 200 characters)</span>
                                 </div>
                             </div>
                         </div>
@@ -602,7 +603,7 @@
                                     <svg viewBox="0 0 1024 1024" class="register-user-error-icon">
                                         <path d="M512 854q140 0 241-101t101-241-101-241-241-101-241 101-101 241 101 241 241 101zM512 86q176 0 301 125t125 301-125 301-301 125-301-125-125-301 125-301 301-125zM470 298h84v256h-84v-256zM470 640h84v86h-84v-86z"></path>
                                     </svg>
-                                    <span class="register-user-error-text">Enter title (less than 200 characters)</span>
+                                    <span class="register-user-error-text">Select the type</span>
                                 </div>
                             </div>
 
@@ -691,6 +692,7 @@
     $(".sidebar-guest-container").parents("div").first().remove();
     $(".header-login-sidebar-trigger-button").css("display","flex");
     $("#create-button").find(".header-login-text").text("Create");
+
     $(document).ready(function () {
 
         $(".paginated-list-container .paginated-previous-page").click(function(){

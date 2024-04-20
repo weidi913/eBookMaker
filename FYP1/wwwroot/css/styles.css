@@ -4645,6 +4645,7 @@ ul.nav-link-dropdown-list {
 .design-add-page-white-element-button:hover {
   background-color: #E1E4E7;
 }
+.design-edit-shape-solid-color-grid-container,
 .design-edit-border-solid-color-grid-container,
 .design-add-page-solid-color-grid-container{
   display:grid;
@@ -4653,6 +4654,7 @@ ul.nav-link-dropdown-list {
   grid-template-columns: repeat(6, 1fr); 
   grid-gap: 8px; 
 }
+.design-edit-shape-solid-color-content,
 .design-edit-border-solid-color-content,
 .design-add-page-solid-color-content{
     height:auto;
@@ -4848,7 +4850,9 @@ ul.nav-link-dropdown-list {
   display:grid; 
   grid-template-columns: repeat(6, 1fr); 
   grid-gap: 12px; 
+  width:218px;
 }
+.design-edit-shape-color-container-color-picker,
 .design-edit-border-color-container-color-picker,
 .design-add-page-color-container-color-picker,
 .design-edit-page-color-container-color-picker{

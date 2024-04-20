@@ -1012,16 +1012,63 @@
                 </button>
             </div>
         </div>
- *@        <div id="edit-style" class="hidden design-edit-page-container">
-            <div class="black-background-add-edit-container"></div>
-
+ *@
+        <div id="edit-shape" class="hidden design-edit-page-container">
             <div class="design-edit-page-heading-container">
                 <span class="design-edit-page-heading-text">
-                    <span>Edit Text</span>
+                    <span>Edit Shape</span>
                 </span>
             </div>
-            <div id="toolbar" class="quil-editor-toolbar-container"></div>
+
+            <span class="design-edit-page-section-header"><span>Shape Color</span></span>
+            <button style="padding:20px" id="edit-shape-color-background" type="button" class="design-edit-page-colour-picker-button button">
+            </button>
+            <div class="design-edit-shape-solid-color-grid-container">
+                <div class="design-edit-border-color-container-color-picker">
+                    <input id="edit-shape-color-picker" type="color">
+                    <div class="design-edit-page-color-container-plus-icon">
+                        <svg viewBox="0 0 1024 1024" style="width: 100%; scale: 0.6; height: 100%; align-self: center;">
+                            <path d="M810 554h-256v256h-84v-256h-256v-84h256v-256h84v256h256v84z"></path>
+                        </svg>
+                    </div>
+                </div>
+                <div class="design-edit-shape-solid-color-content" style="background-image: url('../images/transparent.jpg'); background-color: #00000000;" data-background-info="transparent"></div>
+                <div class="design-edit-shape-solid-color-content" style="background-color: #545454;" data-background-info="dark gray  "></div>
+                <div class="design-edit-shape-solid-color-content" style="background-color: #737373;" data-background-info="gray  "></div>
+                <div class="design-edit-shape-solid-color-content" style="background-color: #a6a6a6;" data-background-info=" gray "></div>
+                <div class="design-edit-shape-solid-color-content" style="background-color: #d9d9d9;" data-background-info=" light gray "></div>
+                <div class="design-edit-shape-solid-color-content" style="background-color: #ff3131;" data-background-info=" bright red "></div>
+                <div class="design-edit-shape-solid-color-content" style="background-color: #ff5757;" data-background-info="coral red  "></div>
+                <div class="design-edit-shape-solid-color-content" style="background-color: #ff66c4;" data-background-info=" pink "></div>
+                <div class="design-edit-shape-solid-color-content" style="background-color: #cb6ce6;" data-background-info=" magneta "></div>
+                <div class="design-edit-shape-solid-color-content" style="background-color: #8c52ff;" data-background-info=" purple "></div>
+                <div class="design-edit-shape-solid-color-content" style="background-color: #5e17eb;" data-background-info=" violet "></div>
+                <div class="design-edit-shape-solid-color-content" style="background-color: #0097b2;" data-background-info=" dark turquoise "></div>
+                <div class="design-edit-shape-solid-color-content" style="background-color: #0cc0df;" data-background-info=" aqua blue "></div>
+                <div class="design-edit-shape-solid-color-content" style="background-color: #5ce1e6;" data-background-info=" turquoise blue "></div>
+                <div class="design-edit-shape-solid-color-content" style="background-color: #38b6ff;" data-background-info="  light blue "></div>
+                <div class="design-edit-shape-solid-color-content" style="background-color: #5271ff;" data-background-info=" royal blue "></div>
+                <div class="design-edit-shape-solid-color-content" style="background-color: #004aad;" data-background-info=" cobalt blue "></div>
+                <div class="design-edit-shape-solid-color-content" style="background-color: #00bf63;" data-background-info=" green "></div>
+                <div class="design-edit-shape-solid-color-content" style="background-color: #7ed957;" data-background-info=" grass green "></div>
+                <div class="design-edit-shape-solid-color-content" style="background-color: #c1ff72;" data-background-info=" lime "></div>
+                <div class="design-edit-shape-solid-color-content" style="background-color: #ffde59;" data-background-info=" yellow "></div>
+                <div class="design-edit-shape-solid-color-content" style="background-color: #ffbd59;" data-background-info=" peach "></div>
+                <div class="design-edit-shape-solid-color-content" style="background-color: #ff914d;" data-background-info=" orange "></div>
+            </div>
+
         </div>
+
+         <div id="edit-style" class="hidden design-edit-page-container">
+                    <div class="black-background-add-edit-container"></div>
+
+                    <div class="design-edit-page-heading-container">
+                        <span class="design-edit-page-heading-text">
+                            <span>Edit Text</span>
+                        </span>
+                    </div>
+                    <div id="toolbar" class="quil-editor-toolbar-container"></div>
+                </div>
         <div id="edit-chart" class="hidden design-edit-page-container">
             <div class="black-background-add-edit-container"></div>
 
@@ -1193,6 +1240,10 @@
                 <div class="e-book-design-button-separator hidden"></div>
                 <button title="Edit Chart" id="chart-button" type="button" class="e-book-design-edit-button button hidden">
                     <span class="e-book-design-text">Chart</span>
+                </button>
+                <div class="e-book-design-button-separator hidden"></div>
+                <button title="Edit Shape" id="shape-button" type="button" class="e-book-design-edit-button button hidden">
+                    <span class="e-book-design-text">Shape</span>
                 </button>
                 <div class="e-book-design-button-separator hidden"></div>
                 <button title="Delete Element" type="button"
@@ -1454,7 +1505,12 @@
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> 
 <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
-<script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+@* <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script> *@
+
+<script src="https://cdn.jsdelivr.net/npm/quill@@2.0.0/dist/quill.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.css" integrity="sha384-wcIxkf4k558AjM3Yz3BBFQUbk/zgIYC2R0QpeeYb+TwlBVMrlgLqwRjRtGZiK7ww" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.js" integrity="sha384-hIoBPJpTUs74ddyc4bFZSM1TVlQDA60VBbJS0oA934VSz82sBx1X7kSx2ATBDIyd" crossorigin="anonymous"></script>
+
 <script>
 
     $("#more-option").click(function () {
@@ -1959,9 +2015,18 @@
             $(this).val(chapterNumber);
 
             // Fetch corresponding page details and update page number input accordingly
+
             updatePageNumber(chapterNumber);
+            
         });
         function updatePageNumber(chapterNumber) {
+            if(chapterNumber === 0){
+                $("#scroll-chapter-number-input").val(0);
+                $("#scroll-page-number-input").val(0);
+                lockAddTabList();
+                return;
+            }
+            unlockAddTabList();
             var chapterContainer = $(".e-book-design-chapter-container").eq(chapterNumber - 1);
             var maxPage = chapterContainer.find(".design-page-content-container").length;
             var minPage = 1; // Minimum page number
@@ -2657,6 +2722,14 @@
 
                 });
             })
+            $("#edit-shape-color-picker").on("input", async function () {
+                $(".selected div.clip-path").css("background-color", $(this).val());
+                $("#edit-shape-color-background").css("background-color", $(this).val());
+            })
+            $("#edit-shape .design-edit-shape-solid-color-content").click(function () {
+                $(".selected div.clip-path").css("background-color", $(this).css("background-color"));
+                $("#edit-shape-color-background").css("background-color", $(this).css("background-color"));
+            })
             $("#edit-border-color-picker").on("input", async function () {
                 $(".selected").css("border-color", $(this).val());
                 $("#edit-border-color-background").css("background-color", $(this).val());
@@ -2732,7 +2805,13 @@
             }
 
             $(document).on("input", ".design-edit-page-text-color-picker-input", function () {
-                curActiveQuil.format("color", $(this).val());
+                //curActiveQuil.format("color", $(this).val());
+
+                var latex = MQ.StaticMath(document.createElement('span'));
+                latex.latex(mathInput);
+                quill.editor.insertEmbed(quill.getSelection().index, 'formula', latex.el.outerHTML);
+
+
             })
             $(document).on("click", ".design-edit-page-chart-dataset-delete-icon", function () {
                 var datasetIndex = $(this).prev().attr("data-chart-datasets");
@@ -3339,6 +3418,9 @@
                 var pageID = pageContent.attr("data-page-id");
                 var pageContainer = pageContent.find(".design-page-content-page-content");
                 var type = $(this).attr("id");
+                if(chapter === 0){
+                    return;
+                }
                 await addShapeElementFunc(pageID, type, pageContainer);
 
 
@@ -3433,7 +3515,7 @@
                     }
                 } catch (error) {
                     alert("Error add book chapter:", error);
-                    locatin.reload();
+                    location.reload();
                 }
             })
             $("#add-chapter-button").click(async function () {
@@ -4083,7 +4165,11 @@
             });
 
         }
-
+        if ($(".e-book-design-chapter-container").length == 0) {
+            $("#scroll-chapter-number-input").val(0);
+            $("#scroll-page-number-input").val(0);
+            lockAddTabList();
+        }
 
         $(document).on("click", "canvas", function (event) {
             $(this).closest("div.element").click();
@@ -4220,6 +4306,9 @@
             printWindow.document.write('.content {background-color:white;overflow:hidden;page-break-after: always; position:relative;width:100%;height:' + (pageHeight - 40) + 'mm}'); // CSS rule to force page break after each page
             printWindow.document.write('.footer {font-size:10px;color:black;background-color:white;overflow:hidden;page-break-after: always; display: flex; justify-content: center; align-items: center;position:relative;width:100%;height:20mm;text-align:center}'); // CSS rule to force page break after each page
             printWindow.document.write('.ql-editor {position:relative;box-sizing:border-box;line-height: 1.42;height: 100%;outline: none;padding: 12px 15px;tab-size: 4;-moz-tab-size: 4;text-align: left;white-space: pre-wrap;word-wrap: break-word;font-family: Helvetica, Arial, sans-serif; font-size: 13px;}'); // CSS rule to force page break after each page
+            printWindow.document.write('span.katex-html {display:none;}'); // CSS rule to force page break after each page
+
+           
 
             printWindow.document.write('</style>');
             printWindow.document.write('</head><body>');
@@ -4625,6 +4714,9 @@
                     case "chart-button":
                         openTab = "edit-chart";
                         break;
+                    case "shape-button":
+                        openTab = "edit-shape";
+                        break;
                     case "header-design-file-toggle-comment":
                     case "comment-fix-float-button":
                         openTab = "edit-comment";
@@ -4690,6 +4782,9 @@
                 case "chart-button":
                     openTab = "edit-chart";
                     break;
+                case "shape-button":
+                    openTab = "edit-shape";
+                    break;
                 case "header-design-file-toggle-comment":
                 case "comment-fix-float-button":
                     openTab = "edit-comment";
@@ -4726,8 +4821,10 @@
                     case "edit-chart":
                         retrieveChartValue($(".selected"));
                         break;
+                    case "edit-shape":
+                        $("#edit-shape-color-background").css("background-color", $(".selected div.clip-path").css("background-color"));
+                        break;
                 }
-                
                 $("#" + openTab).removeClass("hidden");
             }
             else{
@@ -4813,6 +4910,9 @@
                     }
                     else if (id === "edit-chart") {
                         retrieveChartValue($(event.target));
+                    }
+                    else if (id === "edit-shape") {
+                        $("#edit-shape-color-background").css("background-color", $(".selected div.clip-path").css("background-color"));
                     }
                     else if (prevSelectedElement.hasClass("chart")) {
                         content = "";
@@ -5101,6 +5201,7 @@
                 $("#edit-border").addClass("tab-lock");
                 $("#edit-style").addClass("tab-lock");
                 $("#edit-chart").addClass("tab-lock");
+                $("#edit-shape").addClass("tab-lock");
 
                 $("#element-lock-button").find("svg:first-child").removeClass("hidden");
                 $("#element-lock-button").find("svg:nth-child(2)").addClass("hidden");
@@ -5115,6 +5216,8 @@
                 $("#edit-border").removeClass("tab-lock");
                 $("#edit-style").removeClass("tab-lock");
                 $("#edit-chart").removeClass("tab-lock");
+                $("#edit-shape").removeClass("tab-lock");
+
 
                 container.addClass("moveable");
                 if(CRUDAccess){
@@ -5140,6 +5243,8 @@
                 $("#element-lock-button").removeClass("hidden");
                 $("#chart-button").addClass("hidden");
                 $("#chart-button").next("div").addClass("hidden");
+                $("#shape-button").addClass("hidden");
+                $("#shape-button").next("div").addClass("hidden");
                 $("#edit-chart").addClass("hidden");
 ;
                 $("#style-button").next("div").removeClass("hidden");
@@ -5160,9 +5265,12 @@
                 $("#element-lock-button").removeClass("hidden");
                 $("#chart-button").addClass("hidden");
                 $("#chart-button").next("div").addClass("hidden");
+                $("#shape-button").addClass("hidden");
+                $("#shape-button").next("div").addClass("hidden");
                 $("#edit-chart").addClass("hidden");
 
                 $("#edit-style").addClass("hidden");
+
                 $("#style-button").next("div").addClass("hidden");
                 $("#style-button").removeClass("tab-selected");
                 $("#style-button").addClass("hidden");
@@ -5185,7 +5293,10 @@
                 $("#element-delete-button").removeClass("hidden");
                 $("#element-lock-button").removeClass("hidden");
                 $("#chart-button").addClass("hidden");
+                $("#chart-button").next("div").addClass("hidden");
                 $("#edit-chart").addClass("hidden");
+                $("#shape-button").removeClass("hidden");
+                $("#shape-button").next("div").removeClass("hidden");
 
                 $("#style-button").next("div").removeClass("hidden");
                 $("#style-button").removeClass("hidden");
@@ -5208,8 +5319,12 @@
 
                 $("#chart-button").removeClass("hidden");
                 $("#chart-button").next("div").removeClass("hidden");
+                $("#shape-button").addClass("hidden");
+                $("#shape-button").next("div").addClass("hidden");
 
                 $("#edit-style").addClass("hidden");
+                //$("#edit-style").next("div").removeClass("hidden");
+
                 $("#style-button").next("div").addClass("hidden");
                 $("#style-button").removeClass("tab-selected");
                 $("#style-button").addClass("hidden");
@@ -5236,6 +5351,8 @@
 
 
                 $("#edit-style").addClass("hidden");
+                //$("#edit-style").next("div").removeClass("hidden");
+
                 $("#style-button").next("div").addClass("hidden");
                 $("#style-button").removeClass("tab-selected");
                 $("#style-button").addClass("hidden");
@@ -5243,7 +5360,13 @@
                 $("#chart-button").addClass("hidden");
                 $("#chart-button").next("div").addClass("hidden");
                 $("#chart-button").removeClass("tab-selected");
+                $("#shape-button").addClass("hidden");
+                $("#shape-button").next("div").addClass("hidden");
+                $("#shape-button").removeClass("tab-selected");
+
                 $("#edit-chart").addClass("hidden");
+                $("#edit-shape").addClass("hidden");
+
       
                 $("#element-copy-button").addClass("hidden");
                 $("#element-paste-button").addClass("hidden");
@@ -5275,6 +5398,11 @@
                 $("#chart-button").next("div").addClass("hidden");
                 $("#chart-button").removeClass("tab-selected");
                 $("#edit-chart").addClass("hidden");
+                $("#shape-button").addClass("hidden");
+                $("#shape-button").next("div").addClass("hidden");
+                $("#shape-button").removeClass("tab-selected");
+                 $("#edit-shape").addClass("hidden");
+
       
                 $("#element-copy-button").addClass("hidden");
                 $("#element-paste-button").addClass("hidden");
@@ -5477,7 +5605,9 @@
         }
         // Move function
         function dragMoveListener(event) {
+            console.log("this is drag", drag);
             if (!drag) {
+
                 return;
                 console.log("end drag");
             }
@@ -5502,7 +5632,7 @@
                 event.stopPropagation();
                 event.stopImmediatePropagation();
 
-
+                console.log("X Y left right top bottom", mouseX, mouseY, parentRect.left, parentRect.right, parentRect.top, parentRect.bottom)
             }
             else {
                 // If the mouse cursor is still inside the parent container, continue with the drag operation
