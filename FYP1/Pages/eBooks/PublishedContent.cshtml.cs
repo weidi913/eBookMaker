@@ -43,8 +43,9 @@ namespace FYP1.Pages.eBooks
 
         public int bookID { get; set; }
         public eBook publishedBook { get; set; }
+        public bool backtoFileSetting { get; set; } = true;
 
-        public async Task<IActionResult> OnGetAsync(int id)
+        public async Task<IActionResult> OnGetAsync(int id, string? fileSetting)
         {
 
 
@@ -64,13 +65,18 @@ namespace FYP1.Pages.eBooks
             {
                 return NotFound(); // Book non-existent return error
             }
-            else if (ebook.bookStatus != "PUBLISHED" && isAuthorized)
+            else if (ebook.bookStatus != "PUBLISHED" && !isAuthorized)
             {
                 return NotFound(); // Book non-existent return error
             }
             else
             {
                 publishedBook = ebook;
+            }
+
+            if (String.IsNullOrEmpty(fileSetting))
+            {
+                backtoFileSetting = false;
             }
 
             return Page();

@@ -131,7 +131,7 @@ namespace FYP1.Pages.eBooks
         }
 
         public string[] bookTypes;
-        public async Task<IActionResult> OnGetAsync(int id, string? FileMessage, string? CollabMessage, string? VersionMessage)
+        public async Task<IActionResult> OnGetAsync(int id, string? FileMessage, string? CollabMessage, string? VersionMessage, string PublishMessage)
         {
             bookTypes = Enum.GetValues(typeof(BookType))
             .Cast<BookType>()
@@ -206,12 +206,14 @@ namespace FYP1.Pages.eBooks
             }
             // memberList now contains a list of users who have collaborated on the specified book
 
-            versionList = await _context.Version.Where(v => v.bookID == id).ToListAsync();
+            versionList = await _context.Version.Where(v => v.bookID == id)
+                .OrderByDescending(v=>v.versionDate)
+                .ToListAsync();
 
             this.FileMessage = FileMessage;
             this.CollabMessage = CollabMessage;
             this.VersionMessage = VersionMessage;
-
+            this.PublishMessage = PublishMessage;
 
             return Page();
         }
@@ -446,6 +448,11 @@ namespace FYP1.Pages.eBooks
                 return Forbid();
             }
 
+            if (book.authorID == user.UserName)
+            {
+                return RedirectToPage("./FileSetting", new { id = CollaborationInput.bookID, CollabMessage = "This is the author username." });
+            }
+
             if (!validUsername)
             {
                 return RedirectToPage("./FileSetting", new { id = CollaborationInput.bookID, CollabMessage = "Username had already added." });
@@ -544,7 +551,7 @@ namespace FYP1.Pages.eBooks
             _context.eBook.Remove(ebookDelete);
             await _context.SaveChangesAsync();
 
-            return RedirectToPage("./Dashboard", new { bookDeleted = "The book,"+ bookTitle + " has been succesfully deleted"});
+            return RedirectToPage("./Dashboard", new { bookDeleted="0",bookDeletedInfo = "The book,"+ bookTitle + " has been succesfully deleted"});
         }
         public async Task<IActionResult> OnPostVersionAsync()
         {

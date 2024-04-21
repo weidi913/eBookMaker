@@ -44,6 +44,8 @@
     <div class="profile-page-container">
         <div class="profile-page-profile-container file-welcome">
             <div class="profile-page-welcome-background" style="background: rgb(254,253,222);background: linear-gradient(90deg, rgba(254,253,222,1) 33%, rgba(149,242,247,1) 86%);"></div>
+            <div class="profile-success-info">Published update successfully</div>
+            <div class="profile-fail-info">Published update failed</div>
             <span class="profile-page-profile-title file-welcome">Welcome to File Setting</span>
             <span class="profile-page-profile-subtitle file-welcome ">
                 Efficiently update files, view comments, and generate versions seamlessly with file setting
@@ -61,7 +63,7 @@
                         case "REVIEWED":
                         case "REJECTED":
                         case "PUBLISHED":
-                            <a href="./PublishedContent" class="file-setting-add-button" style="margin-right:8px;text-align:center">View</a>
+                            <a asp-page="./PublishedContent"  asp-route-id="@Model.curBook.bookID" asp-route-fileSetting="@Model.curBook.bookID" class="file-setting-add-button" style="margin-right:8px;text-align:center">View</a>
                             break;
                         default:
                             // Handle other cases if needed
@@ -405,7 +407,23 @@
     @Html.Partial("_FooterGuest")
 </div>
 
+@if (Model.PublishMessage == null)
+{
 
+}
+else if (Model.PublishMessage == "1")
+{
+    <script>
+        $(".file-welcome .profile-success-info").css("display", "flex");
+    </script>
+}
+else
+{
+    <script>
+        $(".file-welcome .profile-fail-info").css("display", "flex");
+        $(".file-welcome .profile-fail-info").text(Model.FileMessage);
+    </script>
+}
 @if (Model.FileMessage == null)
 {
 

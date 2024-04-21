@@ -129,7 +129,7 @@ namespace FYP1.Pages.eBooks
         public string defaultBookType = BookType.Novel.ToString(); // Set default book type
 
         public async Task OnGetAsync(string? displayTab, string? searchString, string? sortOrder, 
-            string? typeFilter, int? dateFilter, int? pageIndex, string? bookDeleted)
+            string? typeFilter, int? dateFilter, int? pageIndex, string? bookDeleted, string? PublishMessage)
         {
             bookTypes = Enum.GetValues(typeof(BookType))
                         .Cast<BookType>()
@@ -242,9 +242,9 @@ namespace FYP1.Pages.eBooks
                     default:
                         myBookQuery = myBookQuery.OrderByDescending(b => b.LastUpdate);
                         sharedBookQuery = sharedBookQuery.OrderByDescending(b => b.LastUpdate);
-                        reviewedBookQuery = reviewedBookQuery.OrderByDescending(b => b.LastUpdate);
+                        reviewedBookQuery = reviewedBookQuery.OrderBy(b => b.LastUpdate);
                         publishedBookQuery = publishedBookQuery.OrderByDescending(b => b.LastUpdate);
-                        sortOrder = "date_dsc";
+                        //sortOrder = "date_dsc";
                         break;
                 }
 
@@ -379,11 +379,11 @@ namespace FYP1.Pages.eBooks
             try
             {
                 await _context.SaveChangesAsync();
-                return RedirectToPage("./Dashboard", new { id = ebook.bookID, PublishMessage = 1 });
+                return RedirectToPage("./Dashboard", new { displayTab = "Management", id = ebook.bookID, bookDeleted = 1 });
             }
             catch (DbUpdateConcurrencyException error)
             {
-                return RedirectToPage("./Dashboard", new { displayTab = "Management", bookDeleted = "Update successully" });
+                return RedirectToPage("./Dashboard", new { displayTab = "Management", bookDeleted = 2});
             }
         }
     }

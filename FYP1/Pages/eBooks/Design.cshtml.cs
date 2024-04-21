@@ -400,8 +400,14 @@ namespace FYP1.Pages.eBooks
             }
 
             var collaboration = await _context.Collaboration.FirstOrDefaultAsync(c => c.bookID == bookID && c.authorID == authorID);
+            var book = await _context.eBook.FirstOrDefaultAsync(c => c.bookID == bookID);
 
-            if(collaboration != null)
+            if (book.authorID == authorID)
+            {
+                return new JsonResult(new { status = 3, message = "This is the author name." });
+            }
+
+            if (collaboration != null)
             {
                 return new JsonResult(new { status = 1, message = "User has already been added." });
             }

@@ -1505,9 +1505,9 @@
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> 
 <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
-@* <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script> *@
+<script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
 
-<script src="https://cdn.jsdelivr.net/npm/quill@@2.0.0/dist/quill.js"></script>
+@* <script src="https://cdn.jsdelivr.net/npm/quill@@2.0.0/dist/quill.js"></script> *@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.css" integrity="sha384-wcIxkf4k558AjM3Yz3BBFQUbk/zgIYC2R0QpeeYb+TwlBVMrlgLqwRjRtGZiK7ww" crossorigin="anonymous">
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.js" integrity="sha384-hIoBPJpTUs74ddyc4bFZSM1TVlQDA60VBbJS0oA934VSz82sBx1X7kSx2ATBDIyd" crossorigin="anonymous"></script>
 
@@ -2425,12 +2425,29 @@
             [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
             [{ 'font': [] }, { 'size': fontSizeArr }],
             [{ 'color': [] }, { 'background': [] }, 'bold', 'italic', 'underline', 'strike', { 'script': 'sub' }, { 'script': 'super' }, { 'direction': 'rtl' }, 'clean'],        // toggled buttons
-            [{ 'align': [] }, { 'indent': '-1' }, { 'indent': '+1' }, { 'list': 'ordered' }, { 'list': 'bullet' }, { 'list': 'check' }, 'blockquote', 'code-block', 'link', 'formula'],
+            [{ 'align': [] }, { 'indent': '-1' }, { 'indent': '+1' }, { 'list': 'ordered' }, { 'list': 'bullet' }, { 'list': 'check' }, 'blockquote', 'code-block', /*'link',*/ 'formula'],
         ];
         var quillOptions = {
             modules: {
                 toolbar: {
                     container: toolbarOptions,
+                    handlers: {
+                        'formula': function () {  // Define a handler for the custom button
+                            var mathInput = prompt('Enter mathematical formula:');
+                            if (mathInput) {
+                                var index = curActiveQuil.getSelection().index;
+                                curActiveQuil.insertEmbed(index, 'formula', mathInput, Quill.sources.USER);
+                            }
+                        }
+                      /*  'link': function () {  // Define a handler for the custom button
+                            var url = prompt('Enter the URL:');
+                            if (url) {
+                                var text = prompt('Enter the text for the link:');
+                                var index = curActiveQuil.getSelection().index;
+                                curActiveQuil.insertText(index, text, 'link', url, Quill.sources.USER);
+                            }
+                        }*/
+                    }
                 }
             },
             theme: 'snow'
@@ -2960,7 +2977,7 @@
             })
             $(document).on("click", ".design-edit-page-color-container-exit", function () {
 
-                $(".selected").css("background-color", $(this).css("background-color"));
+                //$(".selected").css("background-color", $(this).css("background-color"));
                 $(".design-edit-page-color-container").remove();
             })
             $(document).on("click", ".design-edit-page-chart-color-button", function () {
@@ -5115,7 +5132,7 @@
                         datasetsInfo += '</button>';
                         datasetsInfo += '</td>';
                         datasetsInfo += '<td><div class="design-edit-page-chart-dataset-delete-row"><input type="text" data-chart-datasets="' + index + '" class="chart-datasets-title-input design-edit-page-chart-title-input" placeholder="Datasets" value="' + dataset.label + '">';
-                        datasetsInfo += '<div class="design-edit-page-chart-dataset-delete-icon"><svg viewBox="0 0 1024 1024">';
+                        datasetsInfo += '<div class="design-edit-page-chart-dataset-delete-icon keep"><svg viewBox="0 0 1024 1024">';
                         datasetsInfo += '<path d="M662 170h148v86h-596v-86h148l44-42h212zM342 384v426h340v-426h-340zM256 810v-512h512v512q0 34-26 60t-60 26h-340q-34 0-60-26t-26-60z"></path>';
                         datasetsInfo += '</svg></div></td>';
                         datasetsInfo += '</tr>';

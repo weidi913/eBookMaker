@@ -4850,7 +4850,7 @@ ul.nav-link-dropdown-list {
   display:grid; 
   grid-template-columns: repeat(6, 1fr); 
   grid-gap: 12px; 
-  width:218px;
+  width:100%;
 }
 .design-edit-shape-color-container-color-picker,
 .design-edit-border-color-container-color-picker,
@@ -4883,7 +4883,7 @@ ul.nav-link-dropdown-list {
   background-color:#000000;
   cursor:pointer;
   border:solid 1px #D9DDE1;
-  margin:4px;
+  /* margin:4px; */
 }
 .design-edit-page-chart-label-add-row{
   background-color:#F6F7F8;
@@ -5844,9 +5844,10 @@ ul.nav-link-dropdown-list {
   flex-direction: row;
   position:relative;
   margin-right:16px;
+  flex:1;
 }
 .file-setting-collaboration-item-right-group{
-  margin-left:auto;
+  /* margin-left:auto; */
   flex-direction: row;
   display:flex;
 }
@@ -5915,6 +5916,11 @@ ul.nav-link-dropdown-list {
   font-weight: 700;
   word-break: break-word;
   margin-bottom:4px;
+  width:100%;
+  border-bottom:dashed 1px black;
+}
+.file-setting-collaboration-item-user-info-username[contenteditable]:focus {
+  outline: 0px solid transparent;
 }
 .file-setting-collaboration-item-user-info-name{
   font-size: 14px;

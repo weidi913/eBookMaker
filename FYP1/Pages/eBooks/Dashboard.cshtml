@@ -790,6 +790,12 @@
             if (loadedCount === numIframes) {
                 // All iframes have loaded, hide the loading screen
                 $("#loading-screen").remove();
+                setTimeout(function () {
+                    $(".book-delete-notice").addClass("notice-fadeOut");
+                }, 5000);
+                setTimeout(function () {
+                    $(".book-delete-notice").css("display", "none");
+                }, 8000);
             }
         }
         // Function to execute if all iframes have already loaded
@@ -1021,15 +1027,32 @@
     })
 </script>
 
-@if (!string.IsNullOrEmpty(Model.bookDeleted))
+/*if (!string.IsNullOrEmpty(Model.bookDeleted))
+{
+    //
+        $(".book-delete-notice").css("display", "flex");
+
+}*/
+@if (Model.bookDeleted == "0")
 {
     <script>
-        $(".book-delete-notice").css("display", "flex");
-        setTimeout(function () {
-            $(".book-delete-notice").addClass("notice-fadeOut");
-        }, 5000);
-        setTimeout(function () {
-            $(".book-delete-notice").css("display", "none");
-        }, 8000);
+          $(".book-delete-notice").css("display", "flex");
+</script>
+}
+else if(Model.bookDeleted == "1")
+{
+    <script>
+        $(".book-delete-notice").css("display", "flex").text("Review successful");
+    </script>
+}
+else if (Model.bookDeleted == "2")
+{
+    <script>
+        $(".book-delete-notice").css({
+            "display": "flex",
+            "background-color": "#f8d7da",
+            "border-color": "#f5c6cb",
+            "color": "#dc3545"
+        }).text("Update review failed");
     </script>
 }
