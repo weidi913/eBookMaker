@@ -278,7 +278,7 @@ namespace FYP1.Pages.eBooks
 
                 ebook.bookContent += "<head>";
                 ebook.bookContent += "<style>";
-                ebook.bookContent += "p { margin:0; margin-top:60px}";
+                ebook.bookContent += "p { margin:0;}";
                 ebook.bookContent += "body { margin:0px; background-color:#EBECF0; display:flex; flex-direction:column; align-items:center; }";
                 ebook.bookContent += ".page {margin:auto;margin-bottom:20px; background-color:white; overflow:hidden; page-break-after: always; position:relative; width:" + ebook.width + "mm; height:" + ebook.height + "mm; }";
                 ebook.bookContent += ".header { color:black; background-color:white; overflow:hidden; page-break-after: always; position:relative; width:100%; height:20mm; align-items:center; display:flex; font-size:10px; padding:16px; padding-left:96px; box-sizing:border-box; }";
@@ -601,7 +601,7 @@ namespace FYP1.Pages.eBooks
             versionAdd.verContent += "<head>";
             versionAdd.verContent += "<style>";
            // versionAdd.verContent += $"@page {{ size: {ebook.width}mm {ebook.height}mm; }}";
-            versionAdd.verContent += "p { margin:0; margin-top:60px}";
+            versionAdd.verContent += "p { margin:0;}";
             versionAdd.verContent += "body { margin:0px; background-color:#EBECF0; display:flex; flex-direction:column; align-items:center; }";
             versionAdd.verContent += ".page {margin:auto;margin-bottom:20px; background-color:white; overflow:hidden; page-break-after: always; position:relative; width:" +ebook.width+"mm; height:"+ebook.height+"mm; }";
             versionAdd.verContent += ".header { color:black; background-color:white; overflow:hidden; page-break-after: always; position:relative; width:100%; height:20mm; align-items:center; display:flex; font-size:10px; padding:16px; padding-left:96px; box-sizing:border-box; }";

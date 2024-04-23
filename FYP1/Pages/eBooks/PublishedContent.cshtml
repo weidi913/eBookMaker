@@ -4,8 +4,134 @@
     ViewData["Title"] = "Version History";
 }
 <style>
-    .katex-html {
-        display: none;
+    .editor {
+        position: relative;
+        box-sizing: border-box;
+        line-height: 1.42;
+        height: 100%;
+        outline: none;
+        padding: 12px 15px;
+        tab-size: 4;
+        -moz-tab-size: 4;
+        text-align: left;
+        white-space: pre-wrap;
+        word-wrap: break-word;
+        font-family: Helvetica, Arial, sans-serif;
+        font-size: 13px;
+    }
+
+    .editor ul[data-checked="false"] > li::before {
+        content: "\2610";
+    }
+
+    .editor ul > li::before {
+        content: "\2022";
+    }
+
+    .editor p, .editor ol, .editor ul, .editor pre, .editor blockquote, .editor h1, .editor h2, .editor h3, .editor h4, .editor h5, .editor h6 {
+        margin: 0;
+        padding: 0;
+        counter-reset: list-1 list-2 list-3 list-4 list-5 list-6 list-7 list-8 list-9;
+    }
+
+    .editor .ql-align-right {
+        text-align: right;
+    }
+
+    .editor .ql-direction-rtl {
+        direction: rtl;
+        text-align: inherit;
+    }
+
+    .editor .ql-align-center {
+        text-align: center;
+    }
+
+    .editor .ql-align-justify {
+        text-align: justify;
+    }
+
+    .editor ol, .editor ul {
+        padding-left: 1.5em;
+    }
+
+    .editor ol li:not(.ql-direction-rtl), .editor ul li:not(.ql-direction-rtl) {
+        padding-left: 1.5em;
+    }
+
+    .editor ol li {
+        counter-reset: list-1 list-2 list-3 list-4 list-5 list-6 list-7 list-8 list-9;
+        counter-increment: list-0;
+    }
+
+    .editor ol > li, .editor ul > li {
+        list-style-type: none;
+    }
+
+    .editor ul[data-checked=false] > li::before {
+    }
+
+    .editor ul[data-checked=true] > li::before, .editor ul[data-checked=false] > li::before {
+        color: #777;
+        cursor: pointer;
+        pointer-events: all;
+    }
+
+    .editor li:not(.ql-direction-rtl)::before {
+        margin-left: -1.5em;
+        margin-right: 0.3em;
+        text-align: right;
+    }
+
+    .editor li:not(.ql-direction-rtl)::before {
+        margin-left: -1.5em;
+        margin-right: 0.3em;
+        text-align: right;
+    }
+
+    .editor ol li:before {
+        content: counter(list-0, decimal) '. ';
+    }
+
+    .editor li::before {
+        display: inline-block;
+        white-space: nowrap;
+        width: 1.2em;
+    }
+
+
+    .editor li::before {
+        display: inline-block;
+        white-space: nowrap;
+        width: 1.2em;
+    }
+
+    .editor blockquote {
+        border-left: 4px solid #ccc;
+        margin-bottom: 5px;
+        margin-top: 5px;
+        padding-left: 16px;
+    }
+
+    pre.ql-syntax {
+        background-color: #23241f;
+        color: #f8f8f2;
+        overflow: visible;
+    }
+
+    .editor pre {
+        white-space: pre-wrap;
+        margin-bottom: 5px;
+        margin-top: 5px;
+        padding: 5px 10px;
+    }
+
+    .editor .ql-font-serif {
+        font-family: Georgia, Times New Roman, serif;
+    }
+
+    .editor .ql-font-monospace {
+        font-family: Monaco, Courier New, monospace;
     }
 </style>
 
@@ -47,6 +173,8 @@
 <div style="margin-top:60px"></div>
 @Html.Raw(Model.publishedBook.bookContent)
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.css" integrity="sha384-wcIxkf4k558AjM3Yz3BBFQUbk/zgIYC2R0QpeeYb+TwlBVMrlgLqwRjRtGZiK7ww" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.js" integrity="sha384-hIoBPJpTUs74ddyc4bFZSM1TVlQDA60VBbJS0oA934VSz82sBx1X7kSx2ATBDIyd" crossorigin="anonymous"></script>
 <script>
     function initChart(element) {
         var configStr = element.innerHTML;

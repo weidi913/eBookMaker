@@ -65,7 +65,7 @@ namespace FYP1.Pages.eBooks
             {
                 return NotFound(); // Book non-existent return error
             }
-            else if (ebook.bookStatus != "PUBLISHED" && !isAuthorized)
+            else if (ebook.bookStatus != "PUBLISHED" && !isAuthorized && ebook.authorID != User.Identity.Name)
             {
                 return NotFound(); // Book non-existent return error
             }

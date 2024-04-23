@@ -323,7 +323,7 @@
                             </a>
                         </li>
                         <li data-thq="thq-dropdown" class="header-design-file-dropdown-item list-item">
-                            <a href="./FileSetting?id=1#VersionHistory" data-thq="thq-dropdown-toggle" class="header-design-file-nested-dropdown-toggle">
+                            <a href="./FileSetting?id=@Model.curBook.bookID#VersionHistory" data-thq="thq-dropdown-toggle" class="header-design-file-nested-dropdown-toggle">
                                 <svg height="25px" version="1.1" viewBox="0 0 20 21" width="24px" xmlns="http://www.w3.org/2000/svg" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns" xmlns:xlink="http://www.w3.org/1999/xlink"><title /><desc /><defs /><g fill="none" fill-rule="evenodd" id="Page-1" stroke="none" stroke-width="1"><g fill="#000000" id="Core" opacity="0.9" transform="translate(-464.000000, -254.000000)"><g id="history" transform="translate(464.000000, 254.500000)"><path d="M10.5,0 C7,0 3.9,1.9 2.3,4.8 L0,2.5 L0,9 L6.5,9 L3.7,6.2 C5,3.7 7.5,2 10.5,2 C14.6,2 18,5.4 18,9.5 C18,13.6 14.6,17 10.5,17 C7.2,17 4.5,14.9 3.4,12 L1.3,12 C2.4,16 6.1,19 10.5,19 C15.8,19 20,14.7 20,9.5 C20,4.3 15.7,0 10.5,0 L10.5,0 Z M9,5 L9,10.1 L13.7,12.9 L14.5,11.6 L10.5,9.2 L10.5,5 L9,5 L9,5 Z" id="Shape" /></g></g></g></svg>                                    <title>version-history</title>
                                 <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                                     <g id="version-history" transform="translate(-0.000000, 0.000000)" fill="#000000">
@@ -1510,7 +1510,7 @@
 @* <script src="https://cdn.jsdelivr.net/npm/quill@@2.0.0/dist/quill.js"></script> *@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.css" integrity="sha384-wcIxkf4k558AjM3Yz3BBFQUbk/zgIYC2R0QpeeYb+TwlBVMrlgLqwRjRtGZiK7ww" crossorigin="anonymous">
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.js" integrity="sha384-hIoBPJpTUs74ddyc4bFZSM1TVlQDA60VBbJS0oA934VSz82sBx1X7kSx2ATBDIyd" crossorigin="anonymous"></script>
-
+ 
 <script>
 
     $("#more-option").click(function () {
@@ -4303,6 +4303,7 @@
             var chapterList = $(".e-book-design-chapter-container");
             var pageWidth = '@Model.curBook.width';
             var pageHeight = '@Model.curBook.height';
+            var bookTitle = $("#ebook-title-input").val();
 
 
             // Open a new window for printing
@@ -4312,18 +4313,124 @@
 
             // Customize the document size using CSS
             printWindow.document.write('<html><head><title>');
-            printWindow.document.write('@Model.curBook.title');
+            //printWindow.document.write('Model.curBook.title');
+            printWindow.document.write(bookTitle);
             printWindow.document.write('</title>');
+            //printWindow.document.write('<link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">');
+            printWindow.document.write('<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.css" integrity="sha384-wcIxkf4k558AjM3Yz3BBFQUbk/zgIYC2R0QpeeYb+TwlBVMrlgLqwRjRtGZiK7ww" crossorigin="anonymous">');
+            printWindow.document.write('<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.js" integrity="sha384-hIoBPJpTUs74ddyc4bFZSM1TVlQDA60VBbJS0oA934VSz82sBx1X7kSx2ATBDIyd" crossorigin="anonymous"><'+''+'/script>');
+
+
+                
+
             printWindow.document.write('<style>');
             printWindow.document.write('@@page { size: ' + pageWidth + 'mm ' + pageHeight + 'mm; }'); // Customize the document size based on book width and height
             printWindow.document.write('p { margin:0}'); // CSS rule to force page break after each page
+
             printWindow.document.write('body { margin:0px;background-color:#EBECF0;display:flex;flex-direction:column;align-items:center}'); // CSS rule to force page break after each page
             printWindow.document.write('.page {background-color:white;overflow:hidden;page-break-after: always; position:relative;width:' + pageWidth + 'mm;height:' + pageHeight + 'mm}'); // CSS rule to force page break after each page
             printWindow.document.write('.header {color:black;background-color:white;overflow:hidden;page-break-after: always; position:relative;width:100%;height:20mm;align-items: center;display:flex;font-size:10px;padding:16px;padding-left:96px;box-sizing:border-box}'); // CSS rule to force page break after each page
             printWindow.document.write('.content {background-color:white;overflow:hidden;page-break-after: always; position:relative;width:100%;height:' + (pageHeight - 40) + 'mm}'); // CSS rule to force page break after each page
             printWindow.document.write('.footer {font-size:10px;color:black;background-color:white;overflow:hidden;page-break-after: always; display: flex; justify-content: center; align-items: center;position:relative;width:100%;height:20mm;text-align:center}'); // CSS rule to force page break after each page
-            printWindow.document.write('.ql-editor {position:relative;box-sizing:border-box;line-height: 1.42;height: 100%;outline: none;padding: 12px 15px;tab-size: 4;-moz-tab-size: 4;text-align: left;white-space: pre-wrap;word-wrap: break-word;font-family: Helvetica, Arial, sans-serif; font-size: 13px;}'); // CSS rule to force page break after each page
-            printWindow.document.write('span.katex-html {display:none;}'); // CSS rule to force page break after each page
+            printWindow.document.write('.ql-editor ul[data-checked="false"] > li::before {content: "\\2610"; }.ql-editor ul > li::before {content: "\\2022"; }.ql-editor {position:relative;box-sizing:border-box;line-height: 1.42;height: 100%;outline: none;padding: 12px 15px;tab-size: 4;-moz-tab-size: 4;text-align: left;white-space: pre-wrap;word-wrap: break-word;font-family: Helvetica, Arial, sans-serif; font-size: 13px;}');
+
+            //printWindow.document.write('    .ql-editor ul > li::before {content: ''\2022''; }.ql-editor {position:relative;box-sizing:border-box;line-height: 1.42;height: 100%;outline: none;padding: 12px 15px;tab-size: 4;-moz-tab-size: 4;text-align: left;white-space: pre-wrap;word-wrap: break-word;font-family: Helvetica, Arial, sans-serif; font-size: 13px;}'); // CSS rule to force page break after each page
+            printWindow.document.write(`
+                .katex {
+        font: normal 1.21em KaTeX_Main, Times New Roman, serif;
+        line-height: 1.2;
+        text-indent: 0;
+        text-rendering: auto;
+    }
+                .ql-editor p, .ql-editor ol, .ql-editor ul, .ql-editor pre, .ql-editor blockquote, .ql-editor h1, .ql-editor h2, .ql-editor h3, .ql-editor h4, .ql-editor h5, .ql-editor h6 {
+        margin: 0;
+        padding: 0;
+        counter-reset: list-1 list-2 list-3 list-4 list-5 list-6 list-7 list-8 list-9;
+    }
+                .ql-editor .ql-align-right {
+                    text-align: right;
+                }
+                .ql-editor .ql-direction-rtl {
+                    direction: rtl;
+                    text-align: inherit;
+                }
+                .ql-editor .ql-align-center {
+    text-align: center;
+}
+    .ql-editor .ql-align-justify {
+        text-align: justify;
+    }
+        .ql-editor ol, .ql-editor ul {
+        padding-left: 1.5em;
+    }
+        .ql-editor ol li:not(.ql-direction-rtl), .ql-editor ul li:not(.ql-direction-rtl) {
+        padding-left: 1.5em;
+    }
+        .ql-editor ol li {
+        counter-reset: list-1 list-2 list-3 list-4 list-5 list-6 list-7 list-8 list-9;
+        counter-increment: list-0;
+    }
+        .ql-editor ol > li, .ql-editor ul > li {
+        list-style-type: none;
+    }
+        .ql-editor ul[data-checked=false] > li::before {
+        
+    }
+    .ql-editor ul[data-checked=true] > li::before, .ql-editor ul[data-checked=false] > li::before {
+        color: #777;
+        cursor: pointer;
+        pointer-events: all;
+    }
+    .ql-editor li:not(.ql-direction-rtl)::before {
+        margin-left: -1.5em;
+        margin-right: 0.3em;
+        text-align: right;
+    }
+
+        .ql-editor li:not(.ql-direction-rtl)::before {
+        margin-left: -1.5em;
+        margin-right: 0.3em;
+        text-align: right;
+    }
+    .ql-editor ol li:before {
+        content: counter(list-0, decimal) '. ';
+    }
+    .ql-editor li::before {
+        display: inline-block;
+        white-space: nowrap;
+        width: 1.2em;
+    }
+
+
+    .ql-editor li::before {
+        display: inline-block;
+        white-space: nowrap;
+        width: 1.2em;
+    }
+    .ql-editor blockquote {
+        border-left: 4px solid #ccc;
+        margin-bottom: 5px;
+        margin-top: 5px;
+        padding-left: 16px;
+    }
+        pre.ql-syntax {
+        background-color: #23241f;
+        color: #f8f8f2;
+        overflow: visible;
+    }
+        .ql-editor pre {
+        white-space: pre-wrap;
+        margin-bottom: 5px;
+        margin-top: 5px;
+        padding: 5px 10px;
+    }
+        .ql-editor .ql-font-serif {
+        font-family: Georgia, Times New Roman, serif;
+    }
+        .ql-editor .ql-font-monospace {
+        font-family: Monaco, Courier New, monospace;
+    }
+            `); // CSS rule to force page break after each page
 
            
 
