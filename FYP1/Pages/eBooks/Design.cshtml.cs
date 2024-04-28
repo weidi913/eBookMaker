@@ -303,18 +303,6 @@ namespace FYP1.Pages.eBooks
                 //to show the error
             }
 
-            /*            switch (AuthorizedUser(bookID))
-                        {
-                            case 0:
-                                break;
-                            case 1:
-                                return new JsonResult(new { status = 1, message = "unable to load user");
-                            case 2:
-                                return new JsonResult(new { status = 2, message = "book has been deleted");
-                            case 3:
-                                return new JsonResult(new { status = 3, message = "unauthorized user");
-                        }*/
-
             var commentUpdate = await _context.Comment.FirstOrDefaultAsync(c => c.commentID == commentID);
             if (commentUpdate == null)
             {
@@ -333,18 +321,6 @@ namespace FYP1.Pages.eBooks
             {
                 return new JsonResult(new { status = 4, message = "comment database is empty" });
             }
-
-/*            switch (AuthorizedUser(bookID))
-            {
-                case 0:
-                    break;
-                case 1:
-                    return new JsonResult(new { status = 1, message = "unable to load user");
-                case 2:
-                    return new JsonResult(new { status = 2, message = "book has been deleted");
-                case 3:
-                    return new JsonResult(new { status = 3, message = "unauthorized user");
-            }*/
 
             var commentDelete = await _context.Comment.FirstOrDefaultAsync(c => c.commentID == commentID);
             if (commentDelete == null)
@@ -700,16 +676,11 @@ namespace FYP1.Pages.eBooks
         public async Task<IActionResult> OnPostChapterTitle(string chapterName, int chapterID)
         {
 
-            /*            var updateBook = await _context.eBook.FirstOrDefaultAsync(m => m.bookID == eBook.bookID);
-            */
             var updateChapter = await _context.Chapter.FirstOrDefaultAsync(m => m.chapterID == chapterID);
             if (updateChapter == null)
             {
                 return new JsonResult(new { status = 1, message = "Deleted" });
             }
-            /*            else if (updateBook.title != eBook.title) {
-                            return new JsonResult(new { status = 2, message = "Concurrency Error" });
-                        }*/
             else
             {
                 updateChapter.chapterName = chapterName;
@@ -923,9 +894,6 @@ namespace FYP1.Pages.eBooks
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
 
-            // Retrieve the relevant eBook
-            // var ebook = await _context.eBook.FirstOrDefaultAsync(m => m.bookID == id);
-
             var ebook = await _context.eBook
                         .Include(e => e.Chapters.OrderBy(c=>c.chapterNo)) // Eager load chapters
                             .ThenInclude(c => c.BookPages.OrderBy(c=>c.pageNo)) // Eager load pages within each chapter
@@ -951,10 +919,11 @@ namespace FYP1.Pages.eBooks
                 .FirstOrDefaultAsync();
 
             // Admin role can access
-            var isAuthorized = User.IsInRole(Constants.AdminRole);
+            //var isAuthorized = User.IsInRole(Constants.AdminRole);
+            var isAuthorized = false;
 
             // Ensure the user is authorized to watch this document
-            if(collaboration != null)
+            if (collaboration != null)
             {
                 Collaboration = collaboration; 
             }
@@ -966,29 +935,6 @@ namespace FYP1.Pages.eBooks
             {
                 return Forbid();
             }
-
-
-            /*            if (_context.Chapter != null)
-                        {
-                            // Retrieve all chapter related to this book
-                            ChapterList = await _context.Chapter
-                            .Include(chapter => chapter.book)
-                            .Where(chapter => chapter.book.bookID == curBook.bookID).ToListAsync();
-                        }
-
-                        if (_context.BookPage != null)
-                        {
-                            // Retrieve all book page related to this book
-                            BookPageList = await _context.BookPage
-                            .Include(bookpage => bookpage.Chapter).ToListAsync();
-                        }
-
-                        if (_context.Element != null)
-                        {
-                            // Retrieve all elements related to this book
-                            ElementList = await _context.Element
-                            .Include(element => element.BookPage).ToListAsync();
-                        }*/
 
             var memberList = new List<Member>();
             CommentList = new List<CommentDisplayModel>();
@@ -1027,381 +973,11 @@ namespace FYP1.Pages.eBooks
                 }
             }
 
-
-            //no need to filter???? i think need to filter to avoid excessive loadinf time
-            // not sure what is this maybe can delete at the finalizing stage
             ViewData["bookID"] = new SelectList(_context.Set<eBook>(), "bookID", "background");
             ViewData["chapterID"] = new SelectList(_context.Chapter, "chapterID", "chapterName");
             return Page();
 
         }
-/*        public async Task OnGetAsync()
-        {
-            if (_context.Element != null)
-            {
-                Element = await _context.Element
-                .Include(e => e.BookPage).ToListAsync();
-            }
-        }*/
 
-        //public IActionResult OnGet()
-        //{
-        //    ViewData["bookID"] = new SelectList(_context.Set<eBook>(), "bookID", "background");
-        //    return Page();
-        //}
-
-
-        //public IList<Chapter> Chapter { get; set; } = default!;
-
-        //public async Task OnGetAsync()
-        //{
-        //    if (_context.Chapter != null)
-        //    {
-        //        Chapter = await _context.Chapter
-        //        .Include(c => c.book).ToListAsync();
-        //    }
-        //}
-
-
-        /*
-         * 
-         public IActionResult OnGet()
-        {
-            return Page();
-        }
-
-        [BindProperty]
-        public eBook eBook { get; set; } = default!;
-        
-
-        // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
-        public async Task<IActionResult> OnPostAsync()
-        {
-          if (!ModelState.IsValid || _context.eBook == null || eBook == null)
-            {
-                return Page();
-            }
-
-            
-            _context.eBook.Add(eBook);
-            await _context.SaveChangesAsync();
-
-            return RedirectToPage("./Index");
-        }
-         */
-
-        // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
-        // Add chapter async for this book
-        public async Task<IActionResult> OnPostAddChapterAsync()
-        {
-            // Ensure it is book author
-            var isAuthorized = await AuthorizationService.AuthorizeAsync(
-                                                        User, curBook.authorID,
-                                                        Operations.Create);
-            // Success - Original book author
-            // Fail - Not the book author
-            if (!isAuthorized.Succeeded)
-            {
-                // Check the user is collaboration memeber 
-                if (Collaboration != null)
-                {
-                    // Ensure that it is collaboration member
-                    isAuthorized = await AuthorizationService.AuthorizeAsync(
-                                                                User, Collaboration.authorID,
-                                                                Operations.Create);
-                }
-
-                // Success - It is collaboration memeber
-                // Fail - it is not collaboration memeber
-                if (!isAuthorized.Succeeded)
-                {
-                    return Forbid();
-                }
-            }
-
-            if (!ModelState.IsValid || _context.Chapter == null || ChapterAdd == null)
-            {
-            //    return Page();
-            }
-
-            _context.Chapter.Add(ChapterAdd);
-            await _context.SaveChangesAsync();
-
-            // Return to the chapter
-            return RedirectToAction("OnGetAsync", new { id = ChapterAdd.bookID }); ;
-        }
-
-        public async Task<IActionResult> OnPostDeleteChapterAsync(int? id, int bookid)
-        {
-            // Ensure it is book author
-            var isAuthorized = await AuthorizationService.AuthorizeAsync(
-                                                        User, curBook.authorID,
-                                                        Operations.Delete);
-            // Success - Original book author
-            // Fail - Not the book author
-            if (!isAuthorized.Succeeded)
-            {
-                // Check the user is collaboration memeber 
-                if (Collaboration != null)
-                {
-                    // Ensure that it is collaboration member
-                    isAuthorized = await AuthorizationService.AuthorizeAsync(
-                                                                User, Collaboration.authorID,
-                                                                Operations.Delete);
-                }
-
-                // Success - It is collaboration memeber
-                // Fail - it is not collaboration memeber
-                if (!isAuthorized.Succeeded)
-                {
-                    return Forbid();
-                }
-            }
-
-            if (id == null || _context.Chapter == null)
-            {
-                return NotFound();
-            }
-
-            var chapter = await _context.Chapter.FindAsync(id);
-
-            if (chapter != null)
-            {
-                _context.Chapter.Remove(chapter);
-                await _context.SaveChangesAsync();
-            }
-
-            return RedirectToAction("OnGetAsync", new { id = bookid }); ;
-        }
-        // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
-        public async Task<IActionResult> OnPostAddBookPageAsync()
-        {
-            // Ensure it is book author
-            var isAuthorized = await AuthorizationService.AuthorizeAsync(
-                                                        User, curBook.authorID,
-                                                        Operations.Create);
-            // Success - Original book author
-            // Fail - Not the book author
-            if (!isAuthorized.Succeeded)
-            {
-                // Check the user is collaboration memeber 
-                if (Collaboration != null)
-                {
-                    // Ensure that it is collaboration member
-                    isAuthorized = await AuthorizationService.AuthorizeAsync(
-                                                                User, Collaboration.authorID,
-                                                                Operations.Create);
-                }
-
-                // Success - It is collaboration memeber
-                // Fail - it is not collaboration memeber
-                if (!isAuthorized.Succeeded)
-                {
-                    return Forbid();
-                }
-            }
-
-            if (!ModelState.IsValid || _context.BookPage == null || BookPageAdd == null)
-            {
-                return Page();
-            }
-            _context.BookPage.Add(BookPageAdd);
-            await _context.SaveChangesAsync();
-
-            return RedirectToAction("OnGetAsync", new { id = curBook.bookID });
-        }
-
-        public async Task<IActionResult> OnPostDeleteBookPageAsync(int? id , int? bookID)
-        {
-            // Ensure it is book author
-            var isAuthorized = await AuthorizationService.AuthorizeAsync(
-                                                        User, curBook.authorID,
-                                                        Operations.Delete);
-            // Success - Original book author
-            // Fail - Not the book author
-            if (!isAuthorized.Succeeded)
-            {
-                // Check the user is collaboration memeber 
-                if (Collaboration != null)
-                {
-                    // Ensure that it is collaboration member
-                    isAuthorized = await AuthorizationService.AuthorizeAsync(
-                                                                User, Collaboration.authorID,
-                                                                Operations.Delete);
-                }
-
-                // Success - It is collaboration memeber
-                // Fail - it is not collaboration memeber
-                if (!isAuthorized.Succeeded)
-                {
-                    return Forbid();
-                }
-            }
-
-            if (id == null || _context.BookPage == null)
-            {
-                return NotFound();
-            }
-            var bookpage = await _context.BookPage.FindAsync(id);
-
-            if (bookpage != null)
-            {
-                _context.BookPage.Remove(bookpage);
-                await _context.SaveChangesAsync();
-            }
-
-            return RedirectToAction("OnGetAsync", new { id = bookID });
-        }
-
-
-        // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
-        public async Task<IActionResult> OnPostAddElementAsync()
-        {
-            // Ensure it is book author
-            var isAuthorized = await AuthorizationService.AuthorizeAsync(
-                                                        User, curBook.authorID,
-                                                        Operations.Create);
-            // Success - Original book author
-            // Fail - Not the book author
-            if (!isAuthorized.Succeeded)
-            {
-                // Check the user is collaboration memeber 
-                if (Collaboration != null)
-                {
-                    // Ensure that it is collaboration member
-                    isAuthorized = await AuthorizationService.AuthorizeAsync(
-                                                                User, Collaboration.authorID,
-                                                                Operations.Create);
-                }
-
-                // Success - It is collaboration memeber
-                // Fail - it is not collaboration memeber
-                if (!isAuthorized.Succeeded)
-                {
-                    return Forbid();
-                }
-            }
-
-            if (!ModelState.IsValid || _context.Element == null || ElementAdd == null)
-            {
-                //return Page();
-            }
-
-            _context.Element.Add(ElementAdd);
-            await _context.SaveChangesAsync();
-            return RedirectToAction("OnGetAsync", new { id = curBook.bookID });
-        }
-
-        [BindProperty]
-        public String elementEditText { get; set; }="";
-        [BindProperty]
-        public int elementEditID { get; set; } = -1;
-        [BindProperty]
-        public String elementEditStyle { get; set; }
-
-        public async Task<IActionResult> OnPostEditElementAsync()
-        {
-            // Ensure it is book author
-            var isAuthorized = await AuthorizationService.AuthorizeAsync(
-                                                        User, curBook.authorID,
-                                                        Operations.Update);
-            // Success - Original book author
-            // Fail - Not the book author
-            if (!isAuthorized.Succeeded)
-            {
-                // Check the user is collaboration memeber 
-                if (Collaboration != null)
-                {
-                    // Ensure that it is collaboration member
-                    isAuthorized = await AuthorizationService.AuthorizeAsync(
-                                                                User, Collaboration.authorID,
-                                                                Operations.Update);
-                }
-
-                // Success - It is collaboration memeber
-                // Fail - it is not collaboration memeber
-                if (!isAuthorized.Succeeded)
-                {
-                    return Forbid();
-                }
-            }
-
-            if (!ModelState.IsValid)
-            {
-/*                return Page();
-*/            }
-
-            Element elementEdit = await _context.Element.FirstOrDefaultAsync(m => m.elementID == elementEditID);
-            elementEdit.text = elementEditText;
-            elementEdit.elementStyle = elementEditStyle;
-            _context.Attach(elementEdit).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ElementExists(elementEdit.elementID))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return RedirectToAction("OnGetAsync", new { id = curBook.bookID });
-        }
-
-        private bool ElementExists(int id)
-        {
-            return (_context.Element?.Any(e => e.elementID == id)).GetValueOrDefault();
-        }
-
-        public async Task<IActionResult> OnPostDeleteElementAsync(/*int? id*/)
-        {
-            // Ensure it is book author
-            var isAuthorized = await AuthorizationService.AuthorizeAsync(
-                                                        User, curBook.authorID,
-                                                        Operations.Delete);
-            // Success - Original book author
-            // Fail - Not the book author
-            if (!isAuthorized.Succeeded)
-            {
-                // Check the user is collaboration memeber 
-                if (Collaboration != null)
-                {
-                    // Ensure that it is collaboration member
-                    isAuthorized = await AuthorizationService.AuthorizeAsync(
-                                                                User, Collaboration.authorID,
-                                                                Operations.Delete);
-                }
-
-                // Success - It is collaboration memeber
-                // Fail - it is not collaboration memeber
-                if (!isAuthorized.Succeeded)
-                {
-                    return Forbid();
-                }
-            }
-
-            /*            if (id == null || _context.Element == null)
-                        {
-                            return NotFound();
-                        }*/
-            var element = await _context.Element.FindAsync(elementEditID);
-
-            if (element != null)
-            {
-            /*                Element = element;
-                            _context.Element.Remove(Element);*/
-
-                _context.Element.Remove(element);
-                await _context.SaveChangesAsync();
-            }
-            return RedirectToAction("OnGetAsync", new { id = curBook.bookID });
-        }
     }
 }

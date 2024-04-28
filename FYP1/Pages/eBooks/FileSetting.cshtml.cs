@@ -173,7 +173,8 @@ namespace FYP1.Pages.eBooks
                 .FirstOrDefaultAsync();
 
             // Admin role can access
-            var isAuthorized = User.IsInRole(Constants.AdminRole);
+            //var isAuthorized = User.IsInRole(Constants.AdminRole);
+            var isAuthorized = false;
 
             // Ensure the user is authorized to watch this document
             if (collaboration != null)

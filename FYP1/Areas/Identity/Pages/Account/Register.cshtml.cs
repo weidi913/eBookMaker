@@ -107,6 +107,7 @@ namespace FYP1.Areas.Identity.Pages.Account
             public string Gender { get; set; }
             public bool Term { get; set; }
             public bool Privacy { get; set; }
+            public string ImageData { get; set; }
         }
 
         public async Task<IActionResult> OnGetCheckEmailExist(string email)
@@ -135,6 +136,7 @@ namespace FYP1.Areas.Identity.Pages.Account
                 user.gender = Input.Gender;
                 user.firstName = Input.FirstName;
                 user.lastName = Input.LastName;
+                user.imageData = Input.ImageData;
                 var result = await _userManager.CreateAsync(user, Input.Password);
 
                 if (result.Succeeded)

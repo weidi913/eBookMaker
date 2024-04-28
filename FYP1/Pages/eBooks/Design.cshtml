@@ -2888,13 +2888,13 @@
                 if (chartType === "bar" || chartType === "line" || chartType === "radar") {
                     myChart.data.labels.push('New Label');
                     myChart.data.datasets.forEach((dataset) => {
-                        dataset.data.push(Math.random() * 100); // Random data for demo purposes
+                        dataset.data.push((Math.random() * 100).toFixed(0)); // Random data for demo purposes
                     });
                 }
                 else if (chartType === "polarArea" || chartType === "pie" || chartType === "doughnut") {
                     var noLabel = myChart.data.labels.length;
                     myChart.data.labels.push('New Label');
-                    myChart.data.datasets[0].data.push(Math.random() * 100); // Random data for demo purposes
+                    myChart.data.datasets[0].data.push((Math.random() * 100).toFixed(0)); // Random data for demo purposes
                     myChart.data.datasets[0].backgroundColor.push(colorsListAvailable[noLabel]); // Random data for demo purposes
                 }
 
@@ -3017,11 +3017,20 @@
             });
             $(document).on("change", "input.chart-data-input", function () {
                 var dataValue = $(this).val();
+                if(dataValue==""){
+                    dataValue = 0;
+                }
                 var myChart = Chart.getChart($(".selected").find("canvas")[0].getContext("2d"));
                 var datasetsIndex = 0;
                 if (myChart.config.type === "line" || myChart.config.type === "bar" || myChart.config.type === "radar") {
                     var datasetsIndex = $(this).closest("tr.chart-data-row").prevAll(".chart-data-header-row").first().find("input").attr("data-chart-datasets");
                 }
+                if (myChart.config.type === "pie" || myChart.config.type === "radar" || myChart.config.type === "polarArea" || myChart.config.type === "doughnut") {
+                    if (parseFloat(dataValue) <= 0) {
+                        dataValue = 0;
+                    }
+                }
+                $(this).val(dataValue);
                 //var datasetsIndex = $(this).closest("tr.chart-data-row").prev(".chart-data-header-row").find("input").attr("data-chart-datasets");
                 var dataIndex = $(this).attr("data-chart-data");
                 console.log("datasetsIndex: " + datasetsIndex + " dataIndex: " + dataIndex);
@@ -3552,6 +3561,7 @@
                         console.log("Book chapter add successfully!");
                         // Append the HTML content to the specified container
                         $(this).last().before(response.htmlContent);
+                        updateCurrentPage();
                     } else {
                         alert("Error add book chapter try:", response.message);
                         location.reload();
@@ -3597,6 +3607,8 @@
                             console.log($(this).text().trim().split(" ")[1]);
                             $(this).text('Page ' + (parseInt($(this).text().trim().split(" ")[1]) + 1));
                         });
+
+                        updateCurrentPage();
 
                     } else {
                         console.error("Error add book chapter try:", response.message);
@@ -3950,16 +3962,33 @@
                         rectangle.height = height;
                         rectangle.y = top;
                     }
+                    // Get the parent container element
+                    var parentContainer = event.target.parentElement;
 
-                    target.style.width = rectangle.width + 'px';
-                    target.style.height = rectangle.height + 'px';
-                    target.style.left = rectangle.x + 'px';
-                    target.style.top = rectangle.y + 'px';
+                    // Get the parent container's bounding rectangle
+                    var parentRect = parentContainer.getBoundingClientRect();
 
-                    $("#x-position").val(rectangle.x);
-                    $("#y-position").val(rectangle.y);
-                    $("#width").val(rectangle.width);
-                    $("#height").val(rectangle.height);
+                    // Get the current mouse coordinates
+                    var mouseX = event.clientX;
+                    var mouseY = event.clientY;
+
+                    // Check if the mouse cursor is outside the parent container
+                    if (!(
+                        mouseX < parentRect.left ||
+                        mouseX > parentRect.right ||
+                        mouseY < parentRect.top ||
+                        mouseY > parentRect.bottom)
+                    ) {
+                        target.style.width = rectangle.width + 'px';
+                        target.style.height = rectangle.height + 'px';
+                        target.style.left = rectangle.x + 'px';
+                        target.style.top = rectangle.y + 'px';
+
+                        $("#x-position").val(rectangle.x);
+                        $("#y-position").val(rectangle.y);
+                        $("#width").val(rectangle.width);
+                        $("#height").val(rectangle.height);
+                    }
                 });
             interact(".moveable").draggable({
 
@@ -4262,7 +4291,7 @@
             var enteredValue = $(this).val();
 
             // Remove any non-numeric characters except dot (.)
-            var sanitizedValue = enteredValue.replace(/[^0-9.]/g, '');
+            var sanitizedValue = enteredValue.replace(/[^0-9]/g, '');
             
 
             // Ensure there is at most one dot in the value
@@ -4286,8 +4315,8 @@
                 // If value is not a number or out of range, revert to the previous value
                 $(this).val(0);
             }
-            else if (numericValue >= 100){
-                $(this).val(100)
+            else if (numericValue >= 11){
+                $(this).val(11)
             } else {
                 // Save the current value as the previous value
                 $(this).data('previousValue', sanitizedValue);
@@ -4511,9 +4540,9 @@
             //Trigger the print dialog for the print window
             printWindow.print();
         })
-        $("#x-position").on("input", function () {
-            var enteredValue = $(this).val();            // Get the entered value
-            var sanitizedValue = enteredValue.replace(/[^0-9.]/g, '');            // Remove any non-numeric characters except dot (.)
+        $(document).on("input",".chart-data-input",function(){
+            var enteredValue = $(this).val(); // Get the entered value
+            var sanitizedValue = enteredValue.replace(/[^0-9.\-]/g, ''); // Remove any non-numeric characters except dot (.) and minus (-)
 
             // Ensure there is at most one dot in the value
             var dotIndex = sanitizedValue.indexOf('.');
@@ -4522,162 +4551,117 @@
                 sanitizedValue = sanitizedValue.substring(0, dotIndex + 1) + remainingValue.replace(/\./g, '');
             }
 
-            // Limit the number of decimal places to 4
-            var decimalIndex = sanitizedValue.indexOf('.');
-            if (decimalIndex !== -1) {
-                var integerPart = sanitizedValue.substring(0, decimalIndex);
-                var decimalPart = sanitizedValue.substring(decimalIndex + 1, decimalIndex + 5); // Limit to 4 decimal places
-                sanitizedValue = integerPart + '.' + decimalPart;
+                            // Limit the number of decimal places to 4
+                var decimalIndex = sanitizedValue.indexOf('.');
+                if (decimalIndex !== -1) {
+                    var integerPart = sanitizedValue.substring(0, decimalIndex);
+                    var decimalPart = sanitizedValue.substring(decimalIndex + 1, decimalIndex + 3); // Limit to 2 decimal places
+                    sanitizedValue = integerPart + '.' + decimalPart;
+                }
+
+            // Ensure there is at most one minus sign and it's at the beginning
+            var negIndex = sanitizedValue.indexOf('-');
+            if (negIndex === 0) {
+                // If minus sign is already at the beginning, keep it and remove any additional minus signs
+                sanitizedValue = "-" + sanitizedValue.replace(/-/g, '');
+            } else {
+                // If minus sign is not at the beginning, remove all minus signs
+                sanitizedValue = sanitizedValue.replace(/-/g, '');
             }
+
 
             // Remove leading zeros unless they are followed by a dot
             sanitizedValue = sanitizedValue.replace(/^0+(?!$|\.)/, '');
 
             // Add back a single leading zero if the value is zero and not followed by a dot
-            if (sanitizedValue === '' || sanitizedValue === '.') {
+            if (sanitizedValue === '.') {
                 sanitizedValue = '0';
             }
 
-            // Ensure the value is between 0 and 100 (exclusive)
-            var numericValue = parseFloat(sanitizedValue);
-            if (isNaN(numericValue)) {
-                // If value is not a number or out of range, revert to the previous value
-                $(this).val(0);
-      //      } else if (numericValue >= 100) {
-      //          $(this).val(100);
-            } else {
-                // Save the current value as the previous value
-                $(this).data('previousValue', sanitizedValue);
+            $(this).val(sanitizedValue);
+        })
+        $("#x-position").on("input", function () {
+            var enteredValue = $(this).val(); // Get the entered value
+            var sanitizedValue = enteredValue.replace(/[^0-9.\-]/g, ''); // Remove any non-numeric characters except dot (.) and minus (-)
 
-                // Update the input value with the sanitized value
-                $(this).val(sanitizedValue);
+            // Ensure there is at most one dot in the value
+            var dotIndex = sanitizedValue.indexOf('.');
+            if (dotIndex !== -1) {
+                var remainingValue = sanitizedValue.substring(dotIndex + 1);
+                sanitizedValue = sanitizedValue.substring(0, dotIndex + 1) + remainingValue.replace(/\./g, '');
             }
+
+            // Ensure there is at most one minus sign and it's at the beginning
+            var negIndex = sanitizedValue.indexOf('-');
+            if (negIndex === 0) {
+                // If minus sign is already at the beginning, keep it and remove any additional minus signs
+                sanitizedValue = "-" + sanitizedValue.replace(/-/g, '');
+            } else {
+                // If minus sign is not at the beginning, remove all minus signs
+                sanitizedValue = sanitizedValue.replace(/-/g, '');
+            }
+
+            $(this).val(sanitizedValue);
         });
         $("#y-position").on("input", function () {
             var enteredValue = $(this).val();            // Get the entered value
-            var sanitizedValue = enteredValue.replace(/[^0-9.]/g, '');            // Remove any non-numeric characters except dot (.)
-
+            var sanitizedValue = enteredValue.replace(/[^0-9.\-]/g, ''); // Remove any non-numeric characters except dot (.) and minus (-)
             // Ensure there is at most one dot in the value
             var dotIndex = sanitizedValue.indexOf('.');
             if (dotIndex !== -1) {
                 var remainingValue = sanitizedValue.substring(dotIndex + 1);
                 sanitizedValue = sanitizedValue.substring(0, dotIndex + 1) + remainingValue.replace(/\./g, '');
             }
-
-            // Limit the number of decimal places to 4
-            var decimalIndex = sanitizedValue.indexOf('.');
-            if (decimalIndex !== -1) {
-                var integerPart = sanitizedValue.substring(0, decimalIndex);
-                var decimalPart = sanitizedValue.substring(decimalIndex + 1, decimalIndex + 5); // Limit to 4 decimal places
-                sanitizedValue = integerPart + '.' + decimalPart;
-            }
-
-            // Remove leading zeros unless they are followed by a dot
-            sanitizedValue = sanitizedValue.replace(/^0+(?!$|\.)/, '');
-
-            // Add back a single leading zero if the value is zero and not followed by a dot
-            if (sanitizedValue === '' || sanitizedValue === '.') {
-                sanitizedValue = '0';
-            }
-
-            // Ensure the value is between 0 and 100 (exclusive)
-            var numericValue = parseFloat(sanitizedValue);
-            if (isNaN(numericValue)) {
-                // If value is not a number or out of range, revert to the previous value
-                $(this).val(0);
-                //      } else if (numericValue >= 100) {
-                //          $(this).val(100);
+            // Ensure there is at most one minus sign and it's at the beginning
+            var negIndex = sanitizedValue.indexOf('-');
+            if (negIndex === 0) {
+                // If minus sign is already at the beginning, keep it and remove any additional minus signs
+                sanitizedValue = "-" + sanitizedValue.replace(/-/g, '');
             } else {
-                // Save the current value as the previous value
-                $(this).data('previousValue', sanitizedValue);
-
-                // Update the input value with the sanitized value
-                $(this).val(sanitizedValue);
+                // If minus sign is not at the beginning, remove all minus signs
+                sanitizedValue = sanitizedValue.replace(/-/g, '');
             }
+            $(this).val(sanitizedValue);
         });
         $("#width").on("input", function () {
             var enteredValue = $(this).val();            // Get the entered value
-            var sanitizedValue = enteredValue.replace(/[^0-9.]/g, '');            // Remove any non-numeric characters except dot (.)
-
+            var sanitizedValue = enteredValue.replace(/[^0-9.\-]/g, ''); // Remove any non-numeric characters except dot (.) and minus (-)
             // Ensure there is at most one dot in the value
             var dotIndex = sanitizedValue.indexOf('.');
             if (dotIndex !== -1) {
                 var remainingValue = sanitizedValue.substring(dotIndex + 1);
                 sanitizedValue = sanitizedValue.substring(0, dotIndex + 1) + remainingValue.replace(/\./g, '');
             }
-
-            // Limit the number of decimal places to 4
-            var decimalIndex = sanitizedValue.indexOf('.');
-            if (decimalIndex !== -1) {
-                var integerPart = sanitizedValue.substring(0, decimalIndex);
-                var decimalPart = sanitizedValue.substring(decimalIndex + 1, decimalIndex + 5); // Limit to 4 decimal places
-                sanitizedValue = integerPart + '.' + decimalPart;
-            }
-
-            // Remove leading zeros unless they are followed by a dot
-            sanitizedValue = sanitizedValue.replace(/^0+(?!$|\.)/, '');
-
-            // Add back a single leading zero if the value is zero and not followed by a dot
-            if (sanitizedValue === '' || sanitizedValue === '.') {
-                sanitizedValue = '0';
-            }
-
-            // Ensure the value is between 0 and 100 (exclusive)
-            var numericValue = parseFloat(sanitizedValue);
-            if (isNaN(numericValue)) {
-                // If value is not a number or out of range, revert to the previous value
-                $(this).val(0);
-                //      } else if (numericValue >= 100) {
-                //          $(this).val(100);
+            // Ensure there is at most one minus sign and it's at the beginning
+            var negIndex = sanitizedValue.indexOf('-');
+            if (negIndex === 0) {
+                // If minus sign is already at the beginning, keep it and remove any additional minus signs
+                sanitizedValue = "-" + sanitizedValue.replace(/-/g, '');
             } else {
-                // Save the current value as the previous value
-                $(this).data('previousValue', sanitizedValue);
-
-                // Update the input value with the sanitized value
-                $(this).val(sanitizedValue);
+                // If minus sign is not at the beginning, remove all minus signs
+                sanitizedValue = sanitizedValue.replace(/-/g, '');
             }
+            $(this).val(sanitizedValue);
         });
         $("#height").on("input", function () {
             var enteredValue = $(this).val();            // Get the entered value
-            var sanitizedValue = enteredValue.replace(/[^0-9.]/g, '');            // Remove any non-numeric characters except dot (.)
-
+            var sanitizedValue = enteredValue.replace(/[^0-9.\-]/g, ''); // Remove any non-numeric characters except dot (.) and minus (-)
             // Ensure there is at most one dot in the value
             var dotIndex = sanitizedValue.indexOf('.');
             if (dotIndex !== -1) {
                 var remainingValue = sanitizedValue.substring(dotIndex + 1);
                 sanitizedValue = sanitizedValue.substring(0, dotIndex + 1) + remainingValue.replace(/\./g, '');
             }
-
-            // Limit the number of decimal places to 4
-            var decimalIndex = sanitizedValue.indexOf('.');
-            if (decimalIndex !== -1) {
-                var integerPart = sanitizedValue.substring(0, decimalIndex);
-                var decimalPart = sanitizedValue.substring(decimalIndex + 1, decimalIndex + 5); // Limit to 4 decimal places
-                sanitizedValue = integerPart + '.' + decimalPart;
-            }
-
-            // Remove leading zeros unless they are followed by a dot
-            sanitizedValue = sanitizedValue.replace(/^0+(?!$|\.)/, '');
-
-            // Add back a single leading zero if the value is zero and not followed by a dot
-            if (sanitizedValue === '' || sanitizedValue === '.') {
-                sanitizedValue = '0';
-            }
-
-            // Ensure the value is between 0 and 100 (exclusive)
-            var numericValue = parseFloat(sanitizedValue);
-            if (isNaN(numericValue)) {
-                // If value is not a number or out of range, revert to the previous value
-                $(this).val(0);
-                //      } else if (numericValue >= 100) {
-                //          $(this).val(100);
+            // Ensure there is at most one minus sign and it's at the beginning
+            var negIndex = sanitizedValue.indexOf('-');
+            if (negIndex === 0) {
+                // If minus sign is already at the beginning, keep it and remove any additional minus signs
+                sanitizedValue = "-" + sanitizedValue.replace(/-/g, '');
             } else {
-                // Save the current value as the previous value
-                $(this).data('previousValue', sanitizedValue);
-
-                // Update the input value with the sanitized value
-                $(this).val(sanitizedValue);
+                // If minus sign is not at the beginning, remove all minus signs
+                sanitizedValue = sanitizedValue.replace(/-/g, '');
             }
+            $(this).val(sanitizedValue);
         });
         $("#rotate-position").on("input", function () {
             var enteredValue = $(this).val();            // Get the entered value
@@ -4728,27 +4712,249 @@
         })
         $("#x-position").focus(function () {
             $(this).on("change", function () {
+                var sanitizedValue = $(this).val();
+                // Ensure there is at most one dot in the value
+                var dotIndex = sanitizedValue.indexOf('.');
+                if (dotIndex !== -1) {
+                    var remainingValue = sanitizedValue.substring(dotIndex + 1);
+                    sanitizedValue = sanitizedValue.substring(0, dotIndex + 1) + remainingValue.replace(/\./g, '');
+                }
+
+                // Limit the number of decimal places to 4
+                var decimalIndex = sanitizedValue.indexOf('.');
+                if (decimalIndex !== -1) {
+                    var integerPart = sanitizedValue.substring(0, decimalIndex);
+                    var decimalPart = sanitizedValue.substring(decimalIndex + 1, decimalIndex + 5); // Limit to 4 decimal places
+                    sanitizedValue = integerPart + '.' + decimalPart;
+                }
+
+                // Remove leading zeros unless they are followed by a dot
+                sanitizedValue = sanitizedValue.replace(/^0+(?!$|\.)/, '');
+
+                // Add back a single leading zero if the value is zero and not followed by a dot
+                if (sanitizedValue === '' || sanitizedValue === '.') {
+                    sanitizedValue = '0';
+                }
+
+                // Ensure the value is between 0 and 100 (exclusive)
+                var numericValue = parseFloat(sanitizedValue);
+                if (isNaN(numericValue)) {
+                    // If value is not a number or out of range, revert to the previous value
+                    $(this).val(0);
+
+
+                } else {
+
+                    if (numericValue >= (parseFloat(@Model.curBook.width) * 3.7795275591 - 10).toFixed(4)) {
+                        $(this).val((parseFloat(@Model.curBook.width) * 3.7795275591 - 10).toFixed(4));
+                    } else if (numericValue <= (parseFloat($(".selected").css("width")) * (-1) + 10).toFixed(4)) {
+                        $(this).val((parseFloat($(".selected").css("width")) * (-1) + 10).toFixed(4));
+                    }
+                    else {
+
+
+                        // Update the input value with the sanitized value
+                        $(this).val(sanitizedValue);
+                    }
+                }
                  $(".selected").css("left",$(this).val() +"px");
             });
         });
         $("#y-position").focus(function () {
             $(this).on("change", function () {
+                var sanitizedValue = $(this).val();
+                // Ensure there is at most one dot in the value
+                var dotIndex = sanitizedValue.indexOf('.');
+                if (dotIndex !== -1) {
+                    var remainingValue = sanitizedValue.substring(dotIndex + 1);
+                    sanitizedValue = sanitizedValue.substring(0, dotIndex + 1) + remainingValue.replace(/\./g, '');
+                }
+
+                // Limit the number of decimal places to 4
+                var decimalIndex = sanitizedValue.indexOf('.');
+                if (decimalIndex !== -1) {
+                    var integerPart = sanitizedValue.substring(0, decimalIndex);
+                    var decimalPart = sanitizedValue.substring(decimalIndex + 1, decimalIndex + 5); // Limit to 4 decimal places
+                    sanitizedValue = integerPart + '.' + decimalPart;
+                }
+
+                // Remove leading zeros unless they are followed by a dot
+                sanitizedValue = sanitizedValue.replace(/^0+(?!$|\.)/, '');
+
+                // Add back a single leading zero if the value is zero and not followed by a dot
+                if (sanitizedValue === '' || sanitizedValue === '.') {
+                    sanitizedValue = '0';
+                }
+
+                // Ensure the value is between 0 and 100 (exclusive)
+                var numericValue = parseFloat(sanitizedValue);
+                if (isNaN(numericValue)) {
+                    // If value is not a number or out of range, revert to the previous value
+                    $(this).val(0);
+
+
+                } else {
+
+                    if (numericValue >= (parseFloat(@Model.curBook.height) - 40) * 3.7795275591 - 10) {
+                        $(this).val(((parseFloat(@Model.curBook.height) - 40) * 3.7795275591 - 10).toFixed(4));
+                    } else if (numericValue <=  (parseFloat($(".selected").css("height")) * (-1) + 10).toFixed(4)) {
+                        $(this).val((parseFloat($(".selected").css("height")) * (-1) + 10).toFixed(4));
+                    } else {
+                        // Update the input value with the sanitized value
+                        $(this).val(sanitizedValue);
+                    }
+
+                }
+
+
                 $(".selected").css("top", $(this).val() + "px");
             });
         });
         $("#width").focus(function () {
             $(this).on("change", function () {
+                var sanitizedValue = $(this).val();
+                // Ensure there is at most one dot in the value
+                var dotIndex = sanitizedValue.indexOf('.');
+                if (dotIndex !== -1) {
+                    var remainingValue = sanitizedValue.substring(dotIndex + 1);
+                    sanitizedValue = sanitizedValue.substring(0, dotIndex + 1) + remainingValue.replace(/\./g, '');
+                }
+
+                // Limit the number of decimal places to 4
+                var decimalIndex = sanitizedValue.indexOf('.');
+                if (decimalIndex !== -1) {
+                    var integerPart = sanitizedValue.substring(0, decimalIndex);
+                    var decimalPart = sanitizedValue.substring(decimalIndex + 1, decimalIndex + 5); // Limit to 4 decimal places
+                    sanitizedValue = integerPart + '.' + decimalPart;
+                }
+
+                // Remove leading zeros unless they are followed by a dot
+                sanitizedValue = sanitizedValue.replace(/^0+(?!$|\.)/, '');
+
+                // Add back a single leading zero if the value is zero and not followed by a dot
+                if (sanitizedValue === '' || sanitizedValue === '.') {
+                    sanitizedValue = '0';
+                }
+
+                // Ensure the value is between 0 and 100 (exclusive)
+                var numericValue = parseFloat(sanitizedValue);
+                if (isNaN(numericValue)) {
+                    // If value is not a number or out of range, revert to the previous value
+                    $(this).val(0);
+
+
+                } else {
+
+                    if (numericValue <= 10) {
+                        $(this).val(10);
+                    }
+                    else {
+                        // Update the input value with the sanitized value
+                        $(this).val(sanitizedValue);
+                    }
+                }
                 $(".selected").css("width", $(this).val() + "px");
+                if (parseFloat($(this).val()) - 10 <= parseFloat($(".selected").css("left"))*-1) {
+                    $(".selected").css("left", "-"+(parseFloat($(this).val()) - 10) + "px");
+                    $("#x-position").val("-" + (parseFloat($(this).val()) - 10));
+                }
             });
         });
         $("#height").focus(function () {
             $(this).on("change", function () {
+                var sanitizedValue = $(this).val();
+                // Ensure there is at most one dot in the value
+                var dotIndex = sanitizedValue.indexOf('.');
+                if (dotIndex !== -1) {
+                    var remainingValue = sanitizedValue.substring(dotIndex + 1);
+                    sanitizedValue = sanitizedValue.substring(0, dotIndex + 1) + remainingValue.replace(/\./g, '');
+                }
+
+                // Limit the number of decimal places to 4
+                var decimalIndex = sanitizedValue.indexOf('.');
+                if (decimalIndex !== -1) {
+                    var integerPart = sanitizedValue.substring(0, decimalIndex);
+                    var decimalPart = sanitizedValue.substring(decimalIndex + 1, decimalIndex + 5); // Limit to 4 decimal places
+                    sanitizedValue = integerPart + '.' + decimalPart;
+                }
+
+                // Remove leading zeros unless they are followed by a dot
+                sanitizedValue = sanitizedValue.replace(/^0+(?!$|\.)/, '');
+
+                // Add back a single leading zero if the value is zero and not followed by a dot
+                if (sanitizedValue === '' || sanitizedValue === '.') {
+                    sanitizedValue = '0';
+                }
+
+                // Ensure the value is between 0 and 100 (exclusive)
+                var numericValue = parseFloat(sanitizedValue);
+                if (isNaN(numericValue)) {
+                    // If value is not a number or out of range, revert to the previous value
+                    $(this).val(0);
+
+
+                } else {
+
+                    if (numericValue <= 10) {
+                        $(this).val(10);
+                    }
+                    else {
+                        // Update the input value with the sanitized value
+                        $(this).val(sanitizedValue);
+                    }
+                }
                 $(".selected").css("height", $(this).val() + "px");
+                if (parseFloat($(this).val()) - 10 <= parseFloat($(".selected").css("top"))*-1) {
+                    $(".selected").css("top", "-" + (parseFloat($(this).val()) - 10) + "px");
+                    $("#y-position").val("-" + (parseFloat($(this).val()) - 10));
+                }
             });
         });
         $("#rotate-position").focus(function () {
             $(this).on("change", function () {
+                var sanitizedValue = $(this).val();
+                // Ensure there is at most one dot in the value
+                var dotIndex = sanitizedValue.indexOf('.');
+                if (dotIndex !== -1) {
+                    var remainingValue = sanitizedValue.substring(dotIndex + 1);
+                    sanitizedValue = sanitizedValue.substring(0, dotIndex + 1) + remainingValue.replace(/\./g, '');
+                }
+
+                // Limit the number of decimal places to 4
+                var decimalIndex = sanitizedValue.indexOf('.');
+                if (decimalIndex !== -1) {
+                    var integerPart = sanitizedValue.substring(0, decimalIndex);
+                    var decimalPart = sanitizedValue.substring(decimalIndex + 1, decimalIndex + 5); // Limit to 4 decimal places
+                    sanitizedValue = integerPart + '.' + decimalPart;
+                }
+
+                // Remove leading zeros unless they are followed by a dot
+                sanitizedValue = sanitizedValue.replace(/^0+(?!$|\.)/, '');
+
+                // Add back a single leading zero if the value is zero and not followed by a dot
+                if (sanitizedValue === '' || sanitizedValue === '.') {
+                    sanitizedValue = '0';
+                }
+
+                // Ensure the value is between 0 and 100 (exclusive)
+                var numericValue = parseFloat(sanitizedValue);
+                if (isNaN(numericValue)) {
+                    // If value is not a number or out of range, revert to the previous value
+                    $(this).val(0);
+
+
+                } else {
+                    while (numericValue < 0) {
+                        numericValue += 2 * Math.PI;
+                    }
+                    while (numericValue >= 2 * Math.PI) {
+                        numericValue -= 2 * Math.PI;
+                    }
+                    $(this).val(numericValue.toFixed(4)); // Round to 4 decimal places
+                  
+                }
                 $(".selected").css("transform", "rotate(" + $(this).val() + "rad)");
+                $(".selected").attr("data-angle", $(this).val());
             });
         });
         $("#x-position,#y-position,#rotate-position,#width,#height").focusout(function () {
@@ -4761,17 +4967,31 @@
             // Remove any non-numeric characters
             var sanitizedValue = enteredValue.replace(/[^0-9]/g, '');
 
+            // Ensure there is at most one dot in the value
+            var dotIndex = sanitizedValue.indexOf('.');
+            if (dotIndex !== -1) {
+                var remainingValue = sanitizedValue.substring(dotIndex + 1);
+                sanitizedValue = sanitizedValue.substring(0, dotIndex + 1) + remainingValue.replace('.', '');
+            }
+
+            // Remove leading zeros unless they are followed by a dot
+            sanitizedValue = sanitizedValue.replace(/^0+(?!$|\.)/, '');
+
+            // Add back a single leading zero if the value is zero and not followed by a dot
+            if (sanitizedValue === '' || sanitizedValue === '.') {
+                sanitizedValue = '0';
+            }
+
             // Ensure the value is between 0 and 100 (exclusive)
             var numericValue = parseInt(sanitizedValue);
             if (isNaN(numericValue)  || numericValue < 0) {
                 // If value is not a number or out of range, revert to the previous value
                 $(this).val(0);
             }
-            else if (numericValue >= 100) {
-                $(this).val(100);
-            } else {
-                // Save the current value as the previous value
-                $(this).data('previousValue', sanitizedValue);
+            else if (numericValue >= 11) {
+                $(this).val(11);
+            } 
+            else {
 
                 // Update the input value with the sanitized value
                 $(this).val(sanitizedValue);
@@ -5282,10 +5502,10 @@
             $("#height").val(height);
         }
         function retrieveBorderValue(container){
-            var borderWidth = extractNumericValue(container.css("border-width"));
+            var borderWidth = extractNumericValue(container.css("border-width")).toFixed(0);
             $("#border-width").val(borderWidth);
 
-            var borderRadius = extractNumericValue(container.css("border-radius"));
+            var borderRadius = extractNumericValue(container.css("border-radius")).toFixed(0);
             $("#border-round").val(borderRadius);
 
             var borderStyle = container.css("border-style");
@@ -5317,7 +5537,7 @@
         // Function to extract numeric value from a CSS property value
         function extractNumericValue(value) {
             // Remove any non-numeric characters
-            return parseFloat(value.replace(/[^\d.]/g, ''));
+            return parseFloat(value.replace(/[^\d.-]/g, ''));
         }
         function toggleLockTabListContainer(container){
             if(container.hasClass("element-lock") || !CRUDAccess){

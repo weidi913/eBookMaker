@@ -5917,6 +5917,9 @@ ul.nav-link-dropdown-list {
   word-break: break-word;
   margin-bottom:4px;
   width:100%;
+
+}
+.file-setting-collaboration-item-user-info-username[contenteditable]{
   border-bottom:dashed 1px black;
 }
 .file-setting-collaboration-item-user-info-username[contenteditable]:focus {

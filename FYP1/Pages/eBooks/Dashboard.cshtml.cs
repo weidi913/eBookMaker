@@ -124,8 +124,6 @@ namespace FYP1.Pages.eBooks
 
         }
 
-        /*        public string[] dateTypes = Enum.GetNames(typeof(DateType)); // Get names of enum values
-                public string[] sortTypes = Enum.GetNames(typeof(SortType)); // Get names of enum values*/
         public string defaultBookType = BookType.Novel.ToString(); // Set default book type
 
         public async Task OnGetAsync(string? displayTab, string? searchString, string? sortOrder, 
@@ -333,20 +331,8 @@ namespace FYP1.Pages.eBooks
 
             eBookAdd.authorID = UserManager.GetUserName(User);
 
-            var isAuthorized = await AuthorizationService.AuthorizeAsync(
-                                                        User, eBookAdd.authorID,
-                                                        Operations.Create);
-            if (!isAuthorized.Succeeded)
-            {
-/*                return Forbid();
-*/                return Challenge();
-            }
-
             _context.eBook.Add(eBookAdd);
             await _context.SaveChangesAsync();
-
-/*            return RedirectToAction("Details", "OnGetAsync", new { id = eBookAdd.bookID });
-*/            //rmb to modify it to better one
 
             return RedirectToPage("./Design", new { id = eBookAdd.bookID });
         }
@@ -359,8 +345,6 @@ namespace FYP1.Pages.eBooks
             {
                 return NotFound(); // Book non-existent return error
             }
-
-
 
             // Admin role can access
             var isAuthorized = User.IsInRole(Constants.AdminRole) || User.IsInRole(Constants.ReviewerRole) || User.IsInRole(Constants.ModeratorRole);
