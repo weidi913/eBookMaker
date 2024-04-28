@@ -3,44 +3,35 @@
 @{
     ViewData["Title"] = "Home page";
 }
-@*
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<style>
+body {
+    font-family: sans-serif;
+}
 
-</div>
-*@
-<head>
-  <title> Transition Page</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    body {
-      font-family: sans-serif;
-    }
+/* Make content area fill the entire browser window */
+html,
+.fullscreen {
 
-    /* Make content area fill the entire browser window */
-    html,
-    .fullscreen {
-      display: flex;
-      height: 100%;
-      margin: 0;
-      padding: 0;
-      width: 100%;
-    }
+}
 
-    /* Center the content in the browser window */
-    .container {
-      margin: auto;
-      text-align: center;
-    }
+/* Center the content in the browser window */
+.container {
 
-    .title {
-      font-size: 3rem;
-    }
-  </style>
-</head>
+    text-align: center;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        display: flex;
+        align-items:center;
+        justify-content:center;
+        position:fixed;
+}
 
-<body class="fullscreen">
+.title {
+    font-size: 3rem;
+}
+</style>
   <div class="container">
       <h1 class="title">Redirect to Home Page....</h1>
   </div>
@@ -51,5 +42,5 @@
     });
 
   </script>
-</body>
+
 

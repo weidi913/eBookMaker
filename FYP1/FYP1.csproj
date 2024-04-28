@@ -8,6 +8,21 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Pages\Collaborations\**" />
+    <Compile Remove="Pages\Comments\**" />
+    <Compile Remove="Pages\Versions\**" />
+    <Content Remove="Pages\Collaborations\**" />
+    <Content Remove="Pages\Comments\**" />
+    <Content Remove="Pages\Versions\**" />
+    <EmbeddedResource Remove="Pages\Collaborations\**" />
+    <EmbeddedResource Remove="Pages\Comments\**" />
+    <EmbeddedResource Remove="Pages\Versions\**" />
+    <None Remove="Pages\Collaborations\**" />
+    <None Remove="Pages\Comments\**" />
+    <None Remove="Pages\Versions\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <_ContentIncludedByDefault Remove="wwwroot\css\styles.css" />
   </ItemGroup>
 
@@ -29,9 +44,6 @@
   <ItemGroup>
     <Folder Include="Data\Migrations\" />
     <Folder Include="Migrations\" />
-    <Folder Include="Pages\Comments\" />
-    <Folder Include="Pages\Versions\" />
-    <Folder Include="Pages\Collaborations\" />
     <Folder Include="wwwroot\images\" />
   </ItemGroup>
 
