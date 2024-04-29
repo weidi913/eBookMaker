@@ -94,7 +94,13 @@
                             break;
                     }
                 }
-                <button id="book-delete-caution-button" type="button" class="file-setting-delete-button">Delete</button>
+                @{
+                    if(Model.curUser.UserName == Model.curBook.authorID)
+                    {
+                        <button id="book-delete-caution-button" type="button" class="file-setting-delete-button">Delete</button>
+
+                    }
+                }
             </div>
         </div>
         <div id="FileSetting" class="profile-page-profile-container file-setting">

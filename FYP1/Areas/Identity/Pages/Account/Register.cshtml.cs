@@ -31,14 +31,17 @@ namespace FYP1.Areas.Identity.Pages.Account
         private readonly IUserEmailStore<Member> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly IConfiguration _configuration;
 
         public RegisterModel(
             UserManager<Member> userManager,
             IUserStore<Member> userStore,
             SignInManager<Member> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            IConfiguration configuration)
         {
+            _configuration = configuration;
             _userManager = userManager;
             _userStore = userStore;
             _emailStore = GetEmailStore();
@@ -173,7 +176,8 @@ namespace FYP1.Areas.Identity.Pages.Account
                                 using (SmtpClient client = new SmtpClient("smtp.gmail.com", 587))
                                 {
                                     client.EnableSsl = true;
-                                    client.Credentials = new System.Net.NetworkCredential("corjackchin@1utar.my", "spmf ywrk xehj fyjo");
+                                    var googleEmailCode = _configuration["EmailAuthenticationCode"];
+                                    client.Credentials = new System.Net.NetworkCredential("corjackchin@1utar.my", googleEmailCode);
                                     await client.SendMailAsync(message);
                                 }
                             }

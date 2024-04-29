@@ -112,7 +112,7 @@ using (var scope = app.Services.CreateScope())
     // use command above to set password
     /*    var testUserPw = builder.Configuration.GetValue<string>("SeedUserPW");
     */
-    var testUserPw = "Passw0rd!";
+    var testUserPw = builder.Configuration.GetValue<string>("SeedUserPW");
 
     await SeedData.Initialize(services, testUserPw);
 }

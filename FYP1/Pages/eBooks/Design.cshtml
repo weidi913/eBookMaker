@@ -1248,7 +1248,7 @@
                 <div class="e-book-design-button-separator hidden"></div>
                 <button title="Delete Element" type="button"
                         id="element-delete-button"
-                        class="e-book-design-top-function-icon-button design-page-button hidden">
+                        class="e-book-design-top-function-icon-button design-page-button hidden @(Model.CRUDAccess? "":"page-lock")">
                     <svg viewBox="0 0 1024 1024"
                          class="e-book-design-top-function-icon">
                         <path d="M662 170h148v86h-596v-86h148l44-42h212zM342 384v426h340v-426h-340zM256 810v-512h512v512q0 34-26 60t-60 26h-340q-34 0-60-26t-26-60z"></path>
@@ -1256,7 +1256,7 @@
                 </button>
                 <button title="Toggle Element Lock" type="button"
                     id="element-lock-button"
-                        class="e-book-design-top-function-icon-button design-page-button hidden">
+                        class="e-book-design-top-function-icon-button design-page-button hidden @(Model.CRUDAccess? "":"page-lock")">
                     <svg viewBox="0 0 1024 1024"
                          class="e-book-design-top-function-icon">
                         <path d="M768 854v-428h-512v428h512zM380 256v86h264v-86q0-54-39-93t-93-39-93 39-39 93zM768 342q34 0 60 25t26 59v428q0 34-26 59t-60 25h-512q-34 0-60-25t-26-59v-428q0-34 26-59t60-25h42v-86q0-88 63-151t151-63 151 63 63 151v86h42zM512 726q-34 0-60-26t-26-60 26-60 60-26 60 26 26 60-26 60-60 26z"></path>
@@ -1267,12 +1267,12 @@
                 </button>
                 <button title="Copy" type="button"
                         id="element-copy-button"
-                        class="e-book-design-top-function-icon-button design-page-button hidden">
+                        class="e-book-design-top-function-icon-button design-page-button hidden @(Model.CRUDAccess? "":"page-lock")">
                     <svg class="e-book-design-top-function-icon" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 115.77 122.88" style="enable-background:new 0 0 115.77 122.88;width:20px;height:20px" xml:space="preserve"><style type="text/css">                                                                                                                                                                                                                                                                }</style><g><path class="st0" d="M89.62,13.96v7.73h12.19h0.01v0.02c3.85,0.01,7.34,1.57,9.86,4.1c2.5,2.51,4.06,5.98,4.07,9.82h0.02v0.02 v73.27v0.01h-0.02c-0.01,3.84-1.57,7.33-4.1,9.86c-2.51,2.5-5.98,4.06-9.82,4.07v0.02h-0.02h-61.7H40.1v-0.02 c-3.84-0.01-7.34-1.57-9.86-4.1c-2.5-2.51-4.06-5.98-4.07-9.82h-0.02v-0.02V92.51H13.96h-0.01v-0.02c-3.84-0.01-7.34-1.57-9.86-4.1 c-2.5-2.51-4.06-5.98-4.07-9.82H0v-0.02V13.96v-0.01h0.02c0.01-3.85,1.58-7.34,4.1-9.86c2.51-2.5,5.98-4.06,9.82-4.07V0h0.02h61.7 h0.01v0.02c3.85,0.01,7.34,1.57,9.86,4.1c2.5,2.51,4.06,5.98,4.07,9.82h0.02V13.96L89.62,13.96z M79.04,21.69v-7.73v-0.02h0.02 c0-0.91-0.39-1.75-1.01-2.37c-0.61-0.61-1.46-1-2.37-1v0.02h-0.01h-61.7h-0.02v-0.02c-0.91,0-1.75,0.39-2.37,1.01 c-0.61,0.61-1,1.46-1,2.37h0.02v0.01v64.59v0.02h-0.02c0,0.91,0.39,1.75,1.01,2.37c0.61,0.61,1.46,1,2.37,1v-0.02h0.01h12.19V35.65 v-0.01h0.02c0.01-3.85,1.58-7.34,4.1-9.86c2.51-2.5,5.98-4.06,9.82-4.07v-0.02h0.02H79.04L79.04,21.69z M105.18,108.92V35.65v-0.02 h0.02c0-0.91-0.39-1.75-1.01-2.37c-0.61-0.61-1.46-1-2.37-1v0.02h-0.01h-61.7h-0.02v-0.02c-0.91,0-1.75,0.39-2.37,1.01 c-0.61,0.61-1,1.46-1,2.37h0.02v0.01v73.27v0.02h-0.02c0,0.91,0.39,1.75,1.01,2.37c0.61,0.61,1.46,1,2.37,1v-0.02h0.01h61.7h0.02 v0.02c0.91,0,1.75-0.39,2.37-1.01c0.61-0.61,1-1.46,1-2.37h-0.02V108.92L105.18,108.92z" /></g></svg>
                 </button>
                 <button title="Paste" type="button"
                         id="element-paste-button"
-                        class="e-book-design-top-function-icon-button design-page-button hidden">
+                        class="e-book-design-top-function-icon-button design-page-button hidden @(Model.CRUDAccess? "":"page-lock")">
                     <svg style="height:20px;width:20px;" fill="#000000" class="e-book-design-top-function-icon" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 62.094 62.094" xml:space="preserve" stroke="#000000" stroke-width="2.7">
 
 <g id="SVGRepo_bgCarrier" stroke-width="0" />
@@ -1314,7 +1314,7 @@
                                         <div class="design-page-content-left-container">
                                             <span class="design-page-content-page-text"><span>Page @bookPage.pageNo </span></span>
                                         </div>
-                                        <div class="design-page-content-right-container">
+                                        <div class="design-page-content-right-container @(Model.CRUDAccess? "":"page-lock")">
                                             @* up button *@
                                             <button type="button" title="Move Page Upward"
                                                     class="design-page-content-middle-button design-page-button page-up-button">
@@ -1404,12 +1404,12 @@
                         </ul>
                     </button>
                 </div>
-                <div class="e-book-design-help-container bottom-bar">
+                <a href="../Help" style="margin-top:auto;margin-bottom:auto" class="e-book-design-help-container bottom-bar">
                     <svg viewBox="0 0 877.7142857142857 1024"
                          class="e-book-design-help-icon">
                         <path d="M502.857 685.714v91.429c0 10.286-8 18.286-18.286 18.286h-91.429c-10.286 0-18.286-8-18.286-18.286v-91.429c0-10.286 8-18.286 18.286-18.286h91.429c10.286 0 18.286 8 18.286 18.286zM649.143 402.286c0 81.143-56.571 113.143-98.286 136.571-29.714 17.143-48 28-48 46.286v18.286c0 10.286-8 18.286-18.286 18.286h-91.429c-10.286 0-18.286-8-18.286-18.286v-38.857c0-70.286 50.286-92.571 90.857-110.857 34.286-16 55.429-26.857 55.429-52.571 0-33.143-41.714-57.714-79.429-57.714-20 0-41.143 6.286-54.286 15.429-12.571 8.571-24.571 21.143-45.714 47.429-3.429 4.571-8.571 6.857-14.286 6.857-4 0-8-1.143-10.857-3.429l-61.714-46.857c-7.429-5.714-9.143-16.571-4-24.571 46.857-73.714 112.571-109.714 199.429-109.714v0c93.714 0 198.857 74.286 198.857 173.714zM438.857 146.286c-201.714 0-365.714 164-365.714 365.714s164 365.714 365.714 365.714 365.714-164 365.714-365.714-164-365.714-365.714-365.714zM877.714 512c0 242.286-196.571 438.857-438.857 438.857s-438.857-196.571-438.857-438.857 196.571-438.857 438.857-438.857v0c242.286 0 438.857 196.571 438.857 438.857z"></path>
                     </svg>
-                </div>
+                </a>
             </div>
         </div>
     </div>
@@ -2570,6 +2570,13 @@
 
         // Function to update the displayed page number based on scroll position
         function updateCurrentPage() {
+            console.log($(".e-book-design-chapter-container").length);
+            if ($(".e-book-design-chapter-container").length < 1) {
+                $('#scroll-page-number-input').val(0);
+                $('#scroll-chapter-number-input').val(0);
+                lockAddTabList();
+                return;
+            }
             // Get the scrollable container and its scroll position
             var container = $('#zoom-container');
             var scrollPosition = container.scrollTop();
@@ -2722,8 +2729,8 @@
                             else if (copyType === "chart") {
                                 initChart(pageContainer.find("div:last")[0]);
                             }
-                            pageContainer.find("div.element").last().click();
 
+                            $("#zoom-container").click();
                         }
                         else {
                             alert("fail to paste content. " + response.message);
@@ -3665,10 +3672,12 @@
                                 var updatedChapterNumber = chapterNumber + index;
                                 $(this).text('Chapter ' + ($(this).text().trim().split(" ")[1] - 1));
                             });
+                            
                         }
                         else {
                             ancestor.remove();
                         }
+                        updateCurrentPage();
                     } else {
                         console.error("Error delete bookpage:", response.message);
                     }
@@ -4065,8 +4074,10 @@
                     if(UndoElementID === ""){
                         return;
                     }
+                    console.log(UndoElementID, UndoElementStyle, UndoElementText, UndoBookPageID, UndoElementType);
                     RedoElementStyle = $("div.element#" + UndoElementID).attr("style");
                     RedoElementText = getContent($("div.element#" + UndoElementID));
+
                     await revertFuncAsync(action, UndoElementID, UndoElementStyle, UndoElementText, UndoElementType, UndoBookPageID);
                 }
 
@@ -4086,7 +4097,6 @@
 
             })
             $(".header-design-redo-icon").click(async function () {
-                alert("find and replace", replace)
 
                 if(replace){
                     $(".find-and-replace-find-input").val(RedoFind);
@@ -4147,7 +4157,8 @@
                                 initQuill(newTextElement[0], document.querySelector('#toolbar'))
                             }
                             else if (elementRevert.hasClass("chart")) {
-                                initChart($("div.element#" + elementID));
+                                initChart($("div.element#" + elementID)[0]);
+                                console.log(elementID);
                             }
                         }
                         else {
@@ -4196,6 +4207,11 @@
                         tempID = "";
                         tempStyle = "";
                         tempText = "";
+                  /*      if(response.type === "chart"){
+                            UndoElementID = "";
+                            UndoElementStyle = "";
+                            UndoElementText = "";
+                        }*/
                     }
                     else {
                         alert("fail update. the element is deleted");
@@ -4327,7 +4343,7 @@
         });
         var pageWidth = @Model.curBook.width;
         var pageHeight = @Model.curBook.height;
-        $("#print-button, .header-design-print-icon, .header-design-file-toggle-print").click(function () {
+        $("#print-button, .header-design-print-icon, #header-design-file-toggle-print").click(function () {
             // Get the content of the specified div
             var chapterList = $(".e-book-design-chapter-container");
             var pageWidth = '@Model.curBook.width';

@@ -449,7 +449,7 @@ namespace FYP1.Pages.eBooks
                 return Forbid();
             }
 
-            if (book.authorID == user.UserName)
+            if (book.authorID == CollaborationInput.authorID)
             {
                 return RedirectToPage("./FileSetting", new { id = CollaborationInput.bookID, CollabMessage = "This is the author username." });
             }

@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace FYP1.Migrations
 {
-    public partial class collabupdate : Migration
+    public partial class first : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -64,9 +64,9 @@ namespace FYP1.Migrations
                     description = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: false),
                     height = table.Column<float>(type: "real", nullable: false),
                     width = table.Column<float>(type: "real", nullable: false),
-                    background = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     edition = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     bookStatus = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    bookContent = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     LastUpdate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     authorID = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     ConcurrencyToken = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: true)
@@ -261,6 +261,7 @@ namespace FYP1.Migrations
                     pageNo = table.Column<int>(type: "int", nullable: false),
                     pageLock = table.Column<bool>(type: "bit", nullable: false),
                     chapterID = table.Column<int>(type: "int", nullable: false),
+                    backgroundStyle = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ConcurrencyToken = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: true)
                 },
                 constraints: table =>
@@ -278,17 +279,20 @@ namespace FYP1.Migrations
                 name: "Comment",
                 columns: table => new
                 {
-                    authorID = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
-                    bookPageID = table.Column<int>(type: "int", nullable: false),
-                    comment = table.Column<int>(type: "int", maxLength: 1000, nullable: false),
+                    commentID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    comment = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: false),
                     commentDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     commentStatus = table.Column<bool>(type: "bit", nullable: false),
+                    authorID = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
+                    bookID = table.Column<int>(type: "int", nullable: false),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    ConcurrencyToken = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: true)
+                    ConcurrencyToken = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: true),
+                    bookPageID = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Comment", x => new { x.authorID, x.bookPageID });
+                    table.PrimaryKey("PK_Comment", x => x.commentID);
                     table.ForeignKey(
                         name: "FK_Comment_AspNetUsers_UserId",
                         column: x => x.UserId,
@@ -298,7 +302,12 @@ namespace FYP1.Migrations
                         name: "FK_Comment_BookPage_bookPageID",
                         column: x => x.bookPageID,
                         principalTable: "BookPage",
-                        principalColumn: "bookPageID",
+                        principalColumn: "bookPageID");
+                    table.ForeignKey(
+                        name: "FK_Comment_eBook_bookID",
+                        column: x => x.bookID,
+                        principalTable: "eBook",
+                        principalColumn: "bookID",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -385,6 +394,11 @@ namespace FYP1.Migrations
                 name: "IX_Collaboration_UserId",
                 table: "Collaboration",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Comment_bookID",
+                table: "Comment",
+                column: "bookID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Comment_bookPageID",

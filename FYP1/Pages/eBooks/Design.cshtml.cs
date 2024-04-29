@@ -286,6 +286,7 @@ namespace FYP1.Pages.eBooks
             {
                 await _context.SaveChangesAsync();
                 return new JsonResult(new { status = 0, 
+                    type=elementUpdate.elementType,
                     message = "Successfully updated", 
                     htmlContent = GenerateElementTemplate(elementUpdate.elementID, elementUpdate.elementStyle,elementUpdate.elementType,elementUpdate.text) });
             }

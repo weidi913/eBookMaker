@@ -50,6 +50,9 @@ namespace FYP1.Data
                 user = new Member
                 {
                     UserName = UserName,
+                    firstName = "Staff",
+                    lastName = "",
+                    birthday = DateTime.Now,
                     EmailConfirmed = true,
                     gender = "Other",
                 };

@@ -1,3 +1,8 @@
 Drop-Database -Context ApplicationDbContext
 Add-Migration -Context ApplicationDbContext first
 Update-Database -Context ApplicationDbContext
+
+dotnet user-secrets set SeedUserPW "Passw0rd!"
+dotnet user-secrets set EmailAuthenticationCode YourSecretPasswordHere
+
+

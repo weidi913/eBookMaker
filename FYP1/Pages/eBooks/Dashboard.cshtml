@@ -703,7 +703,8 @@
         })
 
         $(".paginated-list-container .paginated-next-page").click(function () {
-            var pageIndex = parseInt(@Model.CurrentPageIndex) + 1;
+            var inputElement = $(this).siblings(".paginated-current-page");
+            var pageIndex = parseInt(inputElement.val()) + 1;
             var form = $(this).closest(".paginated-list-container").prevAll(".e-book-dashboard-filter-container").find("form");
             form.find(".e-book-dashboard-page-index-input").val(pageIndex);
             form.submit();
@@ -930,29 +931,29 @@
             case "Home":
                 console.log(curDisplayTab);
                 $("#Home").css("display", "flex");
-                $("#Home .e-book-dashboard-filter-container .e-book-dashboard-filter-form .e-book-dashboard-page-index-input").val("@Model.CurrentPageIndex");
+                //$("#Home .e-book-dashboard-filter-container .e-book-dashboard-filter-form .e-book-dashboard-page-index-input").val("@Model.CurrentPageIndex");
                 $(".home-nav-tab").css("background-color", "rgb(225, 228, 231)");
                 break;
             case "Management":
                 $("#Management").css("display", "flex");
-                $("#Management .e-book-dashboard-filter-container .e-book-dashboard-filter-form .e-book-dashboard-page-index-input").val("@Model.CurrentPageIndex");
+               // $("#Management .e-book-dashboard-filter-container .e-book-dashboard-filter-form .e-book-dashboard-page-index-input").val("@Model.CurrentPageIndex");
                 $(".management-nav-tab").css("background-color", "rgb(225, 228, 231)");
                 break;
             case "Projects":
                 $("#Projects").css("display", "flex");
-                $("#Projects .e-book-dashboard-filter-container .e-book-dashboard-filter-form .e-book-dashboard-page-index-input").val("@Model.CurrentPageIndex");
+              //  $("#Projects .e-book-dashboard-filter-container .e-book-dashboard-filter-form .e-book-dashboard-page-index-input").val("@Model.CurrentPageIndex");
                 $(".sidebar-login-menu-nav-list .sidebar-login-nav-container").eq(1).css("background-color", "rgb(225, 228, 231)");
                 $(".project-nav-tab").css("background-color", "rgb(225, 228, 231)");
                 break;
             case "Published":
                 $("#Published").css("display", "flex");
-                $("#Published .e-book-dashboard-filter-container .e-book-dashboard-filter-form .e-book-dashboard-page-index-input").val("@Model.CurrentPageIndex");
+             //   $("#Published .e-book-dashboard-filter-container .e-book-dashboard-filter-form .e-book-dashboard-page-index-input").val("@Model.CurrentPageIndex");
                 $(".published-nav-tab").css("background-color", "rgb(225, 228, 231)");
 
                 break;
             case "Shared":
                 $("#Shared").css("display", "flex");
-                $("#Shared .e-book-dashboard-filter-container .e-book-dashboard-filter-form .e-book-dashboard-page-index-input").val("@Model.CurrentPageIndex");
+               // $("#Shared .e-book-dashboard-filter-container .e-book-dashboard-filter-form .e-book-dashboard-page-index-input").val("@Model.CurrentPageIndex");
                 $(".shared-nav-tab").css("background-color", "rgb(225, 228, 231)");
                 break;
             default:

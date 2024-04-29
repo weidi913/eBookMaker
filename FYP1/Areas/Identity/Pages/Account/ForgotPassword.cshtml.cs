@@ -22,9 +22,12 @@ namespace FYP1.Areas.Identity.Pages.Account
     {
         private readonly UserManager<Member> _userManager;
         private readonly IEmailSender _emailSender;
+        private readonly IConfiguration _configuration;
 
-        public ForgotPasswordModel(UserManager<Member> userManager, IEmailSender emailSender)
+
+        public ForgotPasswordModel(UserManager<Member> userManager, IEmailSender emailSender, IConfiguration configuration)
         {
+            _configuration = configuration;
             _userManager = userManager;
             _emailSender = emailSender;
         }
@@ -90,7 +93,8 @@ namespace FYP1.Areas.Identity.Pages.Account
                         using (SmtpClient client = new SmtpClient("smtp.gmail.com", 587))
                         {
                             client.EnableSsl = true;
-                            client.Credentials = new System.Net.NetworkCredential("corjackchin@1utar.my", "spmf ywrk xehj fyjo");
+                            var googleEmailCode = _configuration["EmailAuthenticationCode"];
+                            client.Credentials = new System.Net.NetworkCredential("corjackchin@1utar.my", googleEmailCode);
                             await client.SendMailAsync(message);
                         }
                     }

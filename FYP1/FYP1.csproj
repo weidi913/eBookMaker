@@ -8,15 +8,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Data\Migrations\**" />
     <Compile Remove="Pages\Collaborations\**" />
     <Compile Remove="Pages\Comments\**" />
     <Compile Remove="Pages\Versions\**" />
+    <Content Remove="Data\Migrations\**" />
     <Content Remove="Pages\Collaborations\**" />
     <Content Remove="Pages\Comments\**" />
     <Content Remove="Pages\Versions\**" />
+    <EmbeddedResource Remove="Data\Migrations\**" />
     <EmbeddedResource Remove="Pages\Collaborations\**" />
     <EmbeddedResource Remove="Pages\Comments\**" />
     <EmbeddedResource Remove="Pages\Versions\**" />
+    <None Remove="Data\Migrations\**" />
     <None Remove="Pages\Collaborations\**" />
     <None Remove="Pages\Comments\**" />
     <None Remove="Pages\Versions\**" />
@@ -42,7 +46,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Data\Migrations\" />
     <Folder Include="Migrations\" />
     <Folder Include="wwwroot\images\" />
   </ItemGroup>

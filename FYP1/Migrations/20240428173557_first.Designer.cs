@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FYP1.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240402142316_bg")]
-    partial class bg
+    [Migration("20240428173557_first")]
+    partial class first
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -183,6 +183,10 @@ namespace FYP1.Migrations
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("bookContent")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("bookStatus")
                         .IsRequired()
