@@ -1,8 +1,8 @@
-Drop-Database -Context ApplicationDbContext
-Add-Migration -Context ApplicationDbContext first
-Update-Database -Context ApplicationDbContext
+Drop-Database -Context ApplicationDbContext  <---- clean existing database
+Add-Migration -Context ApplicationDbContext first <---- update the migration for the dataabse
+Update-Database -Context ApplicationDbContext <--- update the database
 
-dotnet user-secrets set SeedUserPW "Passw0rd!"
-dotnet user-secrets set EmailAuthenticationCode YourSecretPasswordHere
+dotnet user-secrets set SeedUserPW "Passw0rd!"  <--- set the default password
+dotnet user-secrets set EmailAuthenticationCode YourSecretPasswordHere <--- set the authentication code to use the gmail services for corjackchin@1utar.my at forgetpassword,register and resend email confirmation
 
 
